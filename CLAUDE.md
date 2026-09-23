@@ -433,5 +433,6 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - **Milník 3** (herní engine) hotový: commity `bfd3ef0`, `7848dc6`, `fdc1f62`, `4ad1bd1`, `52bacea`. Na server se nenahrával. Testy: 560 prošlo, 5 úmyslně přeskočených.
 - **Další krok: milník 4** (e-mailová aplikace + 3 vzorové scénáře), poznámky v sekci 13.
 - Předem povolené commity a pushe po každé části platily jen pro milník 3. Pro další milníky platí zase sekce 2, bod 4 (nejdřív Tomášovo OK), dokud Tomáš neřekne jinak.
-- **Repozitář** https://github.com/tomaspolak82-commits/poznej-podvod je soukromý, Tomáš ho sám přepne na veřejný jako ukázku do portfolia. Je v něm `README.md`. E-mail autora v commitech zůstává (Tomášovo rozhodnutí). V historii (commit `4f52284`) je jméno starého FTP účtu; Tomáš založil nový účet a starý zruší, historie se nepřepisuje.
+- **Repozitář** https://github.com/tomaspolak82-commits/poznej-podvod je **veřejný** (ukázka do portfolia), je v něm `README.md`. E-mail autora v commitech zůstává (Tomášovo rozhodnutí). V historii (commit `4f52284`) je jméno starého FTP účtu; ten účet je už zrušený, historie se nepřepisuje.
+- **Kvůli veřejnému repozitáři před každým commitem ověř**, že připravené soubory neobsahují hesla, jméno FTP účtu ani obsah `.env`: projdi `git status` (`.env` v něm nesmí být) a prohledej připravené soubory (`git grep --cached`) na přihlašovací údaje. Když si nejsi jistý, necommituj a zeptej se.
 - **Hosting:** nasazuje se přes samostatný FTP účet subdomény, šifrované spojení funguje (ověřeno `--check`).
