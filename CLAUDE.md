@@ -33,6 +33,8 @@ Tomáš nepíše kód sám. Zadává, kontroluje a učí se pracovat v terminál
 7. **Nasazení na server spouštěj jen na výslovný pokyn.**
 8. **Obsah scénářů piš nejdřív jako vzorek 3 kusů.** Rozepisuj dál až po Tomášově schválení.
 9. **Když si něčím nejsi jistý** (chování hostingu, reálné znění podvodu, právní otázka), řekni to. Nehádej.
+10. **Příkazy spouštěj po jednom**, bez `cd` na začátku (pracovní složka je projekt) a bez spojování přes `;` nebo `&&`. Tomášova pojistka na čtení mimo projekt by jinak u každého příkazu chtěla potvrzení.
+11. **Texty hry** (vše, co hráč čte mimo scénáře) jsou v jednom souboru `src/texts.js` a Tomáš je schválil. Změna znění = úprava tohoto souboru. Nové texty pošli Tomášovi ke schválení dřív, než je zabuduješ. Čísla v textech vždy správně skloňuj pomocí `src/ui/format.js` (1 bod, 2 body, 5 bodů; 1 kolo, 2 kola, 5 kol; „z 19 bodů“).
 
 ## 3. Technologie (rozhodnuto)
 
@@ -78,10 +80,13 @@ Každá úroveň má krátký popis a **maximální počet bodů pro toto kolo**
 - Kolo = **5 zpráv** náhodně vybraných z banky sekce (sekce 7).
 - Hra začne hned. Nahoře je stále viditelné tlačítko **„Na co si dát pozor?“**. Otevře modal s nejčastějšími znaky podvodu v dané sekci. Modal se zavře tlačítkem „Zavřít a pokračovat“, klávesou Esc nebo klepnutím mimo. Hra pak pokračuje, kde byla.
 - Nahoře je průběh („Zpráva 2 z 5“) a body („Body: 7 z 18“).
-- Lišta s průběhem, body a nápovědou je nahoře přilepená jen tam, kde je dost místa. Na nízké obrazovce nebo s velkým písmem se nepřilepuje a odjede s obsahem (Tomáš schválil).
+- Lišta s průběhem, body a nápovědou je nahoře přilepená jen tam, kde je dost místa. Na nízké obrazovce nebo s velkým písmem se nepřilepuje a odjede s obsahem (Tomáš schválil). Technicky: `@media (min-height: 40em)`, tj. od výšky okna asi 640 px při běžném písmu. Jestli to reaguje i na velké systémové písmo telefonu, není ověřené (sekce 13, milník 4).
 - Odchod z rozehraného kola tlačítkem v aplikaci („Zpět na výběr úrovně“) se potvrzuje oknem: „Opravdu chcete kolo ukončit? Body se neuloží.“ Tlačítko Zpět v prohlížeči potvrzení nemá (nejde spolehlivě zachytit).
 - Trvale viditelný štítek nad simulací: **„TRÉNINK: cvičná ukázka, nic se neodesílá“**. Nejde zavřít.
 - Obnovení stránky uprostřed kola: hráč se vrátí na výběr úrovně, rozehrané kolo se neuloží do historie.
+- Adresy: `#/` hlavní stránka, `#/<sekce>` výběr úrovně (vylosuje nové kolo), `#/<sekce>/kolo` kolo. Kolo je jen v paměti: adresa `#/…/kolo` bez rozehraného kola přesměruje na výběr úrovně. Odchod z kola jakoukoli cestou (i tlačítkem Zpět v prohlížeči) kolo zahodí, tlačítko Vpřed ho neobnoví.
+- Okna (nápověda, vysvětlení u žárovky, upozornění na odkaz, potvrzení) používají `src/ui/dialog.js` (prvek `<dialog>`): zavírají se tlačítkem, Esc i klepnutím mimo a fokus se vrátí na prvek, který okno otevřel. Potvrzovací okna mají fokus na bezpečné volbě („Hrát dál“, „Ponechat historii“). Dlouhé okno nápovědy začíná nahoře (fokus na nadpisu).
+- Nápověda „Na co si dát pozor?“ je v liště kola i ve vyhodnocení. Má 5 bodů, pod nimi poznámku o bezchybné češtině a radu (u Zpráv s číslem 7726, u e-mailu bez něj).
 
 ### Vyhodnocení zprávy (po každé zprávě)
 - Jestli rozhodl správně, kolik bodů získal a proč.
@@ -114,6 +119,14 @@ Zobrazení:
 Jedna sekce, každý scénář má `app: "sms"` nebo `app: "chat"`:
 - **SMS:** konverzace s číslem nebo textovým jménem odesílatele, bubliny, podtržený odkaz.
 - **Chat (WhatsApp-like):** hlavička s profilovou fotkou (neutrální avatar, žádné fotky skutečných lidí), jméno nebo číslo, u neznámého čísla lišta „Toto číslo není ve vašich kontaktech: Přidat / Nahlásit a zablokovat“. Bubliny, případně hlasová zpráva jako neaktivní prvek.
+
+**Rozhraní simulované aplikace** (dodržet i v milnících 4 a 5; dnes ho splňuje dočasné neutrální zobrazení `src/apps/generic.js`):
+- funkce vrátí HTML zprávy ve třech režimech: `play` (základní úroveň), `mark` (pokročilá úroveň, označování), `review` (vyhodnocení)
+- každá část zprávy má `data-target` se stejnou hodnotou jako `target` ve scénáři
+- `play`: odkazy, tlačítka a přílohy jsou `<button data-action="notice">`
+- `mark`: každá část je `<button data-mark="…" aria-pressed>` se štítkem „Označeno“ (ikona + text)
+- `review`: u každé části s hrozbou žárovka `<button data-threat="index">`, v pokročilé úrovni stav části (Našli jste / Tohle místo stojí za druhý pohled / Označeno zbytečně)
+- zpráva jako celek má `data-scenario-id` (používají ho testy)
 
 Odkazy, tlačítka a přílohy nikam nevedou.
 - **Základní úroveň:** klepnutí na ně ukáže u **všech** zpráv (podvodných i legitimních) stejné krátké upozornění, aby neprozradilo odpověď dřív, než hráč rozhodne: „Tohle je jen trénink, odkaz nikam nevede a nic se nestalo. Ve skutečnosti by vás podobný odkaz mohl zavést na nebezpečnou stránku, která se snaží získat vaše údaje.“
@@ -176,7 +189,15 @@ Odkazy, tlačítka a přílohy nikam nevedou.
 
 Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (číslo nebo jméno), `inContacts` (true/false), `messages` (pole bublin, každá s `text`, případně `link`).
 
-`target` odkazuje na část zprávy (`fromName`, `fromAddress`, `subject`, `body.N`, `button`, `link`, `attachment`, `from`, `messages.N`). Klikání je vázané na prvky, ne na souřadnice.
+`target` odkazuje na část zprávy (`fromName`, `fromAddress`, `subject`, `body.N`, `button`, `link`, `attachment`, `from`, `messages.N`, `messages.N.link` = odkaz uvnitř bubliny). Klikání je vázané na prvky, ne na souřadnice.
+
+Kontrola obsahu (`src/engine/validate.js`) běží při každém `npm run build` i `npm run dev` a chybný scénář build zastaví s českým popisem chyby. Kromě povinných polí hlídá:
+- `id` = název souboru bez `.json`, `section` = název složky, ID jsou jedinečná napříč sekcemi
+- podvod má 1–4 hrozby, **legitimní zpráva nemá žádnou hrozbu** (`threats: []`)
+- žádný `target` se nesmí opakovat a musí odpovídat existující části zprávy (volitelné části jako `button` jen, když ve zprávě jsou)
+- v sekci je dost zpráv na losování (aspoň 4 podvody a 1 legitimní). Cíl 20 scénářů / 5 legitimních hlídá test v `tests/unit/content.spec.js`, který je do milníku 6 vypnutý (`ENFORCE_CONTENT_GOALS = false`).
+
+Losování se `seed`: jedna řada náhodných čísel na jedno načtení stránky. Kolo se losuje při otevření výběru úrovně, další kolo („Hrát dalších 5“) pokračuje ve stejné řadě. Bez `?seed=` je losování náhodné.
 
 Kategorie hrozeb (pro statistiku nejčastějších chyb):
 `odesilatel`, `odkaz-platba`, `casovy-tlak`, `zadost-o-udaje`, `vyhra-nabidka`, `priloha`, `jazyk-chyby`, `nezname-cislo`, `emocni-natlak`, `neobvykla-zadost`, `qr-kod`, `instalace-aplikace`.
@@ -229,6 +250,9 @@ Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře ne
 - Panel „Vítejte zpět“ na hlavní stránce: „Jsme rádi, že jste zase tady. Nejlepší výsledky: E-mail (pokročilá) 16 z 19 bodů… Nejčastěji vám unikalo: …“
 - „Smazat moji historii“ s potvrzením: nenápadně úplně dole na hlavní stránce (ikona + text, sekce 5). Smaže skóre, chyby, počet kol i ID posledních kol.
 - Veškerý přístup k `localStorage` obal do try/catch. Aplikace musí fungovat i bez něj (anonymní okno).
+- Klíč v `localStorage`: `poznej-podvod:history:v1`. Poškozená nebo neznámá data se berou jako prázdná historie.
+- Známé chování: bez `localStorage` (anonymní okno) si hra nic nepamatuje, takže každé kolo hlásí „To je váš nejlepší výsledek“. Je to v pořádku.
+- V panelu „Vítejte zpět“ se sekce píšou krátce: „E-mail“, „Zprávy“ (pole `shortTitle` v `src/sections.js`).
 
 ## 9. Vzhled (v duchu menestarosti.cz)
 
@@ -339,6 +363,14 @@ Minimální sada:
 
 Po testech Tomáš projde aplikaci ručně na svém telefonu s velkým systémovým písmem.
 
+Jak jsou testy postavené:
+- Testy běží proti sestavené verzi (`npm run build` + `vite preview` na portu 4173), ne proti vývojovému serveru.
+- Projekt `unit` v `playwright.config.js` spouští testy ve `tests/unit/` jednou v Node.js bez prohlížeče (logika, obsah, pojistky nasazení, texty). Ostatní testy běží na všech pěti zařízeních.
+- `tests/helpers/game.js` spočítá očekávané kolo stejnými funkcemi a stejným `seed` jako aplikace, takže testy vědí, které zprávy přijdou, a nepotřebují pevně zapsaná ID.
+- Test průchodu jen klávesnicí běží jen na počítači (na mobilních zařízeních je přeskočený).
+- Nainstalované prohlížeče Playwrightu: Chromium a WebKit (Firefox ne, žádné zařízení ho nepoužívá).
+- Při velkém písmu se testuje i obrazovka kola, vyhodnocení, označování a hlavní stránka s historií. Dlouhé adresy a odkazy se musí dát zalomit kdekoli (`overflow-wrap: anywhere`).
+
 ## 13. Milníky
 
 1. **Příprava:** `git init`, Vite projekt, struktura složek, `.gitignore`, `.env.example`, `docs/`. Propojení s GitHubem přes GitHub CLI (`gh`). Podle Tomáše je nainstalované a přihlášené, ale při kontrole z Claude Code ho terminál nenašel, proto:
@@ -349,9 +381,14 @@ Po testech Tomáš projde aplikaci ručně na svém telefonu s velkým systémov
    U každého příkazu jednou větou vysvětli, co dělá.
 2. **Kostra, vzhled a první nasazení:** hlavička, patička, hlavní stránka s dlaždicemi a obrazovka výběru úrovně ve finálním moderním vzhledu (sekce 9), výběr loga z `docs/loga/`, stažení fontů. Do `index.html` přidej `<meta name="robots" content="noindex">`, aby vyhledávače nezaindexovaly nedodělanou verzi (bez `robots.txt` se zákazem, jinak by vyhledávač meta značku neviděl) → **Tomáš schválí vzhled.** Pak `scripts/deploy.mjs` s `--dry-run` a pojistkou a první nahrání na server, aby se problémy s hostingem ukázaly hned.
 3. **Herní engine:** výběr úrovně, náhodný výběr kola se `seed`, bodování, modal nápovědy, vyhodnocení se žárovkami, konec kola, historie a „Vítejte zpět“. Zatím se **7 testovacími zprávami v každé sekci** (5 podvodů, 2 legitimní), zjevně označenými jako testovací; v milníku 4 je nahradí skutečné scénáře. Postup v pěti částech: (1) logika a testy, (2) základní úroveň, (3) pokročilá úroveň, (4) nápověda a historie, (5) průchody v prohlížeči. Po každé části commit a push s českou zprávou, pokud projde build i všechny testy (Tomáš předem povolil); když testy neprojdou, zastavit se a napsat mu. Texty nápovědy a vyhodnocení nejdřív poslat Tomášovi ke schválení. **Milník 3 se na server nenahrává**, nasazuje se až po milníku 4.
-4. **E-mailová aplikace + 3 vzorové scénáře** (2 podvody, 1 legitimní) → **Tomáš schválí.**
+4. **E-mailová aplikace + 3 vzorové scénáře** (2 podvody, 1 legitimní) → **Tomáš schválí.** Poznámky z milníku 3:
+   - **Lišta kola na mobilu zabírá moc místa:** tlačítka „Zpět na výběr úrovně“ a „Na co si dát pozor?“ jsou pod sebou a zpráva začíná až v polovině obrazovky. Tlačítka zmenšit a dát vedle sebe (pořád aspoň 48 × 48 px).
+   - **Testovací zprávy** (`email-01` až `email-07`, `zpravy-01` až `zpravy-07`) mají v předmětu „(podvod)“ / „(v pořádku)“ a prozrazují odpověď. Nahradí je skutečné scénáře; testy, které se opírají o konkrétní testovací zprávy (`tests/round-advanced.spec.js` hlídá složení kola se `seed` 123), je pak potřeba upravit.
+   - **Přilepení lišty při velkém systémovém písmu** ověří Tomáš ručně na telefonu (automaticky to nasimulovat nejde).
+   - Neutrální zobrazení `src/apps/generic.js` nahradí e-mailová aplikace se stejným rozhraním (sekce 6); u Zpráv to samé v milníku 5.
+   - Po milníku 4 se nasazuje na server (milník 3 se nenasazoval).
 5. **Aplikace Zprávy (SMS + chat) + 3 vzorové scénáře** → **Tomáš schválí.**
-6. **Doplnění obsahu** na aspoň 20 scénářů v každé sekci (z toho aspoň 5 legitimních, pravidla pestrosti a obtížnosti v sekci 7) + `npm run prehled` → Tomáš ověří texty.
+6. **Doplnění obsahu** na aspoň 20 scénářů v každé sekci (z toho aspoň 5 legitimních, pravidla pestrosti a obtížnosti v sekci 7) + `npm run prehled` → Tomáš ověří texty. Zapnout kontrolu cíle: `ENFORCE_CONTENT_GOALS = true` v `tests/unit/content.spec.js`.
 7. **Testy a kontrola** podle sekce 12, oprava nalezených chyb. Tomáš projde aplikaci ručně na telefonu s velkým systémovým písmem.
 8. **Vydání:** **odstraň `noindex`** z `index.html` (a uprav test), nasazení, ruční kontrola na telefonu (s velkým systémovým písmem) a tabletu.
 
@@ -374,6 +411,10 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - Před nahráním spustí build. Když selže, nenahrává.
 - Nahraje obsah `dist/` do `FTP_REMOTE_DIR`. Staré soubory maže až po úspěšném připojení a pojistce 2, a jen ve složkách `assets/` a `fonts/`, které patří našemu buildu.
 - Na konci vypíše adresu, kde si má Tomáš výsledek ověřit (zatím `http://`, viz sekce 4).
+- `--check` se připojuje k serveru, proto ho stejně jako nasazení spouštěj jen na Tomášův pokyn. `--dry-run` se nepřipojuje, ten spouštět smíš.
+- Soubor `.env` nikdy nečti ani nevypisuj (obsahuje heslo). Když je potřeba něco ověřit, vypiš jen ano/ne (např. „FTP_USER je vyplněný“).
+- Když v Git Bash zadáváš `FTP_REMOTE_DIR` přímo v příkazu (ne v `.env`), Git Bash přepíše hodnotu začínající `/` na cestu `C:/Program Files/Git/…` a pojistka ji odmítne. Předřaď `MSYS_NO_PATHCONV=1`. V PowerShellu ani v `.env` se to neděje.
+- Po nasazení ověř živou stránku: typy souborů (JS musí být `text/javascript`, jinak zůstane stránka prázdná) a vykreslení v prohlížeči přes Playwright.
 
 ## 15. Skripty
 
@@ -381,5 +422,16 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - `npm run build`: sestavení do `dist/`
 - `npm run preview`: náhled sestavené verze
 - `npm test`: Playwright testy
-- `npm run prehled`: přehled scénářů do `docs/prehled-scenaru.md`
-- `npm run deploy` / `npm run deploy -- --dry-run`: nasazení / zkouška nasazení
+- `npm run prehled`: přehled scénářů do `docs/prehled-scenaru.md` (zatím neexistuje, vznikne v milníku 6)
+- `npm run deploy` / `npm run deploy -- --dry-run` / `npm run deploy -- --check`: nasazení / zkouška bez připojení / kontrola serveru bez změn
+- `npx playwright test --project=unit`: jen rychlé testy logiky bez prohlížeče
+
+## 16. Stav projektu (k 23. 9. 2026)
+
+- **Milník 1** (příprava) hotový: commit `4e3de39`.
+- **Milník 2** (kostra, vzhled, nasazení) hotový: poslední commit `1e593e7`. Tato verze je nasazená na http://poznej-podvod.menestarosti.cz (HTTPS řeší Subreg).
+- **Milník 3** (herní engine) hotový: commity `bfd3ef0`, `7848dc6`, `fdc1f62`, `4ad1bd1`, `52bacea`. Na server se nenahrával. Testy: 560 prošlo, 5 úmyslně přeskočených.
+- **Další krok: milník 4** (e-mailová aplikace + 3 vzorové scénáře), poznámky v sekci 13.
+- Předem povolené commity a pushe po každé části platily jen pro milník 3. Pro další milníky platí zase sekce 2, bod 4 (nejdřív Tomášovo OK), dokud Tomáš neřekne jinak.
+- **Repozitář** https://github.com/tomaspolak82-commits/poznej-podvod je soukromý, Tomáš ho sám přepne na veřejný jako ukázku do portfolia. Je v něm `README.md`. E-mail autora v commitech zůstává (Tomášovo rozhodnutí). V historii (commit `4f52284`) je jméno starého FTP účtu; Tomáš založil nový účet a starý zruší, historie se nepřepisuje.
+- **Hosting:** nasazuje se přes samostatný FTP účet subdomény, šifrované spojení funguje (ověřeno `--check`).
