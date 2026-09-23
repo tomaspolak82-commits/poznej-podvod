@@ -62,8 +62,9 @@ async function connect(env) {
   }
 }
 
-// Main safety check after connecting: enter the target folder and refuse to continue
+// Main safety check after connecting: enter the target folder, list it and refuse to continue
 // if it looks like WordPress. Runs before any upload or delete, and in --check mode.
+// remoteDir has passed checkRemoteDir, so it is "/" or under ALLOWED_ROOT and never contains the account name.
 async function openTarget(client, remoteDir) {
   try {
     await client.cd(remoteDir);
@@ -72,11 +73,16 @@ async function openTarget(client, remoteDir) {
     fail(`Složka ${remoteDir} na serveru neexistuje nebo do ní nejde vstoupit: ${error.message}`);
   }
   const entries = await client.list();
+  // Listed before the check, so the listing stays visible above a WordPress error
+  console.log(`  Obsah složky ${remoteDir}:`);
+  for (const entry of entries) console.log(`  ${entry.isDirectory ? '[složka]' : '        '} ${entry.name}`);
+  if (entries.length === 0) console.log('  (prázdná složka)');
   const wordPressError = checkForWordPress(entries.map((entry) => entry.name));
   if (wordPressError) {
     client.close();
     fail(wordPressError);
   }
+  console.log(`✔ Ve složce ${remoteDir} není WordPress.`);
   return entries;
 }
 
@@ -118,12 +124,8 @@ async function main() {
   if (checkOnly) {
     const client = await connect(env);
     try {
-      const entries = await openTarget(client, remoteDir);
       console.log('✔ Šifrované spojení (FTPS) funguje.');
-      console.log(`✔ Ve složce ${remoteDir} není WordPress.`);
-      console.log(`  Obsah složky ${remoteDir}:`);
-      for (const entry of entries) console.log(`  ${entry.isDirectory ? '[složka]' : '        '} ${entry.name}`);
-      if (entries.length === 0) console.log('  (prázdná složka)');
+      await openTarget(client, remoteDir);
       console.log('\nNic se nenahrálo ani nesmazalo.');
     } finally {
       client.close();
