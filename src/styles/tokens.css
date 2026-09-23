@@ -1,13 +1,43 @@
-/* Design tokens – Méně starostí palette (CLAUDE.md, section 9) */
+/* Design tokens – Méně Starostí palette (CLAUDE.md, section 9) */
 :root {
   --color-white: #ffffff;       /* main background */
   --color-bg: #f7fafc;          /* secondary surfaces */
-  --color-teal: #008080;        /* main UI colour: buttons, links, active elements */
-  --color-dark: #2a2f35;        /* header, dark surfaces */
-  --color-red: #ff4d4d;         /* ONLY logo and error marks (icons) */
+  --color-teal: #008080;        /* supporting colour only, currently unused */
+  --color-dark: #2a2f35;        /* dark surfaces (badges) */
+  --color-red: #ff4d4d;         /* logo and decorative marks; never as text or behind text */
   --color-yellow: #ffb302;      /* hint bulbs; always with dark text */
   --color-text: #4a5568;        /* body text */
   --color-heading: #1a202c;     /* headings */
   --font-heading: "Montserrat", system-ui, sans-serif;
   --font-body: "Lato", system-ui, sans-serif;
+
+  /* Derived colours (contrast checked against their background) */
+  --color-red-dark: #c93030;    /* buttons, red headings, links: white text 5.3:1, on --color-bg 5.1:1 */
+  --color-red-hover: #a82626;   /* pressed / hover state of red buttons, 7.1:1 */
+  --color-red-tint: #fbeaea;    /* icon backgrounds, hover background of outlined buttons */
+  --color-border: #d5dde6;      /* card borders (decorative) */
+  --color-muted-icon: #718096;  /* inactive icons, ~4:1 on --color-bg */
+  --color-focus: #1a202c;       /* focus ring on light surfaces */
+
+  /* Spacing – multiples of 8 px (expressed in rem so they scale with text) */
+  --space-1: 0.5rem;   /* 8 px at 16 px root */
+  --space-2: 1rem;     /* 16 px */
+  --space-3: 1.5rem;   /* 24 px */
+  --space-4: 2rem;     /* 32 px */
+  --space-5: 2.5rem;   /* 40 px */
+  --space-6: 3rem;     /* 48 px */
+  --space-8: 4rem;     /* 64 px */
+
+  --radius-card: 16px;
+  --radius-button: 12px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgb(26 32 44 / 0.06), 0 4px 16px rgb(26 32 44 / 0.08);
+  --shadow-card-hover: 0 2px 4px rgb(26 32 44 / 0.08), 0 8px 24px rgb(26 32 44 / 0.12);
+
+  --duration: 200ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  --tap-min: 3rem;     /* 48 px minimum touch target */
+  --content-max: 60rem;
 }

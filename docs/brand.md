@@ -1,6 +1,6 @@
-# Méně starostí — brief pro tvorbu her a aplikací
+# Méně Starostí — brief pro tvorbu her a aplikací
 
-Tento dokument popisuje značku, cílovou skupinu a tón Méně starostí. Slouží jako reference pro AI agenty a vývojáře, kteří tvoří interaktivní hry a výukové aplikace pro menestarosti.cz.
+Tento dokument popisuje značku, cílovou skupinu a tón Méně Starostí. Slouží jako reference pro AI agenty a vývojáře, kteří tvoří interaktivní hry a výukové aplikace pro menestarosti.cz.
 
 **Pro projekt „Poznej podvod“:** technické řešení, herní mechanika, bodování, vzhled simulací a obsah scénářů jsou závazně popsané v `CLAUDE.md`. Tento dokument doplňuje obecný kontext značky. Pokud by se s `CLAUDE.md` v něčem rozcházel, platí `CLAUDE.md`.
 
@@ -14,7 +14,7 @@ Tento dokument popisuje značku, cílovou skupinu a tón Méně starostí. Slou�
 
 ## 2. Kdo jsme
 
-**Méně starostí** pomáhá rodinám nastavit řád, bezpečí a klid v péči o seniory. Ne teoretici, praktici.
+**Méně Starostí** pomáhá rodinám nastavit řád, bezpečí a klid v péči o seniory. Ne teoretici, praktici.
 
 - **Káťa:** sociální systém, úřady, papírování, plné moci, emoční stránka péče
 - **Tomáš:** technologie, kyberbezpečnost, požární ochrana, technická bezpečnost domova
@@ -40,7 +40,7 @@ Web běží od května 2026, Facebook od ledna 2026. Obsahové pilíře: bezpeč
 
 ## 4. Tón a hlas (i uvnitř aplikace)
 
-- Mluvíme jako „my, Méně starostí“, ne jako firma
+- Mluvíme jako „my, Méně Starostí“, ne jako firma
 - Vykání
 - Atmosféra „soused u plotu“: věcně, klidně, bez emočně přepálených formulací a bez strašení
 - Zakázané fráze: revoluční, unikátní, komplexní, neváhejte, v dnešní uspěchané době, řešení na míru. Ani jiné obraty typické pro texty psané AI.

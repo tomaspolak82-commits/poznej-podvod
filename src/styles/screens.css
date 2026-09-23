@@ -1,0 +1,312 @@
+/* Screen-specific styles: home, level select, round placeholder */
+
+/* ---------- Home ---------- */
+
+/* minmax(0, 1fr): the column never grows wider than the screen because of a long word */
+.home,
+.level,
+.home__section,
+.tiles,
+.steps,
+.level-list {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Icon + heading rows: with very large text the icon moves above the heading */
+.tile__head,
+.level__head,
+.level-card__head,
+.steps__item {
+  flex-wrap: wrap;
+}
+
+.home {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.home__intro {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 42rem;
+}
+
+.home__lead {
+  font-size: 1.1875rem;
+  color: var(--color-text);
+}
+
+.home__section {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* Section tiles */
+
+.tiles {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 40em) {
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tile,
+  .level-card {
+    padding: var(--space-3);
+  }
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text);
+  text-decoration: none;
+  transition:
+    box-shadow var(--duration) var(--ease),
+    transform var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
+}
+
+a.tile:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-red-dark);
+  transform: translateY(-2px);
+}
+
+a.tile:active {
+  transform: scale(0.98);
+}
+
+.tile__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.tile__title {
+  font-size: 1.375rem;
+}
+
+.tile__text {
+  flex-grow: 1;
+}
+
+.tile__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: var(--tap-min);
+  padding: 0.75rem var(--space-3);
+  border-radius: var(--radius-button);
+  background: var(--color-red-dark);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  transition: background-color var(--duration) var(--ease);
+}
+
+a.tile:hover .tile__cta,
+a.tile:active .tile__cta {
+  background: var(--color-red-hover);
+}
+
+.tile__cta svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+/* Upcoming (inactive) tiles */
+
+.tiles--soon {
+  gap: var(--space-2);
+}
+
+@media (min-width: 48em) {
+  .tiles--soon {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.tile--soon {
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  /* Not a card: no white surface, no shadow, dashed outline = "not available yet" */
+  background: transparent;
+  border: 2px dashed #b8c2cc;
+  box-shadow: none;
+}
+
+.tile--soon .tile__title {
+  font-size: 1.1875rem;
+}
+
+.tile--soon .icon-bubble {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 12px;
+}
+
+.tile--soon .icon-bubble svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.tile__badge {
+  align-self: flex-start;
+}
+
+/* How it works */
+
+.steps {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+@media (min-width: 48em) {
+  .steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}
+
+.steps__item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  counter-increment: step;
+}
+
+.steps__item::before {
+  content: counter(step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 2px solid var(--color-red-dark);
+  color: var(--color-heading);
+  font-family: var(--font-heading);
+  font-weight: 800;
+}
+
+.steps__title {
+  display: block;
+  color: var(--color-heading);
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+/* ---------- Level select ---------- */
+
+.level {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.level__back {
+  justify-self: start;
+}
+
+.level__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.level__intro {
+  margin-top: 0.25rem;
+}
+
+.level-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48em) {
+  .level-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.level-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+}
+
+.level-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.level-card__head .icon-bubble {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 12px;
+}
+
+.level-card__head .icon-bubble svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.level-card__text {
+  flex-grow: 1;
+}
+
+.level-card__points {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 var(--space-1);
+  padding: var(--space-2);
+  border-radius: 12px;
+  background: var(--color-bg);
+  color: var(--color-heading);
+}
+
+.level-card__points-value {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-heading);
+}
+
+/* ---------- Round placeholder (until milestone 3) ---------- */
+
+.placeholder {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}

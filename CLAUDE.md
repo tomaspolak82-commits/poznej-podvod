@@ -4,7 +4,7 @@
 
 „Poznej podvod“ je webová aplikace pro seniory, na které si nacvičí rozpoznávání podvodů. Simuluje prostředí, které znají ze svého telefonu: e-mailovou schránku, SMS, WhatsApp, později i prohlížeč, QR platbu a telefonní hovor. Senior dostane zprávu a rozhodne, jestli je podvod. V pokročilé úrovni navíc označí konkrétní podezřelá místa. Pak dostane body a srozumitelné vysvětlení.
 
-Projekt patří k dobrovolnické iniciativě Méně starostí (menestarosti.cz), kterou vede Tomáš s manželkou Káťou. Hlavní web běží na WordPressu, ale tato aplikace je na něm úplně nezávislá. Je to samostatná stránka na vlastní subdoméně, s hlavním webem ji spojuje jen odkaz.
+Projekt patří k dobrovolnické iniciativě Méně Starostí (menestarosti.cz), kterou vede Tomáš s manželkou Káťou. Hlavní web běží na WordPressu, ale tato aplikace je na něm úplně nezávislá. Je to samostatná stránka na vlastní subdoméně, s hlavním webem ji spojuje jen odkaz.
 
 Cílová skupina:
 - senioři 60+ (hlavně mobil a tablet, často velké systémové písmo, horší zrak a jemná motorika)
@@ -15,9 +15,9 @@ Smysl: ne zábava sama o sobě, ale bezpečné chování a důvěra ve vlastní 
 Podklady ve složce `docs/`:
 - `docs/brand.md`: značka, tón, cílová skupina. Pokud se v něčem rozchází s tímto souborem, platí CLAUDE.md.
 - `docs/hloubkovy_vyzkum_podvody_senior.md`: výzkum podvodů na seniory v ČR, podklad pro obsah scénářů. Je to výstup z AI vyhledávače a jeho zdroje nebyly ověřené. Obsahuje číslo 7726 a jména skutečných osobností. Obojí se do aplikace **nepřebírá** (sekce 7).
-- `docs/loga/`: tři varianty loga Méně starostí (`logo.png`, `logo-white-background.png`, `cerveno_bile.png`), z nich se v milníku 2 vybere jedno (sekce 9).
+- `docs/loga/`: tři varianty loga Méně Starostí (`logo.png`, `logo-white-background.png`, `cerveno_bile.png`), z nich se v milníku 2 vybere jedno (sekce 9).
 
-Název značky se píše vždy **„Méně starostí“** (malé „s“).
+Název značky se píše vždy **„Méně Starostí“** (velké „S“, stejně jako na webu), v aplikaci, v dokumentaci i v testech.
 
 ## 2. Jak se mnou pracovat (pro Claude Code)
 
@@ -57,11 +57,12 @@ Povolené závislosti: `vite`, `@playwright/test`, `basic-ftp`, `dotenv`.
 ## 5. Obrazovky a průběh
 
 ### Hlavní stránka („Poznej podvod“)
-- Hlavička na všech obrazovkách: **velké tlačítko „← Zpět na Méně starostí“** (https://menestarosti.cz/hry-pro-senior/), logo Méně starostí, název „Poznej podvod“, podtitul „Trénink pro seniory: jak poznat podvod v telefonu a na internetu“.
+- Hlavička na všech obrazovkách: **velké tlačítko „← Zpět na Méně Starostí“** (https://menestarosti.cz/hry-pro-senior/), logo Méně Starostí, název „Poznej podvod“, podtitul „Trénink pro seniory: jak poznat podvod v telefonu a na internetu“.
+- **Během hry (kolo, vyhodnocení, konec kola) je hlavička zmenšená**, aby zpráva měla na mobilu víc místa: menší logo a název, podtitul se nezobrazuje. Tlačítko „← Zpět na Méně Starostí“ a štítek TRÉNINK musí zůstat vždy vidět (Tomáš schválil).
 - Pokud hráč už dřív hrál: panel **„Vítejte zpět“**. Nejvyšší skóre v každé sekci a úrovni a nejčastější chyby (sekce 8).
 - Dlaždice sekcí: **E-mail**, **Zprávy (SMS a WhatsApp)**. Budoucí sekce (Prohlížeč, QR platba, Telefonát) jako neaktivní dlaždice „Připravujeme“.
 - Úplně dole na hlavní stránce (nad patičkou) nenápadný odkaz s ikonou **„Smazat moji historii“** s potvrzením (sekce 8). Zobrazí se, jen když nějaká historie existuje.
-- Odkaz „← Zpět na Méně starostí“ vede na https://menestarosti.cz/hry-pro-senior/ (Tomáš ověřil, že existuje). Jinak aplikace na obsah hlavního webu nenavazuje, žádné odkazy na články.
+- Odkaz „← Zpět na Méně Starostí“ vede na https://menestarosti.cz/hry-pro-senior/ (Tomáš ověřil, že existuje). Jinak aplikace na obsah hlavního webu nenavazuje, žádné odkazy na články.
 
 ### Výběr úrovně
 Po klepnutí na sekci:
@@ -216,29 +217,41 @@ Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře ne
 
 ## 9. Vzhled (v duchu menestarosti.cz)
 
-Hlavní barva je bílá, akcenty z palety Méně starostí. Aplikace musí být na první pohled rozpoznatelná jako Méně starostí: logo v hlavičce, název „Poznej podvod“. Simulované aplikace uvnitř jsou neutrální, aby bylo jasné, co je trénink a co naše stránka.
+Vzhled vychází z hlavního webu menestarosti.cz: bílá hlavička, světle šedá stránka, bílé karty se stínem, červené nadpisy sekcí a červená tlačítka. Aplikace musí být na první pohled rozpoznatelná jako Méně Starostí: logo v hlavičce, název „Poznej podvod“. Simulované aplikace uvnitř jsou neutrální, aby bylo jasné, co je trénink a co naše stránka.
 
 ```css
 :root {
-  --color-white: #ffffff;       /* hlavní pozadí */
-  --color-bg: #f7fafc;          /* sekundární plochy */
-  --color-teal: #008080;        /* hlavní barva UI: tlačítka, odkazy, aktivní prvky */
-  --color-dark: #2a2f35;        /* hlavička, tmavé plochy */
-  --color-red: #ff4d4d;         /* JEN logo a značky chyb (kroužky, ikony) */
+  --color-white: #ffffff;       /* hlavička, karty, patička */
+  --color-bg: #f7fafc;          /* pozadí stránky */
+  --color-red: #ff4d4d;         /* logo a dekorativní značky; nikdy jako text ani pod textem */
+  --color-red-dark: #c93030;    /* tlačítka, nadpisy sekcí, název v hlavičce, odkazy */
+  --color-red-hover: #a82626;   /* stisknuté / najeté červené tlačítko */
+  --color-red-tint: #fbeaea;    /* podklad červených ikon, najeté obrysové tlačítko */
+  --color-teal: #008080;        /* jen doplňková barva, zatím nepoužitá */
+  --color-dark: #2a2f35;        /* tmavé drobnosti (štítek „Připravujeme“) */
   --color-yellow: #ffb302;      /* žárovky nápovědy; vždy s tmavým textem */
   --color-text: #4a5568;        /* běžný text */
-  --color-heading: #1a202c;     /* nadpisy */
+  --color-heading: #1a202c;     /* nadpisy karet, podtitul v hlavičce */
   --font-heading: "Montserrat", system-ui, sans-serif;
   --font-body: "Lato", system-ui, sans-serif;
 }
 ```
 
-- Červená a žlutá nikdy jako barva textu na světlém pozadí (nedostatečný kontrast). Chybový stav = červená ikona + tmavý text.
-- Tyrkysová na bílé (cca 4,8:1) je v pořádku pro text i tlačítka. Pro drobnější text zvaž tmavší odstín, aby prošel AAA.
-- Písma hostuj lokálně ve `public/fonts/` (woff2), žádné Google Fonts CDN. Tomáš souhlasil se stažením Montserrat a Lato (řezy 400 a vyšší) **včetně sady latin-ext**. K nim patří licenční soubor OFL (`public/fonts/OFL.txt`). Nejsou to npm závislosti. Po stažení ověř, že se správně vykreslí všechny české znaky, malé i velké (ěščřžýáíéúůťďňó), i běžné speciální znaky („“ – … € Kč). Žádné náhradní písmo u diakritiky.
-- Logo: v milníku 2 vyber jednu variantu z `docs/loga/` (`logo.png`, `logo-white-background.png`, `cerveno_bile.png`) podle toho, co se hodí ke zvolenému vzhledu. Zkopíruj ji do `public/` a volbu Tomášovi zdůvodni.
+- **Hlavička** je bílá (žádná tmavá ani červená plocha): logo, vedle něj název „Poznej podvod“ červeně (`--color-red-dark`), pod ním podtitul tmavým textem. Tlačítko „← Zpět na Méně Starostí“ je výrazné, ale ve stejném stylu: červený obrys a červený tučný text na bílé, po najetí nebo stisku plné červené s bílým textem.
+- **Stránka** má světle šedé pozadí (`--color-bg`), obsah je v bílých kartách se stínem. Patička je bílá.
+- **Nadpisy sekcí** (např. „Vyberte, co chcete trénovat“, „Brzy přibude“, „Jak trénink probíhá“, název sekce na výběru úrovně) jsou červené (`--color-red-dark`, třída `.section-title`). **Nadpisy karet** jsou tmavé (`--color-heading`).
+- **Tlačítka** jsou plná červená `--color-red-dark` s bílým tučným textem (kontrast 5,3:1). Vedlejší tlačítka mají červený obrys a červený text na bílé. Světlá `--color-red` (#ff4d4d) má s bílým textem jen 3,3:1, proto se na tlačítka ani text nepoužívá.
+- **Tlačítka rozhodnutí ve hře** („Je to podvod“ / „Je to v pořádku“) mají **stejný neutrální vzhled**, ne červený. Červená se čte jako „nebezpečí“ a nesmí napovídat odpověď.
+- **Ikony v aktivních kartách** (dlaždice sekcí, výběr úrovně) jsou červené `--color-red-dark` na světle červeném podkladu (`--color-red-tint`). Ikony neaktivních dlaždic „Připravujeme“ jsou šedé, aby bylo vidět, že jsou teprve v plánu.
+- **Tyrkysová** se zatím nepoužívá. Zůstává v paletě jen jako doplňková barva, ne na tlačítka, odkazy ani text.
+- **Chybové značky ve hře nikdy nespoléhají jen na barvu.** Každý chybový nebo varovný stav má vždy ikonu s výrazným tvarem (např. křížek v kroužku, vykřičník v trojúhelníku) a srozumitelný text. Správná odpověď stejně: fajfka + text, ne jen zelená. Červená sama o sobě nesmí nést význam, protože ji část seniorů špatně rozliší a v aplikaci je zároveň barvou tlačítek. (Platí i pro sekci 10.)
+- Žlutá nikdy jako barva textu na světlém pozadí (nedostatečný kontrast). Chybový stav = ikona + tmavý text.
+- Písma hostuj lokálně ve `public/fonts/` (woff2), žádné Google Fonts CDN. Tomáš souhlasil se stažením Montserrat a Lato (řezy 400 a vyšší) **včetně sady latin-ext**. K nim patří licenční soubor OFL (`public/fonts/OFL.txt`). Nejsou to npm závislosti. Po stažení ověř, že se správně vykreslí všechny české znaky, malé i velké (ěščřžýáíéúůťďňó), i běžné speciální znaky („“ – … € Kč). Žádné náhradní písmo u diakritiky. Ověřuje to test `tests/fonts.spec.js`.
+  - Montserrat je z Google Fonts (proměnný řez 400–800, sady latin + latin-ext).
+  - **Lato je verze 2.015 „LatoLatin“ z oficiálního webu latofonts.com**, ne z Google Fonts. Google Fonts nabízí jen Lato 1.0, kterému chybí ě č ř ů ť ď ň.
+- Logo: `public/logo.png` (kopie `docs/loga/logo.png`, červené srdce a šedá ruka na průhledném pozadí). Varianta `cerveno_bile.png` má bílou ruku a na bílé hlavičce by nebyla vidět.
 - Jen světlý režim, žádný tmavý režim podle systému.
-- Patička: © Méně starostí, odkaz na Facebook (https://www.facebook.com/menestarosti), Zásady ochrany osobních údajů (https://menestarosti.cz/ochrana-osobnich-udaju/).
+- Patička: © Méně Starostí, odkaz na Facebook (https://www.facebook.com/menestarosti), Zásady ochrany osobních údajů (https://menestarosti.cz/ochrana-osobnich-udaju/).
 - Žádní maskoti, žádný dětský styl.
 
 ### Moderní styl
@@ -248,7 +261,7 @@ Aplikace má působit moderně, svěže a lákavě, jako současná kvalitní ap
 Ano:
 - hodně volného prostoru, čisté rozvržení, jasná hierarchie (velké výrazné nadpisy Montserrat, klidný text Lato)
 - zaoblené rohy (karty 16 px, tlačítka 12 px), jemné měkké stíny, karty a dlaždice
-- dlaždice sekcí jako výrazné karty s velkou vlastní ikonou (inline SVG, jednotný styl, v barvách palety) a krátkým popisem
+- dlaždice sekcí jako výrazné karty s velkou vlastní ikonou (inline SVG, jednotný styl, v barvách palety) a krátkým popisem; neaktivní dlaždice „Připravujeme“ bez bílé plochy a stínu, s čárkovaným okrajem
 - plné, dobře viditelné tlačítka s výrazným stavem po klepnutí
 - krátké plynulé přechody (150–250 ms) mezi obrazovkami a při odhalení vyhodnocení
 - příjemná mikro-zpětná vazba: animovaná fajfka u správné odpovědi, jemné „zatřesení“ nebo zvýraznění u přehlédnuté hrozby (vše vypnuté při `prefers-reduced-motion`)
@@ -270,6 +283,7 @@ Než se začne stavět engine, připrav v milníku 2 hlavní stránku a výběr 
 - Základní písmo minimálně 18 px při výchozím nastavení.
 - Dotykové prvky minimálně 48 × 48 px, s mezerami.
 - Kontrast min. 4,5:1 (AA), kde to jde 7:1 (AAA).
+- Význam nikdy jen barvou (WCAG 1.4.1): chyba, správná odpověď, označené místo i přehlédnutá hrozba mají vždy ikonu s výrazným tvarem a text (sekce 9).
 - Ovládání klávesnicí, viditelný focus, sémantické HTML, `aria-label` tam, kde text nestačí.
 - Žádná akce jen přes swipe nebo pinch. Vždy i tlačítko.
 - Žádný časový limit.
@@ -288,7 +302,7 @@ Než se začne stavět engine, připrav v milníku 2 hlavní stránku a výběr 
 Projekty (zařízení): `Pixel 7`, `iPhone 13`, `Galaxy Tab S4` (nebo `iPad (gen 7)`), `Desktop Chrome` + mobil s viewportem 320 px.
 
 Minimální sada:
-- hlavní stránka: tlačítko Zpět na Méně starostí, logo, dlaždice sekcí, neaktivní dlaždice „Připravujeme“
+- hlavní stránka: tlačítko Zpět na Méně Starostí, logo, dlaždice sekcí, neaktivní dlaždice „Připravujeme“
 - kolo vybere 5 zpráv, obsahuje 1–2 legitimní, se stejným `seed` vždy stejné pořadí
 - základní úroveň: správné i špatné rozhodnutí → správné body a vyhodnocení
 - pokročilá úroveň: označení všech hrozeb, přehlédnutá hrozba, zbytečné označení, legitimní zpráva bez označení i s označením, zrušení označení druhým klepnutím → body přesně podle sekce 8
@@ -328,9 +342,8 @@ Po testech Tomáš projde aplikaci ručně na svém telefonu s velkým systémov
 ### Pozdější fáze (teď nedělat, jen počítat s nimi v architektuře)
 - **Prohlížeč:** podvodné reklamy a bannery („Vyhráli jste“), investiční reklama se „známou osobností“ (bez skutečných jmen a fotek), falešné vyskakovací okno technické podpory, falešný e-shop.
 - **QR platba:** kontrola příjemce a částky v simulované bankovní aplikaci před odesláním.
-- **Telefonát:** textový rozhovor s větvenými volbami odpovědí. Falešný bankéř nebo policista, „bezpečný účet“, falešná technická podpora s instalací vzdáleného přístupu. Útočník silně tlačí (spěch, „nezavěšujte“, stupňování), bezpečná cesta je vždy zavěsit a ověřit si to jinak. Předem napsané repliky, žádná generativní AI.
+- **Telefonát:** psaný (textový) rozhovor s větvenými volbami odpovědí, **bez zvuku** (zvuk se dělat nebude). Falešný bankéř nebo policista, „bezpečný účet“, falešná technická podpora s instalací vzdáleného přístupu. Útočník silně tlačí (spěch, „nezavěšujte“, stupňování), bezpečná cesta je vždy zavěsit a ověřit si to jinak. Předem napsané repliky, žádná generativní AI.
 - **Statistiky:** GA4 jen s cookie lištou se souhlasem, nebo vlastní anonymní počítadlo bez cookies (PHP + MySQL na hostingu).
-- **Zvuk** u telefonátu.
 
 Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulované aplikace a složka se scénáři. Engine, bodování, historie, nápověda a vyhodnocení jsou společné.
 

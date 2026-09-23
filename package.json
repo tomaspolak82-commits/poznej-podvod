@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Poznej podvod – trénink pro seniory: jak poznat podvod v telefonu a na internetu (Méně starostí).",
+  "description": "Poznej podvod – trénink pro seniory: jak poznat podvod v telefonu a na internetu (Méně Starostí).",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "playwright test"
+    "test": "playwright test",
+    "deploy": "node scripts/deploy.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

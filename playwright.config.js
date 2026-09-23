@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const PORT = 4173;
+const UNIT_TESTS = '**/unit/**/*.spec.js';
 
 export default defineConfig({
   testDir: './tests',
@@ -12,16 +13,19 @@ export default defineConfig({
     baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
   },
-  // Devices from CLAUDE.md, section 12
+  // Devices from CLAUDE.md, section 12. Browser tests skip tests/unit/,
+  // which runs once in the "unit" project (pure Node, no browser needed).
   projects: [
-    { name: 'Pixel 7', use: { ...devices['Pixel 7'] } },
-    { name: 'iPhone 13', use: { ...devices['iPhone 13'] } },
-    { name: 'Galaxy Tab S4', use: { ...devices['Galaxy Tab S4'] } },
-    { name: 'Desktop Chrome', use: { ...devices['Desktop Chrome'] } },
+    { name: 'Pixel 7', testIgnore: UNIT_TESTS, use: { ...devices['Pixel 7'] } },
+    { name: 'iPhone 13', testIgnore: UNIT_TESTS, use: { ...devices['iPhone 13'] } },
+    { name: 'Galaxy Tab S4', testIgnore: UNIT_TESTS, use: { ...devices['Galaxy Tab S4'] } },
+    { name: 'Desktop Chrome', testIgnore: UNIT_TESTS, use: { ...devices['Desktop Chrome'] } },
     {
       name: 'Mobile 320px',
+      testIgnore: UNIT_TESTS,
       use: { ...devices['Pixel 7'], viewport: { width: 320, height: 640 } },
     },
+    { name: 'unit', testMatch: UNIT_TESTS },
   ],
   // Tests run against the production build, not the dev server
   webServer: {
