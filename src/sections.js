@@ -5,6 +5,7 @@ export const sections = [
   {
     id: 'email',
     title: 'E-mail',
+    shortTitle: 'E-mail',
     description: 'E-maily, které se tváří jako zpráva od banky, pošty nebo úřadu. Poznáte, které jsou pravé?',
     icon: 'email',
     active: true,
@@ -12,6 +13,7 @@ export const sections = [
   {
     id: 'zpravy',
     title: 'Zprávy (SMS a WhatsApp)',
+    shortTitle: 'Zprávy',
     description: 'Textové zprávy od neznámých čísel i od „rodiny“, která najednou potřebuje peníze.',
     icon: 'messages',
     active: true,

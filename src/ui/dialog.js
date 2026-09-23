@@ -7,7 +7,9 @@
 
 let counter = 0;
 
-export function openDialog({ title, body, actions, className = '' }) {
+// focusTitle: for long content, start at the top (title gets focus) instead of
+// scrolling down to the first button
+export function openDialog({ title, body, actions, className = '', focusTitle = false }) {
   counter += 1;
   const titleId = `dialog-title-${counter}`;
   const opener = document.activeElement;
@@ -17,14 +19,14 @@ export function openDialog({ title, body, actions, className = '' }) {
   dialog.setAttribute('aria-labelledby', titleId);
   dialog.innerHTML = `
     <div class="dialog__inner">
-      <h2 class="dialog__title" id="${titleId}">${title}</h2>
+      <h2 class="dialog__title" id="${titleId}" tabindex="-1" ${focusTitle ? 'autofocus' : ''}>${title}</h2>
       <div class="dialog__body">${body}</div>
       <div class="dialog__actions">
         ${actions
           .map(
             (action) =>
               `<button type="button" class="button ${action.primary ? 'button--primary' : 'button--secondary'}"
-                data-value="${action.value}" ${action.autofocus ? 'autofocus' : ''}>${action.label}</button>`,
+                data-value="${action.value}" ${action.autofocus && !focusTitle ? 'autofocus' : ''}>${action.label}</button>`,
           )
           .join('')}
       </div>

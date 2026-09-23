@@ -19,6 +19,7 @@ import {
   CATEGORY_LABELS,
   CLOSE_AND_CONTINUE,
   EVALUATION,
+  HINTS,
   LEAVE_ROUND,
   LINK_NOTICE,
   ROUND,
@@ -42,9 +43,14 @@ function roundBar(round) {
   const position = round.phase === 'end' ? round.scenarios.length : round.index + 1;
   return `
     <div class="round-bar">
-      <button type="button" class="button button--secondary round-bar__back" data-action="leave">
-        ${icon('arrowLeft')} ${ROUND.backToLevels}
-      </button>
+      <div class="round-bar__actions">
+        <button type="button" class="button button--secondary round-bar__back" data-action="leave">
+          ${icon('arrowLeft')} ${ROUND.backToLevels}
+        </button>
+        <button type="button" class="button button--secondary round-bar__hint" data-action="hint">
+          ${icon('bulb')} ${ROUND.hintButton}
+        </button>
+      </div>
       <div class="round-bar__status">
         <div class="round-bar__progress">
           <span class="progress-dots" aria-hidden="true">${progressDots(round)}</span>
@@ -129,6 +135,23 @@ function endView(round) {
   `;
 }
 
+function showHints(section) {
+  const hints = HINTS[section];
+  return openDialog({
+    title: hints.title,
+    className: 'dialog--hints',
+    focusTitle: true,
+    body: `
+      <ol class="hint-list">
+        ${hints.items.map(([title, text]) => `<li><strong>${title}</strong> ${text}</li>`).join('')}
+      </ol>
+      <p class="hint-note">${hints.note}</p>
+      <p class="hint-advice">${icon('bulb')}<span>${hints.advice}</span></p>
+    `,
+    actions: [{ label: CLOSE_AND_CONTINUE, value: 'close', primary: true, autofocus: true }],
+  });
+}
+
 function showThreat(scenario, index) {
   const threat = scenario.threats[index];
   return openDialog({
@@ -194,6 +217,11 @@ export function renderRound(container, section) {
     }
 
     const action = target.closest('[data-action]')?.dataset.action;
+    if (action === 'hint') {
+      // The screen is not redrawn, so the game (incl. marks) continues exactly where it was
+      await showHints(section);
+      return;
+    }
     if (action === 'next' && round.phase === 'evaluation') {
       nextMessage();
       redraw();

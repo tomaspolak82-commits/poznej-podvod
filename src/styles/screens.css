@@ -226,6 +226,67 @@ a.tile:active .tile__cta {
   font-weight: 700;
 }
 
+/* Welcome back panel */
+
+.welcome {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+  color: var(--color-heading);
+}
+
+@media (min-width: 40em) {
+  .welcome {
+    padding: var(--space-3);
+  }
+}
+
+.welcome__label {
+  font-weight: 700;
+}
+
+.welcome__list {
+  margin: 0;
+  padding-left: 1.25em;
+}
+
+/* "Smazat moji historii": deliberately low-key text button at the bottom */
+
+.home__history-actions {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+}
+
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--tap-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.text-button svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.home__status {
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
 /* ---------- Level select ---------- */
 
 .level {

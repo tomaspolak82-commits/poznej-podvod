@@ -1,4 +1,8 @@
-import { sections } from '../sections.js';
+import { bestKey, hasHistory, topMissedCategories } from '../engine/history.js';
+import { deleteHistory, getHistory } from '../engine/session.js';
+import { levels, sections } from '../sections.js';
+import { CATEGORY_LABELS, DELETE_HISTORY, WELCOME } from '../texts.js';
+import { openDialog } from '../ui/dialog.js';
 import { icon } from '../ui/icons.js';
 
 function activeTile(section) {
@@ -31,7 +35,37 @@ function soonTile(section) {
   `;
 }
 
-export function renderHome(container) {
+function welcomePanel(history) {
+  if (!hasHistory(history)) return '';
+
+  const bestLines = sections
+    .filter((section) => section.active)
+    .flatMap((section) =>
+      levels
+        .map((level) => ({ section, level, best: history.best[bestKey(section.id, level.id)] }))
+        .filter(({ best }) => best),
+    )
+    .map(({ section, level, best }) => `<li>${WELCOME.best(section.shortTitle, level.title, best.score, best.max)}</li>`);
+
+  const missed = topMissedCategories(history).map((category) => CATEGORY_LABELS[category] ?? category);
+
+  return `
+    <section class="welcome" aria-labelledby="welcome-title" data-testid="welcome">
+      <h2 id="welcome-title" class="section-title">${WELCOME.title}</h2>
+      <p>${WELCOME.intro}</p>
+      ${
+        bestLines.length
+          ? `<p class="welcome__label">${WELCOME.bestTitle}</p><ul class="welcome__list">${bestLines.join('')}</ul>`
+          : ''
+      }
+      ${missed.length ? `<p data-testid="welcome-missed">${WELCOME.missed(missed)}</p>` : ''}
+      <p data-testid="welcome-rounds">${WELCOME.rounds(history.roundsPlayed)}</p>
+    </section>
+  `;
+}
+
+export function renderHome(container, { deletedMessage = '' } = {}) {
+  const history = getHistory();
   const active = sections.filter((section) => section.active);
   const soon = sections.filter((section) => !section.active);
 
@@ -44,6 +78,8 @@ export function renderHome(container) {
           Nic se neodesílá a nic nemůžete pokazit.
         </p>
       </div>
+
+      ${welcomePanel(history)}
 
       <section class="home__section" aria-labelledby="home-sections">
         <h2 id="home-sections" class="visually-hidden">Oblasti tréninku</h2>
@@ -69,8 +105,35 @@ export function renderHome(container) {
           </li>
         </ol>
       </section>
+
+      <div class="home__history-actions">
+        ${
+          hasHistory(history)
+            ? `<button type="button" class="text-button" data-action="delete-history">${icon('trash')}${DELETE_HISTORY.link}</button>`
+            : ''
+        }
+        ${deletedMessage ? `<p class="home__status" role="status" data-testid="history-status">${deletedMessage}</p>` : ''}
+      </div>
     </div>
   `;
+
+  container.onclick = async (event) => {
+    if (!event.target.closest('[data-action="delete-history"]')) return;
+    const choice = await openDialog({
+      title: DELETE_HISTORY.title,
+      body: `<p>${DELETE_HISTORY.text}</p>`,
+      actions: [
+        { label: DELETE_HISTORY.cancel, value: 'keep', primary: true, autofocus: true },
+        { label: DELETE_HISTORY.confirm, value: 'delete' },
+      ],
+    });
+    if (choice !== 'delete') return;
+    deleteHistory();
+    renderHome(container, { deletedMessage: DELETE_HISTORY.done });
+    // The link is gone; keep keyboard focus on the confirmation message
+    container.querySelector('[data-testid="history-status"]')?.setAttribute('tabindex', '-1');
+    container.querySelector('[data-testid="history-status"]')?.focus();
+  };
 
   return { title: 'Poznej podvod | Méně Starostí', isHome: true };
 }

@@ -3,7 +3,7 @@
 // Kept in memory only, so a page reload drops an unfinished round (CLAUDE.md, section 5).
 
 import { getScenarios } from './content.js';
-import { getBrowserStorage, loadHistory, recordRound, saveHistory } from './history.js';
+import { clearHistory, getBrowserStorage, loadHistory, recordRound, saveHistory } from './history.js';
 import { createRandom, randomSeed, seedFromSearch } from './random.js';
 import { drawRound, maxPointsForRound } from './round.js';
 import { scoreMessage } from './scoring.js';
@@ -17,6 +17,11 @@ let active = null;
 
 export function getHistory() {
   return loadHistory(storage);
+}
+
+// "Smazat moji historii": best results, missed categories, round count and last round IDs
+export function deleteHistory() {
+  return clearHistory(storage);
 }
 
 // Draws the next round of a section (called when the level select opens)
