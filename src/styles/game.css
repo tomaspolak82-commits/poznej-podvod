@@ -235,6 +235,113 @@
   cursor: pointer;
 }
 
+/* ---------- Advanced level: marking parts ---------- */
+
+.round__instruction {
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.msg-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-1);
+  border: 2px dashed #a0aec0;
+  border-radius: 8px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+
+.msg-mark:hover {
+  background: var(--color-bg);
+}
+
+/* Marked: thick solid frame + badge with icon and text, not only a colour change */
+.msg-mark.is-marked {
+  border: 3px solid var(--color-heading);
+  background: #fff4d6;
+}
+
+.mark-badge {
+  display: none;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.625rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-heading);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.mark-badge svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.msg-mark.is-marked .mark-badge {
+  display: inline-flex;
+}
+
+/* ---------- Advanced level: status of each part in the evaluation ---------- */
+
+.review-part {
+  flex-wrap: wrap;
+}
+
+.part-status {
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.part-status svg {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.part-status--found svg {
+  color: var(--color-teal);
+}
+
+.part-status--missed svg {
+  color: var(--color-red-dark);
+}
+
+.part-status--extra svg {
+  color: var(--color-text);
+}
+
+.part-status--missed {
+  animation: shake 400ms var(--ease) 200ms;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
 /* ---------- Decision ---------- */
 
 .decision {

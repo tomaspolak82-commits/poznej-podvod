@@ -37,10 +37,18 @@ export function startRound(section, level) {
     max: maxPointsForRound(scenarios, level),
     index: 0,
     phase: 'question', // question → evaluation → … → end
+    marks: new Set(), // advanced level: targets marked on the current message
     results: [],
     end: null,
   };
   return active;
+}
+
+// Marks or unmarks a part of the current message; returns the new state
+export function toggleMark(target) {
+  if (active.marks.has(target)) active.marks.delete(target);
+  else active.marks.add(target);
+  return active.marks.has(target);
 }
 
 export function getActiveRound(section) {
@@ -59,9 +67,10 @@ export function currentScore() {
   return active.results.reduce((sum, result) => sum + result.total, 0);
 }
 
-export function answer(decision, marks = []) {
+export function answer(decision) {
+  const marks = [...active.marks];
   const result = scoreMessage(currentScenario(), active.level, decision, marks);
-  active.results.push({ ...result, decision, marks: [...marks] });
+  active.results.push({ ...result, decision, marks });
   active.phase = 'evaluation';
   return result;
 }
@@ -87,6 +96,7 @@ export function nextMessage() {
   if (!isLastMessage()) {
     active.index += 1;
     active.phase = 'question';
+    active.marks = new Set();
     return;
   }
 

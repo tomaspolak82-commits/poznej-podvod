@@ -12,6 +12,7 @@ import {
   nextMessage,
   prepareRound,
   startRound,
+  toggleMark,
 } from '../engine/session.js';
 import { levels } from '../sections.js';
 import {
@@ -58,10 +59,12 @@ function roundBar(round) {
 
 function questionView(round) {
   const scenario = currentScenario();
+  const advanced = round.level === 'pokrocila';
   return `
     ${roundBar(round)}
     <h1 class="visually-hidden" tabindex="-1">${ROUND.progress(round.index + 1, round.scenarios.length)}</h1>
-    ${renderMessage(scenario, { mode: 'play', level: round.level })}
+    ${advanced ? `<p class="round__instruction" data-testid="instruction">${ROUND.advancedInstruction}</p>` : ''}
+    ${renderMessage(scenario, advanced ? { mode: 'mark', marks: round.marks } : { mode: 'play' })}
     <div class="decision">
       <button type="button" class="button button--neutral decision__button" data-decision="scam">${ROUND.decideScam}</button>
       <button type="button" class="button button--neutral decision__button" data-decision="ok">${ROUND.decideOk}</button>
@@ -89,10 +92,15 @@ function evaluationView(round) {
         <p>${texts.text}</p>
         <p class="evaluation-result__points" data-testid="gained">${EVALUATION.gained(result.total)}</p>
         ${advanced ? `<p data-testid="breakdown">${EVALUATION.breakdown(result.decisionPoints, result.markingPoints)}</p>` : ''}
+        ${
+          advanced && !scenario.isScam
+            ? `<p data-testid="legit-marking">${result.marks.length === 0 ? EVALUATION.legitClean : EVALUATION.legitMarked}</p>`
+            : ''
+        }
       </div>
     </section>
     ${scenario.isScam ? `<p class="evaluation__bulb-intro">${EVALUATION.bulbIntro}</p>` : ''}
-    ${renderMessage(scenario, { mode: 'review', level: round.level })}
+    ${renderMessage(scenario, { mode: 'review', result: advanced ? result : null })}
     <section class="evaluation-summary">
       <h2>${EVALUATION.summaryTitle}</h2>
       <p>${escapeHtml(scenario.summary)}</p>
@@ -152,6 +160,15 @@ export function renderRound(container, section) {
     const target = event.target;
     const round = getActiveRound(section);
     if (!round) return;
+
+    const mark = target.closest('[data-mark]');
+    if (mark && round.phase === 'question') {
+      // Update in place: the page does not jump and focus stays on the part
+      const marked = toggleMark(mark.dataset.mark);
+      mark.setAttribute('aria-pressed', String(marked));
+      mark.classList.toggle('is-marked', marked);
+      return;
+    }
 
     const decision = target.closest('[data-decision]');
     if (decision && round.phase === 'question') {

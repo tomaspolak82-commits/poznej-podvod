@@ -54,5 +54,17 @@ export async function playRound(page, decide) {
   return played;
 }
 
+// Answers messages correctly (without marking) until the one with the given ID is shown
+export async function goToScenario(page, id) {
+  for (let i = 0; i < 5; i += 1) {
+    const current = await currentScenarioId(page);
+    if (current === id) return;
+    const decision = scenarioById(current).isScam ? 'Je to podvod' : 'Je to v pořádku';
+    await page.getByRole('button', { name: decision }).click();
+    await page.getByRole('button', { name: /Další zpráva/ }).click();
+  }
+  throw new Error(`Scenario ${id} is not in this round`);
+}
+
 export const correctly = (scenario) => (scenario.isScam ? 'scam' : 'ok');
 export const wrongly = (scenario) => (scenario.isScam ? 'ok' : 'scam');
