@@ -1,15 +1,10 @@
+import { prepareRound, startRound } from '../engine/session.js';
+import { maxPointsForRound, ROUND_SIZE } from '../engine/round.js';
 import { levels } from '../sections.js';
 import { icon } from '../ui/icons.js';
 import { pointsWord } from '../ui/format.js';
 
-const MESSAGES_PER_ROUND = 5;
-
-// TODO(milestone 3): the round is drawn when this screen opens and the maximum
-// is computed from the drawn messages. Until then these are sample values.
-const SAMPLE_MAX_POINTS = { zakladni: 10, pokrocila: 20 };
-
-function levelCard(section, level) {
-  const max = SAMPLE_MAX_POINTS[level.id];
+function levelCard(level, max) {
   return `
     <li class="level-card" data-testid="level-${level.id}">
       <div class="level-card__head">
@@ -22,14 +17,17 @@ function levelCard(section, level) {
         <span class="level-card__points-value" data-testid="max-points-${level.id}">${max}</span>
         <span>${pointsWord(max)}</span>
       </p>
-      <a class="button button--primary button--block" href="#/${section.id}/kolo" data-level="${level.id}">
+      <button type="button" class="button button--primary button--block" data-level="${level.id}">
         Začít: ${level.title.toLowerCase()} úroveň ${icon('arrowRight')}
-      </a>
+      </button>
     </li>
   `;
 }
 
 export function renderLevelSelect(container, section) {
+  // The round is drawn now, so the real maximum can be shown before the start (CLAUDE.md, section 5)
+  const round = prepareRound(section.id);
+
   container.innerHTML = `
     <div class="screen level">
       <a class="button button--secondary level__back" href="#/">
@@ -40,12 +38,12 @@ export function renderLevelSelect(container, section) {
         <span class="icon-bubble">${icon(section.icon)}</span>
         <div>
           <h1 class="section-title" tabindex="-1">${section.title}</h1>
-          <p class="level__intro">Vyberte si úroveň. V obou uvidíte ${MESSAGES_PER_ROUND} zpráv.</p>
+          <p class="level__intro">Vyberte si úroveň. V obou uvidíte ${ROUND_SIZE} zpráv.</p>
         </div>
       </div>
 
       <ul class="level-list">
-        ${levels.map((level) => levelCard(section, level)).join('')}
+        ${levels.map((level) => levelCard(level, maxPointsForRound(round, level.id))).join('')}
       </ul>
 
       <p class="note">
@@ -57,6 +55,13 @@ export function renderLevelSelect(container, section) {
       </p>
     </div>
   `;
+
+  container.onclick = (event) => {
+    const button = event.target.closest('[data-level]');
+    if (!button) return;
+    startRound(section.id, button.dataset.level);
+    window.location.hash = `#/${section.id}/kolo`;
+  };
 
   return { title: `${section.title}: výběr úrovně | Poznej podvod` };
 }

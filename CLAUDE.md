@@ -242,7 +242,7 @@ Vzhled vychází z hlavního webu menestarosti.cz: bílá hlavička, světle še
   --color-red-dark: #c93030;    /* tlačítka, nadpisy sekcí, název v hlavičce, odkazy */
   --color-red-hover: #a82626;   /* stisknuté / najeté červené tlačítko */
   --color-red-tint: #fbeaea;    /* podklad červených ikon, najeté obrysové tlačítko */
-  --color-teal: #008080;        /* jen doplňková barva, zatím nepoužitá */
+  --color-teal: #008080;        /* jen doplňková barva: ikona (fajfka) u správné odpovědi */
   --color-dark: #2a2f35;        /* tmavé drobnosti (štítek „Připravujeme“) */
   --color-yellow: #ffb302;      /* žárovky nápovědy; vždy s tmavým textem */
   --color-text: #4a5568;        /* běžný text */
@@ -258,7 +258,7 @@ Vzhled vychází z hlavního webu menestarosti.cz: bílá hlavička, světle še
 - **Tlačítka** jsou plná červená `--color-red-dark` s bílým tučným textem (kontrast 5,3:1). Vedlejší tlačítka mají červený obrys a červený text na bílé. Světlá `--color-red` (#ff4d4d) má s bílým textem jen 3,3:1, proto se na tlačítka ani text nepoužívá.
 - **Tlačítka rozhodnutí ve hře** („Je to podvod“ / „Je to v pořádku“) mají **stejný neutrální vzhled**, ne červený. Červená se čte jako „nebezpečí“ a nesmí napovídat odpověď.
 - **Ikony v aktivních kartách** (dlaždice sekcí, výběr úrovně) jsou červené `--color-red-dark` na světle červeném podkladu (`--color-red-tint`). Ikony neaktivních dlaždic „Připravujeme“ jsou šedé, aby bylo vidět, že jsou teprve v plánu.
-- **Tyrkysová** se zatím nepoužívá. Zůstává v paletě jen jako doplňková barva, ne na tlačítka, odkazy ani text.
+- **Tyrkysová** jen doplňkově: ikona fajfky u správné odpovědi ve vyhodnocení (vždy spolu s textem). Ne na tlačítka, odkazy ani text.
 - **Chybové značky ve hře nikdy nespoléhají jen na barvu.** Každý chybový nebo varovný stav má vždy ikonu s výrazným tvarem (např. křížek v kroužku, vykřičník v trojúhelníku) a srozumitelný text. Správná odpověď stejně: fajfka + text, ne jen zelená. Červená sama o sobě nesmí nést význam, protože ji část seniorů špatně rozliší a v aplikaci je zároveň barvou tlačítek. (Platí i pro sekci 10.)
 - Žlutá nikdy jako barva textu na světlém pozadí (nedostatečný kontrast). Chybový stav = ikona + tmavý text.
 - Písma hostuj lokálně ve `public/fonts/` (woff2), žádné Google Fonts CDN. Tomáš souhlasil se stažením Montserrat a Lato (řezy 400 a vyšší) **včetně sady latin-ext**. K nim patří licenční soubor OFL (`public/fonts/OFL.txt`). Nejsou to npm závislosti. Po stažení ověř, že se správně vykreslí všechny české znaky, malé i velké (ěščřžýáíéúůťďňó), i běžné speciální znaky („“ – … € Kč). Žádné náhradní písmo u diakritiky. Ověřuje to test `tests/fonts.spec.js`.

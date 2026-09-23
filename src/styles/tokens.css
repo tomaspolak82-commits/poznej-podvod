@@ -2,7 +2,7 @@
 :root {
   --color-white: #ffffff;       /* main background */
   --color-bg: #f7fafc;          /* secondary surfaces */
-  --color-teal: #008080;        /* supporting colour only, currently unused */
+  --color-teal: #008080;        /* supporting colour only: check icon of a correct answer */
   --color-dark: #2a2f35;        /* dark surfaces (badges) */
   --color-red: #ff4d4d;         /* logo and decorative marks; never as text or behind text */
   --color-yellow: #ffb302;      /* hint bulbs; always with dark text */

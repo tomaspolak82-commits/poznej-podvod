@@ -40,8 +40,9 @@ test.describe('level select', () => {
   });
 
   test('round screen has no "Zpět na Méně Starostí" button', async ({ page }) => {
-    await page.goto('/#/email/kolo');
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await page.goto('/#/email');
+    await page.getByRole('button', { name: /Začít: základní úroveň/ }).click();
+    await expect(page.getByTestId('training-label')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Zpět na Méně Starostí' })).toHaveCount(0);
   });
 
@@ -53,7 +54,7 @@ test.describe('level select', () => {
 
   test('start button leads to the round screen', async ({ page }) => {
     await page.goto('/#/email');
-    await page.getByRole('link', { name: /Začít: základní úroveň/ }).click();
+    await page.getByRole('button', { name: /Začít: základní úroveň/ }).click();
     await expect(page).toHaveURL(/#\/email\/kolo$/);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   });
