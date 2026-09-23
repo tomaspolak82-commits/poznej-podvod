@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { correctly, playRound, startRound, wrongly } from './helpers/game.js';
+import { correctly, nextMessage, playRound, startRound, wrongly } from './helpers/game.js';
 
 const HISTORY_KEY = 'poznej-podvod:history:v1';
 
@@ -11,7 +11,9 @@ test.describe('hint "Na co si dát pozor?"', () => {
 
     await openHints();
     await expect(dialog).toBeVisible();
-    await expect(dialog.locator('li')).toHaveCount(5);
+    await expect(dialog.locator('li')).toHaveCount(6);
+    await expect(dialog).toContainText('Vždy si klepnutím zobrazte i adresu, která se za ním skrývá.');
+    await expect(dialog).toContainText('Firma, u které máte účet, vás obvykle osloví jménem.');
     // Long window starts at the top: the title is on screen, not scrolled away
     await expect(dialog.getByRole('heading', { name: 'Na co si dát pozor v e-mailu' })).toBeInViewport();
     await dialog.getByRole('button', { name: 'Zavřít a pokračovat' }).click();
@@ -29,7 +31,7 @@ test.describe('hint "Na co si dát pozor?"', () => {
   test('the game continues exactly where it was, marks included', async ({ page }) => {
     await startRound(page, { level: 'pokročilá' });
     await page.getByRole('button', { name: 'Je to v pořádku' }).click();
-    await page.getByRole('button', { name: /Další zpráva/ }).click();
+    await nextMessage(page);
     await page.locator('[data-mark="subject"]').click();
 
     await page.getByRole('button', { name: 'Na co si dát pozor?' }).click();

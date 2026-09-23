@@ -6,8 +6,9 @@ test('every allowed category has a Czech label, and no label is left over', () =
   expect(Object.keys(CATEGORY_LABELS).sort()).toEqual([...THREAT_CATEGORIES].sort());
 });
 
-test('hints have 5 items for each playable section', () => {
-  expect(HINTS.email.items).toHaveLength(5);
+test('hints: 6 items for e-mail (incl. "Oslovení", milestone 4), 5 for messages', () => {
+  expect(HINTS.email.items).toHaveLength(6);
+  expect(HINTS.email.items[1][0]).toBe('Oslovení.');
   expect(HINTS.zpravy.items).toHaveLength(5);
 });
 

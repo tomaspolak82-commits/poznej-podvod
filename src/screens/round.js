@@ -1,6 +1,6 @@
 // Round screen: question → evaluation → … → end (CLAUDE.md, section 5).
 
-import { renderMessage } from '../apps/generic.js';
+import { appFor } from '../apps/index.js';
 import {
   abandonRound,
   answer,
@@ -18,6 +18,7 @@ import { levels } from '../sections.js';
 import {
   CATEGORY_LABELS,
   CLOSE_AND_CONTINUE,
+  EMAIL_APP,
   EVALUATION,
   HINTS,
   LEAVE_ROUND,
@@ -41,11 +42,13 @@ function progressDots(round) {
 
 function roundBar(round) {
   const position = round.phase === 'end' ? round.scenarios.length : round.index + 1;
+  // On a narrow screen only the first word ("Zpět") is visible; the accessible name stays whole
+  const [backFirst, ...backRest] = ROUND.backToLevels.split(' ');
   return `
     <div class="round-bar">
       <div class="round-bar__actions">
         <button type="button" class="button button--secondary round-bar__back" data-action="leave">
-          ${icon('arrowLeft')} ${ROUND.backToLevels}
+          ${icon('arrowLeft')} <span>${backFirst}<span class="round-bar__back-rest"> ${backRest.join(' ')}</span></span>
         </button>
         <button type="button" class="button button--secondary round-bar__hint" data-action="hint">
           ${icon('bulb')} ${ROUND.hintButton}
@@ -63,14 +66,31 @@ function roundBar(round) {
   `;
 }
 
-function questionView(round) {
+// ui: state of the simulated app for the current message (inbox or detail, address shown…)
+function questionView(round, app, ui) {
   const scenario = currentScenario();
   const advanced = round.level === 'pokrocila';
+  const heading = `<h1 class="visually-hidden" tabindex="-1">${ROUND.progress(round.index + 1, round.scenarios.length)}</h1>`;
+
+  if (ui.view === 'inbox') {
+    // The player first opens the task message; decisions come in the detail
+    return `
+      ${roundBar(round)}
+      ${heading}
+      <p class="round__instruction" data-testid="inbox-instruction">${EMAIL_APP.inboxInstruction}</p>
+      ${app.renderMessage(scenario, { view: 'inbox', mode: advanced ? 'mark' : 'play', foldersOpen: ui.foldersOpen })}
+    `;
+  }
+
   return `
     ${roundBar(round)}
-    <h1 class="visually-hidden" tabindex="-1">${ROUND.progress(round.index + 1, round.scenarios.length)}</h1>
+    ${heading}
     ${advanced ? `<p class="round__instruction" data-testid="instruction">${ROUND.advancedInstruction}</p>` : ''}
-    ${renderMessage(scenario, advanced ? { mode: 'mark', marks: round.marks } : { mode: 'play' })}
+    ${app.renderMessage(scenario, {
+      view: 'detail',
+      addressShown: ui.addressShown,
+      ...(advanced ? { mode: 'mark', marks: round.marks } : { mode: 'play' }),
+    })}
     <div class="decision">
       <button type="button" class="button button--neutral decision__button" data-decision="scam">${ROUND.decideScam}</button>
       <button type="button" class="button button--neutral decision__button" data-decision="ok">${ROUND.decideOk}</button>
@@ -83,7 +103,7 @@ function resultTexts(scenario, result) {
   return result.correct ? EVALUATION.okCorrect : EVALUATION.okWrong;
 }
 
-function evaluationView(round) {
+function evaluationView(round, app) {
   const scenario = currentScenario();
   const result = lastResult();
   const texts = resultTexts(scenario, result);
@@ -106,7 +126,7 @@ function evaluationView(round) {
       </div>
     </section>
     ${scenario.isScam ? `<p class="evaluation__bulb-intro">${EVALUATION.bulbIntro}</p>` : ''}
-    ${renderMessage(scenario, { mode: 'review', result: advanced ? result : null })}
+    ${app.renderMessage(scenario, { mode: 'review', result: advanced ? result : null })}
     <section class="evaluation-summary">
       <h2>${EVALUATION.summaryTitle}</h2>
       <p>${escapeHtml(scenario.summary)}</p>
@@ -165,24 +185,67 @@ function showThreat(scenario, index) {
 export function renderRound(container, section) {
   if (!getActiveRound(section)) return false;
 
+  const app = appFor(section);
+  // State of the simulated app for the current message; every new message starts in the inbox
+  const freshUi = () => ({ view: app.hasInbox ? 'inbox' : 'detail', foldersOpen: false, addressShown: false });
+  let ui = freshUi();
+
   // Always read the current round: "Hrát dalších 5" replaces it with a new one
   const draw = () => {
     const round = getActiveRound(section);
     const view = round.phase === 'question' ? questionView : round.phase === 'evaluation' ? evaluationView : endView;
-    container.innerHTML = `<div class="screen round round--${round.phase}" data-level="${round.level}">${view(round)}</div>`;
+    container.innerHTML = `<div class="screen round round--${round.phase}" data-level="${round.level}">${view(round, app, ui)}</div>`;
   };
 
   // After a phase change: start from the top and move focus to the new heading
   const redraw = () => {
+    ui = freshUi();
     draw();
     window.scrollTo(0, 0);
     container.querySelector('h1')?.focus({ preventScroll: true });
+  };
+
+  // A change inside the simulated app: redraw and keep focus on the given control
+  const redrawApp = (focusSelector, { toTop = false } = {}) => {
+    draw();
+    if (toTop) window.scrollTo(0, 0);
+    container.querySelector(focusSelector)?.focus({ preventScroll: !toTop });
   };
 
   container.onclick = async (event) => {
     const target = event.target;
     const round = getActiveRound(section);
     if (!round) return;
+
+    const mailAction = round.phase === 'question' ? target.closest('[data-mail]')?.dataset.mail : undefined;
+    if (mailAction === 'open') {
+      ui.view = 'detail';
+      redrawApp('[data-mail="back"]', { toTop: true });
+      return;
+    }
+    if (mailAction === 'back') {
+      ui.view = 'inbox';
+      redrawApp('[data-mail="open"]', { toTop: true });
+      return;
+    }
+    if (mailAction === 'menu') {
+      ui.foldersOpen = !ui.foldersOpen;
+      redrawApp('[data-mail="menu"]');
+      return;
+    }
+    if (mailAction === 'address') {
+      ui.addressShown = !ui.addressShown;
+      redrawApp('[data-mail="address"]');
+      return;
+    }
+    if (mailAction === 'older' || mailAction === 'folder') {
+      await openDialog({
+        title: TRAINING_LABEL,
+        body: `<p>${mailAction === 'older' ? EMAIL_APP.notPartOfTask : EMAIL_APP.folderNotPartOfTask}</p>`,
+        actions: [{ label: CLOSE_AND_CONTINUE, value: 'close', primary: true, autofocus: true }],
+      });
+      return;
+    }
 
     const mark = target.closest('[data-mark]');
     if (mark && round.phase === 'question') {

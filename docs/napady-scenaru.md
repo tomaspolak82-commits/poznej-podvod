@@ -13,7 +13,7 @@ Značení: **E** = e-mail, **Z** = zprávy (SMS a WhatsApp), **L** = legitimní 
 | E1 | Balíkovna vrací 5 000 Kč za dopravu, peníze se mají vybrat přes odkaz. | https://ceskaposta.cz/o-spolecnosti/bezpecnostni-informace/aktualni-informace |
 | E2 | Pošta: balík leží na místní poště kvůli špatné adrese, oprava přes odkaz. | tamtéž jako E1 |
 | E3 | Portál občana: daňový přeplatek, vyplacení přes QR kód. | https://businessinfo.cz/clanky/podvodne-e-maily-utocnici-opet-zneuzivaji-jmeno-a-logo-financni-spravy-i-portalu-obcana/ |
-| E4 | Podvržený odesílatel „Finanční správa epodpora@fs.gov.cz“: adresa vypadá pravě, prozradí ho až požadavek. **Těžký.** Skutečná doména, potřebuje Tomášovo schválení (sekce 7). | tamtéž jako E3 |
+| E4 | Podvod přes zobrazované jméno: odesílatel „Finanční správa“, skutečná adresa cizí (smyšlená soukromá adresa na gmail.com), ukáže se až po „▾ zobrazit adresu“. Podvržená adresa @fs.gov.cz se nepoužije: doména má DMARC `p=quarantine`, taková zpráva by skončila ve spamu (rozhodnutí v CLAUDE.md, sekce 7). Scénář `email-02` (milník 4). | tamtéž jako E3; Finanční správa 30. 10. 2025: https://financnisprava.gov.cz/cs/financni-sprava/media-a-verejnost/tiskove-zpravy-gfr/tiskove-zpravy-2025/dalsi-intenzivni-vlna-podvodnych-emailu-a-sms ; Finanční správa 17. 12. 2025: https://financnisprava.gov.cz/cs/financni-sprava/novinky/novinky-2025/financni-sprava-varuje-pred-dalsi-vlnou-podvodnych-mailu (ověřeno přes WebFetch v chatu, formulace se shodují v obou zdrojích; Tomáš je přečte sám před zveřejněním odkazu na hru) |
 | E5 | Daňový výměr v příloze, ve skutečnosti škodlivý program. | https://tiscali.cz/falesny-financni-urad-rozesila-e-maily-s-danovym-vymerem-otevrete-prilohu-a-pustite-si-do-pocitace-trojana-691315 |
 | E6 | Banka chce aktualizaci údajů, po jejich zadání přesměruje na pravý web banky. | https://policie.gov.cz/clanek/pozor-na-podvodne-e-maily.aspx |
 | E7 | „Omylem zaslané kopie dokladů a smlouvy“ s přílohou. | https://policie.gov.cz/clanek/dalsi-podvodne-e-maily.aspx |
@@ -26,6 +26,7 @@ Značení: **E** = e-mail, **Z** = zprávy (SMS a WhatsApp), **L** = legitimní 
 | E14 | Neuhrazená faktura slušnou češtinou, bez čísla účtu, nutí otevřít přílohu. **Těžký.** | https://irozhlas.cz/veda-technologie/technologie/malware-podvodny-e-mail-virus_2002180914_sot |
 | E15 | Dluh u zdravotní pojišťovny (VZP). | https://penize.cz/tema/podvod |
 | E16 | Vyděračský e-mail: „poslal jsem to z vašeho účtu, mám přístup k počítači a kameře“, výkupné v bitcoinech, případně staré heslo z úniku (ve scénáři smyšlené). Pro seniory **bez erotického obsahu**. | https://nukib.gov.cz/cs/infoservis/hrozby/1670-upozorneni-na-novou-vlnu-podvodnych-vyderacskych-emailu/ |
+| E17 | Podvod, který oslovuje jménem (jméno z uniklých dat). Lekce: jméno v oslovení není záruka pravosti, rozhoduje, co zpráva chce. **Zdroj pro únik jmen a jejich zneužití doplnit** (NÚKIB 2015 uvádí jen, že podvody oslovují obecně). | https://nukib.gov.cz/cs/infoservis/doporuceni/1494-phishing-stale-aktualni-hrozba/ (obecné oslovení) |
 
 ## Zprávy (SMS a WhatsApp) – podvody
 
@@ -59,6 +60,8 @@ Pro obě sekce. V každé sekci musí být aspoň 5 legitimních scénářů a m
 | L5 | Zpráva od vnuka ze známého čísla, která nic nechce. |
 | L6 | Oznámení banky „přihlaste se sami v aplikaci“, bez odkazu. |
 | L7 | Skutečná zpráva z @cez.cz nebo @fs.gov.cz bez požadavku na údaje. |
+| L9 | **Úkol pro milník 6:** legitimní e-mail s odkazem, který vede na pravou doménu firmy. Lekce: odkaz sám o sobě není podvod, rozhoduje, kam vede. (Scénář ČEZ `email-03` z milníku 4 je bez odkazu, zdroj ČEZ odkazy v pravých e-mailech nepotvrzuje.) |
+| L8 | E-mail od zaměstnavatele se zaheslovanou výplatní páskou (PDF), heslo = rodné číslo. Lekce: příloha sama o sobě není podvod, rozhoduje, jestli ji čekám a od koho je. **Ověřit ve zdroji, že je to běžná praxe.** |
 
 ## Pokrytí pestrosti (sekce 7)
 

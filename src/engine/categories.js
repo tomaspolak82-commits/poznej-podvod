@@ -13,4 +13,5 @@ export const THREAT_CATEGORIES = [
   'neobvykla-zadost',
   'qr-kod',
   'instalace-aplikace',
+  'obecne-osloveni',
 ];

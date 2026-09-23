@@ -1,13 +1,13 @@
 {
   "id": "email-05",
   "section": "email",
-  "title": "Testovací zpráva E5 (podvod)",
+  "title": "Testovací zpráva E5",
   "isScam": true,
   "message": {
     "fromName": "Testovací odesílatel 5",
     "fromAddress": "odesilatel5@test.invalid",
     "date": "dnes 8:00",
-    "subject": "Testovací zpráva E5 (podvod)",
+    "subject": "Testovací zpráva E5",
     "body": [
       "Testovací zpráva 5, odstavec 1.",
       "Testovací zpráva 5, odstavec 2."

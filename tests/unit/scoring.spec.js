@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { maxPointsForScenario } from '../../src/engine/round.js';
 import { scoreMessage } from '../../src/engine/scoring.js';
 
 // Scam with 3 threats (like the example in CLAUDE.md, section 7)
@@ -123,6 +124,39 @@ test.describe('scoring: advanced level, legitimate message', () => {
 
   test('statistics: legitimate message never adds missed categories', () => {
     expect(scoreMessage(legit, 'pokrocila', 'scam', ['subject']).missedCategories).toEqual([]);
+  });
+});
+
+test.describe('scoring: one threat on two parts (alsoTargets, CLAUDE.md section 7)', () => {
+  // Like email-02: the sender threat lies on the address and the name
+  const sender = {
+    id: 'email-97',
+    isScam: true,
+    threats: [
+      { target: 'fromAddress', alsoTargets: ['fromName'], category: 'odesilatel' },
+      { target: 'link', category: 'odkaz-platba' },
+    ],
+  };
+
+  for (const marks of [['fromAddress'], ['fromName'], ['fromAddress', 'fromName']]) {
+    test(`marking ${marks.join(' + ')} = one hit, nothing unnecessary`, () => {
+      const result = scoreMessage(sender, 'pokrocila', 'scam', marks);
+      expect(result).toMatchObject({ markingPoints: 1, total: 3 });
+      expect(result.found.map((t) => t.target)).toEqual(['fromAddress']);
+      expect(result.extra).toEqual([]);
+      expect(result.missedCategories).toEqual(['odkaz-platba']);
+    });
+  }
+
+  test('both parts + the link = 2 (no double points), maximum stays 1 per threat', () => {
+    expect(scoreMessage(sender, 'pokrocila', 'scam', ['fromAddress', 'fromName', 'link']).markingPoints).toBe(2);
+    expect(maxPointsForScenario(sender, 'pokrocila')).toBe(4);
+  });
+
+  test('nothing of the sender marked = missed once', () => {
+    const result = scoreMessage(sender, 'pokrocila', 'scam', ['link']);
+    expect(result.missed.map((t) => t.target)).toEqual(['fromAddress']);
+    expect(result.missedCategories).toEqual(['odesilatel']);
   });
 });
 

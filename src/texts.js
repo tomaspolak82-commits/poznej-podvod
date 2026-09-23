@@ -14,7 +14,8 @@ export const HINTS = {
   email: {
     title: 'Na co si dát pozor v e-mailu',
     items: [
-      ['Adresa odesílatele.', 'Jméno si může napsat kdokoli. Podívejte se na adresu pod ním: patří opravdu té firmě nebo úřadu?'],
+      ['Adresa odesílatele.', 'Jméno odesílatele si může napsat kdokoli. Vždy si klepnutím zobrazte i adresu, která se za ním skrývá.'],
+      ['Oslovení.', 'Firma, u které máte účet, vás obvykle osloví jménem. Jméno ale samo o sobě nic nezaručuje.'],
       ['Spěch a strach.', '„Do 24 hodin“, „jinak zablokujeme účet“, „hrozí exekuce“. Tlak má zabránit tomu, abyste si věc v klidu ověřili.'],
       ['Odkazy, tlačítka a žádost o údaje.', 'Banka, pošta ani úřad vás e-mailem nepošlou zadávat údaje z karty, PIN, heslo ani kód z SMS.'],
       ['Přílohy, které nečekáte.', 'Faktura, výměr nebo „smlouva“ od neznámého odesílatele může v počítači spustit škodlivý program.'],
@@ -94,6 +95,31 @@ export const CATEGORY_LABELS = {
   'neobvykla-zadost': 'neobvyklá žádost',
   'qr-kod': 'QR kód',
   'instalace-aplikace': 'výzva k instalaci aplikace',
+  'obecne-osloveni': 'obecné oslovení bez jména',
+};
+
+// The player's role in the simulated mail app (approved by Tomáš, milestone 4).
+// Scenarios greet her by name directly in their text ("Dobrý den, paní Nováková,").
+export const RECIPIENT = 'Jana Nováková';
+
+export const EMAIL_APP = {
+  inboxInstruction: 'Toto je schránka Jany Novákové. Klepněte na nejnovější zprávu nahoře a přečtěte si ji.',
+  folders: ['Doručená pošta', 'Odeslaná', 'Spam', 'Koš'],
+  foldersLabel: 'Složky',
+  // Contains the visible text "Doručená pošta" exactly (WCAG 2.5.3, label in name)
+  backToInbox: 'Zpět do schránky Doručená pošta',
+  to: (name) => `Komu: ${name}`,
+  // The arrow next to these texts is an SVG icon (Lato has no ▾ ▴)
+  showAddress: 'zobrazit adresu',
+  hideAddress: 'skrýt adresu',
+  notPartOfTask: 'Tahle zpráva není součástí úkolu. Otevřete nejnovější zprávu nahoře.',
+  folderNotPartOfTask: 'Tahle složka není součástí úkolu. Zpráva k tréninku je v Doručené poště.',
+  // Older inactive messages under the task message, for realism (CLAUDE.md, section 6)
+  olderMessages: [
+    { from: 'Jana Dvořáková', subject: 'Fotky z oslavy', preview: 'Ahoj, posílám slíbené fotky z babiččiných narozenin…', time: 'včera' },
+    { from: 'Spolek zahrádkářů', subject: 'Zápis ze schůze', preview: 'Dobrý den, v příloze posíláme zápis ze zářijové schůze…', time: 'pondělí' },
+    { from: 'Petr Novák', subject: 'Chata o víkendu', preview: 'Ahoj, jedeme v sobotu kolem deváté, vezmu…', time: '15. 9.' },
+  ],
 };
 
 export const WELCOME = {

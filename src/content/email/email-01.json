@@ -1,41 +1,52 @@
 {
   "id": "email-01",
   "section": "email",
-  "title": "Testovací zpráva E1 (podvod)",
+  "title": "Balíkovna vrací peníze za dopravu",
   "isScam": true,
   "message": {
-    "fromName": "Testovací odesílatel 1",
-    "fromAddress": "odesilatel1@test.invalid",
-    "date": "dnes 8:00",
-    "subject": "Testovací zpráva E1 (podvod)",
+    "fromName": "Balíkovna",
+    "fromAddress": "refundace@balikovna-cz.top",
+    "date": "dnes 9:12",
+    "subject": "Vrácení peněz za dopravu",
     "body": [
-      "Testovací zpráva 1, odstavec 1.",
-      "Testovací zpráva 1, odstavec 2."
+      "Vážený zákazníku,",
+      "vracíme Vám peníze za dopravu ve výši 5,000.00 Kč.",
+      "Prostředky si vyberte kliknutím na odkaz níže.",
+      "Děkujeme, že využíváte Balíkovnu."
     ],
-    "button": {
-      "label": "Testovací tlačítko"
+    "link": {
+      "label": "Vybrat prostředky"
     }
   },
   "threats": [
     {
       "target": "fromAddress",
       "category": "odesilatel",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+      "title": "Adresa odesílatele",
+      "explanation": "Jméno Balíkovna si může napsat kdokoli. Adresa za ním končí na balikovna-cz.top – to není adresa České pošty, jen ji napodobuje."
+    },
+    {
+      "target": "body.0",
+      "category": "obecne-osloveni",
+      "title": "Obecné oslovení",
+      "explanation": "Firma, u které něco máte, vás obvykle osloví jménem. Obecné „Vážený zákazníku“ je varovný signál."
     },
     {
       "target": "body.1",
-      "category": "casovy-tlak",
-      "title": "Testovací hrozba 2",
-      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+      "category": "vyhra-nabidka",
+      "title": "Peníze, o které jste nežádali",
+      "explanation": "Proč by vám někdo vracel 5 000 Kč za dopravu? Nečekané peníze jsou návnada. Všimněte si i zápisu 5,000.00 Kč, česky se píše 5 000 Kč."
     },
     {
-      "target": "button",
+      "target": "link",
       "category": "odkaz-platba",
-      "title": "Testovací hrozba 3",
-      "explanation": "Testovací vysvětlení hrozby 3. Skutečný text doplníme v milníku 4."
+      "title": "Odkaz k výběru peněz",
+      "explanation": "Odkaz vede na stránku podvodníků, kde po vás budou chtít vaše údaje."
     }
   ],
-  "summary": "Testovací shrnutí zprávy E1. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "summary": "Když vám někdo nečekaně nabízí peníze, zpozorněte. Stav zásilek a plateb si ověřte sami v aplikaci nebo na webu pošty, nikdy přes odkaz ve zprávě.",
+  "sources": [
+    "ceskaposta.cz/o-spolecnosti/bezpecnostni-informace/aktualni-informace (varování 27. 8. 2026)",
+    "nukib.gov.cz/cs/infoservis/doporuceni/1494-phishing-stale-aktualni-hrozba/ (obecné oslovení)"
+  ]
 }

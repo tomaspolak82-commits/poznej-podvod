@@ -1,34 +1,22 @@
 {
   "id": "email-03",
   "section": "email",
-  "title": "Testovací zpráva E3 (podvod)",
-  "isScam": true,
+  "title": "ČEZ: vyúčtování elektřiny s přeplatkem",
+  "isScam": false,
   "message": {
-    "fromName": "Testovací odesílatel 3",
-    "fromAddress": "odesilatel3@test.invalid",
-    "date": "dnes 8:00",
-    "subject": "Testovací zpráva E3 (podvod)",
+    "fromName": "ČEZ Prodej",
+    "fromAddress": "vyuctovani@cez.cz",
+    "date": "včera 14:05",
+    "subject": "Vyúčtování elektřiny za uplynulý rok",
     "body": [
-      "Testovací zpráva 3, odstavec 1."
-    ],
-    "link": {
-      "label": "Testovací odkaz"
-    }
+      "Dobrý den, paní Nováková,",
+      "připravili jsme pro Vás vyúčtování elektřiny za uplynulý rok pro odběrné místo Lipová 12.",
+      "Výsledkem je přeplatek 1 240 Kč. Pošleme ho na bankovní účet, který u nás máte uvedený. Nemusíte nic dělat.",
+      "Podrobné vyúčtování a stav plateb najdete po přihlášení ve svém účtu MŮJ ČEZ.",
+      "S pozdravem, ČEZ Prodej"
+    ]
   },
-  "threats": [
-    {
-      "target": "subject",
-      "category": "vyhra-nabidka",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
-    },
-    {
-      "target": "link",
-      "category": "odkaz-platba",
-      "title": "Testovací hrozba 2",
-      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
-    }
-  ],
-  "summary": "Testovací shrnutí zprávy E3. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "threats": [],
+  "summary": "Rozhodující je, že zpráva nic nechce: žádný odkaz, žádné údaje, žádný spěch. Adresa končí na @cez.cz a oslovení jménem je dobré znamení, ale samo o sobě nestačí. Vyúčtování si můžete prohlédnout, když se do MŮJ ČEZ přihlásíte sami.",
+  "sources": ["cez.cz/cs/podvodne-maily"]
 }

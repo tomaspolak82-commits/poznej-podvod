@@ -1,29 +1,54 @@
 {
   "id": "email-02",
   "section": "email",
-  "title": "Testovací zpráva E2 (podvod)",
+  "title": "Finanční správa: nevyzvednutý přeplatek",
   "isScam": true,
   "message": {
-    "fromName": "Testovací odesílatel 2",
-    "fromAddress": "odesilatel2@test.invalid",
-    "date": "dnes 8:00",
-    "subject": "Testovací zpráva E2 (podvod)",
+    "fromName": "Finanční správa",
+    "fromAddress": "financni.sprava.cz47@gmail.com",
+    "date": "dnes 7:40",
+    "subject": "Poslední upozornění: nevyzvednutý přeplatek na dani",
     "body": [
-      "Testovací zpráva 2, odstavec 1.",
-      "Testovací zpráva 2, odstavec 2."
+      "Dobrý den, paní Nováková,",
+      "podle našich záznamů Vám vznikl přeplatek na dani z příjmů ve výši 3 870 Kč. Zatím nebyl vyplacen, protože nám chybí potvrzení Vašeho bankovního spojení.",
+      "Přeplatek je nutné vyzvednout do 3 dnů. Po uplynutí lhůty propadne ve prospěch státu.",
+      "Pro vyplacení se přihlaste přes odkaz níže a potvrďte své údaje.",
+      "S pozdravem, Finanční správa České republiky"
     ],
-    "attachment": {
-      "name": "testovaci-priloha.zip"
+    "link": {
+      "label": "Přihlásit se a vyzvednout přeplatek"
     }
   },
   "threats": [
     {
-      "target": "attachment",
-      "category": "priloha",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+      "target": "fromAddress",
+      "alsoTargets": ["fromName"],
+      "category": "odesilatel",
+      "title": "Falešné jméno odesílatele",
+      "explanation": "Jméno bylo falešné. Důkaz najdete v adrese: skutečná adresa byla financni.sprava.cz47@gmail.com."
+    },
+    {
+      "target": "body.2",
+      "category": "casovy-tlak",
+      "title": "Spěch",
+      "explanation": "Krátká lhůta a hrozba, že o peníze přijdete, mají zabránit tomu, abyste si to v klidu ověřili."
+    },
+    {
+      "target": "body.3",
+      "category": "zadost-o-udaje",
+      "title": "Žádost o údaje",
+      "explanation": "Finanční správa ve svém varování uvádí, že e-mailem nežádá přihlašovací ani bankovní údaje."
+    },
+    {
+      "target": "link",
+      "category": "odkaz-platba",
+      "title": "Odkaz k přihlášení",
+      "explanation": "Finanční správa podle svého varování neposílá e-mailem odkazy pro platby ani pro přihlášení. Přes falešnou stránku by se vaše údaje dostaly k podvodníkům."
     }
   ],
-  "summary": "Testovací shrnutí zprávy E2. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "summary": "Jméno odesílatele si může napsat kdokoli – skutečná adresa byla financni.sprava.cz47@gmail.com. Ani oslovení jménem nic nezaručuje, jméno mohou znát i podvodníci. Když si nejste jistí, napište do prohlížeče sami financnisprava.gov.cz, nikdy nechoďte přes odkaz ve zprávě.",
+  "sources": [
+    "financnisprava.gov.cz/cs/financni-sprava/media-a-verejnost/tiskove-zpravy-gfr/tiskove-zpravy-2025/dalsi-intenzivni-vlna-podvodnych-emailu-a-sms (30. 10. 2025)",
+    "financnisprava.gov.cz/cs/financni-sprava/novinky/novinky-2025/financni-sprava-varuje-pred-dalsi-vlnou-podvodnych-mailu (17. 12. 2025)"
+  ]
 }

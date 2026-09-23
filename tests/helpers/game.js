@@ -36,12 +36,35 @@ export async function currentScenarioId(page) {
   return page.locator('[data-scenario-id]').getAttribute('data-scenario-id');
 }
 
-export async function startRound(page, { section = 'email', seed = 123, level = 'základní' } = {}) {
-  await page.goto(`/?seed=${seed}#/${section}`);
-  await page.getByRole('button', { name: new RegExp(`Začít: ${level}`) }).click();
+// E-mail: every message starts in the inbox; opens the task message when the inbox is shown.
+// Sections without an inbox (Zprávy until milestone 5) show the message right away.
+export async function openCurrentMessage(page) {
+  await page.locator('[data-scenario-id]').waitFor();
+  const task = page.locator('[data-mail="open"]');
+  if (await task.count()) await task.click();
+  await page.locator('article[data-scenario-id]').waitFor();
 }
 
-// decide(scenario) → 'scam' | 'ok'; returns the list of played scenario IDs
+// Opens the next message in the round ("Další zpráva" + open it from the inbox)
+export async function nextMessage(page) {
+  await page.getByRole('button', { name: /Další zpráva/ }).click();
+  await openCurrentMessage(page);
+}
+
+// Starts a round and opens its first message (use open: false to stay in the inbox)
+export async function startRound(page, { section = 'email', seed = 123, level = 'základní', open = true } = {}) {
+  await page.goto(`/?seed=${seed}#/${section}`);
+  await page.getByRole('button', { name: new RegExp(`Začít: ${level}`) }).click();
+  if (open) await openCurrentMessage(page);
+}
+
+// Shows the hidden sender address in the e-mail detail ("▾ zobrazit adresu")
+export async function showAddress(page) {
+  await page.locator('[data-mail="address"]').click();
+}
+
+// decide(scenario) → 'scam' | 'ok'; returns the list of played scenario IDs.
+// Expects the first message to be open already.
 export async function playRound(page, decide) {
   const played = [];
   for (let i = 0; i < 5; i += 1) {
@@ -49,19 +72,20 @@ export async function playRound(page, decide) {
     played.push(id);
     const choice = decide(scenarioById(id));
     await page.getByRole('button', { name: choice === 'scam' ? 'Je to podvod' : 'Je to v pořádku' }).click();
-    await page.getByRole('button', { name: i < 4 ? /Další zpráva/ : /Zobrazit výsledek/ }).click();
+    if (i < 4) await nextMessage(page);
+    else await page.getByRole('button', { name: /Zobrazit výsledek/ }).click();
   }
   return played;
 }
 
-// Answers messages correctly (without marking) until the one with the given ID is shown
+// Answers messages correctly (without marking) until the one with the given ID is open
 export async function goToScenario(page, id) {
   for (let i = 0; i < 5; i += 1) {
     const current = await currentScenarioId(page);
     if (current === id) return;
     const decision = scenarioById(current).isScam ? 'Je to podvod' : 'Je to v pořádku';
     await page.getByRole('button', { name: decision }).click();
-    await page.getByRole('button', { name: /Další zpráva/ }).click();
+    await nextMessage(page);
   }
   throw new Error(`Scenario ${id} is not in this round`);
 }

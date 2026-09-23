@@ -1,21 +1,29 @@
 {
   "id": "email-07",
   "section": "email",
-  "title": "Testovací zpráva E7 (v pořádku)",
-  "isScam": false,
+  "title": "Testovací zpráva E7",
+  "isScam": true,
   "message": {
     "fromName": "Testovací odesílatel 7",
     "fromAddress": "odesilatel7@test.invalid",
     "date": "dnes 8:00",
-    "subject": "Testovací zpráva E7 (v pořádku)",
+    "subject": "Testovací zpráva E7",
     "body": [
-      "Testovací zpráva 7, odstavec 1."
+      "Testovací zpráva 7, odstavec 1.",
+      "Testovací zpráva 7, odstavec 2."
     ],
     "attachment": {
-      "name": "testovaci-dokument.pdf"
+      "name": "testovaci-priloha.zip"
     }
   },
-  "threats": [],
-  "summary": "Testovací shrnutí zprávy E7. Skutečný text doplníme v milníku 4.",
+  "threats": [
+    {
+      "target": "attachment",
+      "category": "priloha",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Testovací zpráva, před zveřejněním odkazu na hru ji nahradí skutečný scénář."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy E7. Před zveřejněním odkazu na hru ji nahradí skutečný scénář.",
   "sources": []
 }

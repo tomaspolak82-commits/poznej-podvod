@@ -110,7 +110,26 @@ test.describe('content: validation rules', () => {
     ['empty body', (s) => (s.message.body = []), /body/],
     ['missing sender address', (s) => delete s.message.fromAddress, /fromAddress/],
     ['button without label', (s) => (s.message.button = {}), /button/],
+    ['alsoTargets that does not exist', (s) => (s.threats[0].alsoTargets = ['link']), /alsoTargets\.0 "link" neodpovídá/],
+    ['alsoTargets not an array', (s) => (s.threats[0].alsoTargets = 'fromName'), /alsoTargets musí být/],
+    ['alsoTargets empty', (s) => (s.threats[0].alsoTargets = []), /alsoTargets musí být/],
+    [
+      'alsoTargets repeats a target of another threat',
+      (s) => {
+        s.threats[0].alsoTargets = ['subject'];
+        s.threats.push({ target: 'subject', category: 'odesilatel', title: 'T', explanation: 'E' });
+      },
+      /"subject" je ve hrozbách dvakrát/,
+    ],
   ];
+
+  test('e-mail: one threat on two parts (alsoTargets) is valid', () => {
+    const scenario = validEmail();
+    scenario.threats = [
+      { target: 'fromAddress', alsoTargets: ['fromName'], category: 'odesilatel', title: 'T', explanation: 'E' },
+    ];
+    expect(validateScenario(scenario, { fileId: 'email-50', section: 'email' })).toEqual([]);
+  });
   for (const [name, breakIt, expected] of broken) {
     test(`e-mail: ${name} is reported`, () => {
       const scenario = validEmail();

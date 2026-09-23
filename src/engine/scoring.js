@@ -5,6 +5,12 @@
 
 import { CLEAN_LEGIT_MARKING_POINTS, DECISION_POINTS } from './round.js';
 
+// All parts of the message a threat lies on: its target plus optional alsoTargets
+// (e.g. the sender name and address in one threat, CLAUDE.md, section 7)
+export function threatParts(threat) {
+  return [threat.target, ...(threat.alsoTargets ?? [])];
+}
+
 export function scoreMessage(scenario, level, decision, marks = []) {
   const correct = (decision === 'scam') === scenario.isScam;
   const decisionPoints = correct ? DECISION_POINTS : 0;
@@ -24,9 +30,11 @@ export function scoreMessage(scenario, level, decision, marks = []) {
   }
 
   const marked = new Set(marks);
-  const threatTargets = new Set(scenario.threats.map((t) => t.target));
-  const found = scenario.threats.filter((t) => marked.has(t.target));
-  const missed = scenario.threats.filter((t) => !marked.has(t.target));
+  const threatTargets = new Set(scenario.threats.flatMap(threatParts));
+  // A threat is found when any of its parts is marked; marking several parts is still one hit
+  const isFound = (threat) => threatParts(threat).some((target) => marked.has(target));
+  const found = scenario.threats.filter(isFound);
+  const missed = scenario.threats.filter((t) => !isFound(t));
   const extra = [...marked].filter((target) => !threatTargets.has(target));
 
   let markingPoints;

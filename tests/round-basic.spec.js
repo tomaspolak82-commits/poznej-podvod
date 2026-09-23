@@ -4,6 +4,8 @@ import {
   correctly,
   currentScenarioId,
   expectedRounds,
+  nextMessage,
+  openCurrentMessage,
   playRound,
   scenarioById,
   startRound,
@@ -91,7 +93,7 @@ test.describe('basic level: round', () => {
         const choice = isTarget ? decision : correctly(scenarioById(id));
         await page.getByRole('button', { name: choice === 'scam' ? 'Je to podvod' : 'Je to v pořádku' }).click();
         if (isTarget) break;
-        await page.getByRole('button', { name: /Další zpráva/ }).click();
+        await nextMessage(page);
       }
       const key = `${scenario.isScam ? 'scam' : 'ok'}-${decision}`;
       await expect(page.getByTestId('evaluation').getByRole('heading', { level: 1 })).toHaveText(expected[key]);
@@ -115,7 +117,8 @@ test.describe('basic level: round', () => {
         await expect(dialog).toHaveCount(0);
       }
       await page.getByRole('button', { name: correctly(scenario) === 'scam' ? 'Je to podvod' : 'Je to v pořádku' }).click();
-      await page.getByRole('button', { name: i < 4 ? /Další zpráva/ : /Zobrazit výsledek/ }).click();
+      if (i < 4) await nextMessage(page);
+      else await page.getByRole('button', { name: /Zobrazit výsledek/ }).click();
     }
     // Seed 123 has actions in both kinds of messages
     expect([...notices.keys()].sort()).toEqual(['legit', 'scam']);
@@ -129,7 +132,7 @@ test.describe('basic level: round', () => {
     // Move to the first scam
     while (!scenarioById(await currentScenarioId(page)).isScam) {
       await page.getByRole('button', { name: 'Je to v pořádku' }).click();
-      await page.getByRole('button', { name: /Další zpráva/ }).click();
+      await nextMessage(page);
     }
     const scam = scenarioById(await currentScenarioId(page));
     expect(round.map((s) => s.id)).toContain(scam.id);
@@ -162,9 +165,13 @@ test.describe('basic level: round', () => {
     await page.getByRole('button', { name: 'Je to podvod' }).click();
     await expect(page.getByTestId('training-label')).toBeVisible();
     await page.getByRole('button', { name: /Další zpráva/ }).click();
+    // Inbox of the next message
+    await expect(page.getByTestId('training-label')).toBeVisible();
+    await openCurrentMessage(page);
     for (let i = 1; i < 5; i += 1) {
       await page.getByRole('button', { name: 'Je to podvod' }).click();
-      await page.getByRole('button', { name: i < 4 ? /Další zpráva/ : /Zobrazit výsledek/ }).click();
+      if (i < 4) await nextMessage(page);
+      else await page.getByRole('button', { name: /Zobrazit výsledek/ }).click();
     }
     await expect(page.getByTestId('round-end')).toBeVisible();
     await expect(page.getByTestId('training-label')).toBeVisible();
@@ -195,9 +202,10 @@ test.describe('round end and history', () => {
 
     await page.getByRole('button', { name: /Hrát dalších 5/ }).click();
     await expect(page.getByTestId('progress')).toHaveText('Zpráva 1 z 5');
+    await openCurrentMessage(page);
     const played = await playRound(page, wrongly);
     expect(played).toEqual(ids(second));
-    // 7 test messages: at least the 2 not played before must be in the new round
+    // 7 messages in the bank: at least the 2 not played before must be in the new round
     const fresh = ['email-01', 'email-02', 'email-03', 'email-04', 'email-05', 'email-06', 'email-07'].filter(
       (id) => !ids(first).includes(id),
     );
@@ -288,15 +296,19 @@ test.describe('round screens: accessibility', () => {
   const noHorizontalScroll = (page) =>
     page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
 
-  test('question, evaluation and end: touch targets at least 48 × 48 px', async ({ page }) => {
-    await startRound(page);
+  test('inbox, question, evaluation and end: touch targets at least 48 × 48 px', async ({ page }) => {
+    await startRound(page, { open: false });
+    await page.locator('[data-mail="menu"]').click();
+    expect(await tooSmallTargets(page)).toEqual([]);
+    await openCurrentMessage(page);
     expect(await tooSmallTargets(page)).toEqual([]);
     await page.getByRole('button', { name: 'Je to podvod' }).click();
     expect(await tooSmallTargets(page)).toEqual([]);
-    await page.getByRole('button', { name: /Další zpráva/ }).click();
+    await nextMessage(page);
     for (let i = 1; i < 5; i += 1) {
       await page.getByRole('button', { name: 'Je to podvod' }).click();
-      await page.getByRole('button', { name: i < 4 ? /Další zpráva/ : /Zobrazit výsledek/ }).click();
+      if (i < 4) await nextMessage(page);
+      else await page.getByRole('button', { name: /Zobrazit výsledek/ }).click();
     }
     expect(await tooSmallTargets(page)).toEqual([]);
   });

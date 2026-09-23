@@ -1,9 +1,17 @@
 import { test, expect } from '@playwright/test';
 import { maxPointsForRound } from '../src/engine/round.js';
-import { expectedRounds, goToScenario, scenarioById, startRound } from './helpers/game.js';
+import {
+  expectedRounds,
+  goToScenario,
+  nextMessage,
+  openCurrentMessage,
+  scenarioById,
+  showAddress,
+  startRound,
+} from './helpers/game.js';
 
-// Seed 123, e-mail: the round contains scams email-04 (4 threats), email-05 (2), email-02 (1)
-// and legitimate email-06 (button + link) and email-07 (attachment).
+// Seed 123, e-mail: the round contains scams email-02 (4 threats, sender threat on name + address),
+// email-05 (2), email-07 (1, attachment) and legitimate email-03 (ČEZ) and email-06 (button + link).
 const SEED = 123;
 const [ROUND] = expectedRounds('email', SEED);
 
@@ -17,7 +25,7 @@ const statusOf = (page, target) => page.locator(`.review-part[data-target="${tar
 
 test.beforeAll(() => {
   // Guard: the test data below relies on this exact round
-  expect(ROUND.map((s) => s.id).sort()).toEqual(['email-02', 'email-04', 'email-05', 'email-06', 'email-07']);
+  expect(ROUND.map((s) => s.id).sort()).toEqual(['email-02', 'email-03', 'email-05', 'email-06', 'email-07']);
 });
 
 test.describe('advanced level: marking', () => {
@@ -27,10 +35,12 @@ test.describe('advanced level: marking', () => {
     await expect(page.getByTestId('instruction')).toContainText('Klepněte na všechno');
   });
 
-  test('sender address is visible without any click and can be marked', async ({ page }) => {
+  test('sender address is hidden, "▾ zobrazit adresu" shows it and then it can be marked', async ({ page }) => {
     await startAdvanced(page);
     const scenario = scenarioById(ROUND[0].id);
     const address = page.locator('[data-mark="fromAddress"]');
+    await expect(address).toHaveCount(0);
+    await showAddress(page);
     await expect(address).toBeVisible();
     await expect(address).toContainText(scenario.message.fromAddress);
     await address.click();
@@ -72,8 +82,9 @@ test.describe('advanced level: marking', () => {
 test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
   test('all threats found + correct decision = 2 + 4', async ({ page }) => {
     await startAdvanced(page);
-    await goToScenario(page, 'email-04');
-    for (const target of ['fromName', 'body.0', 'body.1', 'body.2']) await mark(page, target);
+    await goToScenario(page, 'email-02');
+    await showAddress(page);
+    for (const target of ['fromAddress', 'body.2', 'body.3', 'link']) await mark(page, target);
     await decide(page, true);
     await expect(page.getByTestId('gained')).toHaveText('Získali jste 6 bodů.');
     await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 4');
@@ -104,7 +115,7 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
 
   test('unmarked part does not count (mark, unmark, decide)', async ({ page }) => {
     await startAdvanced(page);
-    await goToScenario(page, 'email-02');
+    await goToScenario(page, 'email-07');
     await mark(page, 'attachment');
     await mark(page, 'subject');
     await mark(page, 'subject');
@@ -115,9 +126,9 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
 
   test('wrong decision still gets points for correctly marked threats', async ({ page }) => {
     await startAdvanced(page);
-    await goToScenario(page, 'email-04');
+    await goToScenario(page, 'email-02');
     await mark(page, 'fromName');
-    await mark(page, 'body.1');
+    await mark(page, 'body.2');
     await decide(page, false);
     await expect(page.getByTestId('evaluation').getByRole('heading', { level: 1 })).toHaveText('Tahle zpráva je podvod.');
     await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 0 · Za označená místa: 2');
@@ -126,9 +137,10 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
 
   test('more unnecessary marks than found: decision points stay, marking = 0', async ({ page }) => {
     await startAdvanced(page);
-    await goToScenario(page, 'email-02');
+    await goToScenario(page, 'email-07');
     await mark(page, 'attachment');
     await mark(page, 'subject');
+    await showAddress(page);
     await mark(page, 'fromAddress');
     await mark(page, 'body.0');
     await decide(page, true);
@@ -138,7 +150,7 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
 
   test('legitimate message, nothing marked = 2 + 2', async ({ page }) => {
     await startAdvanced(page);
-    await goToScenario(page, 'email-07');
+    await goToScenario(page, 'email-03');
     await decide(page, false);
     await expect(page.getByTestId('gained')).toHaveText('Získali jste 4 body.');
     await expect(page.getByTestId('legit-marking')).toHaveText(
@@ -165,7 +177,7 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
     await startAdvanced(page);
     await mark(page, 'subject');
     await decide(page, false);
-    await page.getByRole('button', { name: /Další zpráva/ }).click();
+    await nextMessage(page);
     await expect(page.locator('[data-mark][aria-pressed="true"]')).toHaveCount(0);
   });
 });
@@ -175,6 +187,7 @@ test('marking and evaluation: no horizontal scroll with 200 % text at 360 px', a
   await page.setViewportSize({ width: 360, height: 740 });
   await startAdvanced(page);
   await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+  await showAddress(page);
   await mark(page, 'fromAddress');
   expect(await noScroll()).toBe(true);
   await decide(page, true);
@@ -187,12 +200,15 @@ test.describe('advanced level: whole round', () => {
     await page.goto(`/?seed=${SEED}#/email`);
     await expect(page.getByTestId('max-points-pokrocila')).toHaveText(String(max));
     await page.getByRole('button', { name: /Začít: pokročilá/ }).click();
+    await openCurrentMessage(page);
 
     for (let i = 0; i < 5; i += 1) {
       const scenario = scenarioById(await page.locator('[data-scenario-id]').getAttribute('data-scenario-id'));
+      await showAddress(page);
       for (const threat of scenario.threats) await mark(page, threat.target);
       await decide(page, scenario.isScam);
-      await page.getByRole('button', { name: i < 4 ? /Další zpráva/ : /Zobrazit výsledek/ }).click();
+      if (i < 4) await nextMessage(page);
+      else await page.getByRole('button', { name: /Zobrazit výsledek/ }).click();
     }
     await expect(page.getByTestId('final-score')).toHaveText(`Získali jste ${max} z ${max} bodů.`);
     await expect(page.getByTestId('missed')).toHaveText('V tomto kole vám nic neuniklo.');
@@ -203,7 +219,8 @@ test.describe('advanced level: whole round', () => {
     for (let i = 0; i < 5; i += 1) {
       const scenario = scenarioById(await page.locator('[data-scenario-id]').getAttribute('data-scenario-id'));
       await decide(page, scenario.isScam);
-      await page.getByRole('button', { name: i < 4 ? /Další zpráva/ : /Zobrazit výsledek/ }).click();
+      if (i < 4) await nextMessage(page);
+      else await page.getByRole('button', { name: /Zobrazit výsledek/ }).click();
     }
     const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('poznej-podvod:history:v1')));
     const expected = {};

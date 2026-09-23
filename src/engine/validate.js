@@ -117,9 +117,20 @@ export function validateScenario(scenario, { fileId, section } = {}) {
   const seen = new Set();
   scenario.threats.forEach((threat, i) => {
     const where = `threats.${i}`;
-    if (!targets.has(threat?.target)) errors.push(`${where}.target "${threat?.target}" neodpovídá žádné části zprávy`);
-    if (seen.has(threat?.target)) errors.push(`${where}.target "${threat?.target}" je ve hrozbách dvakrát`);
-    seen.add(threat?.target);
+    // One threat may lie on several parts: target + optional alsoTargets (CLAUDE.md, section 7)
+    const also = threat?.alsoTargets;
+    if (also !== undefined && (!Array.isArray(also) || also.length === 0 || !also.every(isNonEmptyString))) {
+      errors.push(`${where}.alsoTargets musí být neprázdné pole názvů částí zprávy`);
+    }
+    const parts = [
+      [`${where}.target`, threat?.target],
+      ...(Array.isArray(also) ? also.map((target, j) => [`${where}.alsoTargets.${j}`, target]) : []),
+    ];
+    for (const [path, target] of parts) {
+      if (!targets.has(target)) errors.push(`${path} "${target}" neodpovídá žádné části zprávy`);
+      if (seen.has(target)) errors.push(`${path} "${target}" je ve hrozbách dvakrát`);
+      seen.add(target);
+    }
     if (!THREAT_CATEGORIES.includes(threat?.category)) errors.push(`${where}.category "${threat?.category}" není povolená`);
     if (!isNonEmptyString(threat?.title)) errors.push(`${where}.title chybí`);
     if (!isNonEmptyString(threat?.explanation)) errors.push(`${where}.explanation chybí`);

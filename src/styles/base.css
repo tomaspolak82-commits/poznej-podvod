@@ -93,6 +93,11 @@ button {
   outline-offset: 3px;
 }
 
+/* Last input was a mouse or a finger: no ring (main.js); the keyboard always shows it */
+[data-input="pointer"] :focus-visible {
+  outline: none;
+}
+
 /* Heading receives focus after navigation; no ring needed on non-interactive target */
 [tabindex="-1"]:focus {
   outline: none;

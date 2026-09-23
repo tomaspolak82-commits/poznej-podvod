@@ -86,7 +86,7 @@ Každá úroveň má krátký popis a **maximální počet bodů pro toto kolo**
 - Obnovení stránky uprostřed kola: hráč se vrátí na výběr úrovně, rozehrané kolo se neuloží do historie.
 - Adresy: `#/` hlavní stránka, `#/<sekce>` výběr úrovně (vylosuje nové kolo), `#/<sekce>/kolo` kolo. Kolo je jen v paměti: adresa `#/…/kolo` bez rozehraného kola přesměruje na výběr úrovně. Odchod z kola jakoukoli cestou (i tlačítkem Zpět v prohlížeči) kolo zahodí, tlačítko Vpřed ho neobnoví.
 - Okna (nápověda, vysvětlení u žárovky, upozornění na odkaz, potvrzení) používají `src/ui/dialog.js` (prvek `<dialog>`): zavírají se tlačítkem, Esc i klepnutím mimo a fokus se vrátí na prvek, který okno otevřel. Potvrzovací okna mají fokus na bezpečné volbě („Hrát dál“, „Ponechat historii“). Dlouhé okno nápovědy začíná nahoře (fokus na nadpisu).
-- Nápověda „Na co si dát pozor?“ je v liště kola i ve vyhodnocení. Má 5 bodů, pod nimi poznámku o bezchybné češtině a radu (u Zpráv s číslem 7726, u e-mailu bez něj).
+- Nápověda „Na co si dát pozor?“ je v liště kola i ve vyhodnocení. U e-mailu má 6 bodů (bod 2 „Oslovení“ přibyl v milníku 4), u Zpráv 5, pod nimi poznámku o bezchybné češtině a radu (u Zpráv s číslem 7726, u e-mailu bez něj).
 
 ### Vyhodnocení zprávy (po každé zprávě)
 - Jestli rozhodl správně, kolik bodů získal a proč.
@@ -113,7 +113,8 @@ Zobrazení:
 ### E-mail
 - Seznam zpráv (doručená pošta): odesílatel, předmět, začátek textu, čas, nepřečtené tučně. Složky Doručená pošta, Odeslaná, Spam, Koš (na mobilu v menu ☰, na širší obrazovce vlevo).
 - V seznamu je úkolová zpráva jako nejnovější nepřečtená a pod ní 2–3 starší neaktivní zprávy kvůli realismu. Klepnutí na ně ukáže krátké „Tahle zpráva není součástí úkolu“.
-- Detail zprávy: jméno odesílatele nahoře, **pod ním vždy viditelná adresa odesílatele** (nic se nerozbaluje). Dále předmět, datum, text, případně příloha a tlačítko nebo odkaz. V pokročilé úrovni jde adresu označit stejně jako kteroukoli jinou část zprávy.
+- Detail zprávy: jméno odesílatele nahoře, **adresa odesílatele je skrytá** jako v mobilu (Tomášovo rozhodnutí v milníku 4). Vedle jména je vždy viditelný prvek **„▾ zobrazit adresu“** (cílová plocha aspoň 48 × 48 px), který adresu ukáže. Chová se **stejně v základní i pokročilé úrovni** a platí pro **všechny** e-maily (kdyby se adresa skrývala jen u některých, prozradilo by to odpověď). Klepnutí na jméno adresu nezobrazí nikdy; v pokročilé úrovni jméno označí. Adresa je prostý text, **nikdy odkaz** (žádné `mailto:`). Ve vyhodnocení je adresa vidět vždy. Dále předmět, datum, text, případně příloha a tlačítko nebo odkaz. V pokročilé úrovni jde zobrazenou adresu označit stejně jako kteroukoli jinou část zprávy.
+- V seznamu zpráv je u odesílatele vidět jen jméno.
 
 ### Zprávy (SMS a WhatsApp)
 Jedna sekce, každý scénář má `app: "sms"` nebo `app: "chat"`:
@@ -189,7 +190,7 @@ Odkazy, tlačítka a přílohy nikam nevedou.
 
 Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (číslo nebo jméno), `inContacts` (true/false), `messages` (pole bublin, každá s `text`, případně `link`).
 
-`target` odkazuje na část zprávy (`fromName`, `fromAddress`, `subject`, `body.N`, `button`, `link`, `attachment`, `from`, `messages.N`, `messages.N.link` = odkaz uvnitř bubliny). Klikání je vázané na prvky, ne na souřadnice.
+`target` odkazuje na část zprávy (`fromName`, `fromAddress`, `subject`, `body.N`, `button`, `link`, `attachment`, `from`, `messages.N`, `messages.N.link` = odkaz uvnitř bubliny). Klikání je vázané na prvky, ne na souřadnice. Volitelné pole `alsoTargets` (pole dalších částí) naváže jednu hrozbu na víc částí zprávy, např. `"target": "fromAddress", "alsoTargets": ["fromName"]`: označení kterékoli z nich je jeden zásah, žárovka a „Tohle místo stojí za druhý pohled“ jsou u hlavního `target`.
 
 Kontrola obsahu (`src/engine/validate.js`) běží při každém `npm run build` i `npm run dev` a chybný scénář build zastaví s českým popisem chyby. Kromě povinných polí hlídá:
 - `id` = název souboru bez `.json`, `section` = název složky, ID jsou jedinečná napříč sekcemi
@@ -200,7 +201,7 @@ Kontrola obsahu (`src/engine/validate.js`) běží při každém `npm run build`
 Losování se `seed`: jedna řada náhodných čísel na jedno načtení stránky. Kolo se losuje při otevření výběru úrovně, další kolo („Hrát dalších 5“) pokračuje ve stejné řadě. Bez `?seed=` je losování náhodné.
 
 Kategorie hrozeb (pro statistiku nejčastějších chyb):
-`odesilatel`, `odkaz-platba`, `casovy-tlak`, `zadost-o-udaje`, `vyhra-nabidka`, `priloha`, `jazyk-chyby`, `nezname-cislo`, `emocni-natlak`, `neobvykla-zadost`, `qr-kod`, `instalace-aplikace`.
+`odesilatel`, `odkaz-platba`, `casovy-tlak`, `zadost-o-udaje`, `vyhra-nabidka`, `priloha`, `jazyk-chyby`, `nezname-cislo`, `emocni-natlak`, `neobvykla-zadost`, `qr-kod`, `instalace-aplikace`, `obecne-osloveni` (obecné oslovení bez jména, zdroj NÚKIB; přibyla v milníku 4).
 
 Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře nemají.
 
@@ -219,6 +220,8 @@ Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře ne
 - **Skutečné osobnosti** se nejmenují dál, i když je zdroj uvádí.
 - **Legitimní zprávy** musí být skutečně věrohodné (potvrzení objednávky, připomínka lékaře, zpráva od rodiny ze známého čísla…), ne triviálně nudné.
 - **Názvy institucí v textu ano, loga a firemní grafika ne.**
+- **Podvržená adresa skutečného úřadu nebo firmy ne.** Rozhodnutí k námětu E4 (milník 4): doména fs.gov.cz má DMARC s politikou quarantine (ověřeno 23. 9. 2026: `p=quarantine; pct=100`), takže podvržená adresa `epodpora@fs.gov.cz` by skončila ve spamu, ne v doručené poště. Scénář s podvrženou skutečnou adresou proto neodpovídá realitě. E4 je místo toho podvod přes **zobrazované jméno**: jméno „Finanční správa“, skutečná adresa cizí a nesouvisející (smyšlená soukromá adresa na gmail.com, znění schvaluje Tomáš). Vyhodnocení začíná „Jméno odesílatele si může napsat kdokoli. Skutečná adresa byla …“. Netvrď nic typu „Finanční správa nikdy nežádá…“, pokud to není ve zdroji; místo toho „Když si nejste jistí, otevřete daňový portál sami, ne přes odkaz ve zprávě.“
+- **Jedna hrozba může ležet na dvou částech zprávy** (u E4 jméno i adresa odesílatele): označení kterékoli z nich nebo obou je jeden zásah, žádné dvojité body a žádné „označeno zbytečně“. Zapisuje se polem `alsoTargets` (Tomáš schválil v milníku 4).
 - **Domény a telefonní čísla v podvodných zprávách smyšlené.** Výjimku (podvržený odesílatel se skutečnou adresou úřadu, např. náměty z `docs/napady-scenaru.md`) použij jen po Tomášově výslovném schválení u konkrétního scénáře. Tomáši u každé nové domény připomeň, ať ověří, že nepatří reálnému webu. Telefonní čísla používej zjevně neplatná nebo z rozsahu, který se nepřiděluje, a upozorni, že to má Tomáš ověřit.
 - **Číslo 7726** je ověřené pro ČR: Policie ČR na policie.gov.cz/kyberkriminalita/podvodne-sms-zpravy uvádí „reportujte ji svému operátorovi na jednotnou linku 7726 (cestou SMS zprávy)“. Ve vysvětleních u **podvodných SMS** ho uváděj jako radu, touto větou: „Podezřelou SMS můžete přeposlat na číslo 7726, operátor pak odesílatele zablokuje.“ Jen u SMS, ne u e-mailu ani chatu (WhatsApp), tam to nefunguje. Jiné postupy, které nejsou ověřené pro ČR, neuváděj.
 - **Každý nový text je návrh k Tomášovu ověření.** Nevydávej ho za citaci skutečného podvodu.
@@ -351,7 +354,8 @@ Minimální sada:
 - zobrazené maximum bodů odpovídá součtu
 - modal „Na co si dát pozor?“ se otevře a **zavře** tlačítkem i Esc, hra pokračuje na stejném místě
 - žárovka ve vyhodnocení otevře vysvětlení a to jde zavřít
-- adresa odesílatele je v detailu e-mailu viditelná bez klepnutí a v pokročilé úrovni jde označit
+- adresa odesílatele je v detailu e-mailu skrytá, ukáže ji prvek „▾ zobrazit adresu“, stejně v základní i pokročilé úrovni; klepnutí na jméno ji nezobrazí; v pokročilé úrovni jde zobrazenou adresu označit; ve vyhodnocení je vidět vždy
+- adresa odesílatele není odkaz (žádný `<a>`, žádné `mailto:`)
 - historie: po kole se uloží skóre a chyby, po obnovení stránky se zobrazí „Vítejte zpět“, smazání historie funguje
 - obnovení stránky uprostřed kola → výběr úrovně, rozehrané kolo se neuloží
 - neopakování: se stejnou historií nevybere další kolo zprávy z předchozího kola, pokud to banka dovolí
@@ -383,7 +387,7 @@ Jak jsou testy postavené:
 3. **Herní engine:** výběr úrovně, náhodný výběr kola se `seed`, bodování, modal nápovědy, vyhodnocení se žárovkami, konec kola, historie a „Vítejte zpět“. Zatím se **7 testovacími zprávami v každé sekci** (5 podvodů, 2 legitimní), zjevně označenými jako testovací; v milníku 4 je nahradí skutečné scénáře. Postup v pěti částech: (1) logika a testy, (2) základní úroveň, (3) pokročilá úroveň, (4) nápověda a historie, (5) průchody v prohlížeči. Po každé části commit a push s českou zprávou, pokud projde build i všechny testy (Tomáš předem povolil); když testy neprojdou, zastavit se a napsat mu. Texty nápovědy a vyhodnocení nejdřív poslat Tomášovi ke schválení. **Milník 3 se na server nenahrává**, nasazuje se až po milníku 4.
 4. **E-mailová aplikace + 3 vzorové scénáře** (2 podvody, 1 legitimní) → **Tomáš schválí.** Poznámky z milníku 3:
    - **Lišta kola na mobilu zabírá moc místa:** tlačítka „Zpět na výběr úrovně“ a „Na co si dát pozor?“ jsou pod sebou a zpráva začíná až v polovině obrazovky. Tlačítka zmenšit a dát vedle sebe (pořád aspoň 48 × 48 px).
-   - **Testovací zprávy** (`email-01` až `email-07`, `zpravy-01` až `zpravy-07`) mají v předmětu „(podvod)“ / „(v pořádku)“ a prozrazují odpověď. Nahradí je skutečné scénáře; testy, které se opírají o konkrétní testovací zprávy (`tests/round-advanced.spec.js` hlídá složení kola se `seed` 123), je pak potřeba upravit.
+   - **Testovací zprávy** (`email-01` až `email-07`, `zpravy-01` až `zpravy-07`) mají v předmětu „(podvod)“ / „(v pořádku)“ a prozrazují odpověď. V milníku 4 nahradí `email-01` až `email-03` skutečné scénáře, 4 testovací zůstanou jako `email-04` až `email-07` bez prozrazení v předmětu (aby šlo losovat, sekce 16); testy, které se opírají o konkrétní testovací zprávy (`tests/round-advanced.spec.js` hlídá složení kola se `seed` 123), je pak potřeba upravit.
    - **Přilepení lišty při velkém systémovém písmu** ověří Tomáš ručně na telefonu (automaticky to nasimulovat nejde).
    - Neutrální zobrazení `src/apps/generic.js` nahradí e-mailová aplikace se stejným rozhraním (sekce 6); u Zpráv to samé v milníku 5.
    - Po milníku 4 se nasazuje na server (milník 3 se nenasazoval).
@@ -431,7 +435,11 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - **Milník 1** (příprava) hotový: commit `4e3de39`.
 - **Milník 2** (kostra, vzhled, nasazení) hotový: poslední commit `1e593e7`. Tato verze je nasazená na http://poznej-podvod.menestarosti.cz (HTTPS řeší Subreg).
 - **Milník 3** (herní engine) hotový: commity `bfd3ef0`, `7848dc6`, `fdc1f62`, `4ad1bd1`, `52bacea`. Na server se nenahrával. Testy: 560 prošlo, 5 úmyslně přeskočených.
-- **Další krok: milník 4** (e-mailová aplikace + 3 vzorové scénáře), poznámky v sekci 13.
+- **Milník 4** (e-mailová aplikace + 3 vzorové scénáře) hotový: schránka se složkami, detail se skrytou adresou („zobrazit adresu“), lišta kola na mobilu v jednom řádku, `alsoTargets` v engine, kategorie `obecne-osloveni`, scénáře `email-01` až `email-03`. Na server se zatím nenasazoval (nasazení jen na Tomášův pokyn).
+- **Další krok: milník 5** (aplikace Zprávy + 3 vzorové scénáře).
+- **Úkol na později:** na počítači je během kola logo v hlavičce nad názvem „Poznej podvod“, ne vedle něj (sekce 5). Hlavička se v milníku 4 neměnila; ověřit, jestli to bylo už před milníkem 4, a opravit.
+- **Úkol před zveřejněním odkazu na hru** (Tomášovo rozhodnutí v milníku 4): v bance zůstávají testovací zprávy (e-mail `email-04` až `email-07`, u Zpráv `zpravy-01` až `zpravy-07`, dokud je milník 5 nenahradí). Po milníku 4 se nasazuje i s nimi (web má `noindex`). Než se odkaz na hru kdekoli zveřejní, musí být všechny testovací zprávy odstraněné a nahrazené skutečnými scénáři.
+- **Úkol před zveřejněním odkazu na hru:** Tomáš si sám přečte oba zdroje Finanční správy ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.
 - Předem povolené commity a pushe po každé části platily jen pro milník 3. Pro další milníky platí zase sekce 2, bod 4 (nejdřív Tomášovo OK), dokud Tomáš neřekne jinak.
 - **Repozitář** https://github.com/tomaspolak82-commits/poznej-podvod je **veřejný** (ukázka do portfolia), je v něm `README.md`. E-mail autora v commitech zůstává (Tomášovo rozhodnutí). V historii (commit `4f52284`) je jméno starého FTP účtu; ten účet je už zrušený, historie se nepřepisuje.
 - **Kvůli veřejnému repozitáři před každým commitem ověř**, že připravené soubory neobsahují hesla, jméno FTP účtu ani obsah `.env`: projdi `git status` (`.env` v něm nesmí být) a prohledej připravené soubory (`git grep --cached`) na přihlašovací údaje. Když si nejsi jistý, necommituj a zeptej se.
