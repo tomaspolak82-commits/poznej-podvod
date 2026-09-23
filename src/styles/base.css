@@ -1,0 +1,27 @@
+/* Minimal base styles – full design comes in milestone 2 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 112.5%; /* 18px with default browser settings, still scales with user font size */
+}
+
+body {
+  margin: 0;
+  background: var(--color-white);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+h1 {
+  font-family: var(--font-heading);
+  color: var(--color-heading);
+}
+
+.placeholder {
+  padding: 1.5rem 1rem;
+}

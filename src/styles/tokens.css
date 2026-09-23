@@ -1,0 +1,13 @@
+/* Design tokens – Méně starostí palette (CLAUDE.md, section 9) */
+:root {
+  --color-white: #ffffff;       /* main background */
+  --color-bg: #f7fafc;          /* secondary surfaces */
+  --color-teal: #008080;        /* main UI colour: buttons, links, active elements */
+  --color-dark: #2a2f35;        /* header, dark surfaces */
+  --color-red: #ff4d4d;         /* ONLY logo and error marks (icons) */
+  --color-yellow: #ffb302;      /* hint bulbs; always with dark text */
+  --color-text: #4a5568;        /* body text */
+  --color-heading: #1a202c;     /* headings */
+  --font-heading: "Montserrat", system-ui, sans-serif;
+  --font-body: "Lato", system-ui, sans-serif;
+}
