@@ -35,6 +35,7 @@ Tomáš nepíše kód sám. Zadává, kontroluje a učí se pracovat v terminál
 9. **Když si něčím nejsi jistý** (chování hostingu, reálné znění podvodu, právní otázka), řekni to. Nehádej.
 10. **Příkazy spouštěj po jednom**, bez `cd` na začátku (pracovní složka je projekt) a bez spojování přes `;` nebo `&&`. Tomášova pojistka na čtení mimo projekt by jinak u každého příkazu chtěla potvrzení.
 11. **Texty hry** (vše, co hráč čte mimo scénáře) jsou v jednom souboru `src/texts.js` a Tomáš je schválil. Změna znění = úprava tohoto souboru. Nové texty pošli Tomášovi ke schválení dřív, než je zabuduješ. Čísla v textech vždy správně skloňuj pomocí `src/ui/format.js` (1 bod, 2 body, 5 bodů; 1 kolo, 2 kola, 5 kol; „z 19 bodů“).
+12. **Soubory v projektu upravuj a vytvářej nástroji Edit a Write**, ne přes `sed`, `python`, `cat >` ani jiné zápisy v Bash. Bash jen pro `npm`, `git` a spouštění testů. Tomášova pojistka na čtení mimo projekt by jinak hlásila každou úpravu.
 
 ## 3. Technologie (rozhodnuto)
 
@@ -225,6 +226,10 @@ Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře ne
 - **Domény a telefonní čísla v podvodných zprávách smyšlené.** Výjimku (podvržený odesílatel se skutečnou adresou úřadu, např. náměty z `docs/napady-scenaru.md`) použij jen po Tomášově výslovném schválení u konkrétního scénáře. Tomáši u každé nové domény připomeň, ať ověří, že nepatří reálnému webu. Telefonní čísla používej zjevně neplatná nebo z rozsahu, který se nepřiděluje, a upozorni, že to má Tomáš ověřit.
 - **Číslo 7726** je ověřené pro ČR: Policie ČR na policie.gov.cz/kyberkriminalita/podvodne-sms-zpravy uvádí „reportujte ji svému operátorovi na jednotnou linku 7726 (cestou SMS zprávy)“. Ve vysvětleních u **podvodných SMS** ho uváděj jako radu, touto větou: „Podezřelou SMS můžete přeposlat na číslo 7726, operátor pak odesílatele zablokuje.“ Jen u SMS, ne u e-mailu ani chatu (WhatsApp), tam to nefunguje. Jiné postupy, které nejsou ověřené pro ČR, neuváděj.
 - **Každý nový text je návrh k Tomášovu ověření.** Nevydávej ho za citaci skutečného podvodu.
+- **Každé tvrzení za firmu nebo úřad musí mít zdroj** („Finanční správa podle svého varování neposílá…“, „ČEZ posílá e-maily z @cez.cz“). Bez zdroje žádné takové tvrzení, jen obecná rada („Když si nejste jistí, otevřete jejich stránky sami, ne přes odkaz ve zprávě.“). Zdroj patří do `sources` scénáře.
+- **Nápověda nesmí být v rozporu se scénáři.** Hráč, který radu z nápovědy „Na co si dát pozor?“ poslechne, nesmí být potrestán (např. bodem dolů za označení místa, na které nápověda upozorňuje). Když nový scénář s nápovědou nesedí, uprav scénář, nebo navrhni Tomášovi změnu nápovědy.
+- **Legitimní zprávy nesmí učit falešná pravidla** jako „každý odkaz = podvod“ nebo „bez oslovení jménem = vždy podvod“. Vyhodnocení legitimní zprávy vysvětlí, podle čeho se pozná, že je pravá, a že jeden znak sám o sobě nestačí.
+- **Texty pro seniory bez odborných slov** (ne „phishing“, „doména“, „malware“, „DMARC“; místo toho „adresa za zavináčem“, „škodlivý program“).
 - Tón vysvětlení: vykání, krátké věty, klidně, „soused u plotu“. Bez strašení, bez vykřičníků a bez frází revoluční, unikátní, komplexní, neváhejte, v dnešní uspěchané době, řešení na míru.
 - `npm run prehled` vygeneruje `docs/prehled-scenaru.md`, čitelný přehled všech scénářů (text zprávy, hrozby, vysvětlení) pro Tomášovu kontrolu.
 
@@ -323,7 +328,8 @@ Než se začne stavět engine, připrav v milníku 2 hlavní stránku a výběr 
 
 - **Respektuj systémovou velikost písma.** Jednotky `rem`/`em`, žádné pevné výšky boxů s textem, žádné `maximum-scale` ani zákaz zoomu ve viewportu. Rozložení musí vydržet 200% zvětšení textu bez překrývání a bez vodorovného posouvání (WCAG 1.4.4).
 - Základní písmo minimálně 18 px při výchozím nastavení.
-- Dotykové prvky minimálně 48 × 48 px, s mezerami.
+- Dotykové prvky minimálně 48 × 48 px, s mezerami. Klepací plocha aspoň 48 px platí i u prvků, které vizuálně vypadají menší (např. „zobrazit adresu“): řeší se neviditelnou plochou kolem, ne zmenšením klepací plochy.
+- **Přístupné jméno ovládacího prvku musí obsahovat jeho viditelný text** (WCAG 2.5.3), aby ho našel i člověk, který ovládá telefon hlasem. Např. tlačítko s textem „Doručená pošta“ má přístupné jméno „Zpět do schránky Doručená pošta“, ne „Zpět do Doručené pošty“.
 - Kontrast min. 4,5:1 (AA), kde to jde 7:1 (AAA).
 - Význam nikdy jen barvou (WCAG 1.4.1): chyba, správná odpověď, označené místo i přehlédnutá hrozba mají vždy ikonu s výrazným tvarem a text (sekce 9).
 - Ovládání klávesnicí, viditelný focus, sémantické HTML, `aria-label` tam, kde text nestačí.
