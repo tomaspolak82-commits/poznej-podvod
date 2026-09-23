@@ -1,0 +1,41 @@
+{
+  "id": "zpravy-02",
+  "section": "zpravy",
+  "title": "Testovací zpráva Z2 (podvod)",
+  "isScam": true,
+  "message": {
+    "app": "chat",
+    "from": "Testovací odesílatel Z2",
+    "inContacts": false,
+    "messages": [
+      {
+        "text": "Testovací zpráva 2, bublina 1."
+      },
+      {
+        "text": "Testovací zpráva 2, bublina 2."
+      }
+    ]
+  },
+  "threats": [
+    {
+      "target": "from",
+      "category": "nezname-cislo",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "messages.0",
+      "category": "emocni-natlak",
+      "title": "Testovací hrozba 2",
+      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "messages.1",
+      "category": "neobvykla-zadost",
+      "title": "Testovací hrozba 3",
+      "explanation": "Testovací vysvětlení hrozby 3. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy Z2. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

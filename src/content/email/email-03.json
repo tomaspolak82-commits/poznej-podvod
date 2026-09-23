@@ -1,0 +1,34 @@
+{
+  "id": "email-03",
+  "section": "email",
+  "title": "Testovací zpráva E3 (podvod)",
+  "isScam": true,
+  "message": {
+    "fromName": "Testovací odesílatel 3",
+    "fromAddress": "odesilatel3@test.invalid",
+    "date": "dnes 8:00",
+    "subject": "Testovací zpráva E3 (podvod)",
+    "body": [
+      "Testovací zpráva 3, odstavec 1."
+    ],
+    "link": {
+      "label": "Testovací odkaz"
+    }
+  },
+  "threats": [
+    {
+      "target": "subject",
+      "category": "vyhra-nabidka",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "link",
+      "category": "odkaz-platba",
+      "title": "Testovací hrozba 2",
+      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy E3. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

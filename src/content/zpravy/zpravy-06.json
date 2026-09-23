@@ -1,0 +1,20 @@
+{
+  "id": "zpravy-06",
+  "section": "zpravy",
+  "title": "Testovací zpráva Z6 (v pořádku)",
+  "isScam": false,
+  "message": {
+    "app": "sms",
+    "from": "Testovací odesílatel Z6",
+    "inContacts": false,
+    "messages": [
+      {
+        "text": "Testovací zpráva 6, bublina 1.",
+        "link": "https://odkaz6.test.invalid"
+      }
+    ]
+  },
+  "threats": [],
+  "summary": "Testovací shrnutí zprávy Z6. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

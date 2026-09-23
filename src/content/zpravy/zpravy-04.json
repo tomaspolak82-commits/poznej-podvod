@@ -1,0 +1,51 @@
+{
+  "id": "zpravy-04",
+  "section": "zpravy",
+  "title": "Testovací zpráva Z4 (podvod)",
+  "isScam": true,
+  "message": {
+    "app": "chat",
+    "from": "Testovací odesílatel Z4",
+    "inContacts": false,
+    "messages": [
+      {
+        "text": "Testovací zpráva 4, bublina 1."
+      },
+      {
+        "text": "Testovací zpráva 4, bublina 2."
+      },
+      {
+        "text": "Testovací zpráva 4, bublina 3.",
+        "link": "https://odkaz4.test.invalid"
+      }
+    ]
+  },
+  "threats": [
+    {
+      "target": "from",
+      "category": "nezname-cislo",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "messages.1",
+      "category": "zadost-o-udaje",
+      "title": "Testovací hrozba 2",
+      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "messages.2",
+      "category": "vyhra-nabidka",
+      "title": "Testovací hrozba 3",
+      "explanation": "Testovací vysvětlení hrozby 3. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "messages.2.link",
+      "category": "odkaz-platba",
+      "title": "Testovací hrozba 4",
+      "explanation": "Testovací vysvětlení hrozby 4. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy Z4. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

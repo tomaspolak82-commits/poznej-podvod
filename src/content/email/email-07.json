@@ -1,0 +1,21 @@
+{
+  "id": "email-07",
+  "section": "email",
+  "title": "Testovací zpráva E7 (v pořádku)",
+  "isScam": false,
+  "message": {
+    "fromName": "Testovací odesílatel 7",
+    "fromAddress": "odesilatel7@test.invalid",
+    "date": "dnes 8:00",
+    "subject": "Testovací zpráva E7 (v pořádku)",
+    "body": [
+      "Testovací zpráva 7, odstavec 1."
+    ],
+    "attachment": {
+      "name": "testovaci-dokument.pdf"
+    }
+  },
+  "threats": [],
+  "summary": "Testovací shrnutí zprávy E7. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

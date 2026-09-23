@@ -1,0 +1,33 @@
+{
+  "id": "zpravy-05",
+  "section": "zpravy",
+  "title": "Testovací zpráva Z5 (podvod)",
+  "isScam": true,
+  "message": {
+    "app": "sms",
+    "from": "Testovací odesílatel Z5",
+    "inContacts": false,
+    "messages": [
+      {
+        "text": "Testovací zpráva 5, bublina 1.",
+        "link": "https://odkaz5.test.invalid"
+      }
+    ]
+  },
+  "threats": [
+    {
+      "target": "messages.0",
+      "category": "jazyk-chyby",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "messages.0.link",
+      "category": "instalace-aplikace",
+      "title": "Testovací hrozba 2",
+      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy Z5. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

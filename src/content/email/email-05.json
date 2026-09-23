@@ -1,0 +1,35 @@
+{
+  "id": "email-05",
+  "section": "email",
+  "title": "Testovací zpráva E5 (podvod)",
+  "isScam": true,
+  "message": {
+    "fromName": "Testovací odesílatel 5",
+    "fromAddress": "odesilatel5@test.invalid",
+    "date": "dnes 8:00",
+    "subject": "Testovací zpráva E5 (podvod)",
+    "body": [
+      "Testovací zpráva 5, odstavec 1.",
+      "Testovací zpráva 5, odstavec 2."
+    ],
+    "link": {
+      "label": "Testovací odkaz"
+    }
+  },
+  "threats": [
+    {
+      "target": "body.0",
+      "category": "jazyk-chyby",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "link",
+      "category": "instalace-aplikace",
+      "title": "Testovací hrozba 2",
+      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy E5. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

@@ -1,0 +1,45 @@
+{
+  "id": "email-04",
+  "section": "email",
+  "title": "Testovací zpráva E4 (podvod)",
+  "isScam": true,
+  "message": {
+    "fromName": "Testovací odesílatel 4",
+    "fromAddress": "odesilatel4@test.invalid",
+    "date": "dnes 8:00",
+    "subject": "Testovací zpráva E4 (podvod)",
+    "body": [
+      "Testovací zpráva 4, odstavec 1.",
+      "Testovací zpráva 4, odstavec 2.",
+      "Testovací zpráva 4, odstavec 3."
+    ]
+  },
+  "threats": [
+    {
+      "target": "fromName",
+      "category": "odesilatel",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "body.0",
+      "category": "emocni-natlak",
+      "title": "Testovací hrozba 2",
+      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "body.1",
+      "category": "zadost-o-udaje",
+      "title": "Testovací hrozba 3",
+      "explanation": "Testovací vysvětlení hrozby 3. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "body.2",
+      "category": "qr-kod",
+      "title": "Testovací hrozba 4",
+      "explanation": "Testovací vysvětlení hrozby 4. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy E4. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

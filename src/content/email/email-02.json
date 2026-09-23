@@ -1,0 +1,29 @@
+{
+  "id": "email-02",
+  "section": "email",
+  "title": "Testovací zpráva E2 (podvod)",
+  "isScam": true,
+  "message": {
+    "fromName": "Testovací odesílatel 2",
+    "fromAddress": "odesilatel2@test.invalid",
+    "date": "dnes 8:00",
+    "subject": "Testovací zpráva E2 (podvod)",
+    "body": [
+      "Testovací zpráva 2, odstavec 1.",
+      "Testovací zpráva 2, odstavec 2."
+    ],
+    "attachment": {
+      "name": "testovaci-priloha.zip"
+    }
+  },
+  "threats": [
+    {
+      "target": "attachment",
+      "category": "priloha",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy E2. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

@@ -1,0 +1,41 @@
+{
+  "id": "email-01",
+  "section": "email",
+  "title": "Testovací zpráva E1 (podvod)",
+  "isScam": true,
+  "message": {
+    "fromName": "Testovací odesílatel 1",
+    "fromAddress": "odesilatel1@test.invalid",
+    "date": "dnes 8:00",
+    "subject": "Testovací zpráva E1 (podvod)",
+    "body": [
+      "Testovací zpráva 1, odstavec 1.",
+      "Testovací zpráva 1, odstavec 2."
+    ],
+    "button": {
+      "label": "Testovací tlačítko"
+    }
+  },
+  "threats": [
+    {
+      "target": "fromAddress",
+      "category": "odesilatel",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "body.1",
+      "category": "casovy-tlak",
+      "title": "Testovací hrozba 2",
+      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "button",
+      "category": "odkaz-platba",
+      "title": "Testovací hrozba 3",
+      "explanation": "Testovací vysvětlení hrozby 3. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy E1. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

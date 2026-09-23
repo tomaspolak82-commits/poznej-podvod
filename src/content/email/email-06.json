@@ -1,0 +1,25 @@
+{
+  "id": "email-06",
+  "section": "email",
+  "title": "Testovací zpráva E6 (v pořádku)",
+  "isScam": false,
+  "message": {
+    "fromName": "Testovací odesílatel 6",
+    "fromAddress": "odesilatel6@test.invalid",
+    "date": "dnes 8:00",
+    "subject": "Testovací zpráva E6 (v pořádku)",
+    "body": [
+      "Testovací zpráva 6, odstavec 1.",
+      "Testovací zpráva 6, odstavec 2."
+    ],
+    "button": {
+      "label": "Testovací tlačítko"
+    },
+    "link": {
+      "label": "Testovací odkaz"
+    }
+  },
+  "threats": [],
+  "summary": "Testovací shrnutí zprávy E6. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

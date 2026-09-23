@@ -1,0 +1,26 @@
+{
+  "id": "zpravy-03",
+  "section": "zpravy",
+  "title": "Testovací zpráva Z3 (podvod)",
+  "isScam": true,
+  "message": {
+    "app": "sms",
+    "from": "Testovací odesílatel Z3",
+    "inContacts": false,
+    "messages": [
+      {
+        "text": "Testovací zpráva 3, bublina 1."
+      }
+    ]
+  },
+  "threats": [
+    {
+      "target": "messages.0",
+      "category": "casovy-tlak",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy Z3. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

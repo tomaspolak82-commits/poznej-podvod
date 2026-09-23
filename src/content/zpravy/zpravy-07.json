@@ -1,0 +1,22 @@
+{
+  "id": "zpravy-07",
+  "section": "zpravy",
+  "title": "Testovací zpráva Z7 (v pořádku)",
+  "isScam": false,
+  "message": {
+    "app": "chat",
+    "from": "Testovací odesílatel Z7",
+    "inContacts": true,
+    "messages": [
+      {
+        "text": "Testovací zpráva 7, bublina 1."
+      },
+      {
+        "text": "Testovací zpráva 7, bublina 2."
+      }
+    ]
+  },
+  "threats": [],
+  "summary": "Testovací shrnutí zprávy Z7. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}

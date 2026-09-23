@@ -1,0 +1,33 @@
+{
+  "id": "zpravy-01",
+  "section": "zpravy",
+  "title": "Testovací zpráva Z1 (podvod)",
+  "isScam": true,
+  "message": {
+    "app": "sms",
+    "from": "Testovací odesílatel Z1",
+    "inContacts": false,
+    "messages": [
+      {
+        "text": "Testovací zpráva 1, bublina 1.",
+        "link": "https://odkaz1.test.invalid"
+      }
+    ]
+  },
+  "threats": [
+    {
+      "target": "from",
+      "category": "nezname-cislo",
+      "title": "Testovací hrozba 1",
+      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+    },
+    {
+      "target": "messages.0.link",
+      "category": "odkaz-platba",
+      "title": "Testovací hrozba 2",
+      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+    }
+  ],
+  "summary": "Testovací shrnutí zprávy Z1. Skutečný text doplníme v milníku 4.",
+  "sources": []
+}
