@@ -433,13 +433,21 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 ## 16. Stav projektu (k 23. 9. 2026)
 
 - **Milník 1** (příprava) hotový: commit `4e3de39`.
-- **Milník 2** (kostra, vzhled, nasazení) hotový: poslední commit `1e593e7`. Tato verze je nasazená na http://poznej-podvod.menestarosti.cz (HTTPS řeší Subreg).
+- **Milník 2** (kostra, vzhled, nasazení) hotový: poslední commit `1e593e7`.
 - **Milník 3** (herní engine) hotový: commity `bfd3ef0`, `7848dc6`, `fdc1f62`, `4ad1bd1`, `52bacea`. Na server se nenahrával. Testy: 560 prošlo, 5 úmyslně přeskočených.
-- **Milník 4** (e-mailová aplikace + 3 vzorové scénáře) hotový: schránka se složkami, detail se skrytou adresou („zobrazit adresu“), lišta kola na mobilu v jednom řádku, `alsoTargets` v engine, kategorie `obecne-osloveni`, scénáře `email-01` až `email-03`. Na server se zatím nenasazoval (nasazení jen na Tomášův pokyn).
-- **Další krok: milník 5** (aplikace Zprávy + 3 vzorové scénáře).
-- **Úkol na později:** na počítači je během kola logo v hlavičce nad názvem „Poznej podvod“, ne vedle něj (sekce 5). Hlavička se v milníku 4 neměnila; ověřit, jestli to bylo už před milníkem 4, a opravit.
-- **Úkol před zveřejněním odkazu na hru** (Tomášovo rozhodnutí v milníku 4): v bance zůstávají testovací zprávy (e-mail `email-04` až `email-07`, u Zpráv `zpravy-01` až `zpravy-07`, dokud je milník 5 nenahradí). Po milníku 4 se nasazuje i s nimi (web má `noindex`). Než se odkaz na hru kdekoli zveřejní, musí být všechny testovací zprávy odstraněné a nahrazené skutečnými scénáři.
-- **Úkol před zveřejněním odkazu na hru:** Tomáš si sám přečte oba zdroje Finanční správy ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.
+- **Milník 4** (e-mailová aplikace + 3 vzorové scénáře) hotový a **nasazený 23. 9. 2026** na http://poznej-podvod.menestarosti.cz: commit `9e2e73b` (+ tento commit se stavem projektu). Schránka se složkami, detail se skrytou adresou („zobrazit adresu“), lišta kola na mobilu v jednom řádku, `alsoTargets` v engine, kategorie `obecne-osloveni`, scénáře `email-01` až `email-03`. Testy: 655 prošlo, 5 úmyslně přeskočených. Po nasazení ověřeno: JS `text/javascript`, CSS `text/css`, písmo `font/woff2`, stránka se vykreslí a hraje (Playwright, Chromium i WebKit, bez chyb v konzoli).
+- **Další krok: milník 5** (aplikace Zprávy: SMS a WhatsApp + 3 vzorové scénáře).
+
+**Otevřené úkoly:**
+- **Před zveřejněním odkazu na hru: testovací zprávy.** V bance zůstávají testovací zprávy (e-mail `email-04` až `email-07`, u Zpráv `zpravy-01` až `zpravy-07`, dokud je milník 5 nenahradí). Nasazuje se i s nimi (web má `noindex`, Tomášovo rozhodnutí v milníku 4). Než se odkaz na hru kdekoli zveřejní, musí být všechny odstraněné a nahrazené skutečnými scénáři.
+- **Před zveřejněním odkazu na hru: zdroje Finanční správy.** Tomáš si sám přečte oba zdroje ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.
+- **Logo nad názvem:** na počítači je během kola logo v hlavičce nad názvem „Poznej podvod“, ne vedle něj (sekce 5). Hlavička se v milníku 4 neměnila; ověřit, jestli to bylo už před milníkem 4, a opravit.
+- **HTTPS:** certifikát řeší Subreg, web je zatím jen na `http://` (sekce 4).
+- **Timeouty testů na iPhonu 13:** při plném paralelním běhu `npm test` občas vyprší (30 s) některý test na zařízení iPhone 13 (WebKit), samostatně prochází. Příčina neověřená (nejspíš vytížení počítače). Když se to bude opakovat, zkusit méně paralelních běhů pro WebKit nebo delší timeout.
+- **Tenký Montserrat ve WebKitu:** v Playwright WebKitu na Windows se Montserrat (proměnné písmo) kreslí velmi tence místo tučně, v Chromiu správně. Písma se od milníku 2 neměnila. Nejspíš omezení WebKitu na Windows, na skutečném iPhonu neověřeno: Tomáš zkontroluje živou stránku v Safari na iPhonu nebo iPadu (nadpisy a tlačítka mají být tučné).
+- Výpis obsahu cílové složky při nasazení (sekce 14) se ve výstupu npm run deploy neukázal – zjistit proč a opravit, je to pojistka.
+
+**Pravidla, repozitář a hosting:**
 - Předem povolené commity a pushe po každé části platily jen pro milník 3. Pro další milníky platí zase sekce 2, bod 4 (nejdřív Tomášovo OK), dokud Tomáš neřekne jinak.
 - **Repozitář** https://github.com/tomaspolak82-commits/poznej-podvod je **veřejný** (ukázka do portfolia), je v něm `README.md`. E-mail autora v commitech zůstává (Tomášovo rozhodnutí). V historii (commit `4f52284`) je jméno starého FTP účtu; ten účet je už zrušený, historie se nepřepisuje.
 - **Kvůli veřejnému repozitáři před každým commitem ověř**, že připravené soubory neobsahují hesla, jméno FTP účtu ani obsah `.env`: projdi `git status` (`.env` v něm nesmí být) a prohledej připravené soubory (`git grep --cached`) na přihlašovací údaje. Když si nejsi jistý, necommituj a zeptej se.
