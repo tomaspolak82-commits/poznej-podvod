@@ -49,10 +49,11 @@ Povolené závislosti: `vite`, `@playwright/test`, `basic-ftp`, `dotenv`.
 ## 4. Hosting
 
 - Subreg.cz, tarif Start, sdílený hosting.
-- Subdoména `poznej-podvod.menestarosti.cz`, vlastní složka `/poznej-podvod.menestarosti.cz`, SSL zapnuté.
+- Subdoména `poznej-podvod.menestarosti.cz`, vlastní složka `/poznej-podvod.menestarosti.cz`.
 - Hlavní WordPress web ve složce `/menestarosti.cz`. **Na ten se nikdy nesahá.**
-- Neověřeno: jestli soubory patří přímo do složky subdomény, nebo do podsložky. Cesta je v `.env` (`FTP_REMOTE_DIR`) a Tomáš ji ověří ve FileZille.
-- Neověřeno: jestli Subreg podporuje FTPS. Skript zkusí šifrované spojení. Když selže, vypíše srozumitelnou chybu. Na nešifrované FTP bez souhlasu nepřecházej.
+- **Samostatný FTP účet subdomény** (`FTP_HOST=hosting.subreg.cz`, uživatel `poznejpodvod`). Jeho kořen `/` je přímo složka subdomény, bez WordPressu. Proto `FTP_REMOTE_DIR=/`. Tomáš ve FileZille ověřil, že složka je prázdná a že z ní web načítá soubory.
+- Šifrované FTP (FTPS/TLS) funguje (Tomáš ověřil ve FileZille). Na nešifrované FTP nikdy nepřecházej bez souhlasu.
+- **HTTPS zatím nefunguje**, certifikát řeší Subreg. Web je zatím na `http://poznej-podvod.menestarosti.cz`. Přesměrování na https do aplikace ani na server nepřidávej.
 
 ## 5. Obrazovky a průběh
 
@@ -319,7 +320,7 @@ Minimální sada:
 - štítek TRÉNINK je viditelný na všech obrazovkách simulace
 - 200% zvětšení textu: žádné vodorovné posouvání na 360 px
 - validace obsahu: každý JSON má povinná pole, každý `target` odpovídá existující části zprávy, každá `category` je z povoleného seznamu, v každé sekci jsou alespoň 4 legitimní zprávy, žádný scénář neobsahuje „7726“ ani pole `relatedArticle`
-- pojistka deploye (sekce 14): cesty s `..` nebo mimo `/poznej-podvod.menestarosti.cz` skončí chybou
+- pojistky deploye (sekce 14): cesty s `..` nebo mimo povolené hodnoty skončí chybou; cílová složka s WordPressem (`wp-config.php`, `wp-admin`, `wp-content`, `wp-includes`) skončí chybou
 
 Po testech Tomáš projde aplikaci ručně na svém telefonu s velkým systémovým písmem.
 
@@ -350,11 +351,14 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 ## 14. Nasazení (`scripts/deploy.mjs`)
 
 - Načte `.env` (`FTP_HOST`, `FTP_USER`, `FTP_PASSWORD`, `FTP_REMOTE_DIR`).
-- **Pojistka:** `FTP_REMOTE_DIR` nesmí obsahovat `..` a musí být **přesně** `/poznej-podvod.menestarosti.cz`, nebo začínat `/poznej-podvod.menestarosti.cz/` (pro případ, že soubory patří do podsložky, třeba `www`). Jinak skript skončí srozumitelnou chybou dřív, než se připojí, a nic nenahraje ani nesmaže.
-- `--dry-run` vypíše, co by nahrál, a nic neodešle.
+- **Pojistka 1 (cesta, před připojením):** `FTP_REMOTE_DIR` nesmí obsahovat `..` ani `\` a musí být `/` (kořen samostatného FTP účtu subdomény), přesně `/poznej-podvod.menestarosti.cz`, nebo začínat `/poznej-podvod.menestarosti.cz/`. Jinak skript skončí srozumitelnou chybou dřív, než cokoli sestaví nebo se připojí.
+- **Pojistka 2 (hlavní, obsah cílové složky, po připojení):** před jakýmkoli nahráním nebo mazáním skript vypíše obsah cílové složky. Pokud v ní najde cokoli z WordPressu (`wp-config.php`, `wp-admin`, `wp-content`, `wp-includes`, bez ohledu na velikost písmen), skončí chybou a nic nenahraje ani nesmaže. Totéž platí v režimu `--check`.
+- Obě pojistky jsou v `scripts/deploy-guard.mjs` a pokrývají je testy v `tests/unit/deploy-guard.spec.js`.
+- `--dry-run` sestaví aplikaci, vypíše, co by nahrál, a nepřipojí se.
+- `--check` se připojí přes FTPS, provede pojistku 2, vypíše obsah cílové složky a nic nezmění.
 - Před nahráním spustí build. Když selže, nenahrává.
-- Nahraje obsah `dist/` do `FTP_REMOTE_DIR`. Staré soubory maže až po úspěšném připojení a jen v této složce.
-- Na konci vypíše adresu, kde si má Tomáš výsledek ověřit.
+- Nahraje obsah `dist/` do `FTP_REMOTE_DIR`. Staré soubory maže až po úspěšném připojení a pojistce 2, a jen ve složkách `assets/` a `fonts/`, které patří našemu buildu.
+- Na konci vypíše adresu, kde si má Tomáš výsledek ověřit (zatím `http://`, viz sekce 4).
 
 ## 15. Skripty
 
