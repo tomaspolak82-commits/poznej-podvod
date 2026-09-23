@@ -14,7 +14,8 @@ Smysl: ne zábava sama o sobě, ale bezpečné chování a důvěra ve vlastní 
 
 Podklady ve složce `docs/`:
 - `docs/brand.md`: značka, tón, cílová skupina. Pokud se v něčem rozchází s tímto souborem, platí CLAUDE.md.
-- `docs/hloubkovy_vyzkum_podvody_senior.md`: výzkum podvodů na seniory v ČR, podklad pro obsah scénářů. **Soubor je jen lokální:** je v `.gitignore`, v repozitáři není (repozitář může být veřejný) a existuje jen na Tomášově disku. Kdo pracuje z čistého klonu, nemá ho. Je to výstup z AI vyhledávače a jeho zdroje nebyly ověřené. Obsahuje číslo 7726 a jména skutečných osobností. Obojí se do aplikace **nepřebírá** (sekce 7). Z tohoto souboru nic necituj do souborů, které jdou do repozitáře.
+- `docs/hloubkovy_vyzkum_podvody_senior.md`: výzkum podvodů na seniory v ČR, podklad pro obsah scénářů. **Soubor je jen lokální:** je v `.gitignore`, v repozitáři není (repozitář může být veřejný) a existuje jen na Tomášově disku. Kdo pracuje z čistého klonu, nemá ho. Je to výstup z AI vyhledávače a jeho zdroje nebyly ověřené. Obsahuje jména skutečných osobností, ta se do aplikace **nepřebírají** (sekce 7). Z tohoto souboru nic necituj do souborů, které jdou do repozitáře.
+- `docs/napady-scenaru.md`: náměty na scénáře pro milníky 4–6, u každého odkaz na zdroj (sekce 7). Je v repozitáři.
 - `docs/loga/`: tři varianty loga Méně Starostí (`logo.png`, `logo-white-background.png`, `cerveno_bile.png`), z nich se v milníku 2 vybere jedno (sekce 9).
 
 Název značky se píše vždy **„Méně Starostí“** (velké „S“, stejně jako na webu), v aplikaci, v dokumentaci i v testech.
@@ -77,6 +78,8 @@ Každá úroveň má krátký popis a **maximální počet bodů pro toto kolo**
 - Kolo = **5 zpráv** náhodně vybraných z banky sekce (sekce 7).
 - Hra začne hned. Nahoře je stále viditelné tlačítko **„Na co si dát pozor?“**. Otevře modal s nejčastějšími znaky podvodu v dané sekci. Modal se zavře tlačítkem „Zavřít a pokračovat“, klávesou Esc nebo klepnutím mimo. Hra pak pokračuje, kde byla.
 - Nahoře je průběh („Zpráva 2 z 5“) a body („Body: 7 z 18“).
+- Lišta s průběhem, body a nápovědou je nahoře přilepená jen tam, kde je dost místa. Na nízké obrazovce nebo s velkým písmem se nepřilepuje a odjede s obsahem (Tomáš schválil).
+- Odchod z rozehraného kola tlačítkem v aplikaci („Zpět na výběr úrovně“) se potvrzuje oknem: „Opravdu chcete kolo ukončit? Body se neuloží.“ Tlačítko Zpět v prohlížeči potvrzení nemá (nejde spolehlivě zachytit).
 - Trvale viditelný štítek nad simulací: **„TRÉNINK: cvičná ukázka, nic se neodesílá“**. Nejde zavřít.
 - Obnovení stránky uprostřed kola: hráč se vrátí na výběr úrovně, rozehrané kolo se neuloží do historie.
 
@@ -90,7 +93,7 @@ Každá úroveň má krátký popis a **maximální počet bodů pro toto kolo**
 ### Konec kola
 - Celkové body z maxima, porovnání s nejlepším výsledkem.
 - Stručné shrnutí chyb v tomto kole.
-- Tlačítka: „Hrát další kolo“ (nové náhodné zprávy), „Zpět na hlavní stránku“.
+- Tlačítka: „Hrát dalších 5“ (nových 5 náhodných zpráv), „Zpět na hlavní stránku“.
 
 ## 6. Simulovaná prostředí (realismus)
 
@@ -119,7 +122,7 @@ Odkazy, tlačítka a přílohy nikam nevedou.
 ## 7. Obsah scénářů
 
 ### Banka zpráv
-- Cíl: **15–20 scénářů na sekci**, z toho **alespoň 4 legitimní** zprávy.
+- Zásoba: **aspoň 20 scénářů v sekci E-mail i v sekci Zprávy**, z toho **aspoň 5 legitimních**. Náměty jsou v `docs/napady-scenaru.md`.
 - Kolo vybere náhodně 5 zpráv. **V každém kole je 1–2 legitimní.** Zprávy z předchozího kola stejné sekce se v dalším kole neopakují, pokud to banka dovolí. Platí i mezi návštěvami (ID posledního kola se ukládá do `localStorage`, zvlášť pro každou sekci).
 - Pro testy musí jít náhodu zafixovat parametrem `?seed=123`. Parametr stojí v adrese před `#`, např. `/?seed=123#/email`.
 
@@ -176,7 +179,7 @@ Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (�
 `target` odkazuje na část zprávy (`fromName`, `fromAddress`, `subject`, `body.N`, `button`, `link`, `attachment`, `from`, `messages.N`). Klikání je vázané na prvky, ne na souřadnice.
 
 Kategorie hrozeb (pro statistiku nejčastějších chyb):
-`odesilatel`, `odkaz-platba`, `casovy-tlak`, `zadost-o-udaje`, `vyhra-nabidka`, `priloha`, `jazyk-chyby`, `nezname-cislo`, `emocni-natlak`, `neobvykla-zadost`.
+`odesilatel`, `odkaz-platba`, `casovy-tlak`, `zadost-o-udaje`, `vyhra-nabidka`, `priloha`, `jazyk-chyby`, `nezname-cislo`, `emocni-natlak`, `neobvykla-zadost`, `qr-kod`, `instalace-aplikace`.
 
 Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře nemají.
 
@@ -185,12 +188,18 @@ Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře ne
 ### Pravidla pro obsah
 - **Jen reálné situace z ČR.** Primární zdroje jsou oficiální varování: policie.gov.cz, nukib.gov.cz, cnb.cz, ceskaposta.cz a weby bank. `docs/hloubkovy_vyzkum_podvody_senior.md` (jen lokální, sekce 1) slouží jen jako přehled a vodítko, ne jako ověřený zdroj. Nevymýšlej typy podvodů, které se v ČR nedějí.
 - **Skutečné osobnosti nejmenuj** (ani u investičních podvodů, kde výzkum jména uvádí).
-- **Pestrost:** v každé sekci střídej legendy (zásilka, banka, úřad a dávky, pokuta, výhra, exekuce, „vnuk / dítě v nouzi“, nové číslo, investice) i způsoby (odkaz, platba, žádost o kód, příloha, citový nátlak).
+- **Pestrost:** scénáře v sekci střídají tři věci, aby se kombinace neopakovaly:
+  - **za koho se podvodník vydává:** pošta, úřad, banka, energie, pojišťovna, rodina, kamarád, e-shop, bazar;
+  - **co chce:** kliknout, zaplatit, zadat kód, otevřít přílohu, naskenovat QR, nainstalovat aplikaci, odpovědět;
+  - **jaký tlak používá:** strach, spěch, zvědavost, soucit, výhra.
+- **Čeština:** aspoň polovina podvodů v každé sekci je psaná **bezchybnou češtinou**. Podvodníci dnes píšou s pomocí AI a pravopis už nic neprozradí. Chyby v jazyce (`jazyk-chyby`) jsou jen u menšiny podvodů a nikdy nejsou jedinou stopou.
+- **Obtížnost:** část podvodů je zjevná (divná adresa, chyby, výhra), část těžká: věrohodný odesílatel i adresa, slušný tón, a prozradí je teprve to, co chtějí (kód, celé číslo karty, přílohu, platbu jinou cestou než obvykle).
 - **Počet hrozeb** se mezi scénáři liší (1–4).
+- **Skutečné osobnosti** se nejmenují dál, i když je zdroj uvádí.
 - **Legitimní zprávy** musí být skutečně věrohodné (potvrzení objednávky, připomínka lékaře, zpráva od rodiny ze známého čísla…), ne triviálně nudné.
 - **Názvy institucí v textu ano, loga a firemní grafika ne.**
-- **Domény a telefonní čísla v podvodných zprávách smyšlené.** Tomáši u každé nové domény připomeň, ať ověří, že nepatří reálnému webu. Telefonní čísla používej zjevně neplatná nebo z rozsahu, který se nepřiděluje, a upozorni, že to má Tomáš ověřit.
-- **Nezmiňuj číslo 7726** (nikde v aplikaci, i když ho výzkum uvádí) ani jiné postupy, které nejsou ověřené pro ČR.
+- **Domény a telefonní čísla v podvodných zprávách smyšlené.** Výjimku (podvržený odesílatel se skutečnou adresou úřadu, např. náměty z `docs/napady-scenaru.md`) použij jen po Tomášově výslovném schválení u konkrétního scénáře. Tomáši u každé nové domény připomeň, ať ověří, že nepatří reálnému webu. Telefonní čísla používej zjevně neplatná nebo z rozsahu, který se nepřiděluje, a upozorni, že to má Tomáš ověřit.
+- **Číslo 7726** je ověřené pro ČR: Policie ČR na policie.gov.cz/kyberkriminalita/podvodne-sms-zpravy uvádí „reportujte ji svému operátorovi na jednotnou linku 7726 (cestou SMS zprávy)“. Ve vysvětleních u **podvodných SMS** ho uváděj jako radu, touto větou: „Podezřelou SMS můžete přeposlat na číslo 7726, operátor pak odesílatele zablokuje.“ Jen u SMS, ne u e-mailu ani chatu (WhatsApp), tam to nefunguje. Jiné postupy, které nejsou ověřené pro ČR, neuváděj.
 - **Každý nový text je návrh k Tomášovu ověření.** Nevydávej ho za citaci skutečného podvodu.
 - Tón vysvětlení: vykání, krátké věty, klidně, „soused u plotu“. Bez strašení, bez vykřičníků a bez frází revoluční, unikátní, komplexní, neváhejte, v dnešní uspěchané době, řešení na míru.
 - `npm run prehled` vygeneruje `docs/prehled-scenaru.md`, čitelný přehled všech scénářů (text zprávy, hrozby, vysvětlení) pro Tomášovu kontrolu.
@@ -210,8 +219,11 @@ Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře ne
 - Formulace povzbudivé, ne známkovací. Místo „Chyba!“ třeba „Tohle místo stojí za druhý pohled.“
 
 ### Historie (`localStorage`, jen v prohlížeči hráče, přetrvává i mezi návštěvami)
-- nejvyšší skóre pro každou sekci a úroveň (včetně maxima, ze kterého bylo dosaženo)
+- nejvyšší skóre pro každou sekci a úroveň (včetně maxima, ze kterého bylo dosaženo). **Lepší je vyšší procento** (body / maximum); při shodě procenta vyhrává kolo s vyšším maximem. Zobrazuje se „15 z 16 bodů“, ne procenta.
 - počitadlo přehlédnutých hrozeb podle kategorie → „Nejčastěji vám unikalo: adresa odesílatele, spěch ve zprávě“
+  - pokročilá úroveň: každá neoznačená hrozba podvodné zprávy (bez ohledu na rozhodnutí)
+  - základní úroveň: když hráč podvod označí za „v pořádku“, započítají se všechny hrozby té zprávy
+  - legitimní zpráva označená za podvod se do počitadla nepočítá (nemá kategorii)
 - počet odehraných kol
 - ID zpráv z posledního kola v každé sekci (kvůli neopakování)
 - Panel „Vítejte zpět“ na hlavní stránce: „Jsme rádi, že jste zase tady. Nejlepší výsledky: E-mail (pokročilá) 16 z 19 bodů… Nejčastěji vám unikalo: …“
@@ -322,7 +334,7 @@ Minimální sada:
 - stránka obsahuje `noindex` (do milníku 8), po milníku 8 už ne
 - štítek TRÉNINK je viditelný na všech obrazovkách simulace
 - 200% zvětšení textu: žádné vodorovné posouvání na 360 px
-- validace obsahu: každý JSON má povinná pole, každý `target` odpovídá existující části zprávy, každá `category` je z povoleného seznamu, v každé sekci jsou alespoň 4 legitimní zprávy, žádný scénář neobsahuje „7726“ ani pole `relatedArticle`
+- validace obsahu: každý JSON má povinná pole, každý `target` odpovídá existující části zprávy, každá `category` je z povoleného seznamu, v každé sekci je aspoň 20 scénářů a z nich aspoň 5 legitimních (v milníku 3 s testovacími zprávami se kontroluje jen minimum pro losování), žádný scénář nemá pole `relatedArticle`
 - pojistky deploye (sekce 14): cesty s `..` nebo mimo povolené hodnoty skončí chybou; cílová složka s WordPressem (`wp-config.php`, `wp-admin`, `wp-content`, `wp-includes`) skončí chybou
 
 Po testech Tomáš projde aplikaci ručně na svém telefonu s velkým systémovým písmem.
@@ -336,10 +348,10 @@ Po testech Tomáš projde aplikaci ručně na svém telefonu s velkým systémov
    4. Push až po OK.
    U každého příkazu jednou větou vysvětli, co dělá.
 2. **Kostra, vzhled a první nasazení:** hlavička, patička, hlavní stránka s dlaždicemi a obrazovka výběru úrovně ve finálním moderním vzhledu (sekce 9), výběr loga z `docs/loga/`, stažení fontů. Do `index.html` přidej `<meta name="robots" content="noindex">`, aby vyhledávače nezaindexovaly nedodělanou verzi (bez `robots.txt` se zákazem, jinak by vyhledávač meta značku neviděl) → **Tomáš schválí vzhled.** Pak `scripts/deploy.mjs` s `--dry-run` a pojistkou a první nahrání na server, aby se problémy s hostingem ukázaly hned.
-3. **Herní engine:** výběr úrovně, náhodný výběr kola se `seed`, bodování, modal nápovědy, vyhodnocení se žárovkami, konec kola, historie a „Vítejte zpět“. Zatím s jednou testovací zprávou.
+3. **Herní engine:** výběr úrovně, náhodný výběr kola se `seed`, bodování, modal nápovědy, vyhodnocení se žárovkami, konec kola, historie a „Vítejte zpět“. Zatím se **7 testovacími zprávami v každé sekci** (5 podvodů, 2 legitimní), zjevně označenými jako testovací; v milníku 4 je nahradí skutečné scénáře. Postup v pěti částech: (1) logika a testy, (2) základní úroveň, (3) pokročilá úroveň, (4) nápověda a historie, (5) průchody v prohlížeči. Po každé části commit a push s českou zprávou, pokud projde build i všechny testy (Tomáš předem povolil); když testy neprojdou, zastavit se a napsat mu. Texty nápovědy a vyhodnocení nejdřív poslat Tomášovi ke schválení. **Milník 3 se na server nenahrává**, nasazuje se až po milníku 4.
 4. **E-mailová aplikace + 3 vzorové scénáře** (2 podvody, 1 legitimní) → **Tomáš schválí.**
 5. **Aplikace Zprávy (SMS + chat) + 3 vzorové scénáře** → **Tomáš schválí.**
-6. **Doplnění obsahu** na 15–20 scénářů v každé sekci + `npm run prehled` → Tomáš ověří texty.
+6. **Doplnění obsahu** na aspoň 20 scénářů v každé sekci (z toho aspoň 5 legitimních, pravidla pestrosti a obtížnosti v sekci 7) + `npm run prehled` → Tomáš ověří texty.
 7. **Testy a kontrola** podle sekce 12, oprava nalezených chyb. Tomáš projde aplikaci ručně na telefonu s velkým systémovým písmem.
 8. **Vydání:** **odstraň `noindex`** z `index.html` (a uprav test), nasazení, ruční kontrola na telefonu (s velkým systémovým písmem) a tabletu.
 
