@@ -20,6 +20,15 @@
   flex-wrap: wrap;
 }
 
+/* The text part stays next to the icon unless it gets narrower than ~10 characters of large text */
+.tile__head > :not(.icon-bubble),
+.level__head > :not(.icon-bubble),
+.level-card__head > :not(.icon-bubble),
+.steps__item > p {
+  flex: 1 1 10rem;
+  min-width: 0;
+}
+
 .home {
   display: grid;
   gap: var(--space-5);

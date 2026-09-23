@@ -43,7 +43,20 @@ test.describe('home page', () => {
     }
   });
 
-  test('footer has Facebook and privacy policy links', async ({ page }) => {
+  test('logo sits next to the title, not above it', async ({ page }) => {
+    const logo = await page.getByRole('img', { name: 'Méně Starostí' }).boundingBox();
+    const title = await page.getByText('Poznej podvod', { exact: true }).boundingBox();
+    expect(logo.x + logo.width).toBeLessThanOrEqual(title.x);
+    // Vertical overlap = same row
+    expect(logo.y).toBeLessThan(title.y + title.height);
+    expect(title.y).toBeLessThan(logo.y + logo.height);
+  });
+
+  test('footer has main site, Facebook and privacy policy links', async ({ page }) => {
+    await expect(page.getByRole('contentinfo').getByRole('link', { name: 'menestarosti.cz' })).toHaveAttribute(
+      'href',
+      'https://menestarosti.cz/',
+    );
     await expect(page.getByRole('contentinfo')).toContainText('© ');
     await expect(page.getByRole('contentinfo')).toContainText('Méně Starostí');
     await expect(page.getByRole('link', { name: 'Facebook' })).toHaveAttribute(

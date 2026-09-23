@@ -9,6 +9,9 @@ dist/
 .env.*
 !.env.example
 
+# Local-only research notes (unverified AI output, not for the public repo)
+docs/hloubkovy_vyzkum_podvody_senior.md
+
 # Playwright
 test-results/
 playwright-report/

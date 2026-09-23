@@ -14,7 +14,7 @@ Smysl: ne zábava sama o sobě, ale bezpečné chování a důvěra ve vlastní 
 
 Podklady ve složce `docs/`:
 - `docs/brand.md`: značka, tón, cílová skupina. Pokud se v něčem rozchází s tímto souborem, platí CLAUDE.md.
-- `docs/hloubkovy_vyzkum_podvody_senior.md`: výzkum podvodů na seniory v ČR, podklad pro obsah scénářů. Je to výstup z AI vyhledávače a jeho zdroje nebyly ověřené. Obsahuje číslo 7726 a jména skutečných osobností. Obojí se do aplikace **nepřebírá** (sekce 7).
+- `docs/hloubkovy_vyzkum_podvody_senior.md`: výzkum podvodů na seniory v ČR, podklad pro obsah scénářů. **Soubor je jen lokální:** je v `.gitignore`, v repozitáři není (repozitář může být veřejný) a existuje jen na Tomášově disku. Kdo pracuje z čistého klonu, nemá ho. Je to výstup z AI vyhledávače a jeho zdroje nebyly ověřené. Obsahuje číslo 7726 a jména skutečných osobností. Obojí se do aplikace **nepřebírá** (sekce 7). Z tohoto souboru nic necituj do souborů, které jdou do repozitáře.
 - `docs/loga/`: tři varianty loga Méně Starostí (`logo.png`, `logo-white-background.png`, `cerveno_bile.png`), z nich se v milníku 2 vybere jedno (sekce 9).
 
 Název značky se píše vždy **„Méně Starostí“** (velké „S“, stejně jako na webu), v aplikaci, v dokumentaci i v testech.
@@ -28,7 +28,7 @@ Tomáš nepíše kód sám. Zadává, kontroluje a učí se pracovat v terminál
 3. **Příkazy vysvětluj.** U každého příkazu, který má Tomáš spustit sám, napiš jednou větou, co dělá. U Gitu a GitHubu ho veď krok za krokem, dělá to poprvé.
 4. **Po každém milníku** spusť `npm run build` a `npm test`. Když projdou, napiš, co a proč commitneš, a **počkej na Tomášovo OK**. Teprve pak udělej commit s českou zprávou („Milník 3: e-mailová aplikace a 3 vzorové scénáře“). Stejně tak push a změna větve jen po OK.
 5. **Nepřidávej závislosti** mimo sekci 3 bez Tomášova souhlasu.
-6. **Nikdy necommituj `.env`** ani nic s hesly.
+6. **Nikdy necommituj `.env`** ani nic s hesly. Jméno FTP účtu a jiné přihlašovací údaje nepiš do žádného souboru v repozitáři (repozitář může být veřejný), patří jen do `.env`.
 7. **Nasazení na server spouštěj jen na výslovný pokyn.**
 8. **Obsah scénářů piš nejdřív jako vzorek 3 kusů.** Rozepisuj dál až po Tomášově schválení.
 9. **Když si něčím nejsi jistý** (chování hostingu, reálné znění podvodu, právní otázka), řekni to. Nehádej.
@@ -51,19 +51,21 @@ Povolené závislosti: `vite`, `@playwright/test`, `basic-ftp`, `dotenv`.
 - Subreg.cz, tarif Start, sdílený hosting.
 - Subdoména `poznej-podvod.menestarosti.cz`, vlastní složka `/poznej-podvod.menestarosti.cz`.
 - Hlavní WordPress web ve složce `/menestarosti.cz`. **Na ten se nikdy nesahá.**
-- **Samostatný FTP účet subdomény** (`FTP_HOST=hosting.subreg.cz`, uživatel `poznejpodvod`). Jeho kořen `/` je přímo složka subdomény, bez WordPressu. Proto `FTP_REMOTE_DIR=/`. Tomáš ve FileZille ověřil, že složka je prázdná a že z ní web načítá soubory.
+- **Samostatný FTP účet subdomény** (`FTP_HOST=hosting.subreg.cz`, jméno účtu je jen v `.env`, do repozitáře se nepíše). Jeho kořen `/` je přímo složka subdomény, bez WordPressu. Proto `FTP_REMOTE_DIR=/`. Tomáš ve FileZille ověřil, že složka je prázdná a že z ní web načítá soubory.
 - Šifrované FTP (FTPS/TLS) funguje (Tomáš ověřil ve FileZille). Na nešifrované FTP nikdy nepřecházej bez souhlasu.
 - **HTTPS zatím nefunguje**, certifikát řeší Subreg. Web je zatím na `http://poznej-podvod.menestarosti.cz`. Přesměrování na https do aplikace ani na server nepřidávej.
 
 ## 5. Obrazovky a průběh
 
 ### Hlavní stránka („Poznej podvod“)
-- Hlavička na všech obrazovkách: **velké tlačítko „← Zpět na Méně Starostí“** (https://menestarosti.cz/hry-pro-senior/), logo Méně Starostí, název „Poznej podvod“, podtitul „Trénink pro seniory: jak poznat podvod v telefonu a na internetu“.
-- **Během hry (kolo, vyhodnocení, konec kola) je hlavička zmenšená**, aby zpráva měla na mobilu víc místa: menší logo a název, podtitul se nezobrazuje. Tlačítko „← Zpět na Méně Starostí“ a štítek TRÉNINK musí zůstat vždy vidět (Tomáš schválil).
+- Hlavička na všech obrazovkách: logo Méně Starostí, **vedle něj** (i na mobilu) název „Poznej podvod“ a pod názvem podtitul „Trénink pro seniory: jak poznat podvod v telefonu a na internetu“. Na mobilu je logo malé (40 px), aby hlavička zabírala co nejméně místa. Jen při velmi velkém písmu se logo přesune nad název.
+- **Výrazné tlačítko „← Zpět na Méně Starostí“** (https://menestarosti.cz/hry-pro-senior/) je v hlavičce **jen na hlavní stránce**. Na ostatních obrazovkách (výběr úrovně, hra, vyhodnocení, konec kola) v hlavičce není; tam je vždy tlačítko pro krok zpět v aplikaci („Zpět na výběr tréninku“, „Zpět na výběr úrovně“ apod.).
+- **Patička na všech obrazovkách** má nenápadný textový odkaz „menestarosti.cz“ (https://menestarosti.cz/), vedle odkazů na Facebook a Zásady ochrany osobních údajů.
+- **Během hry (kolo, vyhodnocení, konec kola) je hlavička zmenšená**, aby zpráva měla na mobilu víc místa: menší logo a název, podtitul se nezobrazuje. Tlačítko pro krok zpět a štítek TRÉNINK musí zůstat vždy vidět (Tomáš schválil).
 - Pokud hráč už dřív hrál: panel **„Vítejte zpět“**. Nejvyšší skóre v každé sekci a úrovni a nejčastější chyby (sekce 8).
 - Dlaždice sekcí: **E-mail**, **Zprávy (SMS a WhatsApp)**. Budoucí sekce (Prohlížeč, QR platba, Telefonát) jako neaktivní dlaždice „Připravujeme“.
 - Úplně dole na hlavní stránce (nad patičkou) nenápadný odkaz s ikonou **„Smazat moji historii“** s potvrzením (sekce 8). Zobrazí se, jen když nějaká historie existuje.
-- Odkaz „← Zpět na Méně Starostí“ vede na https://menestarosti.cz/hry-pro-senior/ (Tomáš ověřil, že existuje). Jinak aplikace na obsah hlavního webu nenavazuje, žádné odkazy na články.
+- Tlačítko „← Zpět na Méně Starostí“ vede na https://menestarosti.cz/hry-pro-senior/ (Tomáš ověřil, že existuje), odkaz v patičce na https://menestarosti.cz/. Jinak aplikace na obsah hlavního webu nenavazuje, žádné odkazy na články.
 
 ### Výběr úrovně
 Po klepnutí na sekci:
@@ -181,7 +183,7 @@ Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře ne
 `sources` je interní poznámka pro ověřování, v aplikaci se nezobrazuje.
 
 ### Pravidla pro obsah
-- **Jen reálné situace z ČR.** Primární zdroje jsou oficiální varování: policie.gov.cz, nukib.gov.cz, cnb.cz, ceskaposta.cz a weby bank. `docs/hloubkovy_vyzkum_podvody_senior.md` slouží jen jako přehled a vodítko, ne jako ověřený zdroj. Nevymýšlej typy podvodů, které se v ČR nedějí.
+- **Jen reálné situace z ČR.** Primární zdroje jsou oficiální varování: policie.gov.cz, nukib.gov.cz, cnb.cz, ceskaposta.cz a weby bank. `docs/hloubkovy_vyzkum_podvody_senior.md` (jen lokální, sekce 1) slouží jen jako přehled a vodítko, ne jako ověřený zdroj. Nevymýšlej typy podvodů, které se v ČR nedějí.
 - **Skutečné osobnosti nejmenuj** (ani u investičních podvodů, kde výzkum jména uvádí).
 - **Pestrost:** v každé sekci střídej legendy (zásilka, banka, úřad a dávky, pokuta, výhra, exekuce, „vnuk / dítě v nouzi“, nové číslo, investice) i způsoby (odkaz, platba, žádost o kód, příloha, citový nátlak).
 - **Počet hrozeb** se mezi scénáři liší (1–4).
@@ -238,7 +240,7 @@ Vzhled vychází z hlavního webu menestarosti.cz: bílá hlavička, světle še
 }
 ```
 
-- **Hlavička** je bílá (žádná tmavá ani červená plocha): logo, vedle něj název „Poznej podvod“ červeně (`--color-red-dark`), pod ním podtitul tmavým textem. Tlačítko „← Zpět na Méně Starostí“ je výrazné, ale ve stejném stylu: červený obrys a červený tučný text na bílé, po najetí nebo stisku plné červené s bílým textem.
+- **Hlavička** je bílá (žádná tmavá ani červená plocha): logo, vedle něj název „Poznej podvod“ červeně (`--color-red-dark`), pod ním podtitul tmavým textem. Tlačítko „← Zpět na Méně Starostí“ (jen na hlavní stránce, sekce 5) je výrazné, ale ve stejném stylu: červený obrys a červený tučný text na bílé, po najetí nebo stisku plné červené s bílým textem.
 - **Stránka** má světle šedé pozadí (`--color-bg`), obsah je v bílých kartách se stínem. Patička je bílá.
 - **Nadpisy sekcí** (např. „Vyberte, co chcete trénovat“, „Brzy přibude“, „Jak trénink probíhá“, název sekce na výběru úrovně) jsou červené (`--color-red-dark`, třída `.section-title`). **Nadpisy karet** jsou tmavé (`--color-heading`).
 - **Tlačítka** jsou plná červená `--color-red-dark` s bílým tučným textem (kontrast 5,3:1). Vedlejší tlačítka mají červený obrys a červený text na bílé. Světlá `--color-red` (#ff4d4d) má s bílým textem jen 3,3:1, proto se na tlačítka ani text nepoužívá.
@@ -252,7 +254,7 @@ Vzhled vychází z hlavního webu menestarosti.cz: bílá hlavička, světle še
   - **Lato je verze 2.015 „LatoLatin“ z oficiálního webu latofonts.com**, ne z Google Fonts. Google Fonts nabízí jen Lato 1.0, kterému chybí ě č ř ů ť ď ň.
 - Logo: `public/logo.png` (kopie `docs/loga/logo.png`, červené srdce a šedá ruka na průhledném pozadí). Varianta `cerveno_bile.png` má bílou ruku a na bílé hlavičce by nebyla vidět.
 - Jen světlý režim, žádný tmavý režim podle systému.
-- Patička: © Méně Starostí, odkaz na Facebook (https://www.facebook.com/menestarosti), Zásady ochrany osobních údajů (https://menestarosti.cz/ochrana-osobnich-udaju/).
+- Patička: © Méně Starostí, nenápadný odkaz „menestarosti.cz“ (https://menestarosti.cz/), odkaz na Facebook (https://www.facebook.com/menestarosti), Zásady ochrany osobních údajů (https://menestarosti.cz/ochrana-osobnich-udaju/).
 - Žádní maskoti, žádný dětský styl.
 
 ### Moderní styl
@@ -303,7 +305,8 @@ Než se začne stavět engine, připrav v milníku 2 hlavní stránku a výběr 
 Projekty (zařízení): `Pixel 7`, `iPhone 13`, `Galaxy Tab S4` (nebo `iPad (gen 7)`), `Desktop Chrome` + mobil s viewportem 320 px.
 
 Minimální sada:
-- hlavní stránka: tlačítko Zpět na Méně Starostí, logo, dlaždice sekcí, neaktivní dlaždice „Připravujeme“
+- hlavní stránka: tlačítko Zpět na Méně Starostí, logo vedle názvu, dlaždice sekcí, neaktivní dlaždice „Připravujeme“
+- ostatní obrazovky: tlačítko Zpět na Méně Starostí v hlavičce není (ani po návratu z hlavní stránky a zpět), je tam tlačítko pro krok zpět; v patičce je odkaz „menestarosti.cz“
 - kolo vybere 5 zpráv, obsahuje 1–2 legitimní, se stejným `seed` vždy stejné pořadí
 - základní úroveň: správné i špatné rozhodnutí → správné body a vyhodnocení
 - pokročilá úroveň: označení všech hrozeb, přehlédnutá hrozba, zbytečné označení, legitimní zpráva bez označení i s označením, zrušení označení druhým klepnutím → body přesně podle sekce 8

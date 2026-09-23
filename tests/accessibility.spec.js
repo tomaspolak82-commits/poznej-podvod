@@ -27,6 +27,8 @@ for (const [name, url] of PAGES) {
     await page.goto(url);
     const tooSmall = await page.evaluate(() =>
       [...document.querySelectorAll('a, button')]
+        // Hidden elements (e.g. the home-only header button) are not on screen, so size does not apply
+        .filter((el) => el.getClientRects().length > 0)
         .map((el) => ({ text: el.textContent.trim().slice(0, 40), box: el.getBoundingClientRect() }))
         .filter(({ box }) => box.width < 47.5 || box.height < 47.5)
         .map(({ text, box }) => `${text} (${Math.round(box.width)}×${Math.round(box.height)})`),

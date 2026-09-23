@@ -2,6 +2,7 @@ import { findActiveSection } from './sections.js';
 import { renderHome } from './screens/home.js';
 import { renderLevelSelect } from './screens/level-select.js';
 import { renderRoundPlaceholder } from './screens/round-placeholder.js';
+import { setMainSiteButtonVisible } from './ui/layout.js';
 
 // Hash routes: #/            → home
 //              #/<section>   → level select
@@ -27,16 +28,15 @@ export function startRouter(container) {
   let firstRender = true;
 
   const render = () => {
-    const result = resolve(container);
+    let result = resolve(container);
 
     // Unknown or inactive route → go home without adding a history entry
     if (!result) {
       history.replaceState(null, '', `${window.location.pathname}${window.location.search}#/`);
-      renderHome(container);
-      document.title = 'Poznej podvod | Méně Starostí';
-    } else {
-      document.title = result.title;
+      result = renderHome(container);
     }
+    document.title = result.title;
+    setMainSiteButtonVisible(result.isHome === true);
 
     if (!firstRender) {
       window.scrollTo(0, 0);

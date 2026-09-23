@@ -72,5 +72,5 @@ export function renderHome(container) {
     </div>
   `;
 
-  return { title: 'Poznej podvod | Méně Starostí' };
+  return { title: 'Poznej podvod | Méně Starostí', isHome: true };
 }

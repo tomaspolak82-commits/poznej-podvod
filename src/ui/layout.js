@@ -1,6 +1,7 @@
 import { icon } from './icons.js';
 
 const MAIN_SITE_URL = 'https://menestarosti.cz/hry-pro-senior/';
+const MAIN_SITE_HOME_URL = 'https://menestarosti.cz/';
 const FACEBOOK_URL = 'https://www.facebook.com/menestarosti';
 const PRIVACY_URL = 'https://menestarosti.cz/ochrana-osobnich-udaju/';
 
@@ -14,12 +15,13 @@ export function renderLayout(root) {
       <div class="container site-header__inner">
         <div class="site-header__brand">
           <img class="site-header__logo" src="${logoUrl}" alt="Méně Starostí" width="72" height="72" />
-          <div>
+          <div class="site-header__text">
             <p class="site-header__title">Poznej podvod</p>
             <p class="site-header__subtitle">Trénink pro seniory: jak poznat podvod v telefonu a na internetu</p>
           </div>
         </div>
-        <a class="site-header__back" href="${MAIN_SITE_URL}">
+        <!-- Shown only on the home page; other screens have their own step-back button -->
+        <a class="site-header__back" href="${MAIN_SITE_URL}" data-main-site-button hidden>
           ${icon('arrowLeft')}
           <span>Zpět na Méně Starostí</span>
         </a>
@@ -34,6 +36,7 @@ export function renderLayout(root) {
       <div class="container site-footer__inner">
         <p class="site-footer__copy">© ${year} Méně Starostí</p>
         <ul class="site-footer__links">
+          <li><a class="site-footer__link" href="${MAIN_SITE_HOME_URL}">menestarosti.cz</a></li>
           <li><a class="site-footer__link" href="${FACEBOOK_URL}">Facebook</a></li>
           <li><a class="site-footer__link" href="${PRIVACY_URL}">Zásady ochrany osobních údajů</a></li>
         </ul>
@@ -42,4 +45,9 @@ export function renderLayout(root) {
   `;
 
   return root.querySelector('[data-screen-root]');
+}
+
+// The prominent "back to Méně Starostí" button belongs to the home page only
+export function setMainSiteButtonVisible(visible) {
+  document.querySelector('[data-main-site-button]').hidden = !visible;
 }
