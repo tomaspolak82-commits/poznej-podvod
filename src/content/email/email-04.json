@@ -1,45 +1,47 @@
 {
   "id": "email-04",
   "section": "email",
-  "title": "Testovací zpráva E4",
+  "title": "Upomínka neuhrazené faktury s přílohou",
   "isScam": true,
   "message": {
-    "fromName": "Testovací odesílatel 4",
-    "fromAddress": "odesilatel4@test.invalid",
-    "date": "dnes 8:00",
-    "subject": "Testovací zpráva E4",
+    "fromName": "Kalvora velkoobchod",
+    "fromAddress": "fakturace@kalvora-velkoobchod.cz",
+    "date": "dnes 10:03",
+    "subject": "Upomínka: neuhrazená faktura č. 2026-0917",
     "body": [
-      "Testovací zpráva 4, odstavec 1.",
-      "Testovací zpráva 4, odstavec 2.",
-      "Testovací zpráva 4, odstavec 3."
-    ]
+      "Dobrý den,",
+      "při kontrole účetnictví jsme zjistili, že dosud nebyla uhrazena faktura č. 2026-0917 na částku 4 368 Kč.",
+      "Fakturu i údaje k platbě najdete v příloze.",
+      "Prosíme o úhradu do 3 pracovních dnů. Jinak budeme nuceni předat pohledávku k vymáhání.",
+      "Pokud jste fakturu mezitím uhradili, považujte prosím tuto zprávu za bezpředmětnou.",
+      "S pozdravem, účtárna Kalvora velkoobchod s.r.o."
+    ],
+    "attachment": {
+      "name": "Faktura_2026-0917.doc"
+    }
   },
   "threats": [
     {
-      "target": "fromName",
-      "category": "odesilatel",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
-    },
-    {
-      "target": "body.0",
-      "category": "emocni-natlak",
-      "title": "Testovací hrozba 2",
-      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+      "target": "attachment",
+      "alsoTargets": ["body.2"],
+      "category": "priloha",
+      "title": "Číslo účtu jen v příloze",
+      "explanation": "Číslo účtu v textu chybí, abyste museli otevřít přílohu. Podle iROZHLASu byl právě v takových přílohách škodlivý program."
     },
     {
       "target": "body.1",
-      "category": "zadost-o-udaje",
-      "title": "Testovací hrozba 3",
-      "explanation": "Testovací vysvětlení hrozby 3. Skutečný text doplníme v milníku 4."
+      "alsoTargets": ["subject", "body.0"],
+      "category": "neobvykla-zadost",
+      "title": "Faktura, o které nic nevíte",
+      "explanation": "Upomínka nepíše, za co faktura je, a neosloví vás jménem. Když si nevzpomínáte, že byste u této firmy něco objednali, je to důvod zpozornět."
     },
     {
-      "target": "body.2",
-      "category": "qr-kod",
-      "title": "Testovací hrozba 4",
-      "explanation": "Testovací vysvětlení hrozby 4. Skutečný text doplníme v milníku 4."
+      "target": "body.3",
+      "category": "casovy-tlak",
+      "title": "Spěch a hrozba vymáháním",
+      "explanation": "Krátká lhůta a hrozba vymáháním mají zabránit tomu, abyste si věc v klidu ověřili."
     }
   ],
-  "summary": "Testovací shrnutí zprávy E4. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "summary": "Faktura od firmy sama o sobě podvod není, posílají je i řemeslníci. Tahle ale nepíše, za co je, a číslo účtu schovává do přílohy. Když si nevzpomínáte, že byste něco objednali, přílohu neotevírejte. Ověřte si to u firmy na čísle, které si sami najdete, ne na čísle ze zprávy.",
+  "sources": ["irozhlas.cz/veda-technologie/technologie/malware-podvodny-e-mail-virus_2002180914_sot (18. 2. 2020)"]
 }

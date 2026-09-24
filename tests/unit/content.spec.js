@@ -4,6 +4,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { CONTENT_SECTIONS, readSection, validateContent } from '../../scripts/content-files.mjs';
 import { checkSectionGoals, listTargets, validateScenario } from '../../src/engine/validate.js';
+import { RECIPIENT } from '../../src/texts.js';
 
 const CONTENT_DIR = path.resolve('src/content');
 // Switch on in milestone 6, when the full bank of scenarios exists (CLAUDE.md, section 7)
@@ -51,6 +52,11 @@ test.describe('content: real scenario files', () => {
   test('scenario IDs are unique across all sections', () => {
     const all = CONTENT_SECTIONS.flatMap((section) => readSection(CONTENT_DIR, section).map((f) => f.data.id));
     expect(new Set(all).size).toBe(all.length);
+  });
+
+  test('email-06 is sent under the name of the player (the game character RECIPIENT)', () => {
+    const scenario = readSection(CONTENT_DIR, 'email').find((f) => f.data.id === 'email-06').data;
+    expect(scenario.message.fromName).toBe(RECIPIENT);
   });
 
   test('content goal: at least 20 scenarios and 5 legitimate per section (milestone 6)', () => {

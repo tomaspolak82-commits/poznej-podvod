@@ -13,12 +13,20 @@ export const CLOSE_AND_CONTINUE = 'Zavřít a pokračovat';
 export const HINTS = {
   email: {
     title: 'Na co si dát pozor v e-mailu',
+    // Items 4 and 5 revised in milestone 6 (approved by Tomáš): a link alone is not a scam;
+    // an unexpected attachment is risky even from a known sender
     items: [
       ['Adresa odesílatele.', 'Jméno odesílatele si může napsat kdokoli. Vždy si klepnutím zobrazte i adresu, která se za ním skrývá.'],
       ['Oslovení.', 'Firma, u které máte účet, vás obvykle osloví jménem. Jméno ale samo o sobě nic nezaručuje.'],
       ['Spěch a strach.', '„Do 24 hodin“, „jinak zablokujeme účet“, „hrozí exekuce“. Tlak má zabránit tomu, abyste si věc v klidu ověřili.'],
-      ['Odkazy, tlačítka a žádost o údaje.', 'Banka, pošta ani úřad vás e-mailem nepošlou zadávat údaje z karty, PIN, heslo ani kód z SMS.'],
-      ['Přílohy, které nečekáte.', 'Faktura, výměr nebo „smlouva“ od neznámého odesílatele může v počítači spustit škodlivý program.'],
+      [
+        'Odkaz nebo tlačítko k penězům, přihlášení či údajům.',
+        'Odkaz sám o sobě podvod není. Zpozorněte, když vás vede k placení nebo „vyzvednutí“ peněz, k přihlášení nebo k zadání údajů. Údaje z karty, PIN, heslo ani kód z SMS nikdy nezadávejte na stránce, kam vás poslal e-mail.',
+      ],
+      [
+        'Přílohy, které nečekáte.',
+        'Faktura, výměr nebo „smlouva“, o kterých nic nevíte, může obsahovat škodlivý program. Platí to i u známého odesílatele. Když si nejste jistí, přílohu neotevírejte a nejdřív se zeptejte, třeba telefonem.',
+      ],
       ['Nabídka, která je moc dobrá.', 'Výhra v soutěži, do které jste se nepřihlásili, nebo peníze „zpět“ bez důvodu.'],
     ],
     note: 'Pozor: i zpráva v bezchybné češtině může být podvod. Podvodníci dnes píšou s pomocí umělé inteligence.',

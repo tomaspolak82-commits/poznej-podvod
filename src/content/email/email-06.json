@@ -1,25 +1,48 @@
 {
   "id": "email-06",
   "section": "email",
-  "title": "Testovací zpráva E6",
-  "isScam": false,
+  "title": "Vyděračský e-mail „mám přístup k tvé kameře“",
+  "isScam": true,
   "message": {
-    "fromName": "Testovací odesílatel 6",
-    "fromAddress": "odesilatel6@test.invalid",
-    "date": "dnes 8:00",
-    "subject": "Testovací zpráva E6",
+    "fromName": "Jana Nováková",
+    "fromAddress": "k7m2q9x@post-schranka.top",
+    "date": "dnes 3:17",
+    "subject": "Poslední varování",
     "body": [
-      "Testovací zpráva 6, odstavec 1.",
-      "Testovací zpráva 6, odstavec 2."
-    ],
-    "button": {
-      "label": "Testovací tlačítko"
-    },
-    "link": {
-      "label": "Testovací odkaz"
-    }
+      "Mám přístup k tvému počítači i telefonu. Přes kameru jsem tě natáčel a mám kopii všech tvých kontaktů a zpráv.",
+      "Možná se v počítačích moc nevyznáš, tak to řeknu jednoduše.",
+      "Jestli nechceš, aby se videa a tvoje soukromé zprávy dostaly ke všem tvým známým, pošli mi 1 200 eur v bitcoinech.",
+      "Máš 48 hodin. Když zprávu někomu ukážeš, video hned zveřejním."
+    ]
   },
-  "threats": [],
-  "summary": "Testovací shrnutí zprávy E6. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "threats": [
+    {
+      "target": "fromAddress",
+      "alsoTargets": ["fromName"],
+      "category": "odesilatel",
+      "title": "Vaše jméno jako odesílatel",
+      "explanation": "Jako odesílatel je tu napsané vaše jméno. To si může napsat kdokoli. Adresa za ním je cizí."
+    },
+    {
+      "target": "body.0",
+      "alsoTargets": ["subject"],
+      "category": "emocni-natlak",
+      "title": "Nic nemá",
+      "explanation": "Pisatel nic nemá. Národní úřad pro kybernetickou bezpečnost uvádí, že autoři takových zpráv přístup k počítači nezískali a nic natočené nemají. Chtějí vás jen vyděsit."
+    },
+    {
+      "target": "body.2",
+      "category": "neobvykla-zadost",
+      "title": "Žádost o peníze",
+      "explanation": "Neplaťte. Národní úřad pro kybernetickou bezpečnost radí peníze v žádném případě neposílat."
+    },
+    {
+      "target": "body.3",
+      "category": "casovy-tlak",
+      "title": "Lhůta a zákaz o tom mluvit",
+      "explanation": "Lhůta a zákaz zprávu ukázat mají zabránit tomu, abyste se s někým poradili. Klidně to řekněte někomu blízkému. Není se za co stydět."
+    }
+  ],
+  "summary": "Pisatel nic nemá, chce vás jen vyděsit. Neplaťte a neodpovídejte, zprávu stačí smazat. Nemusíte se stydět říct o ní někomu blízkému. Národní úřad pro kybernetickou bezpečnost před takovými vlnami e-mailů varuje.",
+  "sources": ["nukib.gov.cz/cs/infoservis/hrozby/1670-upozorneni-na-novou-vlnu-podvodnych-vyderacskych-emailu/ (4. 1. 2021)"]
 }

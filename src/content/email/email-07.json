@@ -1,29 +1,28 @@
 {
   "id": "email-07",
   "section": "email",
-  "title": "Testovací zpráva E7",
-  "isScam": true,
+  "title": "Zásilkovna: zásilka je připravená k vyzvednutí",
+  "isScam": false,
   "message": {
-    "fromName": "Testovací odesílatel 7",
-    "fromAddress": "odesilatel7@test.invalid",
-    "date": "dnes 8:00",
-    "subject": "Testovací zpráva E7",
+    "fromName": "Zásilkovna",
+    "fromAddress": "noreply@zasilkovna.cz",
+    "date": "dnes 13:48",
+    "subject": "Zásilka je připravena k vyzvednutí",
     "body": [
-      "Testovací zpráva 7, odstavec 1.",
-      "Testovací zpráva 7, odstavec 2."
+      "Dobrý den, paní Nováková,",
+      "Vaše zásilka z e-shopu Kniha pro radost je připravena k vyzvednutí na výdejním místě Trafika U Nádraží, Lipová 3.",
+      "Zásilka je zaplacená, při vyzvednutí nic neplatíte.",
+      "Kde výdejní místo najdete a kdy má otevřeno, uvidíte na odkazu níže.",
+      "Děkujeme, tým Zásilkovny"
     ],
-    "attachment": {
-      "name": "testovaci-priloha.zip"
+    "link": {
+      "label": "Sledovat zásilku na www.zasilkovna.cz"
     }
   },
-  "threats": [
-    {
-      "target": "attachment",
-      "category": "priloha",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Testovací zpráva, před zveřejněním odkazu na hru ji nahradí skutečný scénář."
-    }
-  ],
-  "summary": "Testovací shrnutí zprávy E7. Před zveřejněním odkazu na hru ji nahradí skutečný scénář.",
-  "sources": []
+  "threats": [],
+  "summary": "Zpráva přišla z adresy noreply@zasilkovna.cz. Zásilkovna na svém webu uvádí, že upozornění na zásilky posílá právě z ní. Zpráva po vás nic nechce: žádnou platbu, žádné údaje. Odkaz sám o sobě podvod není. Jistější je ale otevřít si aplikaci nebo stránky Zásilkovny sami, ne přes odkaz ve zprávě.",
+  "sources": [
+    "zasilkovna.cz/blog/upozornujeme-na-novy-podvodny-e-mail (25. 6. 2024)",
+    "zasilkovna.cz/bezpecnost-ochrana-dat/emaily"
+  ]
 }

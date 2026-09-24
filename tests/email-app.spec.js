@@ -1,6 +1,14 @@
 // Simulated mail app (milestone 4, CLAUDE.md sections 6 and 12).
 import { test, expect } from '@playwright/test';
-import { currentScenarioId, goToScenario, openCurrentMessage, scenarioById, showAddress, startRound } from './helpers/game.js';
+import {
+  currentScenarioId,
+  goToScenario,
+  openCurrentMessage,
+  scenarioById,
+  seedWith,
+  showAddress,
+  startRound,
+} from './helpers/game.js';
 
 const LEVELS = [
   ['základní', 'zakladni'],
@@ -153,9 +161,11 @@ test.describe('sender address in the detail', () => {
   });
 });
 
-test.describe('one threat on name and address (email-02, seed 123)', () => {
+const EMAIL_02_SEED = seedWith('email', ['email-02']);
+
+test.describe(`one threat on name and address (email-02, seed ${EMAIL_02_SEED})`, () => {
   test('marking only the name = one hit; the bulb is at the address', async ({ page }) => {
-    await startRound(page, { level: 'pokročilá' });
+    await startRound(page, { seed: EMAIL_02_SEED, level: 'pokročilá' });
     await goToScenario(page, 'email-02');
     await page.locator('[data-mark="fromName"]').click();
     await page.getByRole('button', { name: 'Je to podvod' }).click();
@@ -167,7 +177,7 @@ test.describe('one threat on name and address (email-02, seed 123)', () => {
   });
 
   test('marking name and address = still one hit, both shown as found', async ({ page }) => {
-    await startRound(page, { level: 'pokročilá' });
+    await startRound(page, { seed: EMAIL_02_SEED, level: 'pokročilá' });
     await goToScenario(page, 'email-02');
     await page.locator('[data-mark="fromName"]').click();
     await showAddress(page);
@@ -178,7 +188,7 @@ test.describe('one threat on name and address (email-02, seed 123)', () => {
   });
 
   test('the sender explanation names the real address', async ({ page }) => {
-    await startRound(page);
+    await startRound(page, { seed: EMAIL_02_SEED });
     await goToScenario(page, 'email-02');
     await page.getByRole('button', { name: 'Je to podvod' }).click();
     await page.getByRole('button', { name: 'Proč je to podezřelé: Falešné jméno odesílatele' }).click();

@@ -199,10 +199,15 @@
   color: var(--color-text);
 }
 
-/* Long addresses and links have no spaces; with large text they must break anywhere */
+/* Long addresses, links and file names have no spaces; with large text they must break anywhere.
+   Paragraphs and the summary may quote an address too ("noreply@zasilkovna.cz") and sit in a grid,
+   where break-word alone does not stop the page from scrolling sideways. */
 .msg__from-address,
 .msg__from-name,
-.msg__link {
+.msg__link,
+.msg__attachment,
+.msg__paragraph,
+.evaluation-summary p {
   overflow-wrap: anywhere;
 }
 

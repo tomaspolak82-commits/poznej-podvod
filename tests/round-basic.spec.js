@@ -8,6 +8,8 @@ import {
   openCurrentMessage,
   playRound,
   scenarioById,
+  scenarios,
+  seedWith,
   startRound,
   wrongly,
 } from './helpers/game.js';
@@ -85,6 +87,9 @@ test.describe('basic level: round', () => {
       [legit, 'ok'],
       [legit, 'scam'],
     ]) {
+      // Leave the page first: going to the same address with only a different part after "#"
+      // does not reload it, and the game would draw the next round from the same random sequence
+      await page.goto('about:blank');
       await startRound(page);
       // Answer until the wanted scenario comes, then check its evaluation
       for (let i = 0; i < 5; i += 1) {
@@ -102,8 +107,10 @@ test.describe('basic level: round', () => {
     }
   });
 
-  test('clicking a link, button or attachment shows the same notice for scams and legitimate messages', async ({ page }) => {
-    await startRound(page);
+  // A round with a scam and a legitimate message that both have a link, button or attachment
+  const noticeSeed = seedWith('email', ['email-05', 'email-07']);
+  test(`clicking a link, button or attachment shows the same notice for scams and legitimate messages (seed ${noticeSeed})`, async ({ page }) => {
+    await startRound(page, { seed: noticeSeed });
     const notices = new Map();
     for (let i = 0; i < 5; i += 1) {
       const scenario = scenarioById(await currentScenarioId(page));
@@ -120,7 +127,7 @@ test.describe('basic level: round', () => {
       if (i < 4) await nextMessage(page);
       else await page.getByRole('button', { name: /Zobrazit výsledek/ }).click();
     }
-    // Seed 123 has actions in both kinds of messages
+    // The seed has actions in both kinds of messages
     expect([...notices.keys()].sort()).toEqual(['legit', 'scam']);
     expect(notices.get('scam')).toBe(notices.get('legit'));
     expect(notices.get('scam')).toContain('Tohle je jen trénink, odkaz nikam nevede');
@@ -205,11 +212,16 @@ test.describe('round end and history', () => {
     await openCurrentMessage(page);
     const played = await playRound(page, wrongly);
     expect(played).toEqual(ids(second));
-    // 7 messages in the bank: at least the 2 not played before must be in the new round
-    const fresh = ['email-01', 'email-02', 'email-03', 'email-04', 'email-05', 'email-06', 'email-07'].filter(
-      (id) => !ids(first).includes(id),
-    );
-    for (const id of fresh) expect(played).toContain(id);
+    // Scams and legitimate messages are drawn separately; each group takes messages
+    // not played before first, repeats only when there are not enough of them
+    for (const isScam of [true, false]) {
+      const fresh = scenarios('email')
+        .filter((s) => s.isScam === isScam && !ids(first).includes(s.id))
+        .map((s) => s.id);
+      const playedInGroup = played.filter((id) => scenarioById(id).isScam === isScam);
+      if (playedInGroup.length <= fresh.length) for (const id of playedInGroup) expect(fresh).toContain(id);
+      else for (const id of fresh) expect(playedInGroup).toContain(id);
+    }
 
     // Worse result keeps the best
     await expect(page.getByTestId('best')).toHaveText('Váš nejlepší výsledek je 10 z 10 bodů.');

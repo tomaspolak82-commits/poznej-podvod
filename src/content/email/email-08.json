@@ -1,0 +1,24 @@
+{
+  "id": "email-08",
+  "section": "email",
+  "title": "Vnučka posílá fotku z výletu",
+  "isScam": false,
+  "message": {
+    "fromName": "Anička",
+    "fromAddress": "anicka.novakova@seznam.cz",
+    "date": "včera 20:15",
+    "subject": "Fotka z výletu",
+    "body": [
+      "Ahoj babi,",
+      "jak jsem ti v neděli slíbila, posílám fotku z našeho výletu na hrad. Nejvíc se mi líbí, jak Honza mává z věže.",
+      "V sobotu se u vás zastavíme, upeču štrůdl.",
+      "Pa, Anička"
+    ],
+    "attachment": {
+      "name": "vylet_hrad.jpg"
+    }
+  },
+  "threats": [],
+  "summary": "Příloha sama o sobě podvod není. Tuhle fotku jste čekali: vnučka vám ji slíbila a zpráva na ten slib přesně navazuje. Nic po vás nechce, žádné peníze ani údaje. Kdyby vám přišla příloha, o které nic nevíte, neotevírejte ji, i když je od někoho známého. Nejdřív se zeptejte, třeba telefonem.",
+  "sources": []
+}

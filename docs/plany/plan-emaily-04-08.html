@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plán: e-maily 04–08</title>
+<style>
+  :root {
+    --work-bg: #eef0f3; --work-border: #8a939f;
+    --check-bg: #e2f3f3; --check-border: #1f8a8a;
+    --wait-bg: #fff0dc; --wait-border: #d9822b;
+    --text: #1f2933; --muted: #52606d; --page: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px 16px 48px;
+    background: var(--page); color: var(--text);
+    font: 1.0625rem/1.5 system-ui, "Segoe UI", sans-serif;
+  }
+  main { max-width: 56rem; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .intro { color: var(--muted); margin: 0 0 20px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 28px; padding: 0; list-style: none; }
+  .legend li { display: flex; align-items: center; gap: 8px; }
+  .swatch { width: 1.25rem; height: 1.25rem; border-radius: 4px; border: 2px solid; }
+  .swatch--work { background: var(--work-bg); border-color: var(--work-border); }
+  .swatch--check { background: var(--check-bg); border-color: var(--check-border); }
+  .swatch--wait { background: var(--wait-bg); border-color: var(--wait-border); }
+
+  .phases { list-style: none; margin: 0; padding: 0; counter-reset: phase; }
+  .phase {
+    display: grid; grid-template-columns: minmax(12rem, 16rem) 1fr;
+    gap: 8px 24px; align-items: start; position: relative; padding-bottom: 36px;
+    counter-increment: phase;
+  }
+  .phase:last-child { padding-bottom: 0; }
+  .phase__box {
+    border: 2px solid; border-radius: 10px; padding: 10px 14px; font-weight: 700;
+    position: relative;
+  }
+  .phase__box::before { content: counter(phase) ". "; }
+  .phase--work .phase__box { background: var(--work-bg); border-color: var(--work-border); }
+  .phase--check .phase__box { background: var(--check-bg); border-color: var(--check-border); }
+  .phase--wait .phase__box { background: var(--wait-bg); border-color: var(--wait-border); }
+  .phase__wait { display: block; font-weight: 400; font-size: 0.9rem; color: #8a4b0f; }
+  /* Arrow to the next phase: under the box (wide screen), under the whole phase (phone) */
+  .phase:not(:last-child) .phase__box::after,
+  .phase:not(:last-child)::after {
+    content: "↓"; position: absolute; left: 50%; transform: translateX(-50%);
+    font-size: 1.5rem; line-height: 36px; font-weight: 700; color: var(--muted);
+  }
+  .phase:not(:last-child) .phase__box::after { top: 100%; }
+  .phase:not(:last-child)::after { bottom: 0; display: none; }
+  .phase__details { margin: 0; padding: 8px 0 0 1.1rem; color: var(--muted); }
+  .phase__details li + li { margin-top: 2px; }
+
+  @media (max-width: 40rem) {
+    .phase { grid-template-columns: 1fr; }
+    .phase__details { padding-top: 0; }
+    .phase:not(:last-child) .phase__box::after { display: none; }
+    .phase:not(:last-child)::after { display: block; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Plán: e-maily 04–08 a nápověda</h1>
+  <p class="intro">Zabudování schválených e-mailů email-04 až email-08 a nových bodů 4 a 5 nápovědy e-mailu. Připraveno 24. 9. 2026.</p>
+
+  <ul class="legend" aria-label="Legenda">
+    <li><span class="swatch swatch--work"></span>Moje práce</li>
+    <li><span class="swatch swatch--check"></span>Ověřování (testy, build, zdroje)</li>
+    <li><span class="swatch swatch--wait"></span>Čeká na tebe</li>
+  </ul>
+
+  <!-- Phases: class phase--work | phase--check | phase--wait -->
+  <ol class="phases">
+    <li class="phase phase--wait">
+      <div class="phase__box">Schválení plánu<span class="phase__wait">Čeká na tebe</span></div>
+      <ul class="phase__details"><li>OK na plán a odpovědi na 3 otázky</li><li>(kategorie u vydírání, jak testy volí kolo, co commitnout z docs)</li></ul>
+    </li>
+    <li class="phase phase--work">
+      <div class="phase__box">Nápověda e-mailu</div>
+      <ul class="phase__details"><li>Nové znění bodů 4 a 5 v textech hry</li><li>Ostatní body beze změny</li></ul>
+    </li>
+    <li class="phase phase--work">
+      <div class="phase__box">Pět scénářů</div>
+      <ul class="phase__details"><li>Testovací e-maily 4–7 se přepíšou skutečnými</li><li>Přibude e-mail 8</li><li>Úprava zobrazení přílohy, jen když je potřeba</li></ul>
+    </li>
+    <li class="phase phase--check">
+      <div class="phase__box">Kontrola znění</div>
+      <ul class="phase__details"><li>Každá schválená věta se dohledá v souborech hry</li><li>A naopak: v souborech není nic navíc</li></ul>
+    </li>
+    <li class="phase phase--work">
+      <div class="phase__box">Úprava testů</div>
+      <ul class="phase__details"><li>Testy postavené na testovacích zprávách se přepíšou</li><li>Nové testy nápovědy a nových scénářů</li></ul>
+    </li>
+    <li class="phase phase--check">
+      <div class="phase__box">Sestavení a všechny testy</div>
+      <ul class="phase__details"><li>npm run build a npm test (asi 10 minut)</li><li>Výsledek ti ukážu</li></ul>
+    </li>
+    <li class="phase phase--work">
+      <div class="phase__box">Dokumentace</div>
+      <ul class="phase__details"><li>Stav projektu v CLAUDE.md a historie</li></ul>
+    </li>
+    <li class="phase phase--wait">
+      <div class="phase__box">Commit a push<span class="phase__wait">Čeká na tebe</span></div>
+      <ul class="phase__details"><li>Napíšu, co a proč uložím</li><li>Po tvém OK commit, po dalším OK push</li></ul>
+    </li>
+    <li class="phase phase--check">
+      <div class="phase__box">Zkouška nasazení</div>
+      <ul class="phase__details"><li>Nanečisto, bez připojení k serveru</li><li>Seznam souborů, které by se nahrály</li></ul>
+    </li>
+    <li class="phase phase--wait">
+      <div class="phase__box">OK na nahrání<span class="phase__wait">Čeká na tebe</span></div>
+      <ul class="phase__details"><li>Nahrání na server až po tvém výslovném pokynu</li></ul>
+    </li>
+    <li class="phase phase--check">
+      <div class="phase__box">Nahrání a kontrola webu</div>
+      <ul class="phase__details"><li>Nahrání přes šifrované FTP</li><li>Kontrola živé stránky (typy souborů, vykreslení)</li></ul>
+    </li>
+    <li class="phase phase--wait">
+      <div class="phase__box">Kontrola ve hře<span class="phase__wait">Čeká na tebe</span></div>
+      <ul class="phase__details"><li>Projdeš nové e-maily na živé stránce</li></ul>
+    </li>
+  </ol>
+</main>
+</body>
+</html>

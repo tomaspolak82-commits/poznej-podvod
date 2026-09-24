@@ -172,6 +172,19 @@ test.describe('scoring: real scenarios, parts the hint leads to are hits', () =>
     ['email-02', ['subject'], 'subject "Poslední upozornění" = time pressure'],
     ['email-02', ['body.1'], 'missing bank details = request for data'],
     ['email-02', ['body.4'], 'signature "Finanční správa" = the fake sender name'],
+    ['email-04', ['subject'], 'subject "Upomínka" = the invoice you know nothing about'],
+    ['email-04', ['body.0'], 'general greeting = the invoice you know nothing about'],
+    ['email-04', ['body.2'], '"details in the attachment" = the attachment threat'],
+    ['email-04', ['attachment'], 'unexpected attachment'],
+    ['email-05', ['fromName'], 'sender name "ČEZ Prodej" = the sender threat'],
+    ['email-05', ['body.4'], 'signature "ČEZ Prodej" = the sender threat'],
+    ['email-05', ['subject'], 'subject "Vrácení přeplatku" = card details for money back'],
+    ['email-05', ['body.1'], 'money back = card details for money back'],
+    ['email-05', ['body.2'], 'card number and code'],
+    ['email-05', ['button'], 'button to enter the card'],
+    ['email-06', ['fromName'], 'your own name as the sender = the sender threat'],
+    ['email-06', ['subject'], 'subject "Poslední varování" = the fear threat'],
+    ['email-06', ['body.0'], '"I recorded you" = the fear threat'],
     ['zpravy-02', ['messages.0'], '"new number" bubble = the unknown number'],
   ];
   for (const [id, marks, why] of cases) {
@@ -193,6 +206,9 @@ test.describe('scoring: marking everything does not pay off (real scenarios)', (
   for (const [id, innocent] of [
     ['email-01', ['body.3']],
     ['email-02', ['body.0']],
+    ['email-04', ['fromName', 'fromAddress', 'body.4', 'body.5']],
+    ['email-05', ['body.0']],
+    ['email-06', ['body.1']],
     ['zpravy-02', ['messages.1']],
   ]) {
     test(`${id}: marking everything leaves the innocent part as unnecessary`, () => {

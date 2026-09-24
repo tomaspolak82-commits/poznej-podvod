@@ -17,6 +17,16 @@ test('messages hint does not teach "a link = a scam" (legitimate zpravy-03 has a
   expect(links[1]).toContain('Odkaz sám o sobě podvod není.');
 });
 
+test('e-mail hint does not teach "a link = a scam" (legitimate email-07 has a link)', () => {
+  expect(HINTS.email.items[3][0]).toBe('Odkaz nebo tlačítko k penězům, přihlášení či údajům.');
+  expect(HINTS.email.items[3][1]).toContain('Odkaz sám o sobě podvod není.');
+});
+
+test('e-mail hint: an unexpected attachment is risky even from a known sender (email-08)', () => {
+  expect(HINTS.email.items[4][0]).toBe('Přílohy, které nečekáte.');
+  expect(HINTS.email.items[4][1]).toContain('Platí to i u známého odesílatele.');
+});
+
 test('7726 advice is only in the messages hint, not in e-mail', () => {
   expect(HINTS.zpravy.advice).toContain('7726');
   expect(JSON.stringify(HINTS.email)).not.toContain('7726');

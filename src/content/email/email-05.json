@@ -1,35 +1,55 @@
 {
   "id": "email-05",
   "section": "email",
-  "title": "Testovací zpráva E5",
+  "title": "Falešný ČEZ vrací přeplatek, chce údaje z karty",
   "isScam": true,
   "message": {
-    "fromName": "Testovací odesílatel 5",
-    "fromAddress": "odesilatel5@test.invalid",
-    "date": "dnes 8:00",
-    "subject": "Testovací zpráva E5",
+    "fromName": "ČEZ Prodej",
+    "fromAddress": "preplatky@cez-vyuctovani.cz",
+    "date": "dnes 16:22",
+    "subject": "Vrácení přeplatku za elektřinu",
     "body": [
-      "Testovací zpráva 5, odstavec 1.",
-      "Testovací zpráva 5, odstavec 2."
+      "Dobrý den, paní Nováková,",
+      "při vyúčtování elektřiny za uplynulý rok Vám vznikl přeplatek 2 180 Kč.",
+      "Abychom Vám ho mohli vrátit, potvrďte prosím údaje své platební karty: číslo karty, datum platnosti a trojmístný kód z její zadní strany.",
+      "Údaje prosím potvrďte do 5 dnů. Jinak nárok na vrácení přeplatku zanikne.",
+      "S pozdravem, ČEZ Prodej"
     ],
-    "link": {
-      "label": "Testovací odkaz"
+    "button": {
+      "label": "Potvrdit údaje karty"
     }
   },
   "threats": [
     {
-      "target": "body.0",
-      "category": "jazyk-chyby",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+      "target": "fromAddress",
+      "alsoTargets": ["fromName", "body.4"],
+      "category": "odesilatel",
+      "title": "Adresa odesílatele",
+      "explanation": "Jméno ČEZ Prodej si může napsat kdokoli. ČEZ uvádí, že e-maily k platbám posílá z adres, které mají za zavináčem cez.cz. Tahle adresa končí na cez-vyuctovani.cz."
     },
     {
-      "target": "link",
-      "category": "instalace-aplikace",
-      "title": "Testovací hrozba 2",
-      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+      "target": "body.2",
+      "alsoTargets": ["body.1", "subject"],
+      "category": "zadost-o-udaje",
+      "title": "Údaje z karty kvůli vrácení peněz",
+      "explanation": "Když vám někdo vrací peníze, stačí mu číslo účtu. Česká spořitelna upozorňuje, že kvůli vrácení peněz po vás žádná skutečná instituce nebude chtít všechna čísla z karty."
+    },
+    {
+      "target": "body.3",
+      "category": "casovy-tlak",
+      "title": "Spěch",
+      "explanation": "Krátká lhůta a hrozba, že o peníze přijdete, mají zabránit tomu, abyste si to v klidu ověřili."
+    },
+    {
+      "target": "button",
+      "category": "odkaz-platba",
+      "title": "Tlačítko k zadání karty",
+      "explanation": "Tlačítko vede na stránku, kde byste údaje z karty dali podvodníkům. ČEZ radí údaje z platební karty nezadávat, pokud si nejste jistí, že e-mail přišel opravdu od něj."
     }
   ],
-  "summary": "Testovací shrnutí zprávy E5. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "summary": "Oslovení jménem i částka vypadají věrohodně, ale kvůli vrácení peněz nikdo nepotřebuje číslo karty ani kód z její zadní strany. Stačí číslo účtu. Když si nejste jistí, přihlaste se do MŮJ ČEZ sami, ne přes tlačítko v e-mailu.",
+  "sources": [
+    "cez.cz/cs/podvodne-maily",
+    "csas.cz/cs/zpravy-z-banky/2024/11/26/podvodnou-sms-nebo-e-mail-muzete-dostat-i-vy-jak-je-poznat-a-neprijit-o-penize (26. 11. 2024)"
+  ]
 }

@@ -6,13 +6,16 @@ import {
   nextMessage,
   openCurrentMessage,
   scenarioById,
+  seedWith,
   showAddress,
   startRound,
 } from './helpers/game.js';
 
-// Seed 123, e-mail: the round contains scams email-02 (4 threats, sender threat on name + address),
-// email-05 (2), email-07 (1, attachment) and legitimate email-03 (ČEZ) and email-06 (button + link).
-const SEED = 123;
+// The round is chosen by its messages, not by a fixed seed (seedWith):
+// scams email-02 (4 threats, sender threat on name + address), email-04 (3, attachment),
+// email-05 (4, button) and legitimate email-07 (link) and email-08 (attachment).
+const ROUND_IDS = ['email-02', 'email-04', 'email-05', 'email-07', 'email-08'];
+const SEED = seedWith('email', ROUND_IDS);
 const [ROUND] = expectedRounds('email', SEED);
 
 async function startAdvanced(page) {
@@ -25,10 +28,10 @@ const statusOf = (page, target) => page.locator(`.review-part[data-target="${tar
 
 test.beforeAll(() => {
   // Guard: the test data below relies on this exact round
-  expect(ROUND.map((s) => s.id).sort()).toEqual(['email-02', 'email-03', 'email-05', 'email-06', 'email-07']);
+  expect(ROUND.map((s) => s.id).sort()).toEqual(ROUND_IDS);
 });
 
-test.describe('advanced level: marking', () => {
+test.describe(`advanced level: marking (seed ${SEED})`, () => {
   test('bar shows the advanced maximum of the round; instruction is visible', async ({ page }) => {
     await startAdvanced(page);
     await expect(page.getByTestId('score')).toHaveText(`Body: 0 z ${maxPointsForRound(ROUND, 'pokrocila')}`);
@@ -68,18 +71,22 @@ test.describe('advanced level: marking', () => {
     await expect(subject).toHaveAttribute('aria-pressed', 'false');
   });
 
-  test('links and buttons are only marked, no notice window appears', async ({ page }) => {
-    await startAdvanced(page);
-    await goToScenario(page, 'email-06');
-    await mark(page, 'button');
-    await mark(page, 'link');
-    await expect(page.getByRole('dialog')).toHaveCount(0);
-    await expect(page.locator('[data-mark="button"]')).toHaveAttribute('aria-pressed', 'true');
-    await expect(page.locator('[data-mark="link"]')).toHaveAttribute('aria-pressed', 'true');
-  });
+  for (const [id, target] of [
+    ['email-05', 'button'],
+    ['email-07', 'link'],
+    ['email-04', 'attachment'],
+  ]) {
+    test(`${target} is only marked, no notice window appears (${id})`, async ({ page }) => {
+      await startAdvanced(page);
+      await goToScenario(page, id);
+      await mark(page, target);
+      await expect(page.getByRole('dialog')).toHaveCount(0);
+      await expect(page.locator(`[data-mark="${target}"]`)).toHaveAttribute('aria-pressed', 'true');
+    });
+  }
 });
 
-test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
+test.describe(`advanced level: points, CLAUDE.md section 8 (seed ${SEED})`, () => {
   test('all threats found + correct decision = 2 + 4', async ({ page }) => {
     await startAdvanced(page);
     await goToScenario(page, 'email-02');
@@ -95,33 +102,34 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
   test('missed threat is shown with "Tohle místo stojí za druhý pohled"', async ({ page }) => {
     await startAdvanced(page);
     await goToScenario(page, 'email-05');
-    await mark(page, 'link');
+    await mark(page, 'button');
     await decide(page, true);
     await expect(page.getByTestId('gained')).toHaveText('Získali jste 3 body.');
-    await expect(statusOf(page, 'link')).toHaveText('Našli jste');
-    await expect(statusOf(page, 'body.0')).toHaveText('Tohle místo stojí za druhý pohled');
+    await expect(statusOf(page, 'button')).toHaveText('Našli jste');
+    await expect(statusOf(page, 'body.3')).toHaveText('Tohle místo stojí za druhý pohled');
   });
 
   test('unnecessary mark costs 1 point and is shown as "Označeno zbytečně"', async ({ page }) => {
     await startAdvanced(page);
     await goToScenario(page, 'email-05');
-    await mark(page, 'link');
+    await mark(page, 'button');
+    await mark(page, 'body.3');
+    // The greeting by name is the innocent part of email-05
     await mark(page, 'body.0');
-    await mark(page, 'subject');
     await decide(page, true);
     await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 1');
-    await expect(statusOf(page, 'subject')).toHaveText('Označeno zbytečně, tady je vše v pořádku');
+    await expect(statusOf(page, 'body.0')).toHaveText('Označeno zbytečně, tady je vše v pořádku');
   });
 
   test('unmarked part does not count (mark, unmark, decide)', async ({ page }) => {
     await startAdvanced(page);
-    await goToScenario(page, 'email-07');
+    await goToScenario(page, 'email-04');
     await mark(page, 'attachment');
-    await mark(page, 'subject');
-    await mark(page, 'subject');
+    await mark(page, 'body.4');
+    await mark(page, 'body.4');
     await decide(page, true);
     await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 1');
-    await expect(statusOf(page, 'subject')).toHaveCount(0);
+    await expect(statusOf(page, 'body.4')).toHaveCount(0);
   });
 
   test('wrong decision still gets points for correctly marked threats', async ({ page }) => {
@@ -137,12 +145,13 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
 
   test('more unnecessary marks than found: decision points stay, marking = 0', async ({ page }) => {
     await startAdvanced(page);
-    await goToScenario(page, 'email-07');
+    await goToScenario(page, 'email-04');
     await mark(page, 'attachment');
-    await mark(page, 'subject');
+    // Innocent parts of email-04: the company name and address, "if you have paid…", the signature
+    await mark(page, 'fromName');
     await showAddress(page);
     await mark(page, 'fromAddress');
-    await mark(page, 'body.0');
+    await mark(page, 'body.5');
     await decide(page, true);
     await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 0');
     await expect(page.getByTestId('gained')).toHaveText('Získali jste 2 body.');
@@ -150,7 +159,7 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
 
   test('legitimate message, nothing marked = 2 + 2', async ({ page }) => {
     await startAdvanced(page);
-    await goToScenario(page, 'email-03');
+    await goToScenario(page, 'email-08');
     await decide(page, false);
     await expect(page.getByTestId('gained')).toHaveText('Získali jste 4 body.');
     await expect(page.getByTestId('legit-marking')).toHaveText(
@@ -160,8 +169,7 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
 
   test('legitimate message with marks = 2 + 0, never negative', async ({ page }) => {
     await startAdvanced(page);
-    await goToScenario(page, 'email-06');
-    await mark(page, 'button');
+    await goToScenario(page, 'email-07');
     await mark(page, 'link');
     await mark(page, 'subject');
     await decide(page, false);
@@ -170,7 +178,7 @@ test.describe('advanced level: points (CLAUDE.md, section 8)', () => {
     await expect(page.getByTestId('legit-marking')).toHaveText(
       'Na zprávě nebylo nic podezřelého. Označená místa jsou v pořádku.',
     );
-    await expect(statusOf(page, 'button')).toHaveText('Označeno zbytečně, tady je vše v pořádku');
+    await expect(statusOf(page, 'link')).toHaveText('Označeno zbytečně, tady je vše v pořádku');
   });
 
   test('marks do not carry over to the next message', async ({ page }) => {
@@ -194,7 +202,7 @@ test('marking and evaluation: no horizontal scroll with 200 % text at 360 px', a
   expect(await noScroll()).toBe(true);
 });
 
-test.describe('advanced level: whole round', () => {
+test.describe(`advanced level: whole round (seed ${SEED})`, () => {
   test('perfect round = the maximum shown before the start', async ({ page }) => {
     const max = maxPointsForRound(ROUND, 'pokrocila');
     await page.goto(`/?seed=${SEED}#/email`);
