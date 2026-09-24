@@ -477,6 +477,7 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 
 - **Milník 6 probíhá.** E-mail: scénáře `email-01` až `email-08` jsou skutečné (5 podvodů, 3 legitimní), `email-04` až `email-08` a body 4 a 5 nápovědy e-mailu zabudované 24. 9. 2026 (záznam zdrojů a rozhodnutí v `docs/navrhy-scenaru-email.md`). Návrhy Zpráv čekají v `docs/navrhy-scenaru-zpravy.md`.
 - Vlastní text po klepnutí na přílohu (`ATTACHMENT_NOTICE`) zabudovaný 24. 9. 2026.
+- **Nasazeno 24. 9. 2026** (commit `1b26bd8`): e-maily 01–08, nová nápověda e-mailu, text u přílohy. Ověřeno na https: JS `text/javascript`, CSS `text/css`, `noindex` na stránce, hra se vykreslí a příloha ukáže nový text (Chromium, bez chyb na stránce).
 - **Další krok:** návrhy Zpráv v `docs/navrhy-scenaru-zpravy.md` (stav schválení ověřit u Tomáše), pak doplňování obou sekcí na 20 scénářů.
 
 **Otevřené úkoly:**
