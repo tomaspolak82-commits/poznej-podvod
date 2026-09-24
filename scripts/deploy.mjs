@@ -14,8 +14,8 @@ import { checkForWordPress, checkRemoteDir } from './deploy-guard.mjs';
 
 const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST_DIR = path.join(PROJECT_ROOT, 'dist');
-// HTTP for now: the HTTPS certificate is being set up by Subreg (no redirect to https in the app)
-const PUBLIC_URL = 'http://poznej-podvod.menestarosti.cz/';
+// HTTPS works since 24. 9. 2026 (http still works too, the redirect is a separate task)
+const PUBLIC_URL = 'https://poznej-podvod.menestarosti.cz/';
 // Folders fully owned by our build: stale files inside them may be deleted
 const OWNED_DIRS = ['assets', 'fonts'];
 

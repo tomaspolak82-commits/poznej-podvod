@@ -36,6 +36,7 @@ Tomáš nepíše kód sám. Zadává, kontroluje a učí se pracovat v terminál
 10. **Příkazy spouštěj po jednom**, bez `cd` na začátku (pracovní složka je projekt) a bez spojování přes `;` nebo `&&`. Tomášova pojistka na čtení mimo projekt by jinak u každého příkazu chtěla potvrzení.
 11. **Texty hry** (vše, co hráč čte mimo scénáře) jsou v jednom souboru `src/texts.js` a Tomáš je schválil. Změna znění = úprava tohoto souboru. Nové texty pošli Tomášovi ke schválení dřív, než je zabuduješ. Čísla v textech vždy správně skloňuj pomocí `src/ui/format.js` (1 bod, 2 body, 5 bodů; 1 kolo, 2 kola, 5 kol; „z 19 bodů“).
 12. **Soubory v projektu upravuj a vytvářej nástroji Edit a Write**, ne přes `sed`, `python`, `cat >` ani jiné zápisy v Bash. Bash jen pro `npm`, `git` a spouštění testů. Tomášova pojistka na čtení mimo projekt by jinak hlásila každou úpravu.
+13. **Na server se nasazují jen texty a scénáře, které Tomáš schválil.** Kontrolu ve hře dělá Tomáš až po nasazení, přes internet na živé stránce.
 
 ## 3. Technologie (rozhodnuto)
 
@@ -57,7 +58,7 @@ Povolené závislosti: `vite`, `@playwright/test`, `basic-ftp`, `dotenv`.
 - Hlavní WordPress web ve složce `/menestarosti.cz`. **Na ten se nikdy nesahá.**
 - **Samostatný FTP účet subdomény** (`FTP_HOST=hosting.subreg.cz`, jméno účtu je jen v `.env`, do repozitáře se nepíše). Jeho kořen `/` je přímo složka subdomény, bez WordPressu. Proto `FTP_REMOTE_DIR=/`. Tomáš ve FileZille ověřil, že složka je prázdná a že z ní web načítá soubory.
 - Šifrované FTP (FTPS/TLS) funguje (Tomáš ověřil ve FileZille). Na nešifrované FTP nikdy nepřecházej bez souhlasu.
-- **HTTPS zatím nefunguje**, certifikát řeší Subreg. Web je zatím na `http://poznej-podvod.menestarosti.cz`. Přesměrování na https do aplikace ani na server nepřidávej.
+- **HTTPS funguje od 24. 9. 2026** (certifikát Let's Encrypt, platný do 23. 12. 2026). Web je na https://poznej-podvod.menestarosti.cz a zatím i na `http://`. Přesměrování http → https se řeší jako samostatný úkol (sekce 16).
 
 ## 5. Obrazovky a průběh
 
@@ -429,7 +430,7 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - `--check` se připojí přes FTPS, provede pojistku 2, vypíše obsah cílové složky a nic nezmění.
 - Před nahráním spustí build. Když selže, nenahrává.
 - Nahraje obsah `dist/` do `FTP_REMOTE_DIR`. Staré soubory maže až po úspěšném připojení a pojistce 2, a jen ve složkách `assets/` a `fonts/`, které patří našemu buildu.
-- Na konci vypíše adresu, kde si má Tomáš výsledek ověřit (zatím `http://`, viz sekce 4).
+- Na konci vypíše adresu, kde si má Tomáš výsledek ověřit: https://poznej-podvod.menestarosti.cz/ (sekce 4).
 - `--check` se připojuje k serveru, proto ho stejně jako nasazení spouštěj jen na Tomášův pokyn. `--dry-run` se nepřipojuje, ten spouštět smíš.
 - Soubor `.env` nikdy nečti ani nevypisuj (obsahuje heslo). Když je potřeba něco ověřit, vypiš jen ano/ne (např. „FTP_USER je vyplněný“).
 - Když v Git Bash zadáváš `FTP_REMOTE_DIR` přímo v příkazu (ne v `.env`), Git Bash přepíše hodnotu začínající `/` na cestu `C:/Program Files/Git/…` a pojistka ji odmítne. Předřaď `MSYS_NO_PATHCONV=1`. V PowerShellu ani v `.env` se to neděje.
@@ -452,16 +453,18 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - **Milník 3** (herní engine) hotový: commity `bfd3ef0`, `7848dc6`, `fdc1f62`, `4ad1bd1`, `52bacea`. Na server se nenahrával. Testy: 560 prošlo, 5 úmyslně přeskočených.
 - **Milník 4** (e-mailová aplikace + 3 vzorové scénáře) hotový a **nasazený 23. 9. 2026** na http://poznej-podvod.menestarosti.cz: commit `9e2e73b` (+ tento commit se stavem projektu). Schránka se složkami, detail se skrytou adresou („zobrazit adresu“), lišta kola na mobilu v jednom řádku, `alsoTargets` v engine, kategorie `obecne-osloveni`, scénáře `email-01` až `email-03`. Testy: 655 prošlo, 5 úmyslně přeskočených. Po nasazení ověřeno: JS `text/javascript`, CSS `text/css`, písmo `font/woff2`, stránka se vykreslí a hraje (Playwright, Chromium i WebKit, bez chyb v konzoli).
 - **Pojistka nasazení** (sekce 14) teď při nasazení i `--check` vypíše obsah cílové složky před kontrolou WordPressu a pořadí v kódu hlídají 2 testy v `tests/unit/deploy-guard.spec.js`.
-- **Milník 5** (aplikace Zprávy + 3 vzorové scénáře) hotový, commitnutý a pushnutý: commit `f9bcf39`. Nasazení na server tu zatím zaznamenané není. Obsah: `src/apps/messages.js`, `src/styles/messages.css`, scénáře `zpravy-01` (SMS pokuta), `zpravy-02` (chat „Ahoj mami“), `zpravy-03` (legitimní SMS od syna s odkazem), upravená nápověda Zpráv (bod 1 jen o čísle, které se vydává za někoho blízkého), `alsoTargets` u `email-01` a `email-02` (části, které hráč označí podle nápovědy), nevinná bublina v `zpravy-02` (pravidlo „aspoň jedna nevinná část“, sekce 7), nepovinné `message.date`. `src/apps/generic.js` smazaný. Testy: 790 prošlo, 5 úmyslně přeskočených.
+- **Milník 5** (aplikace Zprávy + 3 vzorové scénáře) hotový: commit `f9bcf39`, **nasazený 24. 9. 2026**. Po nasazení ověřeno na http i https: JS `text/javascript`, CSS `text/css`, písmo `font/woff2`, stránka se vykreslí a kolo v E-mailu i Zprávách jde spustit (Playwright, Chromium i WebKit, bez chyb v konzoli). Obsah: `src/apps/messages.js`, `src/styles/messages.css`, scénáře `zpravy-01` (SMS pokuta), `zpravy-02` (chat „Ahoj mami“), `zpravy-03` (legitimní SMS od syna s odkazem), upravená nápověda Zpráv (bod 1 jen o čísle, které se vydává za někoho blízkého), `alsoTargets` u `email-01` a `email-02` (části, které hráč označí podle nápovědy), nevinná bublina v `zpravy-02` (pravidlo „aspoň jedna nevinná část“, sekce 7), nepovinné `message.date`. `src/apps/generic.js` smazaný. Testy: 790 prošlo, 5 úmyslně přeskočených.
 - **Timeouty testů na iPhonu 13 vyřešené** (commit `c1f73f2`, 24. 9. 2026). Příčina ověřená: WebKit je na Windows asi 1,6× pomalejší než Chromium a pod zátěží zpomaluje víc. S 8 paralelními běhy přetáhly nejdelší testy kola na iPhonu 13 limit 30 s (až 32,7 s), zařízení s Chromiem zůstala pod 20 s. Projekt iPhone 13 má v `playwright.config.js` limit 60 s. Ověřeno 7 běhy celé sady (3 výchozí a 1 zátěžový před opravou, 2 zátěžové a 1 výchozí po ní).
-- **Další krok:** nasazení milníku 5 (jen na Tomášův pokyn), potom milník 6. Návrhy scénářů čekají v `docs/navrhy-scenaru-email.md` a `docs/navrhy-scenaru-zpravy.md`. U e-mailu Tomáš 24. 9. 2026 schválil nové znění bodů 4 a 5 nápovědy, do `src/texts.js` se zatím nezabudovalo.
+- **HTTPS funguje od 24. 9. 2026:** certifikát Let's Encrypt pro `poznej-podvod.menestarosti.cz` (platný do 23. 12. 2026). Ověřeno po nasazení milníku 5: https://poznej-podvod.menestarosti.cz vrací všechny soubory se správnými typy a hra se vykreslí a hraje. Přesměrování z http na https není nastavené, web funguje na obou adresách.
+- **Další krok:** milník 6. Návrhy scénářů čekají v `docs/navrhy-scenaru-email.md` a `docs/navrhy-scenaru-zpravy.md`. U e-mailu Tomáš 24. 9. 2026 schválil nové znění bodů 4 a 5 nápovědy, do `src/texts.js` se zatím nezabudovalo.
 
 **Otevřené úkoly:**
 - **Před zveřejněním odkazu na hru: testovací zprávy.** V bance zůstávají testovací zprávy (e-mail `email-04` až `email-07`, u Zpráv `zpravy-04` až `zpravy-07`). Nasazuje se i s nimi (web má `noindex`, Tomášovo rozhodnutí v milníku 4). Než se odkaz na hru kdekoli zveřejní, musí být všechny odstraněné a nahrazené skutečnými scénáři.
 - **Před zveřejněním odkazu na hru: zdroje Finanční správy.** Tomáš si sám přečte oba zdroje ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.
 - **Logo nad názvem:** na počítači je během kola logo v hlavičce nad názvem „Poznej podvod“, ne vedle něj (sekce 5). Hlavička se v milníku 4 neměnila; ověřit, jestli to bylo už před milníkem 4, a opravit.
-- **HTTPS:** certifikát řeší Subreg, web je zatím jen na `http://` (sekce 4).
 - **Tenký Montserrat ve WebKitu:** v Playwright WebKitu na Windows se Montserrat (proměnné písmo) kreslí velmi tence místo tučně, v Chromiu správně. Písma se od milníku 2 neměnila. Nejspíš omezení WebKitu na Windows, na skutečném iPhonu neověřeno: Tomáš zkontroluje živou stránku v Safari na iPhonu nebo iPadu (nadpisy a tlačítka mají být tučné).
+- **Přesměrování http → https:** web zatím funguje na obou adresách. Nejdřív zjistit, jaký postup Subreg podporuje (nastavení hostingu, nebo soubor na serveru). Samostatný úkol (sekce 4).
+- **Obnova certifikátu:** certifikát Let's Encrypt platí do 23. 12. 2026. Kolem 10. 12. 2026 zkontrolovat, jestli ho Subreg obnovil (datum platnosti na https://poznej-podvod.menestarosti.cz).
 
 **Pravidla, repozitář a hosting:**
 - Předem povolené commity a pushe po každé části platily jen pro milník 3. Pro další milníky platí zase sekce 2, bod 4 (nejdřív Tomášovo OK), dokud Tomáš neřekne jinak.
