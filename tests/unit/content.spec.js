@@ -153,7 +153,7 @@ test.describe('content: validation rules', () => {
 
   test('SMS: optional date is valid when filled, empty date is reported', () => {
     const scenario = validChat();
-    scenario.message.date = 'dnes 10:24';
+    scenario.message.date = 'Dnes 10:24';
     expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' })).toEqual([]);
     scenario.message.date = ' ';
     expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' }).join('\n')).toMatch(/message\.date/);
@@ -170,7 +170,7 @@ test.describe('content: validation rules', () => {
 
   test('chat: date above the thread and before the first bubble at once is reported', () => {
     const scenario = validChat();
-    scenario.message.date = 'dnes 10:24';
+    scenario.message.date = 'Dnes 10:24';
     scenario.message.messages[0].date = 'Dnes 10:24';
     expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' }).join('\n')).toMatch(/nesmí být vyplněné zároveň/);
   });

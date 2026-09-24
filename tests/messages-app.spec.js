@@ -36,7 +36,7 @@ test.describe('conversation view', () => {
     const message = page.locator('article[data-scenario-id]');
     await expect(message.locator('[data-target="from"]')).toHaveText('+44 7700 900318');
     await expect(message.locator('.chat__app')).toHaveText('SMS');
-    await expect(message.locator('.chat__date')).toHaveText('dnes 10:24');
+    await expect(message.locator('.chat__date')).toHaveText('Dnes 10:24');
     await expect(message.locator('.chat__avatar svg')).toHaveCount(1);
     await expect(page.getByTestId('not-in-contacts')).toHaveCount(0);
     await expect(page.getByText('zobrazit adresu')).toHaveCount(0);

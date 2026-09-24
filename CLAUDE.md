@@ -161,7 +161,7 @@ Jedna sekce, každý scénář má `app: "sms"` nebo `app: "chat"`:
 - Rozhodnutí z milníku 5 (`src/apps/messages.js`):
   - **Bez seznamu konverzací:** hráč vidí rovnou otevřenou konverzaci.
   - **Odesílatel** je jen číslo, nebo jméno uloženého kontaktu (`inContacts: true`, v avataru jeho první písmeno). Nic se neodkrývá, žádné „zobrazit adresu“. Označit jde jako `from`. Výjimka: `fromMarkable: false` (milník 6, převzatý účet uloženého kontaktu). Odesílatel je pak obyčejný text, nejde označit a nestojí bod. Podezření k němu je tam oprávněné, ale není to hrozba.
-  - **Štítek s datem** (milník 6): malý šedý štítek uprostřed chatu, formát den + čas („Út 18:05“, „Dnes 11:40“), žádné pevné datum. Buď jeden nad všemi bublinami (`message.date`), nebo před konkrétní bublinou (`messages.N.date`), třeba nad staršími bublinami a nad novou zprávou. Obojí najednou u první bubliny kontrola obsahu odmítne. Štítek není část zprávy, nejde označit a čtečka obrazovky ho čte jako text.
+  - **Štítek s datem** (milník 6): malý šedý štítek uprostřed chatu, formát den + čas („Út 18:05“, „Dnes 11:40“, „Včera 17:30“), vždy s velkým písmenem na začátku, žádné pevné datum. E-mail má datum dál s malým písmenem („dnes 10:03“). Buď jeden nad všemi bublinami (`message.date`), nebo před konkrétní bublinou (`messages.N.date`), třeba nad staršími bublinami a nad novou zprávou. Obojí najednou u první bubliny kontrola obsahu odmítne. Štítek není část zprávy, nejde označit a čtečka obrazovky ho čte jako text.
   - **Bublina je nejmenší část, kterou jde označit.** Odkaz v bublině je samostatná část vedle textu, nikdy vnořené tlačítko. SMS s jednou bublinou a odkazem má tedy nejvýš 3 hrozby.
   - **Lišta „není ve vašich kontaktech“** (jen chat) není část zprávy a nejde označit. Její tlačítka v obou úrovních ukážou stejné upozornění „Tohle je jen trénink, tlačítko nic nedělá…“. Ve vyhodnocení zůstane jen text bez tlačítek.
   - Dole je neaktivní pole „Zpráva“, jen jako dekorace (`aria-hidden`).
@@ -234,7 +234,7 @@ Odkazy, tlačítka a přílohy nikam nevedou.
 }
 ```
 
-Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (číslo nebo jméno), `inContacts` (true/false), `messages` (pole bublin, každá s `text`, případně `link` a `date` = štítek před bublinou) a nepovinně `date` („dnes 10:24“, štítek nad bublinami) a `fromMarkable` (`false` = odesílatel nejde označit, sekce 6).
+Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (číslo nebo jméno), `inContacts` (true/false), `messages` (pole bublin, každá s `text`, případně `link` a `date` = štítek před bublinou) a nepovinně `date` („Dnes 10:24“, štítek nad bublinami) a `fromMarkable` (`false` = odesílatel nejde označit, sekce 6).
 
 `target` odkazuje na část zprávy (`fromName`, `fromAddress`, `subject`, `body.N`, `button`, `link`, `attachment`, `from`, `messages.N`, `messages.N.link` = odkaz uvnitř bubliny). Klikání je vázané na prvky, ne na souřadnice. Volitelné pole `alsoTargets` (pole dalších částí) naváže jednu hrozbu na víc částí zprávy, např. `"target": "fromAddress", "alsoTargets": ["fromName"]`: označení kterékoli z nich je jeden zásah, žárovka a „Tohle místo stojí za druhý pohled“ jsou u hlavního `target`.
 

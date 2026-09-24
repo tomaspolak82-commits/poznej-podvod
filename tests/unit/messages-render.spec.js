@@ -40,8 +40,8 @@ test.describe('messages app: date labels between bubbles', () => {
   test('without dates there is no label; the date above the thread still works', () => {
     const plain = scenario({ messages: [{ text: 'Bublina' }] });
     expect(labels(renderMessage(plain, { mode: 'play' }))).toEqual([]);
-    expect(labels(renderMessage(scenario({ date: 'dnes 10:24', messages: [{ text: 'Bublina' }] }), { mode: 'play' }))).toEqual([
-      'dnes 10:24',
+    expect(labels(renderMessage(scenario({ date: 'Dnes 10:24', messages: [{ text: 'Bublina' }] }), { mode: 'play' }))).toEqual([
+      'Dnes 10:24',
     ]);
   });
 });
