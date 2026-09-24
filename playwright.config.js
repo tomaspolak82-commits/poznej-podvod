@@ -17,7 +17,14 @@ export default defineConfig({
   // which runs once in the "unit" project (pure Node, no browser needed).
   projects: [
     { name: 'Pixel 7', testIgnore: UNIT_TESTS, use: { ...devices['Pixel 7'] } },
-    { name: 'iPhone 13', testIgnore: UNIT_TESTS, use: { ...devices['iPhone 13'] } },
+    // WebKit on Windows is about 1.6x slower than Chromium and slows down more under CPU load:
+    // with 8 workers the longest round tests reached 30 s here, the Chromium devices stayed under 20 s
+    {
+      name: 'iPhone 13',
+      testIgnore: UNIT_TESTS,
+      timeout: 60_000,
+      use: { ...devices['iPhone 13'] },
+    },
     { name: 'Galaxy Tab S4', testIgnore: UNIT_TESTS, use: { ...devices['Galaxy Tab S4'] } },
     { name: 'Desktop Chrome', testIgnore: UNIT_TESTS, use: { ...devices['Desktop Chrome'] } },
     {
