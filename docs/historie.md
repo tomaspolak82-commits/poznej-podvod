@@ -1,0 +1,32 @@
+# Historie hotové práce
+
+Přesunuto doslova z `CLAUDE.md` 24. 9. 2026. Odkazy na sekce („sekce 6“, „sekce 16“) míří do `CLAUDE.md`.
+
+## Milníky 1–5 (z CLAUDE.md, sekce 13)
+
+1. **Příprava:** `git init`, Vite projekt, struktura složek, `.gitignore`, `.env.example`, `docs/`. Propojení s GitHubem přes GitHub CLI (`gh`). Podle Tomáše je nainstalované a přihlášené, ale při kontrole z Claude Code ho terminál nenašel, proto:
+   1. `gh auth status`: ověří, že `gh` existuje a je přihlášené. Když ho terminál nezná, Tomáš zavře a znovu otevře terminál (a Claude Code), aby se načetla nová cesta k programům. Když ani pak ne, zeptej se.
+   2. Před vytvořením repozitáře napiš název a počkej na OK.
+   3. `gh repo create <název> --private --source . --remote origin`: vytvoří na GitHubu soukromý repozitář a propojí ho s místní složkou.
+   4. Push až po OK.
+   U každého příkazu jednou větou vysvětli, co dělá.
+2. **Kostra, vzhled a první nasazení:** hlavička, patička, hlavní stránka s dlaždicemi a obrazovka výběru úrovně ve finálním moderním vzhledu (sekce 9), výběr loga z `docs/loga/`, stažení fontů. Do `index.html` přidej `<meta name="robots" content="noindex">`, aby vyhledávače nezaindexovaly nedodělanou verzi (bez `robots.txt` se zákazem, jinak by vyhledávač meta značku neviděl) → **Tomáš schválí vzhled.** Pak `scripts/deploy.mjs` s `--dry-run` a pojistkou a první nahrání na server, aby se problémy s hostingem ukázaly hned.
+3. **Herní engine:** výběr úrovně, náhodný výběr kola se `seed`, bodování, modal nápovědy, vyhodnocení se žárovkami, konec kola, historie a „Vítejte zpět“. Zatím se **7 testovacími zprávami v každé sekci** (5 podvodů, 2 legitimní), zjevně označenými jako testovací; v milníku 4 je nahradí skutečné scénáře. Postup v pěti částech: (1) logika a testy, (2) základní úroveň, (3) pokročilá úroveň, (4) nápověda a historie, (5) průchody v prohlížeči. Po každé části commit a push s českou zprávou, pokud projde build i všechny testy (Tomáš předem povolil); když testy neprojdou, zastavit se a napsat mu. Texty nápovědy a vyhodnocení nejdřív poslat Tomášovi ke schválení. **Milník 3 se na server nenahrává**, nasazuje se až po milníku 4.
+4. **E-mailová aplikace + 3 vzorové scénáře** (2 podvody, 1 legitimní) → **Tomáš schválí.** Poznámky z milníku 3:
+   - **Lišta kola na mobilu zabírá moc místa:** tlačítka „Zpět na výběr úrovně“ a „Na co si dát pozor?“ jsou pod sebou a zpráva začíná až v polovině obrazovky. Tlačítka zmenšit a dát vedle sebe (pořád aspoň 48 × 48 px).
+   - **Testovací zprávy** (`email-01` až `email-07`, `zpravy-01` až `zpravy-07`) mají v předmětu „(podvod)“ / „(v pořádku)“ a prozrazují odpověď. V milníku 4 nahradí `email-01` až `email-03` skutečné scénáře, 4 testovací zůstanou jako `email-04` až `email-07` bez prozrazení v předmětu (aby šlo losovat, sekce 16); testy, které se opírají o konkrétní testovací zprávy (`tests/round-advanced.spec.js` hlídá složení kola se `seed` 123), je pak potřeba upravit.
+   - **Přilepení lišty při velkém systémovém písmu** ověří Tomáš ručně na telefonu (automaticky to nasimulovat nejde).
+   - Neutrální zobrazení `src/apps/generic.js` nahradí e-mailová aplikace se stejným rozhraním (sekce 6); u Zpráv to samé v milníku 5.
+   - Po milníku 4 se nasazuje na server (milník 3 se nenasazoval).
+5. **Aplikace Zprávy (SMS + chat) + 3 vzorové scénáře** → **Tomáš schválí.**
+
+## Stav hotové práce (z CLAUDE.md, sekce 16, k 24. 9. 2026)
+
+- **Milník 1** (příprava) hotový: commit `4e3de39`.
+- **Milník 2** (kostra, vzhled, nasazení) hotový: poslední commit `1e593e7`.
+- **Milník 3** (herní engine) hotový: commity `bfd3ef0`, `7848dc6`, `fdc1f62`, `4ad1bd1`, `52bacea`. Na server se nenahrával. Testy: 560 prošlo, 5 úmyslně přeskočených.
+- **Milník 4** (e-mailová aplikace + 3 vzorové scénáře) hotový a **nasazený 23. 9. 2026** na http://poznej-podvod.menestarosti.cz: commit `9e2e73b` (+ tento commit se stavem projektu). Schránka se složkami, detail se skrytou adresou („zobrazit adresu“), lišta kola na mobilu v jednom řádku, `alsoTargets` v engine, kategorie `obecne-osloveni`, scénáře `email-01` až `email-03`. Testy: 655 prošlo, 5 úmyslně přeskočených. Po nasazení ověřeno: JS `text/javascript`, CSS `text/css`, písmo `font/woff2`, stránka se vykreslí a hraje (Playwright, Chromium i WebKit, bez chyb v konzoli).
+- **Pojistka nasazení** (sekce 14) teď při nasazení i `--check` vypíše obsah cílové složky před kontrolou WordPressu a pořadí v kódu hlídají 2 testy v `tests/unit/deploy-guard.spec.js`.
+- **Milník 5** (aplikace Zprávy + 3 vzorové scénáře) hotový: commit `f9bcf39`, **nasazený 24. 9. 2026**. Po nasazení ověřeno na http i https: JS `text/javascript`, CSS `text/css`, písmo `font/woff2`, stránka se vykreslí a kolo v E-mailu i Zprávách jde spustit (Playwright, Chromium i WebKit, bez chyb v konzoli). Obsah: `src/apps/messages.js`, `src/styles/messages.css`, scénáře `zpravy-01` (SMS pokuta), `zpravy-02` (chat „Ahoj mami“), `zpravy-03` (legitimní SMS od syna s odkazem), upravená nápověda Zpráv (bod 1 jen o čísle, které se vydává za někoho blízkého), `alsoTargets` u `email-01` a `email-02` (části, které hráč označí podle nápovědy), nevinná bublina v `zpravy-02` (pravidlo „aspoň jedna nevinná část“, sekce 7), nepovinné `message.date`. `src/apps/generic.js` smazaný. Testy: 790 prošlo, 5 úmyslně přeskočených.
+- **Timeouty testů na iPhonu 13 vyřešené** (commit `c1f73f2`, 24. 9. 2026). Příčina ověřená: WebKit je na Windows asi 1,6× pomalejší než Chromium a pod zátěží zpomaluje víc. S 8 paralelními běhy přetáhly nejdelší testy kola na iPhonu 13 limit 30 s (až 32,7 s), zařízení s Chromiem zůstala pod 20 s. Projekt iPhone 13 má v `playwright.config.js` limit 60 s. Ověřeno 7 běhy celé sady (3 výchozí a 1 zátěžový před opravou, 2 zátěžové a 1 výchozí po ní).
+- **HTTPS funguje od 24. 9. 2026:** certifikát Let's Encrypt pro `poznej-podvod.menestarosti.cz` (platný do 23. 12. 2026). Ověřeno po nasazení milníku 5: https://poznej-podvod.menestarosti.cz vrací všechny soubory se správnými typy a hra se vykreslí a hraje. Přesměrování z http na https není nastavené, web funguje na obou adresách.
