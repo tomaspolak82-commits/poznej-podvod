@@ -39,13 +39,14 @@ U podvodných SMS patří do vysvětlení rada: „Podezřelou SMS můžete pře
 | Z3 | Hlasování v soutěži: pošlete kód a „Připojit zařízení“, ve skutečnosti převzetí WhatsAppu. | tamtéž jako Z2 |
 | Z4 | Dopravní pokuta, třídenní lhůta, falešný Portál dopravy. Scénář `zpravy-01` (milník 5, SMS). | https://tiscali.cz/podvodna-sms-k-uhrade-pokuty-vypada-zcela-legitimne-cesi-skacou-na-trik-ktery-je-pripravi-o-tisice-korun-720319 ; Ministerstvo dopravy 12. 6. 2026: https://md.gov.cz/Media/Media-a-tiskove-zpravy/Pozor-na-falesne-SMS-o-pokutach |
 | Z5 | Clo za balík 216,99 Kč. | https://ceskaposta.cz/-/bezpečnostní-upozornění-na-podvodné-sms-zprávy-2 |
-| Z6 | Trestní oznámení ze zfalšované linky 158, falešná Datová schránka, přihlášení bankovní identitou, doména .top. | https://moneta.cz/blog/pozor-na-podvodne-sms-zasilane-jmenem-policie-cr |
+| Z6 | Trestní oznámení ze zfalšované linky 158, falešná Datová schránka, přihlášení bankovní identitou, doména .top. | Policie ČR přes ČTK 5. 2. 2025: https://www.ceskenoviny.cz/zpravy/policie-varuje-pred-podvodnymi-sms-zpravami-vypadaji-jako-odeslane-z-linky-158/2630375 (původní příspěvek https://x.com/PolicieCZ/status/1887141569452462279) ; dříve https://moneta.cz/blog/pozor-na-podvodne-sms-zasilane-jmenem-policie-cr |
 | Z7 | Falešné SMS jménem Bank iD. | https://tiscali.cz/vetsina-cechu-si-niceho-nevsimne-a-proste-klikne-podvodny-e-mail-nebo-sms-ale-muzete-spolehlive-rozpoznat-i-v-dobe-ai-676291 |
 | Z8 | „Máte nárok na státní příspěvek.“ | https://policie.gov.cz/kyberkriminalita/podvodne-sms-zpravy |
 | Z9 | Daňový přeplatek, falešný portál MOJE daně. | podpora.mojedane.gov.cz (varování před podvodnými telefonáty a SMS; přesnou adresu stránky doplnit) |
 | Z10 | Bazar: „kupující“ pošle odkaz na „přijetí platby“ kartou. | https://airbank.cz/co-vas-nejvic-zajima/podvody-ktere-zrovna-leti/ |
 | Z11 | Brigáda z domu: lajkování, pak Telegram, pak zaplatit za „rozšířenou nabídku“. | tamtéž jako Z10 |
 | Z12 | Láska přes internet, „voják v zahraničí“ chce peníze na cestu. | tamtéž jako Z10 |
+| Z13 | Převzatý účet známého, který nikdy nechce peníze, najednou naléhavě žádá o půjčku. Navazuje na Z3: po převzetí účtu podvodník rozesílá kontaktům žádosti o peníze. Starší bubliny v obvyklém tónu, pak změna chování. (Nápad z 24. 9. 2026, do `zpravy-04` se záměrně nepřidává.) | tamtéž jako Z2 (doslova ověřen úsek „začne rozesílat žádosti o peníze“) |
 
 ## Legitimní zprávy – náměty
 
