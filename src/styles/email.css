@@ -1,24 +1,5 @@
-/* Simulated mail app (CLAUDE.md, section 6): neutral colours, no logos of real apps */
-
-/* ---------- Phone frame: only on tablet and desktop ---------- */
-
-@media (min-width: 40em) {
-  .phone {
-    width: 100%;
-    max-width: 28rem;
-    margin-inline: auto;
-    padding: 0.75rem;
-    border-radius: 2.5rem;
-    background: #2d3748;
-    box-shadow: var(--shadow-card-hover);
-  }
-
-  .phone > .mail {
-    border: 0;
-    border-radius: 1.75rem;
-    box-shadow: none;
-  }
-}
+/* Simulated mail app (CLAUDE.md, section 6): neutral colours, no logos of real apps.
+   The phone frame is shared with the messages app (game.css). */
 
 /* ---------- Common ---------- */
 

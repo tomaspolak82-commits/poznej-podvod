@@ -4,15 +4,12 @@
 //
 // The parts of the message follow the shared contract in ./parts.js.
 
-import { createPart } from './parts.js';
+import { createPart, phoneFrame as frame } from './parts.js';
 import { EMAIL_APP, RECIPIENT } from '../texts.js';
 import { escapeHtml } from '../ui/html.js';
 import { icon } from '../ui/icons.js';
 
 export const hasInbox = true;
-
-// Phone frame on tablet and desktop; on a phone the app fills the width (CSS)
-const frame = (content) => `<div class="phone">${content}</div>`;
 
 function inboxBar(foldersOpen) {
   return `

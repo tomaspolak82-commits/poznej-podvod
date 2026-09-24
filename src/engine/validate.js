@@ -54,6 +54,8 @@ function validateChatMessage(message, errors) {
   if (!['sms', 'chat'].includes(message.app)) errors.push('message.app musí být "sms" nebo "chat"');
   if (!isNonEmptyString(message.from)) errors.push('message.from chybí nebo je prázdné');
   if (typeof message.inContacts !== 'boolean') errors.push('message.inContacts musí být true nebo false');
+  // Optional date shown above the bubbles ("dnes 10:24")
+  if (message.date !== undefined && !isNonEmptyString(message.date)) errors.push('message.date musí být neprázdný text');
   if (!Array.isArray(message.messages) || message.messages.length === 0) {
     errors.push('message.messages musí být neprázdné pole bublin');
     return;

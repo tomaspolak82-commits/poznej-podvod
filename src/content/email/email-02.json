@@ -22,19 +22,21 @@
   "threats": [
     {
       "target": "fromAddress",
-      "alsoTargets": ["fromName"],
+      "alsoTargets": ["fromName", "body.4"],
       "category": "odesilatel",
       "title": "Falešné jméno odesílatele",
       "explanation": "Jméno bylo falešné. Důkaz najdete v adrese: skutečná adresa byla financni.sprava.cz47@gmail.com."
     },
     {
       "target": "body.2",
+      "alsoTargets": ["subject"],
       "category": "casovy-tlak",
       "title": "Spěch",
       "explanation": "Krátká lhůta a hrozba, že o peníze přijdete, mají zabránit tomu, abyste si to v klidu ověřili."
     },
     {
       "target": "body.3",
+      "alsoTargets": ["body.1"],
       "category": "zadost-o-udaje",
       "title": "Žádost o údaje",
       "explanation": "Finanční správa ve svém varování uvádí, že e-mailem nežádá přihlašovací ani bankovní údaje."

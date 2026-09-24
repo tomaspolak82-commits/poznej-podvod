@@ -142,7 +142,28 @@
   text-align: center;
 }
 
-/* ---------- Message (neutral view, milestone 3) ---------- */
+/* ---------- Phone frame of the simulated apps: only on tablet and desktop ---------- */
+
+@media (min-width: 40em) {
+  .phone {
+    width: 100%;
+    max-width: 28rem;
+    margin-inline: auto;
+    padding: 0.75rem;
+    border-radius: 2.5rem;
+    background: #2d3748;
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .phone > .mail,
+  .phone > .chat {
+    border: 0;
+    border-radius: 1.75rem;
+    box-shadow: none;
+  }
+}
+
+/* ---------- Message: common parts of the simulated apps ---------- */
 
 .msg {
   display: grid;
@@ -194,21 +215,6 @@
 .msg__body {
   display: grid;
   gap: var(--space-2);
-}
-
-.msg__bubbles {
-  display: grid;
-  gap: var(--space-2);
-}
-
-.msg__bubble {
-  display: grid;
-  gap: var(--space-1);
-  justify-self: start;
-  max-width: 90%;
-  padding: var(--space-2);
-  border-radius: var(--radius-card);
-  background: #edf2f7;
 }
 
 /* Links, buttons and attachments inside the simulated message (neutral, not our brand colours) */

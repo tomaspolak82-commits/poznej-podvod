@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { maxPointsForScenario } from '../../src/engine/round.js';
 import { scoreMessage } from '../../src/engine/scoring.js';
+import { listTargets } from '../../src/engine/validate.js';
+import { scenarioById } from '../helpers/game.js';
 
 // Scam with 3 threats (like the example in CLAUDE.md, section 7)
 const scam = {
@@ -157,6 +159,53 @@ test.describe('scoring: one threat on two parts (alsoTargets, CLAUDE.md section 
     const result = scoreMessage(sender, 'pokrocila', 'scam', ['link']);
     expect(result.missed.map((t) => t.target)).toEqual(['fromAddress']);
     expect(result.missedCategories).toEqual(['odesilatel']);
+  });
+});
+
+// A player who follows the hint must not lose a point (CLAUDE.md, section 7): every part
+// the hint leads to lies on a threat. Checked on the real scenario files (milestone 5).
+test.describe('scoring: real scenarios, parts the hint leads to are hits', () => {
+  const cases = [
+    ['email-01', ['fromName'], 'sender name "Balíkovna" = the sender threat'],
+    ['email-01', ['subject'], 'subject "Vrácení peněz" = unexpected money'],
+    ['email-01', ['body.2'], 'call to click = the link threat'],
+    ['email-02', ['subject'], 'subject "Poslední upozornění" = time pressure'],
+    ['email-02', ['body.1'], 'missing bank details = request for data'],
+    ['email-02', ['body.4'], 'signature "Finanční správa" = the fake sender name'],
+    ['zpravy-02', ['messages.0'], '"new number" bubble = the unknown number'],
+  ];
+  for (const [id, marks, why] of cases) {
+    test(`${id}: ${why}`, () => {
+      const result = scoreMessage(scenarioById(id), 'pokrocila', 'scam', marks);
+      expect(result.extra).toEqual([]);
+      expect(result.markingPoints).toBe(1);
+    });
+  }
+
+});
+
+// Every scam has at least one innocent part, so marking everything never gets full points
+// (CLAUDE.md, section 7, variant A). Exception: an SMS with one bubble and a link.
+test.describe('scoring: marking everything does not pay off (real scenarios)', () => {
+  const markAll = (scenario) =>
+    scoreMessage(scenario, 'pokrocila', 'scam', listTargets(scenario.section, scenario.message));
+
+  for (const [id, innocent] of [
+    ['email-01', ['body.3']],
+    ['email-02', ['body.0']],
+    ['zpravy-02', ['messages.1']],
+  ]) {
+    test(`${id}: marking everything leaves the innocent part as unnecessary`, () => {
+      const result = markAll(scenarioById(id));
+      expect(result.extra).toEqual(innocent);
+      expect(result.missed).toEqual([]);
+    });
+  }
+
+  test('zpravy-01 is the exception: an SMS with one bubble and a link, every part is a threat', () => {
+    const scenario = scenarioById('zpravy-01');
+    expect(scenario.message.messages).toHaveLength(1);
+    expect(markAll(scenario).extra).toEqual([]);
   });
 });
 

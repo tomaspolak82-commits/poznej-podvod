@@ -1,0 +1,148 @@
+/* Simulated messages app, SMS and chat (CLAUDE.md, section 6): neutral colours,
+   no logos or colours of real apps. The phone frame is in game.css. */
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ---------- Header: avatar + number or contact name ---------- */
+
+.chat__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  background: #edf2f7;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.chat__avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #cbd5e0;
+  color: var(--color-heading);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.chat__avatar svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.chat__who {
+  display: grid;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.chat__from {
+  font-size: 1.125rem;
+}
+
+.chat__app {
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+/* ---------- Chat: number not saved in contacts ---------- */
+
+.chat__unknown {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-heading);
+  text-align: center;
+}
+
+.chat__unknown-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-1);
+}
+
+.chat__unknown-button {
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+  padding: 0 var(--space-2);
+  border: 1px solid #a0aec0;
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  color: #1d4ed8; /* 6.7:1 on white */
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chat__unknown-button:hover {
+  background: #edf2f7;
+}
+
+/* ---------- Conversation ---------- */
+
+.chat__thread {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-2);
+}
+
+.chat--chat .chat__thread {
+  background: #eef1f4;
+}
+
+.chat__date {
+  justify-self: center;
+  padding: 0.125rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: #e2e8f0;
+  color: var(--color-heading);
+  font-size: 1rem;
+}
+
+/* Incoming bubble on the left; the link is a sibling of the text, never nested in it */
+.chat__bubble {
+  display: grid;
+  gap: var(--space-1);
+  justify-self: start;
+  max-width: 90%;
+  min-width: 0;
+  padding: 0.75rem var(--space-2);
+  border-radius: 1.25rem 1.25rem 1.25rem 0.375rem;
+  background: #edf2f7;
+  overflow-wrap: anywhere;
+}
+
+.chat--chat .chat__bubble {
+  background: var(--color-white);
+  box-shadow: 0 1px 2px rgb(26 32 44 / 0.12);
+}
+
+/* Marking: the whole width, so the dashed frames are easy to hit */
+.msg--mark .chat__bubble {
+  justify-self: stretch;
+  max-width: none;
+}
+
+/* ---------- Message field: decoration only, not interactive ---------- */
+
+.chat__input {
+  margin: var(--space-2);
+  padding: 0.75rem var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  color: var(--color-text);
+}

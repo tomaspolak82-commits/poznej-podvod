@@ -145,6 +145,14 @@ test.describe('content: validation rules', () => {
     expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' }).join('\n')).toMatch(/app/);
   });
 
+  test('SMS: optional date is valid when filled, empty date is reported', () => {
+    const scenario = validChat();
+    scenario.message.date = 'dnes 10:24';
+    expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' })).toEqual([]);
+    scenario.message.date = ' ';
+    expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' }).join('\n')).toMatch(/message\.date/);
+  });
+
   test('SMS: inContacts must be true or false', () => {
     const scenario = validChat();
     delete scenario.message.inContacts;

@@ -13,6 +13,9 @@ import { escapeHtml } from '../ui/html.js';
 
 const INTERACTIVE = /^(button|link|attachment|messages\.\d+\.link)$/;
 
+// Phone frame on tablet and desktop; on a phone the app fills the width (CSS)
+export const phoneFrame = (content) => `<div class="phone">${content}</div>`;
+
 // Status of a part after an advanced-level answer: icon + text, never colour alone
 function statusHtml(kind) {
   const variants = {

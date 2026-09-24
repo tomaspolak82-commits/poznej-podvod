@@ -6,6 +6,7 @@ import './styles/components.css';
 import './styles/screens.css';
 import './styles/game.css';
 import './styles/email.css';
+import './styles/messages.css';
 
 import { renderLayout } from './ui/layout.js';
 import { startRouter } from './router.js';

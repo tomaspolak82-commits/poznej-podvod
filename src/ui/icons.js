@@ -28,6 +28,7 @@ const paths = {
   menu: '<path d="M4 6.5h16M4 12h16M4 17.5h16"/>',
   chevronDown: '<path d="m6 9 6 6 6-6"/>',
   chevronUp: '<path d="m6 15 6-6 6 6"/>',
+  person: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/>',
 };
 
 export function icon(name) {

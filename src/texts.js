@@ -26,15 +26,28 @@ export const HINTS = {
   },
   zpravy: {
     title: 'Na co si dát pozor ve zprávách',
+    // Revised in milestone 5 (approved by Tomáš): a link alone is not a scam; item 1 only
+    // about numbers pretending to be someone close (an unknown number alone means nothing)
     items: [
-      ['Neznámé nebo „nové“ číslo.', '„Mami, tohle je moje nové číslo“ je častý trik. Zavolejte na staré číslo, které znáte.'],
-      ['Odkaz nebo výzva k instalaci aplikace.', 'Pokuta, clo za balík, přeplatek: odkaz ve zprávě často vede na falešnou stránku. Aplikace instalujte jen z obchodu v telefonu.'],
-      ['Spěch a citový nátlak.', '„Rychle, potřebuju pomoct“, „máte tři dny“. Čím víc zpráva tlačí, tím víc si ji ověřte.'],
+      [
+        'Neznámé nebo „nové“ číslo, které se vydává za někoho blízkého.',
+        '„Mami, tohle je moje nové číslo“ je častý trik. Zavolejte na původní číslo, které znáte. Zpozorněte i u předvolby jiné než +420.',
+      ],
+      [
+        'Žádost o peníze.',
+        'Když vás někdo blízký žádá o peníze přes zprávu, zavolejte mu dřív, než cokoli pošlete. Pomůže i otázka, na kterou zná odpověď jen on.',
+      ],
+      ['Spěch a citový nátlak.', '„Rychle“, „ještě dnes“, „nikomu to neříkej“. Čím víc zpráva tlačí, tím víc si ji ověřte.'],
+      [
+        'Odkaz k platbě nebo přihlášení.',
+        'Odkaz sám o sobě podvod není. Zpozorněte, když vás vede k zaplacení pokuty, cla nebo přeplatku, k přihlášení nebo k zadání údajů. Ověřte si to sami na oficiálních stránkách.',
+      ],
       ['Žádost o kód.', 'Kód z SMS je jako klíč od vašeho účtu. Nikomu ho nepřeposílejte, ani „kamarádovi“.'],
-      ['Žádost o peníze.', 'Když vás někdo blízký žádá o peníze přes zprávu, zavolejte mu dřív, než cokoli pošlete.'],
+      ['Výzva k instalaci aplikace.', 'Aplikace instalujte jen z obchodu v telefonu, nikdy přes odkaz ve zprávě.'],
     ],
     note: 'Pozor: i zpráva v bezchybné češtině může být podvod. Podvodníci dnes píšou s pomocí umělé inteligence.',
-    advice: 'Podezřelou SMS můžete přeposlat na číslo 7726, operátor pak odesílatele zablokuje.',
+    advice:
+      'Podezřelou SMS můžete přeposlat na číslo 7726, operátor pak odesílatele zablokuje. V chatu můžete podezřelý účet zablokovat a nahlásit přímo v aplikaci.',
   },
 };
 
@@ -120,6 +133,17 @@ export const EMAIL_APP = {
     { from: 'Spolek zahrádkářů', subject: 'Zápis ze schůze', preview: 'Dobrý den, v příloze posíláme zápis ze zářijové schůze…', time: 'pondělí' },
     { from: 'Petr Novák', subject: 'Chata o víkendu', preview: 'Ahoj, jedeme v sobotu kolem deváté, vezmu…', time: '15. 9.' },
   ],
+};
+
+// Simulated messages app, SMS and chat (approved by Tomáš, milestone 5)
+export const MESSAGES_APP = {
+  appLabel: { sms: 'SMS', chat: 'Chat' },
+  notInContacts: 'Toto číslo není ve vašich kontaktech',
+  addContact: 'Přidat',
+  block: 'Nahlásit a zablokovat',
+  // Same for scams and legitimate messages, so it does not give the answer away
+  buttonNotice: 'Tohle je jen trénink, tlačítko nic nedělá. Rozhodněte dole, jestli je zpráva podvod, nebo v pořádku.',
+  inputPlaceholder: 'Zpráva',
 };
 
 export const WELCOME = {

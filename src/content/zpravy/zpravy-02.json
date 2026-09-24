@@ -1,41 +1,52 @@
 {
   "id": "zpravy-02",
   "section": "zpravy",
-  "title": "Testovací zpráva Z2 (podvod)",
+  "title": "Ahoj mami, rozbil se mi mobil",
   "isScam": true,
   "message": {
     "app": "chat",
-    "from": "Testovací odesílatel Z2",
+    "from": "+33 6 39 98 41 27",
     "inContacts": false,
+    "date": "dnes 16:02",
     "messages": [
-      {
-        "text": "Testovací zpráva 2, bublina 1."
-      },
-      {
-        "text": "Testovací zpráva 2, bublina 2."
-      }
+      { "text": "Ahoj mami, rozbil se mi mobil, píšu z nového čísla. Ulož si ho." },
+      { "text": "Jak se máš? Doma je všechno v pořádku?" },
+      { "text": "Mám malý problém. Nedostanu se do bankovnictví a ještě dnes musím zaplatit fakturu, jinak mi naběhne penále." },
+      { "text": "Mohla bys ji zaplatit za mě? Je to 8 450 Kč, zítra ti to hned vrátím. Pošlu ti číslo účtu." },
+      { "text": "Prosím, neříkej to tátovi, ať není naštvaný." }
     ]
   },
   "threats": [
     {
       "target": "from",
+      "alsoTargets": ["messages.0"],
       "category": "nezname-cislo",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+      "title": "Neznámé „nové“ číslo",
+      "explanation": "Píše vám číslo, které nemáte uložené, a začíná +33, to je Francie. Policie varuje, že podvodníci často používají zahraniční předvolby a začínají právě větou o novém čísle."
     },
     {
-      "target": "messages.0",
-      "category": "emocni-natlak",
-      "title": "Testovací hrozba 2",
-      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+      "target": "messages.2",
+      "category": "casovy-tlak",
+      "title": "Spěch",
+      "explanation": "„Ještě dnes, jinak penále.“ Policie upozorňuje, že jakýkoli tlak na rychlé jednání je podezřelý."
     },
     {
-      "target": "messages.1",
+      "target": "messages.3",
       "category": "neobvykla-zadost",
-      "title": "Testovací hrozba 3",
-      "explanation": "Testovací vysvětlení hrozby 3. Skutečný text doplníme v milníku 4."
+      "title": "Prosba o peníze",
+      "explanation": "Prosba o rychlé peníze se slibem, že se hned vrátí, je podle policie typický znak tohoto podvodu."
+    },
+    {
+      "target": "messages.4",
+      "category": "emocni-natlak",
+      "title": "„Nikomu to neříkej“",
+      "explanation": "Prosba o tajemství má zabránit tomu, abyste si to s někým z rodiny ověřili."
     }
   ],
-  "summary": "Testovací shrnutí zprávy Z2. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "summary": "Než cokoli pošlete, zavolejte na původní číslo, které znáte, i když zpráva tvrdí, že je telefon rozbitý. Nebo se zeptejte na něco, co ví jen vaše dítě. Podezřelý účet můžete v aplikaci zablokovat a nahlásit.",
+  "sources": [
+    "archiv.policie.gov.cz/clanek/pozor-na-podvodne-zpravy-na-whatsappu-mami-mam-nove-cislo.aspx (Policie ČR, KŘP Středočeského kraje, 25. 9. 2025)",
+    "archiv.policie.gov.cz/clanek/ahoj-mami-mam-nove-cislo-napis-mi-na-whatsapp-tohle-neni-vase-dite-ale-podvodnik.aspx (Policie ČR, ÚO Kladno, 17. 9. 2025)",
+    "bezpecnejsi.ostrava.cz/ahoj-tati-rozbil-se-mi-telefon-nehoda-nebo-podvod/ (Bezpečnější Ostrava, 20. 10. 2025)"
+  ]
 }

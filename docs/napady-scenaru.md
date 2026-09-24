@@ -34,10 +34,10 @@ U podvodných SMS patří do vysvětlení rada: „Podezřelou SMS můžete pře
 
 | # | Námět | Zdroj |
 | --- | --- | --- |
-| Z1 | „Mami, tohle je moje nové číslo“, rozbitý mikrofon, potřeba zaplatit fakturu. | https://policie.gov.cz/kyberkriminalita/podvodne-sms-zpravy |
+| Z1 | „Mami, tohle je moje nové číslo“, rozbitý mikrofon, potřeba zaplatit fakturu. Scénář `zpravy-02` (milník 5, chat, „rozbil se mi mobil“). | https://policie.gov.cz/kyberkriminalita/podvodne-sms-zpravy ; Policie ČR, KŘP Středočeského kraje 25. 9. 2025: https://archiv.policie.gov.cz/clanek/pozor-na-podvodne-zpravy-na-whatsappu-mami-mam-nove-cislo.aspx ; Policie ČR, ÚO Kladno 17. 9. 2025: https://archiv.policie.gov.cz/clanek/ahoj-mami-mam-nove-cislo-napis-mi-na-whatsapp-tohle-neni-vase-dite-ale-podvodnik.aspx ; Bezpečnější Ostrava 20. 10. 2025: https://bezpecnejsi.ostrava.cz/ahoj-tati-rozbil-se-mi-telefon-nehoda-nebo-podvod/ |
 | Z2 | Kamarád s napadeným WhatsAppem: „Ahoj, můžeš mi rychle pomoct?“ | https://airbank.cz/co-vas-nejvic-zajima/podvody-ktere-zrovna-leti/ |
 | Z3 | Hlasování v soutěži: pošlete kód a „Připojit zařízení“, ve skutečnosti převzetí WhatsAppu. | tamtéž jako Z2 |
-| Z4 | Dopravní pokuta, třídenní lhůta, falešný Portál dopravy. | https://tiscali.cz/podvodna-sms-k-uhrade-pokuty-vypada-zcela-legitimne-cesi-skacou-na-trik-ktery-je-pripravi-o-tisice-korun-720319 |
+| Z4 | Dopravní pokuta, třídenní lhůta, falešný Portál dopravy. Scénář `zpravy-01` (milník 5, SMS). | https://tiscali.cz/podvodna-sms-k-uhrade-pokuty-vypada-zcela-legitimne-cesi-skacou-na-trik-ktery-je-pripravi-o-tisice-korun-720319 ; Ministerstvo dopravy 12. 6. 2026: https://md.gov.cz/Media/Media-a-tiskove-zpravy/Pozor-na-falesne-SMS-o-pokutach |
 | Z5 | Clo za balík 216,99 Kč. | https://ceskaposta.cz/-/bezpečnostní-upozornění-na-podvodné-sms-zprávy-2 |
 | Z6 | Trestní oznámení ze zfalšované linky 158, falešná Datová schránka, přihlášení bankovní identitou, doména .top. | https://moneta.cz/blog/pozor-na-podvodne-sms-zasilane-jmenem-policie-cr |
 | Z7 | Falešné SMS jménem Bank iD. | https://tiscali.cz/vetsina-cechu-si-niceho-nevsimne-a-proste-klikne-podvodny-e-mail-nebo-sms-ale-muzete-spolehlive-rozpoznat-i-v-dobe-ai-676291 |
@@ -57,7 +57,7 @@ Pro obě sekce. V každé sekci musí být aspoň 5 legitimních scénářů a m
 | L2 | Připomínka termínu u lékaře. |
 | L3 | Kurýr oznamuje čas doručení, bez výzvy k platbě. |
 | L4 | Potvrzení objednávky z e-shopu bez odkazu k placení. |
-| L5 | Zpráva od vnuka ze známého čísla, která nic nechce. |
+| L5 | Zpráva od vnuka ze známého čísla, která nic nechce. Obdoba je scénář `zpravy-03` (milník 5: syn posílá odkaz na fotky). |
 | L6 | Oznámení banky „přihlaste se sami v aplikaci“, bez odkazu. |
 | L7 | Skutečná zpráva z @cez.cz nebo @fs.gov.cz bez požadavku na údaje. |
 | L9 | **Úkol pro milník 6:** legitimní e-mail s odkazem, který vede na pravou doménu firmy. Lekce: odkaz sám o sobě není podvod, rozhoduje, kam vede. (Scénář ČEZ `email-03` z milníku 4 je bez odkazu, zdroj ČEZ odkazy v pravých e-mailech nepotvrzuje.) |

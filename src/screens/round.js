@@ -23,6 +23,7 @@ import {
   HINTS,
   LEAVE_ROUND,
   LINK_NOTICE,
+  MESSAGES_APP,
   ROUND,
   ROUND_END,
   TRAINING_LABEL,
@@ -242,6 +243,16 @@ export function renderRound(container, section) {
       await openDialog({
         title: TRAINING_LABEL,
         body: `<p>${mailAction === 'older' ? EMAIL_APP.notPartOfTask : EMAIL_APP.folderNotPartOfTask}</p>`,
+        actions: [{ label: CLOSE_AND_CONTINUE, value: 'close', primary: true, autofocus: true }],
+      });
+      return;
+    }
+
+    // Chat bar "Přidat / Nahlásit a zablokovat": same notice at both levels, never a mark
+    if (round.phase === 'question' && target.closest('[data-chat="contact"]')) {
+      await openDialog({
+        title: TRAINING_LABEL,
+        body: `<p>${MESSAGES_APP.buttonNotice}</p>`,
         actions: [{ label: CLOSE_AND_CONTINUE, value: 'close', primary: true, autofocus: true }],
       });
       return;

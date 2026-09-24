@@ -1,26 +1,22 @@
 {
   "id": "zpravy-03",
   "section": "zpravy",
-  "title": "Testovací zpráva Z3 (podvod)",
-  "isScam": true,
+  "title": "Fotky od syna",
+  "isScam": false,
   "message": {
     "app": "sms",
-    "from": "Testovací odesílatel Z3",
-    "inContacts": false,
+    "from": "Petr",
+    "inContacts": true,
+    "date": "dnes 19:15",
     "messages": [
       {
-        "text": "Testovací zpráva 3, bublina 1."
-      }
+        "text": "Ahoj mami, tady jsou ty fotky z Aniččiných narozenin, jak jsem ti včera slíbil do telefonu.",
+        "link": "https://photos.google.com/share/AF1QipN7x"
+      },
+      { "text": "Ta s dortem je nejlepší. V neděli se stavíme, jak jsme se domluvili." }
     ]
   },
-  "threats": [
-    {
-      "target": "messages.0",
-      "category": "casovy-tlak",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
-    }
-  ],
-  "summary": "Testovací shrnutí zprávy Z3. Skutečný text doplníme v milníku 4.",
+  "threats": [],
+  "summary": "Rozhodující je, že zpráva nic nechce: žádné peníze, žádný kód, žádné přihlášení ani platbu. Píše Petr z čísla, které máte uložené, a navazuje na to, o čem jste spolu mluvili. Odkaz sám o sobě podvod není. Rozhoduje, od koho zpráva je, jestli ji čekáte a co po vás chce. Kdyby vás i známé číslo nečekaně prosilo o peníze nebo o kód, raději zavolejte.",
   "sources": []
 }

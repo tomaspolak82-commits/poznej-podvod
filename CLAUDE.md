@@ -87,7 +87,7 @@ Každá úroveň má krátký popis a **maximální počet bodů pro toto kolo**
 - Obnovení stránky uprostřed kola: hráč se vrátí na výběr úrovně, rozehrané kolo se neuloží do historie.
 - Adresy: `#/` hlavní stránka, `#/<sekce>` výběr úrovně (vylosuje nové kolo), `#/<sekce>/kolo` kolo. Kolo je jen v paměti: adresa `#/…/kolo` bez rozehraného kola přesměruje na výběr úrovně. Odchod z kola jakoukoli cestou (i tlačítkem Zpět v prohlížeči) kolo zahodí, tlačítko Vpřed ho neobnoví.
 - Okna (nápověda, vysvětlení u žárovky, upozornění na odkaz, potvrzení) používají `src/ui/dialog.js` (prvek `<dialog>`): zavírají se tlačítkem, Esc i klepnutím mimo a fokus se vrátí na prvek, který okno otevřel. Potvrzovací okna mají fokus na bezpečné volbě („Hrát dál“, „Ponechat historii“). Dlouhé okno nápovědy začíná nahoře (fokus na nadpisu).
-- Nápověda „Na co si dát pozor?“ je v liště kola i ve vyhodnocení. U e-mailu má 6 bodů (bod 2 „Oslovení“ přibyl v milníku 4), u Zpráv 5, pod nimi poznámku o bezchybné češtině a radu (u Zpráv s číslem 7726, u e-mailu bez něj).
+- Nápověda „Na co si dát pozor?“ je v liště kola i ve vyhodnocení. U e-mailu má 6 bodů (bod 2 „Oslovení“ přibyl v milníku 4), u Zpráv také 6 (upravené v milníku 5: bod o odkazech říká „Odkaz sám o sobě podvod není“, instalace aplikace má vlastní bod), pod nimi poznámku o bezchybné češtině a radu (u Zpráv s číslem 7726 a radou zablokovat účet v chatu, u e-mailu bez nich).
 
 ### Vyhodnocení zprávy (po každé zprávě)
 - Jestli rozhodl správně, kolik bodů získal a proč.
@@ -121,8 +121,15 @@ Zobrazení:
 Jedna sekce, každý scénář má `app: "sms"` nebo `app: "chat"`:
 - **SMS:** konverzace s číslem nebo textovým jménem odesílatele, bubliny, podtržený odkaz.
 - **Chat (WhatsApp-like):** hlavička s profilovou fotkou (neutrální avatar, žádné fotky skutečných lidí), jméno nebo číslo, u neznámého čísla lišta „Toto číslo není ve vašich kontaktech: Přidat / Nahlásit a zablokovat“. Bubliny, případně hlasová zpráva jako neaktivní prvek.
+- Rozhodnutí z milníku 5 (`src/apps/messages.js`):
+  - **Bez seznamu konverzací:** hráč vidí rovnou otevřenou konverzaci.
+  - **Odesílatel** je jen číslo, nebo jméno uloženého kontaktu (`inContacts: true`, v avataru jeho první písmeno). Nic se neodkrývá, žádné „zobrazit adresu“. Označit jde jako `from`.
+  - **Bublina je nejmenší část, kterou jde označit.** Odkaz v bublině je samostatná část vedle textu, nikdy vnořené tlačítko. SMS s jednou bublinou a odkazem má tedy nejvýš 3 hrozby.
+  - **Lišta „není ve vašich kontaktech“** (jen chat) není část zprávy a nejde označit. Její tlačítka v obou úrovních ukážou stejné upozornění „Tohle je jen trénink, tlačítko nic nedělá…“. Ve vyhodnocení zůstane jen text bez tlačítek.
+  - Dole je neaktivní pole „Zpráva“, jen jako dekorace (`aria-hidden`).
+  - Rám telefonu `.phone` je společný pro obě aplikace (`phoneFrame` v `src/apps/parts.js`, styl v `game.css`).
 
-**Rozhraní simulované aplikace** (dodržet i v milnících 4 a 5; dnes ho splňuje dočasné neutrální zobrazení `src/apps/generic.js`):
+**Rozhraní simulované aplikace** (dodržují ho `src/apps/email.js` a `src/apps/messages.js`, společné části jsou v `src/apps/parts.js`):
 - funkce vrátí HTML zprávy ve třech režimech: `play` (základní úroveň), `mark` (pokročilá úroveň, označování), `review` (vyhodnocení)
 - každá část zprávy má `data-target` se stejnou hodnotou jako `target` ve scénáři
 - `play`: odkazy, tlačítka a přílohy jsou `<button data-action="notice">`
@@ -189,7 +196,7 @@ Odkazy, tlačítka a přílohy nikam nevedou.
 }
 ```
 
-Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (číslo nebo jméno), `inContacts` (true/false), `messages` (pole bublin, každá s `text`, případně `link`).
+Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (číslo nebo jméno), `inContacts` (true/false), `messages` (pole bublin, každá s `text`, případně `link`) a nepovinně `date` („dnes 10:24“, oddělovač nad bublinami).
 
 `target` odkazuje na část zprávy (`fromName`, `fromAddress`, `subject`, `body.N`, `button`, `link`, `attachment`, `from`, `messages.N`, `messages.N.link` = odkaz uvnitř bubliny). Klikání je vázané na prvky, ne na souřadnice. Volitelné pole `alsoTargets` (pole dalších částí) naváže jednu hrozbu na víc částí zprávy, např. `"target": "fromAddress", "alsoTargets": ["fromName"]`: označení kterékoli z nich je jeden zásah, žárovka a „Tohle místo stojí za druhý pohled“ jsou u hlavního `target`.
 
@@ -228,6 +235,8 @@ Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře ne
 - **Každý nový text je návrh k Tomášovu ověření.** Nevydávej ho za citaci skutečného podvodu.
 - **Každé tvrzení za firmu nebo úřad musí mít zdroj** („Finanční správa podle svého varování neposílá…“, „ČEZ posílá e-maily z @cez.cz“). Bez zdroje žádné takové tvrzení, jen obecná rada („Když si nejste jistí, otevřete jejich stránky sami, ne přes odkaz ve zprávě.“). Zdroj patří do `sources` scénáře.
 - **Nápověda nesmí být v rozporu se scénáři.** Hráč, který radu z nápovědy „Na co si dát pozor?“ poslechne, nesmí být potrestán (např. bodem dolů za označení místa, na které nápověda upozorňuje). Když nový scénář s nápovědou nesedí, uprav scénář, nebo navrhni Tomášovi změnu nápovědy.
+- **Povinná kontrola každého nového scénáře (od milníku 5): každá část, kterou by hráč podle nápovědy označil, musí ležet na hrozbě** (`target` nebo `alsoTargets`). Týká se to i částí, které vypadají podezřele kvůli zápisu (divný formát částky, pravopis), předmětu se spěchem, výzvy ke klepnutí na odkaz nebo podpisu s falešným jménem. Automaticky to hlídat nejde, proto projdi části zprávy jednu po druhé proti bodům nápovědy. Hlídané případy u skutečných scénářů jsou v `tests/unit/scoring.spec.js` („parts the hint leads to are hits“). U legitimní zprávy nápověda k označení nic vést nesmí.
+- **Každý podvod má aspoň jednu nevinnou část, ke které nápověda nevede** (neutrální pozdrav, dotaz, poděkování, oslovení jménem, uložený kontakt…). Označení takové části je „zbytečné“ (−1), takže strategie „označit všechno“ nedostane plný počet bodů (Tomášovo rozhodnutí po milníku 5, varianta A). Nevinná část nesmí být nic, k čemu vede nápověda (pravidlo výše má přednost). **Výjimka:** SMS s jednou bublinou a odkazem (má jen 3 části: odesílatel, bublina, odkaz).
 - **Legitimní zprávy nesmí učit falešná pravidla** jako „každý odkaz = podvod“ nebo „bez oslovení jménem = vždy podvod“. Vyhodnocení legitimní zprávy vysvětlí, podle čeho se pozná, že je pravá, a že jeden znak sám o sobě nestačí.
 - **Texty pro seniory bez odborných slov** (ne „phishing“, „doména“, „malware“, „DMARC“; místo toho „adresa za zavináčem“, „škodlivý program“).
 - Tón vysvětlení: vykání, krátké věty, klidně, „soused u plotu“. Bez strašení, bez vykřičníků a bez frází revoluční, unikátní, komplexní, neváhejte, v dnešní uspěchané době, řešení na míru.
@@ -443,10 +452,11 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - **Milník 3** (herní engine) hotový: commity `bfd3ef0`, `7848dc6`, `fdc1f62`, `4ad1bd1`, `52bacea`. Na server se nenahrával. Testy: 560 prošlo, 5 úmyslně přeskočených.
 - **Milník 4** (e-mailová aplikace + 3 vzorové scénáře) hotový a **nasazený 23. 9. 2026** na http://poznej-podvod.menestarosti.cz: commit `9e2e73b` (+ tento commit se stavem projektu). Schránka se složkami, detail se skrytou adresou („zobrazit adresu“), lišta kola na mobilu v jednom řádku, `alsoTargets` v engine, kategorie `obecne-osloveni`, scénáře `email-01` až `email-03`. Testy: 655 prošlo, 5 úmyslně přeskočených. Po nasazení ověřeno: JS `text/javascript`, CSS `text/css`, písmo `font/woff2`, stránka se vykreslí a hraje (Playwright, Chromium i WebKit, bez chyb v konzoli).
 - **Pojistka nasazení** (sekce 14) teď při nasazení i `--check` vypíše obsah cílové složky před kontrolou WordPressu a pořadí v kódu hlídají 2 testy v `tests/unit/deploy-guard.spec.js`.
-- **Další krok: milník 5** (aplikace Zprávy: SMS a WhatsApp + 3 vzorové scénáře).
+- **Milník 5** (aplikace Zprávy + 3 vzorové scénáře) postavený, **zatím necommitnutý a nenasazený** (čeká na Tomášovo schválení): `src/apps/messages.js`, `src/styles/messages.css`, scénáře `zpravy-01` (SMS pokuta), `zpravy-02` (chat „Ahoj mami“), `zpravy-03` (legitimní SMS od syna s odkazem), upravená nápověda Zpráv (bod 1 jen o čísle, které se vydává za někoho blízkého), `alsoTargets` u `email-01` a `email-02` (části, které hráč označí podle nápovědy), nevinná bublina v `zpravy-02` (pravidlo „aspoň jedna nevinná část“, sekce 7), nepovinné `message.date`. `src/apps/generic.js` smazaný. Testy: 790 prošlo, 5 úmyslně přeskočených.
+- **Další krok:** Tomáš schválí milník 5, pak commit a nasazení; potom milník 6.
 
 **Otevřené úkoly:**
-- **Před zveřejněním odkazu na hru: testovací zprávy.** V bance zůstávají testovací zprávy (e-mail `email-04` až `email-07`, u Zpráv `zpravy-01` až `zpravy-07`, dokud je milník 5 nenahradí). Nasazuje se i s nimi (web má `noindex`, Tomášovo rozhodnutí v milníku 4). Než se odkaz na hru kdekoli zveřejní, musí být všechny odstraněné a nahrazené skutečnými scénáři.
+- **Před zveřejněním odkazu na hru: testovací zprávy.** V bance zůstávají testovací zprávy (e-mail `email-04` až `email-07`, u Zpráv `zpravy-04` až `zpravy-07`). Nasazuje se i s nimi (web má `noindex`, Tomášovo rozhodnutí v milníku 4). Než se odkaz na hru kdekoli zveřejní, musí být všechny odstraněné a nahrazené skutečnými scénáři.
 - **Před zveřejněním odkazu na hru: zdroje Finanční správy.** Tomáš si sám přečte oba zdroje ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.
 - **Logo nad názvem:** na počítači je během kola logo v hlavičce nad názvem „Poznej podvod“, ne vedle něj (sekce 5). Hlavička se v milníku 4 neměnila; ověřit, jestli to bylo už před milníkem 4, a opravit.
 - **HTTPS:** certifikát řeší Subreg, web je zatím jen na `http://` (sekce 4).

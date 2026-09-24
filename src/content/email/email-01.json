@@ -21,6 +21,7 @@
   "threats": [
     {
       "target": "fromAddress",
+      "alsoTargets": ["fromName"],
       "category": "odesilatel",
       "title": "Adresa odesílatele",
       "explanation": "Jméno Balíkovna si může napsat kdokoli. Adresa za ním končí na balikovna-cz.top – to není adresa České pošty, jen ji napodobuje."
@@ -33,12 +34,14 @@
     },
     {
       "target": "body.1",
+      "alsoTargets": ["subject"],
       "category": "vyhra-nabidka",
       "title": "Peníze, o které jste nežádali",
       "explanation": "Proč by vám někdo vracel 5 000 Kč za dopravu? Nečekané peníze jsou návnada. Všimněte si i zápisu 5,000.00 Kč, česky se píše 5 000 Kč."
     },
     {
       "target": "link",
+      "alsoTargets": ["body.2"],
       "category": "odkaz-platba",
       "title": "Odkaz k výběru peněz",
       "explanation": "Odkaz vede na stránku podvodníků, kde po vás budou chtít vaše údaje."

@@ -1,15 +1,20 @@
 import { test, expect } from '@playwright/test';
 import { THREAT_CATEGORIES } from '../../src/engine/categories.js';
-import { CATEGORY_LABELS, EVALUATION, HINTS, ROUND_END, WELCOME } from '../../src/texts.js';
+import { CATEGORY_LABELS, EVALUATION, HINTS, MESSAGES_APP, ROUND_END, WELCOME } from '../../src/texts.js';
 
 test('every allowed category has a Czech label, and no label is left over', () => {
   expect(Object.keys(CATEGORY_LABELS).sort()).toEqual([...THREAT_CATEGORIES].sort());
 });
 
-test('hints: 6 items for e-mail (incl. "Oslovení", milestone 4), 5 for messages', () => {
+test('hints: 6 items for e-mail (incl. "Oslovení", milestone 4), 6 for messages (milestone 5)', () => {
   expect(HINTS.email.items).toHaveLength(6);
   expect(HINTS.email.items[1][0]).toBe('Oslovení.');
-  expect(HINTS.zpravy.items).toHaveLength(5);
+  expect(HINTS.zpravy.items).toHaveLength(6);
+});
+
+test('messages hint does not teach "a link = a scam" (legitimate zpravy-03 has a link)', () => {
+  const links = HINTS.zpravy.items.find(([title]) => title.startsWith('Odkaz'));
+  expect(links[1]).toContain('Odkaz sám o sobě podvod není.');
 });
 
 test('7726 advice is only in the messages hint, not in e-mail', () => {
@@ -31,6 +36,6 @@ test('texts with numbers use correct Czech plurals', () => {
 });
 
 test('no exclamation marks in player texts (calm tone, CLAUDE.md section 7)', () => {
-  const all = JSON.stringify({ CATEGORY_LABELS, EVALUATION: { ...EVALUATION }, HINTS, ROUND_END: { ...ROUND_END } });
+  const all = JSON.stringify({ CATEGORY_LABELS, EVALUATION: { ...EVALUATION }, HINTS, MESSAGES_APP, ROUND_END: { ...ROUND_END } });
   expect(all).not.toContain('!');
 });

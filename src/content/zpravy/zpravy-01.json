@@ -1,16 +1,17 @@
 {
   "id": "zpravy-01",
   "section": "zpravy",
-  "title": "Testovací zpráva Z1 (podvod)",
+  "title": "Pokuta za dopravní přestupek",
   "isScam": true,
   "message": {
     "app": "sms",
-    "from": "Testovací odesílatel Z1",
+    "from": "+44 7700 900318",
     "inContacts": false,
+    "date": "dnes 10:24",
     "messages": [
       {
-        "text": "Testovací zpráva 1, bublina 1.",
-        "link": "https://odkaz1.test.invalid"
+        "text": "Dobrý den, evidujeme u Vás neuhrazenou pokutu za dopravní přestupek ve výši 1 500 Kč. Uhraďte ji do 3 dnů, jinak bude předána k vymáhání a navýšena.",
+        "link": "https://portal-dopravy-pokuty.top/uhrada"
       }
     ]
   },
@@ -18,16 +19,25 @@
     {
       "target": "from",
       "category": "nezname-cislo",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+      "title": "Číslo ze zahraničí",
+      "explanation": "Zpráva přišla z čísla s předvolbou +44, to je Velká Británie. Pokuta za přestupek v Česku a číslo z ciziny k sobě nesedí."
+    },
+    {
+      "target": "messages.0",
+      "category": "casovy-tlak",
+      "title": "Spěch a výhrůžka",
+      "explanation": "Krátká lhůta a hrozba vymáháním mají zabránit tomu, abyste si to v klidu ověřili. Všimněte si i toho, co ve zprávě chybí: kde, kdy a jakým autem jste měli přestupek spáchat. Ministerstvo dopravy ve svém varování uvádí, že skutečná zpráva o přestupku vždy obsahuje jeho konkrétní popis, například místo, čas a vozidlo, a že informace o dopravních přestupcích se takto nerozesílají."
     },
     {
       "target": "messages.0.link",
       "category": "odkaz-platba",
-      "title": "Testovací hrozba 2",
-      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+      "title": "Odkaz k platbě",
+      "explanation": "Odkaz vede na stránku, která jen napodobuje úřad. Ministerstvo dopravy radí na odkazy v podobných SMS neklikat a nereagovat na výzvy k platbě."
     }
   ],
-  "summary": "Testovací shrnutí zprávy Z1. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "summary": "Když si nejste jistí, jestli pokutu opravdu máte, ověřte si to sami na oficiálních stránkách, nikdy přes odkaz ve zprávě. Podezřelou SMS můžete přeposlat na číslo 7726, operátor pak odesílatele zablokuje.",
+  "sources": [
+    "md.gov.cz/Media/Media-a-tiskove-zpravy/Pozor-na-falesne-SMS-o-pokutach (Ministerstvo dopravy, 12. 6. 2026)",
+    "policie.gov.cz/kyberkriminalita/podvodne-sms-zpravy (7726)"
+  ]
 }
