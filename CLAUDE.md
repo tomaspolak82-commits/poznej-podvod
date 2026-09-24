@@ -445,22 +445,22 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - `npm run deploy` / `npm run deploy -- --dry-run` / `npm run deploy -- --check`: nasazení / zkouška bez připojení / kontrola serveru bez změn
 - `npx playwright test --project=unit`: jen rychlé testy logiky bez prohlížeče
 
-## 16. Stav projektu (k 23. 9. 2026)
+## 16. Stav projektu (k 24. 9. 2026)
 
 - **Milník 1** (příprava) hotový: commit `4e3de39`.
 - **Milník 2** (kostra, vzhled, nasazení) hotový: poslední commit `1e593e7`.
 - **Milník 3** (herní engine) hotový: commity `bfd3ef0`, `7848dc6`, `fdc1f62`, `4ad1bd1`, `52bacea`. Na server se nenahrával. Testy: 560 prošlo, 5 úmyslně přeskočených.
 - **Milník 4** (e-mailová aplikace + 3 vzorové scénáře) hotový a **nasazený 23. 9. 2026** na http://poznej-podvod.menestarosti.cz: commit `9e2e73b` (+ tento commit se stavem projektu). Schránka se složkami, detail se skrytou adresou („zobrazit adresu“), lišta kola na mobilu v jednom řádku, `alsoTargets` v engine, kategorie `obecne-osloveni`, scénáře `email-01` až `email-03`. Testy: 655 prošlo, 5 úmyslně přeskočených. Po nasazení ověřeno: JS `text/javascript`, CSS `text/css`, písmo `font/woff2`, stránka se vykreslí a hraje (Playwright, Chromium i WebKit, bez chyb v konzoli).
 - **Pojistka nasazení** (sekce 14) teď při nasazení i `--check` vypíše obsah cílové složky před kontrolou WordPressu a pořadí v kódu hlídají 2 testy v `tests/unit/deploy-guard.spec.js`.
-- **Milník 5** (aplikace Zprávy + 3 vzorové scénáře) postavený, **zatím necommitnutý a nenasazený** (čeká na Tomášovo schválení): `src/apps/messages.js`, `src/styles/messages.css`, scénáře `zpravy-01` (SMS pokuta), `zpravy-02` (chat „Ahoj mami“), `zpravy-03` (legitimní SMS od syna s odkazem), upravená nápověda Zpráv (bod 1 jen o čísle, které se vydává za někoho blízkého), `alsoTargets` u `email-01` a `email-02` (části, které hráč označí podle nápovědy), nevinná bublina v `zpravy-02` (pravidlo „aspoň jedna nevinná část“, sekce 7), nepovinné `message.date`. `src/apps/generic.js` smazaný. Testy: 790 prošlo, 5 úmyslně přeskočených.
-- **Další krok:** Tomáš schválí milník 5, pak commit a nasazení; potom milník 6.
+- **Milník 5** (aplikace Zprávy + 3 vzorové scénáře) hotový, commitnutý a pushnutý: commit `f9bcf39`. Nasazení na server tu zatím zaznamenané není. Obsah: `src/apps/messages.js`, `src/styles/messages.css`, scénáře `zpravy-01` (SMS pokuta), `zpravy-02` (chat „Ahoj mami“), `zpravy-03` (legitimní SMS od syna s odkazem), upravená nápověda Zpráv (bod 1 jen o čísle, které se vydává za někoho blízkého), `alsoTargets` u `email-01` a `email-02` (části, které hráč označí podle nápovědy), nevinná bublina v `zpravy-02` (pravidlo „aspoň jedna nevinná část“, sekce 7), nepovinné `message.date`. `src/apps/generic.js` smazaný. Testy: 790 prošlo, 5 úmyslně přeskočených.
+- **Timeouty testů na iPhonu 13 vyřešené** (commit `c1f73f2`, 24. 9. 2026). Příčina ověřená: WebKit je na Windows asi 1,6× pomalejší než Chromium a pod zátěží zpomaluje víc. S 8 paralelními běhy přetáhly nejdelší testy kola na iPhonu 13 limit 30 s (až 32,7 s), zařízení s Chromiem zůstala pod 20 s. Projekt iPhone 13 má v `playwright.config.js` limit 60 s. Ověřeno 7 běhy celé sady (3 výchozí a 1 zátěžový před opravou, 2 zátěžové a 1 výchozí po ní).
+- **Další krok:** nasazení milníku 5 (jen na Tomášův pokyn), potom milník 6. Návrhy scénářů čekají v `docs/navrhy-scenaru-email.md` a `docs/navrhy-scenaru-zpravy.md`. U e-mailu Tomáš 24. 9. 2026 schválil nové znění bodů 4 a 5 nápovědy, do `src/texts.js` se zatím nezabudovalo.
 
 **Otevřené úkoly:**
 - **Před zveřejněním odkazu na hru: testovací zprávy.** V bance zůstávají testovací zprávy (e-mail `email-04` až `email-07`, u Zpráv `zpravy-04` až `zpravy-07`). Nasazuje se i s nimi (web má `noindex`, Tomášovo rozhodnutí v milníku 4). Než se odkaz na hru kdekoli zveřejní, musí být všechny odstraněné a nahrazené skutečnými scénáři.
 - **Před zveřejněním odkazu na hru: zdroje Finanční správy.** Tomáš si sám přečte oba zdroje ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.
 - **Logo nad názvem:** na počítači je během kola logo v hlavičce nad názvem „Poznej podvod“, ne vedle něj (sekce 5). Hlavička se v milníku 4 neměnila; ověřit, jestli to bylo už před milníkem 4, a opravit.
 - **HTTPS:** certifikát řeší Subreg, web je zatím jen na `http://` (sekce 4).
-- **Timeouty testů na iPhonu 13:** při plném paralelním běhu `npm test` občas vyprší (30 s) některý test na zařízení iPhone 13 (WebKit), samostatně prochází. Příčina neověřená (nejspíš vytížení počítače). Když se to bude opakovat, zkusit méně paralelních běhů pro WebKit nebo delší timeout.
 - **Tenký Montserrat ve WebKitu:** v Playwright WebKitu na Windows se Montserrat (proměnné písmo) kreslí velmi tence místo tučně, v Chromiu správně. Písma se od milníku 2 neměnila. Nejspíš omezení WebKitu na Windows, na skutečném iPhonu neověřeno: Tomáš zkontroluje živou stránku v Safari na iPhonu nebo iPadu (nadpisy a tlačítka mají být tučné).
 
 **Pravidla, repozitář a hosting:**
