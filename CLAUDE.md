@@ -27,16 +27,51 @@ Tomáš nepíše kód sám. Zadává, kontroluje a učí se pracovat v terminál
 1. **Komunikuj česky.** Česky jsou texty v aplikaci a commit zprávy. Kód, názvy souborů a proměnných a komentáře v kódu anglicky. Texty v aplikaci pěknou jednoduchou češtinou, které rozumí senior.
 2. **Pracuj po milnících** (sekce 13), vždy jen na jednom. Před začátkem napiš ve 3–5 větách, co uděláš. Na konci napiš, jak si výsledek Tomáš ověří: konkrétní příkaz, adresu nebo co přesně má vidět.
 3. **Příkazy vysvětluj.** U každého příkazu, který má Tomáš spustit sám, napiš jednou větou, co dělá. U Gitu a GitHubu ho veď krok za krokem, dělá to poprvé.
-4. **Po každém milníku** spusť `npm run build` a `npm test`. Když projdou, napiš, co a proč commitneš, a **počkej na Tomášovo OK**. Teprve pak udělej commit s českou zprávou („Milník 3: e-mailová aplikace a 3 vzorové scénáře“). Stejně tak push a změna větve jen po OK.
+4. **Commity** mají českou zprávu („Milník 3: e-mailová aplikace a 3 vzorové scénáře“). Kdy commitovat, pushovat a nasazovat, určuje sekce 2a.
 5. **Nepřidávej závislosti** mimo sekci 3 bez Tomášova souhlasu.
 6. **Nikdy necommituj `.env`** ani nic s hesly. Jméno FTP účtu a jiné přihlašovací údaje nepiš do žádného souboru v repozitáři (repozitář může být veřejný), patří jen do `.env`.
-7. **Nasazení na server spouštěj jen na výslovný pokyn.**
-8. **Obsah scénářů piš nejdřív jako vzorek 3 kusů.** Rozepisuj dál až po Tomášově schválení.
-9. **Když si něčím nejsi jistý** (chování hostingu, reálné znění podvodu, právní otázka), řekni to. Nehádej.
-10. **Příkazy spouštěj po jednom**, bez `cd` na začátku (pracovní složka je projekt) a bez spojování přes `;` nebo `&&`. Tomášova pojistka na čtení mimo projekt by jinak u každého příkazu chtěla potvrzení.
-11. **Texty hry** (vše, co hráč čte mimo scénáře) jsou v jednom souboru `src/texts.js` a Tomáš je schválil. Změna znění = úprava tohoto souboru. Nové texty pošli Tomášovi ke schválení dřív, než je zabuduješ. Čísla v textech vždy správně skloňuj pomocí `src/ui/format.js` (1 bod, 2 body, 5 bodů; 1 kolo, 2 kola, 5 kol; „z 19 bodů“).
-12. **Soubory v projektu upravuj a vytvářej nástroji Edit a Write**, ne přes `sed`, `python`, `cat >` ani jiné zápisy v Bash. Bash jen pro `npm`, `git` a spouštění testů. Tomášova pojistka na čtení mimo projekt by jinak hlásila každou úpravu.
-13. **Na server se nasazují jen texty a scénáře, které Tomáš schválil.** Kontrolu ve hře dělá Tomáš až po nasazení, přes internet na živé stránce.
+7. **Obsah scénářů piš nejdřív jako vzorek 3 kusů.** Rozepisuj dál až po Tomášově schválení.
+8. **Když si něčím nejsi jistý** (chování hostingu, reálné znění podvodu, právní otázka), řekni to. Nehádej.
+9. **Příkazy spouštěj po jednom**, bez `cd` na začátku (pracovní složka je projekt) a bez spojování přes `;` nebo `&&`. Tomášova pojistka na čtení mimo projekt by jinak u každého příkazu chtěla potvrzení.
+10. **Texty hry** (vše, co hráč čte mimo scénáře) jsou v jednom souboru `src/texts.js` a Tomáš je schválil. Změna znění = úprava tohoto souboru. Nové a změněné texty posílej Tomášovi ke schválení najednou v jedné dávce (sekce 2a), dřív než je zabuduješ. Čísla v textech vždy správně skloňuj pomocí `src/ui/format.js` (1 bod, 2 body, 5 bodů; 1 kolo, 2 kola, 5 kol; „z 19 bodů“).
+11. **Soubory v projektu upravuj a vytvářej nástroji Edit a Write**, ne přes `sed`, `python`, `cat >` ani jiné zápisy v Bash. Bash jen pro `npm`, `git` a spouštění testů. Tomášova pojistka na čtení mimo projekt by jinak hlásila každou úpravu.
+12. **Na server se nasazují jen texty a scénáře, které Tomáš schválil.** Kontrolu ve hře dělá Tomáš až po nasazení, přes internet na živé stránce.
+
+## 2a. Samostatnost a zastávky (platí od 24. 9. 2026)
+
+Cíl: pracuj co nejvíc samostatně. Zastav se jen v případech níže.
+
+### Dělej bez ptaní
+- Opravy chyb v kódu, CSS a testech, pokud nemění texty pro hráče ani pravidla hry.
+- Lokální commity po každém uceleném kroku.
+- Během práce spouštěj jen dotčené testy, celou sadu jednou před push.
+- Push do GitHubu, pokud projde celá sada a automatická kontrola tajných údajů: v přidávaných souborech nesmí být .env, hesla, jméno FTP účtu ani přístupové údaje. Když kontrola něco najde, nepushuj a zastav se.
+- Nasazení do veřejného vydání (viz níže).
+- HTML diagram plánu v docs/plany/ dělej jen u plánu nového milníku nebo nové sekce hry, ne u drobných úkolů.
+
+### Nasazení do veřejného vydání
+- Po každém push nasaď sám. Vždy nejdřív --dry-run.
+- Když výpis obsahuje cokoli jiného než nahrání souborů a mazání starých souborů ve složkách assets a fonts, nebo skript ohlásí WordPress či jinou chybu, NENASAZUJ a pošli mi celý výpis.
+- Do vydání musí stránka mít <meta name="robots" content="noindex"> a robots.txt se zákazem indexace. Odstranit až na můj pokyn.
+- Před veřejným vydáním (zveřejnění odkazu) toto pravidlo končí a nasazuje se jen na můj výslovný pokyn.
+
+### Zastav se a čekej na mě jen když
+1. Máš nové nebo změněné texty pro hráče. Sbírej je a pošli najednou v jedné dávce, ne po jednom. Návrhy scénářů dál chodí přes docs/navrhy-scenaru-*.md.
+2. Narazíš na rozpor se schváleným rozhodnutím nebo se zásadami pro scénáře (sekce 7).
+3. Rozhodnutí má víc rozumných variant a volba změní, co hráč uvidí nebo jak se hraje. Technické volby rozhoduj sám a napiš, co jsi zvolil.
+4. Dry-run nebo kontrola tajných údajů ukáže něco nečekaného.
+
+### Formát každé zastávky
+Každou zprávu, kde ode mě chceš rozhodnutí, začni tímto blokem. Stručně, dohromady nejvýš 8 řádků:
+
+STAV PRO CHAT
+- Fáze: (milník / úkol, jednou větou)
+- Hotovo od minula: (commity, nasazeno ano/ne)
+- Teď řeším: (jednou větou)
+- Rozhodni: (očíslované otázky; texty pro hráče vždy doslovně, kde se zobrazí, zda platí pro podvod i legitimní zprávu)
+- Moje doporučení: (u každé otázky jedna věta)
+
+Pod blokem už nic dalšího nepiš, pokud se na to neptám. Implementaci, výpisy testů ani git status neposílej, pokud v nich není problém.
 
 ## 3. Technologie (rozhodnuto)
 
@@ -88,7 +123,7 @@ Každá úroveň má krátký popis a **maximální počet bodů pro toto kolo**
 - Obnovení stránky uprostřed kola: hráč se vrátí na výběr úrovně, rozehrané kolo se neuloží do historie.
 - Adresy: `#/` hlavní stránka, `#/<sekce>` výběr úrovně (vylosuje nové kolo), `#/<sekce>/kolo` kolo. Kolo je jen v paměti: adresa `#/…/kolo` bez rozehraného kola přesměruje na výběr úrovně. Odchod z kola jakoukoli cestou (i tlačítkem Zpět v prohlížeči) kolo zahodí, tlačítko Vpřed ho neobnoví.
 - Okna (nápověda, vysvětlení u žárovky, upozornění na odkaz, potvrzení) používají `src/ui/dialog.js` (prvek `<dialog>`): zavírají se tlačítkem, Esc i klepnutím mimo a fokus se vrátí na prvek, který okno otevřel. Potvrzovací okna mají fokus na bezpečné volbě („Hrát dál“, „Ponechat historii“). Dlouhé okno nápovědy začíná nahoře (fokus na nadpisu).
-- Nápověda „Na co si dát pozor?“ je v liště kola i ve vyhodnocení. U e-mailu má 6 bodů (bod 2 „Oslovení“ přibyl v milníku 4), u Zpráv také 6 (upravené v milníku 5: bod o odkazech říká „Odkaz sám o sobě podvod není“, instalace aplikace má vlastní bod), pod nimi poznámku o bezchybné češtině a radu (u Zpráv s číslem 7726 a radou zablokovat účet v chatu, u e-mailu bez nich).
+- Nápověda „Na co si dát pozor?“ je v liště kola i ve vyhodnocení. U e-mailu má 6 bodů (bod 2 „Oslovení“ přibyl v milníku 4; body 4 a 5 upravené v milníku 6: „Odkaz sám o sobě podvod není“, příloha, o které nic nevíte, je riziko i od známého odesílatele), u Zpráv také 6 (upravené v milníku 5: bod o odkazech říká „Odkaz sám o sobě podvod není“, instalace aplikace má vlastní bod), pod nimi poznámku o bezchybné češtině a radu (u Zpráv s číslem 7726 a radou zablokovat účet v chatu, u e-mailu bez nich).
 
 ### Vyhodnocení zprávy (po každé zprávě)
 - Jestli rozhodl správně, kolik bodů získal a proč.
@@ -387,6 +422,7 @@ Jak jsou testy postavené:
 - Testy běží proti sestavené verzi (`npm run build` + `vite preview` na portu 4173), ne proti vývojovému serveru.
 - Projekt `unit` v `playwright.config.js` spouští testy ve `tests/unit/` jednou v Node.js bez prohlížeče (logika, obsah, pojistky nasazení, texty). Ostatní testy běží na všech pěti zařízeních.
 - `tests/helpers/game.js` spočítá očekávané kolo stejnými funkcemi a stejným `seed` jako aplikace, takže testy vědí, které zprávy přijdou, a nepotřebují pevně zapsaná ID.
+- Test, který potřebuje konkrétní zprávy, si `seed` najde sám funkcí `seedWith(sekce, [ID…])` (první `seed`, jehož kolo ty zprávy obsahuje) a uvede ho v názvu testu. Nové scénáře v bance tak testy nerozbijí (Tomášovo rozhodnutí v milníku 6). Pevný `seed` 123 zůstává jen u testů, kterým na složení kola nezáleží.
 - Test průchodu jen klávesnicí běží jen na počítači (na mobilních zařízeních je přeskočený).
 - Nainstalované prohlížeče Playwrightu: Chromium a WebKit (Firefox ne, žádné zařízení ho nepoužívá).
 - iPhone 13 má v playwright.config.js limit 60 s místo 30 s, protože WebKit na Windows je pomalejší a pod zátěží testy přesahovaly 30 s (podrobnosti v docs/historie.md). Limit nesnižuj.
@@ -419,7 +455,7 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - Před nahráním spustí build. Když selže, nenahrává.
 - Nahraje obsah `dist/` do `FTP_REMOTE_DIR`. Staré soubory maže až po úspěšném připojení a pojistce 2, a jen ve složkách `assets/` a `fonts/`, které patří našemu buildu.
 - Na konci vypíše adresu, kde si má Tomáš výsledek ověřit: https://poznej-podvod.menestarosti.cz/ (sekce 4).
-- `--check` se připojuje k serveru, proto ho stejně jako nasazení spouštěj jen na Tomášův pokyn. `--dry-run` se nepřipojuje, ten spouštět smíš.
+- `--check` se připojuje k serveru, proto ho spouštěj jen na Tomášův pokyn (kdy smíš nasazovat, určuje sekce 2a). `--dry-run` se nepřipojuje, ten spouštět smíš.
 - Soubor `.env` nikdy nečti ani nevypisuj (obsahuje heslo). Když je potřeba něco ověřit, vypiš jen ano/ne (např. „FTP_USER je vyplněný“).
 - Když v Git Bash zadáváš `FTP_REMOTE_DIR` přímo v příkazu (ne v `.env`), Git Bash přepíše hodnotu začínající `/` na cestu `C:/Program Files/Git/…` a pojistka ji odmítne. Předřaď `MSYS_NO_PATHCONV=1`. V PowerShellu ani v `.env` se to neděje.
 - Po nasazení ověř živou stránku: typy souborů (JS musí být `text/javascript`, jinak zůstane stránka prázdná) a vykreslení v prohlížeči přes Playwright.
@@ -438,10 +474,11 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 
 Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 
-- **Další krok:** milník 6. Návrhy scénářů čekají v `docs/navrhy-scenaru-email.md` a `docs/navrhy-scenaru-zpravy.md`. U e-mailu Tomáš 24. 9. 2026 schválil nové znění bodů 4 a 5 nápovědy, do `src/texts.js` se zatím nezabudovalo.
+- **Milník 6 probíhá.** E-mail: scénáře `email-01` až `email-08` jsou skutečné (5 podvodů, 3 legitimní), `email-04` až `email-08` a body 4 a 5 nápovědy e-mailu zabudované 24. 9. 2026 (záznam zdrojů a rozhodnutí v `docs/navrhy-scenaru-email.md`). Návrhy Zpráv čekají v `docs/navrhy-scenaru-zpravy.md`.
+- **Čeká na Tomášovo schválení:** vlastní text upozornění po klepnutí na přílohu v základní úrovni (dnes se ukáže text o odkazu, „odkaz nikam nevede“).
 
 **Otevřené úkoly:**
-- **Před zveřejněním odkazu na hru: testovací zprávy.** V bance zůstávají testovací zprávy (e-mail `email-04` až `email-07`, u Zpráv `zpravy-04` až `zpravy-07`). Nasazuje se i s nimi (web má `noindex`, Tomášovo rozhodnutí v milníku 4). Než se odkaz na hru kdekoli zveřejní, musí být všechny odstraněné a nahrazené skutečnými scénáři.
+- **Před zveřejněním odkazu na hru: testovací zprávy.** V bance zůstávají testovací zprávy Zpráv `zpravy-04` až `zpravy-07` (testovací e-maily nahradily v milníku 6 skutečné scénáře). Nasazuje se i s nimi (web má `noindex`, Tomášovo rozhodnutí v milníku 4). Než se odkaz na hru kdekoli zveřejní, musí být všechny odstraněné a nahrazené skutečnými scénáři.
 - **Před zveřejněním odkazu na hru: zdroje Finanční správy.** Tomáš si sám přečte oba zdroje ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.
 - **Logo nad názvem:** na počítači je během kola logo v hlavičce nad názvem „Poznej podvod“, ne vedle něj (sekce 5). Hlavička se v milníku 4 neměnila; ověřit, jestli to bylo už před milníkem 4, a opravit.
 - **Tenký Montserrat ve WebKitu:** v Playwright WebKitu na Windows se Montserrat (proměnné písmo) kreslí velmi tence místo tučně, v Chromiu správně. Písma se od milníku 2 neměnila. Nejspíš omezení WebKitu na Windows, na skutečném iPhonu neověřeno: Tomáš zkontroluje živou stránku v Safari na iPhonu nebo iPadu (nadpisy a tlačítka mají být tučné).
@@ -449,7 +486,7 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **Obnova certifikátu:** certifikát Let's Encrypt platí do 23. 12. 2026. Kolem 10. 12. 2026 zkontrolovat, jestli ho Subreg obnovil (datum platnosti na https://poznej-podvod.menestarosti.cz).
 
 **Pravidla, repozitář a hosting:**
-- Předem povolené commity a pushe po každé části platily jen pro milník 3. Pro další milníky platí zase sekce 2, bod 4 (nejdřív Tomášovo OK), dokud Tomáš neřekne jinak.
+- Commity, pushe a nasazení se od 24. 9. 2026 řídí sekcí 2a (samostatně, zastávky jen v uvedených případech).
 - **Repozitář** https://github.com/tomaspolak82-commits/poznej-podvod je **veřejný** (ukázka do portfolia), je v něm `README.md`. E-mail autora v commitech zůstává (Tomášovo rozhodnutí). V historii (commit `4f52284`) je jméno starého FTP účtu; ten účet je už zrušený, historie se nepřepisuje.
 - **Kvůli veřejnému repozitáři před každým commitem ověř**, že připravené soubory neobsahují hesla, jméno FTP účtu ani obsah `.env`: projdi `git status` (`.env` v něm nesmí být) a prohledej připravené soubory (`git grep --cached`) na přihlašovací údaje. Když si nejsi jistý, necommituj a zeptej se.
 - **Hosting:** nasazuje se přes samostatný FTP účet subdomény, šifrované spojení funguje (ověřeno `--check`).
