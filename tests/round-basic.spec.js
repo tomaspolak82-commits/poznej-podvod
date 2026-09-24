@@ -107,14 +107,15 @@ test.describe('basic level: round', () => {
     }
   });
 
-  // A round with a scam and a legitimate message that both have a link, button or attachment
+  // A round with a scam and a legitimate message that both have a link or button
+  // (attachments have their own notice, tested below)
   const noticeSeed = seedWith('email', ['email-05', 'email-07']);
-  test(`clicking a link, button or attachment shows the same notice for scams and legitimate messages (seed ${noticeSeed})`, async ({ page }) => {
+  test(`clicking a link or button shows the same notice for scams and legitimate messages (seed ${noticeSeed})`, async ({ page }) => {
     await startRound(page, { seed: noticeSeed });
     const notices = new Map();
     for (let i = 0; i < 5; i += 1) {
       const scenario = scenarioById(await currentScenarioId(page));
-      const actions = page.locator('[data-action="notice"]');
+      const actions = page.locator('[data-action="notice"]:not([data-target="attachment"])');
       if ((await actions.count()) > 0) {
         await actions.first().click();
         const dialog = page.getByRole('dialog');
@@ -131,6 +132,31 @@ test.describe('basic level: round', () => {
     expect([...notices.keys()].sort()).toEqual(['legit', 'scam']);
     expect(notices.get('scam')).toBe(notices.get('legit'));
     expect(notices.get('scam')).toContain('Tohle je jen trénink, odkaz nikam nevede');
+  });
+
+  // A round with an attachment in a scam (email-04) and in a legitimate message (email-08)
+  const attachmentSeed = seedWith('email', ['email-04', 'email-08']);
+  test(`clicking an attachment shows its own notice, the same for scams and legitimate messages (seed ${attachmentSeed})`, async ({ page }) => {
+    await startRound(page, { seed: attachmentSeed });
+    const notices = new Map();
+    for (let i = 0; i < 5; i += 1) {
+      const scenario = scenarioById(await currentScenarioId(page));
+      const attachment = page.locator('[data-action="notice"][data-target="attachment"]');
+      if ((await attachment.count()) > 0) {
+        await attachment.click();
+        const dialog = page.getByRole('dialog');
+        notices.set(scenario.id, await dialog.locator('.dialog__body').textContent());
+        await dialog.getByRole('button', { name: 'Zavřít a pokračovat' }).click();
+        await expect(dialog).toHaveCount(0);
+      }
+      await page.getByRole('button', { name: correctly(scenario) === 'scam' ? 'Je to podvod' : 'Je to v pořádku' }).click();
+      if (i < 4) await nextMessage(page);
+      else await page.getByRole('button', { name: /Zobrazit výsledek/ }).click();
+    }
+    expect([...notices.keys()].sort()).toEqual(['email-04', 'email-08']);
+    expect(notices.get('email-04')).toBe(notices.get('email-08'));
+    expect(notices.get('email-04')).toContain('Tohle je jen trénink, příloha se neotevřela');
+    expect(notices.get('email-04')).toContain('Platí to i u známého odesílatele.');
   });
 
   test('bulb opens the explanation; it closes with the button, Esc and a click outside', async ({ page }) => {

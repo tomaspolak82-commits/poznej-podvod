@@ -8,6 +8,11 @@ export const TRAINING_LABEL = 'TRÉNINK: cvičná ukázka, nic se neodesílá';
 export const LINK_NOTICE =
   'Tohle je jen trénink, odkaz nikam nevede a nic se nestalo. Ve skutečnosti by vás podobný odkaz mohl zavést na nebezpečnou stránku, která se snaží získat vaše údaje.';
 
+// Same text for every attachment (scam or legitimate), so it does not give the answer away;
+// it carries the rule of e-mail hint item 5 (approved by Tomáš, milestone 6)
+export const ATTACHMENT_NOTICE =
+  'Tohle je jen trénink, příloha se neotevřela a nic se nestalo. Ve skutečnosti by příloha, kterou nečekáte, mohla obsahovat škodlivý program. Platí to i u známého odesílatele.';
+
 export const CLOSE_AND_CONTINUE = 'Zavřít a pokračovat';
 
 export const HINTS = {

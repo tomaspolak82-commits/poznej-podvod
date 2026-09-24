@@ -16,6 +16,7 @@ import {
 } from '../engine/session.js';
 import { levels } from '../sections.js';
 import {
+  ATTACHMENT_NOTICE,
   CATEGORY_LABELS,
   CLOSE_AND_CONTINUE,
   EMAIL_APP,
@@ -278,7 +279,7 @@ export function renderRound(container, section) {
     if (notice && round.phase === 'question') {
       await openDialog({
         title: TRAINING_LABEL,
-        body: `<p>${LINK_NOTICE}</p>`,
+        body: `<p>${notice.dataset.target === 'attachment' ? ATTACHMENT_NOTICE : LINK_NOTICE}</p>`,
         actions: [{ label: CLOSE_AND_CONTINUE, value: 'close', primary: true, autofocus: true }],
       });
       return;

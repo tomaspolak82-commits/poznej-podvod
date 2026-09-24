@@ -48,11 +48,12 @@ Cíl: pracuj co nejvíc samostatně. Zastav se jen v případech níže.
 - Push do GitHubu, pokud projde celá sada a automatická kontrola tajných údajů: v přidávaných souborech nesmí být .env, hesla, jméno FTP účtu ani přístupové údaje. Když kontrola něco najde, nepushuj a zastav se.
 - Nasazení do veřejného vydání (viz níže).
 - HTML diagram plánu v docs/plany/ dělej jen u plánu nového milníku nebo nové sekce hry, ne u drobných úkolů.
+- Po dokončeném úkolu, před /clear, zapiš aktuální stav do sekce 16.
 
 ### Nasazení do veřejného vydání
 - Po každém push nasaď sám. Vždy nejdřív --dry-run.
 - Když výpis obsahuje cokoli jiného než nahrání souborů a mazání starých souborů ve složkách assets a fonts, nebo skript ohlásí WordPress či jinou chybu, NENASAZUJ a pošli mi celý výpis.
-- Do vydání musí stránka mít <meta name="robots" content="noindex"> a robots.txt se zákazem indexace. Odstranit až na můj pokyn.
+- Do vydání musí stránka mít <meta name="robots" content="noindex">. Odstranit až na můj pokyn. Žádný robots.txt se zákazem: vyhledávač by pak stránku nepřečetl, `noindex` by neviděl a adresa by se mohla ve výsledcích objevit bez popisu (Tomášovo rozhodnutí 24. 9. 2026).
 - Před veřejným vydáním (zveřejnění odkazu) toto pravidlo končí a nasazuje se jen na můj výslovný pokyn.
 
 ### Zastav se a čekej na mě jen když
@@ -174,7 +175,7 @@ Jedna sekce, každý scénář má `app: "sms"` nebo `app: "chat"`:
 - zpráva jako celek má `data-scenario-id` (používají ho testy)
 
 Odkazy, tlačítka a přílohy nikam nevedou.
-- **Základní úroveň:** klepnutí na ně ukáže u **všech** zpráv (podvodných i legitimních) stejné krátké upozornění, aby neprozradilo odpověď dřív, než hráč rozhodne: „Tohle je jen trénink, odkaz nikam nevede a nic se nestalo. Ve skutečnosti by vás podobný odkaz mohl zavést na nebezpečnou stránku, která se snaží získat vaše údaje.“
+- **Základní úroveň:** klepnutí na ně ukáže u **všech** zpráv (podvodných i legitimních) stejné krátké upozornění, aby neprozradilo odpověď dřív, než hráč rozhodne: „Tohle je jen trénink, odkaz nikam nevede a nic se nestalo. Ve skutečnosti by vás podobný odkaz mohl zavést na nebezpečnou stránku, která se snaží získat vaše údaje.“ Příloha má vlastní text (`ATTACHMENT_NOTICE`, milník 6), opět stejný u všech zpráv a nesoucí pravidlo bodu 5 nápovědy: „Tohle je jen trénink, příloha se neotevřela a nic se nestalo. Ve skutečnosti by příloha, kterou nečekáte, mohla obsahovat škodlivý program. Platí to i u známého odesílatele.“ Tlačítka zůstávají u textu o odkazu.
 - **Pokročilá úroveň:** označování je klepnutí na část zprávy (odesílatel, adresa, předmět, odstavec, odkaz, tlačítko, příloha, bublina). Označená část je viditelně zvýrazněná, druhé klepnutí označení zruší. Odkaz nebo tlačítko se tím jen označí, upozornění se nezobrazí.
 
 ## 7. Obsah scénářů
@@ -475,7 +476,8 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 
 - **Milník 6 probíhá.** E-mail: scénáře `email-01` až `email-08` jsou skutečné (5 podvodů, 3 legitimní), `email-04` až `email-08` a body 4 a 5 nápovědy e-mailu zabudované 24. 9. 2026 (záznam zdrojů a rozhodnutí v `docs/navrhy-scenaru-email.md`). Návrhy Zpráv čekají v `docs/navrhy-scenaru-zpravy.md`.
-- **Čeká na Tomášovo schválení:** vlastní text upozornění po klepnutí na přílohu v základní úrovni (dnes se ukáže text o odkazu, „odkaz nikam nevede“).
+- Vlastní text po klepnutí na přílohu (`ATTACHMENT_NOTICE`) zabudovaný 24. 9. 2026.
+- **Další krok:** návrhy Zpráv v `docs/navrhy-scenaru-zpravy.md` (stav schválení ověřit u Tomáše), pak doplňování obou sekcí na 20 scénářů.
 
 **Otevřené úkoly:**
 - **Před zveřejněním odkazu na hru: testovací zprávy.** V bance zůstávají testovací zprávy Zpráv `zpravy-04` až `zpravy-07` (testovací e-maily nahradily v milníku 6 skutečné scénáře). Nasazuje se i s nimi (web má `noindex`, Tomášovo rozhodnutí v milníku 4). Než se odkaz na hru kdekoli zveřejní, musí být všechny odstraněné a nahrazené skutečnými scénáři.
