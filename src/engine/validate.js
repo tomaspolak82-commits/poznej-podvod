@@ -23,7 +23,8 @@ export function listTargets(section, message) {
       if (message[optional]) targets.push(optional);
     }
   } else if (section === 'zpravy') {
-    targets.push('from');
+    // fromMarkable: false = the sender is plain text, not a part of the message
+    if (message.fromMarkable !== false) targets.push('from');
     (Array.isArray(message.messages) ? message.messages : []).forEach((bubble, i) => {
       targets.push(`messages.${i}`);
       if (bubble && bubble.link) targets.push(`messages.${i}.link`);
@@ -54,6 +55,9 @@ function validateChatMessage(message, errors) {
   if (!['sms', 'chat'].includes(message.app)) errors.push('message.app musí být "sms" nebo "chat"');
   if (!isNonEmptyString(message.from)) errors.push('message.from chybí nebo je prázdné');
   if (typeof message.inContacts !== 'boolean') errors.push('message.inContacts musí být true nebo false');
+  if (message.fromMarkable !== undefined && typeof message.fromMarkable !== 'boolean') {
+    errors.push('message.fromMarkable musí být true nebo false');
+  }
   // Optional date shown above the bubbles ("dnes 10:24")
   if (message.date !== undefined && !isNonEmptyString(message.date)) errors.push('message.date musí být neprázdný text');
   if (!Array.isArray(message.messages) || message.messages.length === 0) {
@@ -65,7 +69,15 @@ function validateChatMessage(message, errors) {
     if (bubble?.link !== undefined && !isNonEmptyString(bubble.link)) {
       errors.push(`message.messages.${i}.link musí být text odkazu`);
     }
+    // Optional date label before this bubble ("Út 18:05", "Dnes 11:40")
+    if (bubble?.date !== undefined && !isNonEmptyString(bubble.date)) {
+      errors.push(`message.messages.${i}.date musí být neprázdný text`);
+    }
   });
+  // Two labels on top of each other would look like a mistake
+  if (message.date !== undefined && message.messages[0]?.date !== undefined) {
+    errors.push('message.date a message.messages.0.date nesmí být vyplněné zároveň');
+  }
 }
 
 function containsKey(value, key) {

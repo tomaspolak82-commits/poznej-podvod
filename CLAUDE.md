@@ -160,7 +160,8 @@ Jedna sekce, každý scénář má `app: "sms"` nebo `app: "chat"`:
 - **Chat (WhatsApp-like):** hlavička s profilovou fotkou (neutrální avatar, žádné fotky skutečných lidí), jméno nebo číslo, u neznámého čísla lišta „Toto číslo není ve vašich kontaktech: Přidat / Nahlásit a zablokovat“. Bubliny, případně hlasová zpráva jako neaktivní prvek.
 - Rozhodnutí z milníku 5 (`src/apps/messages.js`):
   - **Bez seznamu konverzací:** hráč vidí rovnou otevřenou konverzaci.
-  - **Odesílatel** je jen číslo, nebo jméno uloženého kontaktu (`inContacts: true`, v avataru jeho první písmeno). Nic se neodkrývá, žádné „zobrazit adresu“. Označit jde jako `from`.
+  - **Odesílatel** je jen číslo, nebo jméno uloženého kontaktu (`inContacts: true`, v avataru jeho první písmeno). Nic se neodkrývá, žádné „zobrazit adresu“. Označit jde jako `from`. Výjimka: `fromMarkable: false` (milník 6, převzatý účet uloženého kontaktu). Odesílatel je pak obyčejný text, nejde označit a nestojí bod. Podezření k němu je tam oprávněné, ale není to hrozba.
+  - **Štítek s datem** (milník 6): malý šedý štítek uprostřed chatu, formát den + čas („Út 18:05“, „Dnes 11:40“), žádné pevné datum. Buď jeden nad všemi bublinami (`message.date`), nebo před konkrétní bublinou (`messages.N.date`), třeba nad staršími bublinami a nad novou zprávou. Obojí najednou u první bubliny kontrola obsahu odmítne. Štítek není část zprávy, nejde označit a čtečka obrazovky ho čte jako text.
   - **Bublina je nejmenší část, kterou jde označit.** Odkaz v bublině je samostatná část vedle textu, nikdy vnořené tlačítko. SMS s jednou bublinou a odkazem má tedy nejvýš 3 hrozby.
   - **Lišta „není ve vašich kontaktech“** (jen chat) není část zprávy a nejde označit. Její tlačítka v obou úrovních ukážou stejné upozornění „Tohle je jen trénink, tlačítko nic nedělá…“. Ve vyhodnocení zůstane jen text bez tlačítek.
   - Dole je neaktivní pole „Zpráva“, jen jako dekorace (`aria-hidden`).
@@ -233,7 +234,7 @@ Odkazy, tlačítka a přílohy nikam nevedou.
 }
 ```
 
-Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (číslo nebo jméno), `inContacts` (true/false), `messages` (pole bublin, každá s `text`, případně `link`) a nepovinně `date` („dnes 10:24“, oddělovač nad bublinami).
+Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (číslo nebo jméno), `inContacts` (true/false), `messages` (pole bublin, každá s `text`, případně `link` a `date` = štítek před bublinou) a nepovinně `date` („dnes 10:24“, štítek nad bublinami) a `fromMarkable` (`false` = odesílatel nejde označit, sekce 6).
 
 `target` odkazuje na část zprávy (`fromName`, `fromAddress`, `subject`, `body.N`, `button`, `link`, `attachment`, `from`, `messages.N`, `messages.N.link` = odkaz uvnitř bubliny). Klikání je vázané na prvky, ne na souřadnice. Volitelné pole `alsoTargets` (pole dalších částí) naváže jednu hrozbu na víc částí zprávy, např. `"target": "fromAddress", "alsoTargets": ["fromName"]`: označení kterékoli z nich je jeden zásah, žárovka a „Tohle místo stojí za druhý pohled“ jsou u hlavního `target`.
 
@@ -478,10 +479,12 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **Milník 6 probíhá.** E-mail: scénáře `email-01` až `email-08` jsou skutečné (5 podvodů, 3 legitimní), `email-04` až `email-08` a body 4 a 5 nápovědy e-mailu zabudované 24. 9. 2026 (záznam zdrojů a rozhodnutí v `docs/navrhy-scenaru-email.md`). Návrhy Zpráv čekají v `docs/navrhy-scenaru-zpravy.md`.
 - Vlastní text po klepnutí na přílohu (`ATTACHMENT_NOTICE`) zabudovaný 24. 9. 2026.
 - **Nasazeno 24. 9. 2026** (commit `1b26bd8`): e-maily 01–08, nová nápověda e-mailu, text u přílohy. Ověřeno na https: JS `text/javascript`, CSS `text/css`, `noindex` na stránce, hra se vykreslí a příloha ukáže nový text (Chromium, bez chyb na stránce).
-- **Další krok:** návrhy Zpráv v `docs/navrhy-scenaru-zpravy.md` (stav schválení ověřit u Tomáše), pak doplňování obou sekcí na 20 scénářů.
+- **Zprávy, stav 24. 9. 2026:** schválené číslo +420 772 145 208 (`zpravy-06`), obec „Javorná Lhota“ (`zpravy-08`), 158 jako odesílatel (`zpravy-05`), bez pevných dat (`zpravy-07`, `zpravy-08`). Texty `zpravy-04` a `zpravy-05` kontroluje Tomáš, do jeho OK se nezabudovávají. Postavené (zatím jen lokální commit, push až s texty): štítky s datem před bublinou a `fromMarkable: false` (sekce 6).
+- **Další krok:** po Tomášově OK zabudovat `zpravy-04` až `zpravy-08` (nahradí testovací zprávy), pak doplňování obou sekcí na 20 scénářů.
 
 **Otevřené úkoly:**
 - **Před zveřejněním odkazu na hru: testovací zprávy.** V bance zůstávají testovací zprávy Zpráv `zpravy-04` až `zpravy-07` (testovací e-maily nahradily v milníku 6 skutečné scénáře). Nasazuje se i s nimi (web má `noindex`, Tomášovo rozhodnutí v milníku 4). Než se odkaz na hru kdekoli zveřejní, musí být všechny odstraněné a nahrazené skutečnými scénáři.
+- **Před zveřejněním odkazu na hru: číslo kupujícího v `zpravy-06`.** Znovu ověřit v otevřených datech ČTÚ „Přidělená čísla a kódy“ (https://data.ctu.gov.cz/dataset/pridelena-cisla-kody), že blok 772 100 000 až 772 199 999 (číslo +420 772 145 208) nemá držitele. Ověřeno 24. 9. 2026, ČTÚ ale může blok kdykoli přidělit.
 - **Před zveřejněním odkazu na hru: zdroje Finanční správy.** Tomáš si sám přečte oba zdroje ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.
 - **Logo nad názvem:** na počítači je během kola logo v hlavičce nad názvem „Poznej podvod“, ne vedle něj (sekce 5). Hlavička se v milníku 4 neměnila; ověřit, jestli to bylo už před milníkem 4, a opravit.
 - **Tenký Montserrat ve WebKitu:** v Playwright WebKitu na Windows se Montserrat (proměnné písmo) kreslí velmi tence místo tučně, v Chromiu správně. Písma se od milníku 2 neměnila. Nejspíš omezení WebKitu na Windows, na skutečném iPhonu neověřeno: Tomáš zkontroluje živou stránku v Safari na iPhonu nebo iPadu (nadpisy a tlačítka mají být tučné).

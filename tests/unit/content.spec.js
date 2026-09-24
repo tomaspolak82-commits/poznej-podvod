@@ -159,6 +159,37 @@ test.describe('content: validation rules', () => {
     expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' }).join('\n')).toMatch(/message\.date/);
   });
 
+  test('chat: date label before a bubble is valid when filled, empty label is reported', () => {
+    const scenario = validChat();
+    scenario.message.messages = [{ text: 'Starší', date: 'Út 18:05' }, { ...scenario.message.messages[0], date: 'Dnes 11:40' }];
+    scenario.threats[0].target = 'messages.1.link';
+    expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' })).toEqual([]);
+    scenario.message.messages[1].date = '';
+    expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' }).join('\n')).toMatch(/messages\.1\.date/);
+  });
+
+  test('chat: date above the thread and before the first bubble at once is reported', () => {
+    const scenario = validChat();
+    scenario.message.date = 'dnes 10:24';
+    scenario.message.messages[0].date = 'Dnes 10:24';
+    expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' }).join('\n')).toMatch(/nesmí být vyplněné zároveň/);
+  });
+
+  test('chat: fromMarkable false removes the sender from the parts; a threat on it is reported', () => {
+    const scenario = validChat();
+    scenario.message.fromMarkable = false;
+    expect(listTargets('zpravy', scenario.message)).toEqual(['messages.0', 'messages.0.link']);
+    expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' })).toEqual([]);
+    scenario.threats[0].target = 'from';
+    expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' }).join('\n')).toMatch(/"from" neodpovídá/);
+  });
+
+  test('chat: fromMarkable must be true or false', () => {
+    const scenario = validChat();
+    scenario.message.fromMarkable = 'ne';
+    expect(validateScenario(scenario, { fileId: 'zpravy-50', section: 'zpravy' }).join('\n')).toMatch(/fromMarkable/);
+  });
+
   test('SMS: inContacts must be true or false', () => {
     const scenario = validChat();
     delete scenario.message.inContacts;
