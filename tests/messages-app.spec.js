@@ -1,6 +1,14 @@
 // Simulated messages app, SMS and chat (milestone 5, CLAUDE.md sections 6 and 12).
 import { test, expect } from '@playwright/test';
-import { currentScenarioId, expectedRounds, goToScenario, nextMessage, scenarioById, startRound } from './helpers/game.js';
+import {
+  currentScenarioId,
+  expectedRounds,
+  goToScenario,
+  nextMessage,
+  scenarioById,
+  seedWith,
+  startRound,
+} from './helpers/game.js';
 
 // Seed 5: zpravy-01 (SMS, unknown number) first, then zpravy-03 (SMS, saved contact)
 // and zpravy-02 (chat, unknown number). Seed 2: zpravy-02 first.
@@ -266,4 +274,43 @@ test.describe('layout', () => {
       }
     });
   }
+});
+
+// zpravy-04: older conversation under a date label, the sender cannot be marked (milestone 6)
+const SEED_JARKA = seedWith('zpravy', ['zpravy-04']);
+
+test.describe(`date labels and a sender that cannot be marked (zpravy-04, seed ${SEED_JARKA})`, () => {
+  test('labels "Út 18:05" and "Dnes 11:40" stand in the thread and are read as text', async ({ page }) => {
+    await start(page, { seed: SEED_JARKA });
+    await goToScenario(page, 'zpravy-04');
+    const labels = page.locator('article[data-scenario-id] .chat__date');
+    await expect(labels).toHaveText(['Út 18:05', 'Dnes 11:40']);
+    // Screen readers: plain visible text, not hidden, not a button
+    await expect(page.getByText('Út 18:05', { exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: /Út 18:05|Dnes 11:40/ })).toHaveCount(0);
+  });
+
+  test('advanced level: the bubbles can be marked, the sender and the labels cannot', async ({ page }) => {
+    await start(page, { seed: SEED_JARKA, level: 'pokročilá' });
+    await goToScenario(page, 'zpravy-04');
+    await expect(page.locator('[data-mark="from"]')).toHaveCount(0);
+    await expect(page.locator('.chat__from')).toHaveText('Jarka');
+    await expect(page.locator('[data-mark^="messages."]')).toHaveCount(6);
+    // Older bubble = innocent part, costs a point
+    await mark(page, 'messages.4');
+    await mark(page, 'messages.0');
+    await decide(page, true);
+    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 0');
+    await expect(statusOf(page, 'messages.0')).toHaveText('Označeno zbytečně, tady je vše v pořádku');
+  });
+
+  test('200 % text at 320 px: no horizontal scroll in marking and evaluation', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 740 });
+    await start(page, { seed: SEED_JARKA, level: 'pokročilá' });
+    await goToScenario(page, 'zpravy-04');
+    await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+    expect(await noScroll(page)).toBe(true);
+    await decide(page, true);
+    expect(await noScroll(page)).toBe(true);
+  });
 });

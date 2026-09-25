@@ -1,51 +1,45 @@
 {
   "id": "zpravy-04",
   "section": "zpravy",
-  "title": "Testovací zpráva Z4 (podvod)",
+  "title": "Kamarádka prosí o hlas v soutěži",
   "isScam": true,
   "message": {
     "app": "chat",
-    "from": "Testovací odesílatel Z4",
-    "inContacts": false,
+    "from": "Jarka",
+    "inContacts": true,
+    "fromMarkable": false,
     "messages": [
+      { "date": "Út 18:05", "text": "Díky za dnešní kafe, bylo to moc prima. Musíme to zase brzo zopakovat." },
+      { "text": "Ten recept na bábovku ti pošlu, až ho najdu." },
       {
-        "text": "Testovací zpráva 4, bublina 1."
+        "date": "Dnes 11:40",
+        "text": "Ahoj, prosím tě, můžeš mi pomoct? Moje vnučka je ve finále soutěže o nejhezčí dětskou kresbu a rozhoduje hlasování."
       },
-      {
-        "text": "Testovací zpráva 4, bublina 2."
-      },
-      {
-        "text": "Testovací zpráva 4, bublina 3.",
-        "link": "https://odkaz4.test.invalid"
-      }
+      { "text": "Stačí kliknout sem a hlasovat, zabere to minutu.", "link": "https://soutez-kresba-hlasovani.top/hlas" },
+      { "text": "Potom ti přijde SMS s kódem, ten tam jen opiš a klikni na Připojit zařízení. Moc ti děkuju." }
     ]
   },
   "threats": [
     {
-      "target": "from",
-      "category": "nezname-cislo",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+      "target": "messages.3.link",
+      "alsoTargets": ["messages.3"],
+      "category": "zadost-o-udaje",
+      "title": "Odkaz na hlasování",
+      "explanation": "Prosba o hlas v soutěži s odkazem je známý trik. Air Bank ho popisuje takto: podvodník pošle prosbu o pomoc při hlasování a přidá odkaz."
     },
     {
-      "target": "messages.1",
+      "target": "messages.4",
       "category": "zadost-o-udaje",
-      "title": "Testovací hrozba 2",
-      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+      "title": "Kód z SMS",
+      "explanation": "Kód z SMS a tlačítko „Připojit zařízení“ by otevřely váš účet v chatu cizímu člověku. Podle Air Bank pak podvodník začne rozesílat žádosti o peníze."
     },
     {
       "target": "messages.2",
-      "category": "vyhra-nabidka",
-      "title": "Testovací hrozba 3",
-      "explanation": "Testovací vysvětlení hrozby 3. Skutečný text doplníme v milníku 4."
-    },
-    {
-      "target": "messages.2.link",
-      "category": "odkaz-platba",
-      "title": "Testovací hrozba 4",
-      "explanation": "Testovací vysvětlení hrozby 4. Skutečný text doplníme v milníku 4."
+      "category": "emocni-natlak",
+      "title": "Prosba, které se těžko odmítá",
+      "explanation": "Vnučka a soutěž kresbiček: prosbě o pomoc se špatně říká ne. Právě na to podvodník spoléhá."
     }
   ],
-  "summary": "Testovací shrnutí zprávy Z4. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "summary": "Zpráva přišla od kamarádky, kterou máte v kontaktech, a přesto je to podvod: její účet v chatu mohl někdo převzít. I zprávu od známého tak může psát někdo jiný. Když se známý chová jinak než obvykle, pospíchá nebo chce kód, ověřte si to zavoláním na číslo, které znáte. Kód z SMS nikomu neposílejte a nikdy ho neopisujte na stránku, kam vás poslal odkaz ze zprávy.",
+  "sources": ["airbank.cz/co-vas-nejvic-zajima/podvody-ktere-zrovna-leti/"]
 }

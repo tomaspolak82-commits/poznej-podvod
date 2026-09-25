@@ -1,33 +1,44 @@
 {
   "id": "zpravy-05",
   "section": "zpravy",
-  "title": "Testovací zpráva Z5 (podvod)",
+  "title": "Trestní oznámení z čísla 158",
   "isScam": true,
   "message": {
     "app": "sms",
-    "from": "Testovací odesílatel Z5",
+    "from": "158",
     "inContacts": false,
+    "date": "Dnes 8:52",
     "messages": [
       {
-        "text": "Testovací zpráva 5, bublina 1.",
-        "link": "https://odkaz5.test.invalid"
+        "text": "Policie ČR: Na Vaši osobu bylo podáno trestní oznámení. Podrobnosti a předvolání najdete ve své datové schránce.",
+        "link": "https://datova-schranka-portal.top/prihlaseni"
       }
     ]
   },
   "threats": [
     {
+      "target": "from",
+      "category": "odesilatel",
+      "title": "Číslo 158",
+      "explanation": "Číslo 158 zná každý, a proto se hodí podvodníkům. Číslo odesílatele se dá podvrhnout. Policie ve svém varování napsala: „Z linky 158 žádné takové zprávy neposíláme.“"
+    },
+    {
       "target": "messages.0",
-      "category": "jazyk-chyby",
-      "title": "Testovací hrozba 1",
-      "explanation": "Testovací vysvětlení hrozby 1. Skutečný text doplníme v milníku 4."
+      "category": "emocni-natlak",
+      "title": "Strach",
+      "explanation": "Trestní oznámení má vyděsit a donutit vás jednat hned, bez rozmyslu."
     },
     {
       "target": "messages.0.link",
-      "category": "instalace-aplikace",
-      "title": "Testovací hrozba 2",
-      "explanation": "Testovací vysvětlení hrozby 2. Skutečný text doplníme v milníku 4."
+      "category": "zadost-o-udaje",
+      "title": "Falešná datová schránka",
+      "explanation": "Odkaz vede na falešnou stránku, která se jen tváří jako datová schránka. Adresa končí na .top, to s úřadem nesouvisí."
     }
   ],
-  "summary": "Testovací shrnutí zprávy Z5. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "summary": "Na takovou zprávu nereagujte a na odkaz neklikejte. Když si nejste jistí, přihlaste se do datové schránky sami přes její oficiální stránky. Podezřelou SMS můžete přeposlat na číslo 7726, tím ji nahlásíte operátorovi.",
+  "sources": [
+    "ceskenoviny.cz/zpravy/policie-varuje-pred-podvodnymi-sms-zpravami-vypadaji-jako-odeslane-z-linky-158/2630375 (ČTK, 5. 2. 2025, cituje Policii ČR)",
+    "x.com/PolicieCZ/status/1887141569452462279 (Policie ČR, původní příspěvek)",
+    "policie.gov.cz/kyberkriminalita/podvodne-sms-zpravy (7726)"
+  ]
 }

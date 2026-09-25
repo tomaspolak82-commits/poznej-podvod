@@ -186,6 +186,9 @@ test.describe('scoring: real scenarios, parts the hint leads to are hits', () =>
     ['email-06', ['subject'], 'subject "Poslední varování" = the fear threat'],
     ['email-06', ['body.0'], '"I recorded you" = the fear threat'],
     ['zpravy-02', ['messages.0'], '"new number" bubble = the unknown number'],
+    ['zpravy-04', ['messages.2'], 'plea for help = emotional pressure'],
+    ['zpravy-04', ['messages.3'], 'call to click = the link threat'],
+    ['zpravy-04', ['messages.4'], 'code from SMS'],
   ];
   for (const [id, marks, why] of cases) {
     test(`${id}: ${why}`, () => {
@@ -210,6 +213,8 @@ test.describe('scoring: marking everything does not pay off (real scenarios)', (
     ['email-05', ['body.0']],
     ['email-06', ['body.1']],
     ['zpravy-02', ['messages.1']],
+    // Older bubbles of the usual conversation; the sender cannot be marked (fromMarkable: false)
+    ['zpravy-04', ['messages.0', 'messages.1']],
   ]) {
     test(`${id}: marking everything leaves the innocent part as unnecessary`, () => {
       const result = markAll(scenarioById(id));
@@ -218,11 +223,13 @@ test.describe('scoring: marking everything does not pay off (real scenarios)', (
     });
   }
 
-  test('zpravy-01 is the exception: an SMS with one bubble and a link, every part is a threat', () => {
-    const scenario = scenarioById('zpravy-01');
-    expect(scenario.message.messages).toHaveLength(1);
-    expect(markAll(scenario).extra).toEqual([]);
-  });
+  for (const id of ['zpravy-01', 'zpravy-05']) {
+    test(`${id} is the exception: an SMS with one bubble and a link, every part is a threat`, () => {
+      const scenario = scenarioById(id);
+      expect(scenario.message.messages).toHaveLength(1);
+      expect(markAll(scenario).extra).toEqual([]);
+    });
+  }
 });
 
 test('points are always whole numbers', () => {
