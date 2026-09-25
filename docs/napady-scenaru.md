@@ -62,6 +62,7 @@ Pro obě sekce. V každé sekci musí být aspoň 5 legitimních scénářů a m
 | L6 | Oznámení banky „přihlaste se sami v aplikaci“, bez odkazu. |
 | L7 | Skutečná zpráva z @cez.cz nebo @fs.gov.cz bez požadavku na údaje. |
 | L9 | **Úkol pro milník 6:** legitimní e-mail s odkazem, který vede na pravou doménu firmy. Lekce: odkaz sám o sobě není podvod, rozhoduje, kam vede. (Scénář ČEZ `email-03` z milníku 4 je bez odkazu, zdroj ČEZ odkazy v pravých e-mailech nepotvrzuje.) |
+| L10 | **Zpráva od banky** (e-mail nebo SMS), která nic nechce, např. oznámení „přihlaste se sami v aplikaci“ (navazuje na L6). Lekce: zpráva od banky sama o sobě podvod není. **Odloženo 25. 9. 2026:** potřebný zdroj je stránka banky, kde banka doslova píše, jaké SMS nebo e-maily klientům posílá (z jaké adresy, s jakým obsahem) a jaké nikdy. Titulky článků (např. že banky ruší potvrzovací SMS) jako zdroj nepoužívat. |
 | L8 | E-mail od zaměstnavatele se zaheslovanou výplatní páskou (PDF), heslo = rodné číslo. Lekce: příloha sama o sobě není podvod, rozhoduje, jestli ji čekám a od koho je. **Ověřit ve zdroji, že je to běžná praxe.** |
 
 ## Pokrytí pestrosti (sekce 7)

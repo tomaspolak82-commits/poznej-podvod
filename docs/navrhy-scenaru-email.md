@@ -373,7 +373,7 @@ Cíl: 3 nové legitimní e-maily, pak 11 e-mailů (5 podvodů, 6 legitimních). 
 | email-10 | „Když e-mail chce odpověď, je to podvod.“ | nový (klub seniorů) |
 | email-11 | „Když zpráva připomíná lhůtu, je to podvod.“ | nový (knihovna), **potřebuje úpravu bodu 3 nápovědy** |
 
-**Zpráva od banky** (Tomášův příklad) zatím chybí záměrně. Námět L6 („přihlaste se sami v aplikaci“) by potřeboval skutečnou adresu banky. Na stránkách Air Bank, Monety ani ČSOB jsem doslova nenašel, z jaké adresy banka e-maily posílá (25. 9. 2026). Bez toho by scénář tvrdil za banku něco, co nemám ověřené. Varianta se smyšlenou bankou je otázka pro Tomáše.
+**Zpráva od banky** je odložená (Tomášovo rozhodnutí 25. 9. 2026, námět L10 v `docs/napady-scenaru.md`). Na stránkách Air Bank, Monety ani ČSOB jsem doslova nenašel, z jaké adresy banka e-maily posílá. Potřebný zdroj je stránka banky, kde doslova píše, jaké e-maily nebo SMS klientům posílá a jaké nikdy.
 
 Všechna tři shrnutí jsou obecná rada, nic netvrdí za firmu ani úřad (`sources: []`). Domény: `javornalhota.cz` je v registru `.cz` volná (RDAP 404, kontrolní `nic.cz` 200, 25. 9. 2026). Obec je smyšlená a schválená („Javorná Lhota“, zpravy-08). Adresa `marie.kopecka@seznam.cz` je smyšlená schránka na skutečné službě, stejné riziko jako u `email-08`.
 
@@ -472,6 +472,16 @@ Zpráva připomíná lhůtu, a přesto je v pořádku. Lhůta sama o sobě podvo
 ```
 
 Kontrola podvodů s novým zněním: spěch v `email-02` (`body.2`, lhůta a propadnutí peněz), `email-04` (`body.3`, vymáhání), `email-05` (`body.3`, zánik nároku) a `email-06` (`body.3`, výhrůžka) se pojí s výhrůžkou nebo penězi. Nápověda k nim dál vede a všechny leží na hrozbách.
+
+**Kontrola proti předběžně schválenému znění bodu 3 (25. 9. 2026)**, tedy kde by se lhůta pojila s platbou, výhrůžkou nebo žádostí o údaje:
+
+| Návrh | Lhůta | Platba | Výhrůžka | Žádost o údaje | Výsledek |
+|---|---|---|---|---|---|
+| email-09 (obec) | ne („poplatek na příští rok“ je období, ne termín) | ano (`body.1`, `body.2`) | ne | ne | platba bez lhůty, **bez kolize** |
+| email-11 (knihovna) | ano (předmět, `body.1`: „zítra končí“) | ne | ne | ne | lhůta bez platby, výhrůžky i údajů, **bez kolize** |
+| email-10 (klub), navíc | ne („za dva týdny ve čtvrtek“ je datum výletu, ne lhůta pro hráče) | jen „jízdné vybírám až v autobuse“, osobně | ne | ne | **bez kolize** |
+
+Nápověda tedy s novým zněním bodu 3 k žádné části těchto legitimních zpráv nevede. Úprava scénářů není potřeba.
 
 Poznámky:
 - Věta o poplatku za pozdní vrácení je záměrně vynechaná: spěch s platbou by k označení vedl i podle nového znění.

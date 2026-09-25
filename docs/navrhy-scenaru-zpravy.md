@@ -273,7 +273,9 @@ Cíl: 3 nové legitimní Zprávy, pak 11 Zpráv (5 podvodů, 6 legitimních). Ka
 | zpravy-10 | „Když mě známý přes zprávu o něco prosí, je to podvod.“ | nový, protiváha k `zpravy-02` a `zpravy-04` |
 | zpravy-11 | „Když zpráva nemá háčky a čárky nebo má chyby, je to podvod.“ | nový, navazuje na `email-08` (Honza) |
 
-**Proč ne L1 (SMS kód od banky):** Peníze.cz a Měšec.cz v titulcích článků (25. 9. 2026) píšou, že banky s potvrzovacími SMS končí a přecházejí na aplikace. Scénář by brzy nebyl věrohodný. Obsah článků jsem doslova neověřoval, tahle poznámka je jen důvod, proč námět nepoužít. „Zpráva od banky“ zatím chybí i v e-mailu, viz `docs/navrhy-scenaru-email.md`.
+**Proč ne L1 (SMS kód od banky):** zpráva od banky je odložená (Tomášovo rozhodnutí 25. 9. 2026, námět L10 v `docs/napady-scenaru.md`). Potřebný zdroj je stránka banky, kde doslova píše, jaké SMS nebo e-maily klientům posílá a jaké nikdy.
+
+**Kontrola bodu 3 nápovědy Zpráv („Spěch a citový nátlak“, znění se nemění):** `zpravy-09` oznamuje doručení „dnes mezi 13. a 15. hodinou“. Není to výzva ke spěchu („Rychle“, „ještě dnes“ ve smyslu „udělejte hned“), zpráva nic nechce. Riziko, že ji opatrný hráč označí, je malé, ale není nulové. Posoudí Tomáš u textů.
 
 Všechna tři shrnutí jsou obecná rada, nic netvrdí za firmu ani úřad (`sources: []`). E-shop „Kniha pro radost“ je smyšlený a už ve hře (`email-07`, ARES 0 výsledků, doména volná, ověřeno 24. 9. 2026). Věra a Honza jsou smyšlená jména. Honza je vnuk z `email-08`.
 
