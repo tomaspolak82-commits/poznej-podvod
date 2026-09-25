@@ -1,0 +1,20 @@
+{
+  "id": "zpravy-08",
+  "section": "zpravy",
+  "title": "Obec hlásí odstávku vody",
+  "isScam": false,
+  "message": {
+    "app": "sms",
+    "from": "Obec Javorná Lhota",
+    "inContacts": false,
+    "date": "Dnes 7:15",
+    "messages": [
+      {
+        "text": "Obec Javorná Lhota informuje: v pátek od 8 do 14 hodin nepoteče voda kvůli opravě vodovodu v ulici Polní. Cisterna s pitnou vodou bude stát u obecního úřadu."
+      }
+    ]
+  },
+  "threats": [],
+  "summary": "Zpráva jen informuje a nic nechce: žádný odkaz, peníze ani údaje. To, že odesílatel není ve vašich kontaktech, samo o sobě nevadí. Když si nejste jistí, podívejte se na stránky obce nebo zavolejte na obecní úřad.",
+  "sources": []
+}

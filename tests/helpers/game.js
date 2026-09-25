@@ -36,11 +36,16 @@ export function expectedRounds(section, seed, count = 2) {
 // Tests ask for the messages they need instead of relying on one fixed seed, so adding
 // scenarios to the bank does not break them. Put the seed in the test name.
 export function seedWith(section, ids) {
+  return seedWhere(section, (round) => ids.every((id) => round.some((s) => s.id === id)), ids.join(', '));
+}
+
+// Finds the first seed whose first round passes the check (e.g. a given message comes first)
+export function seedWhere(section, check, description = 'the wanted messages') {
   for (let seed = 1; seed <= 10000; seed += 1) {
     const [round] = expectedRounds(section, seed, 1);
-    if (ids.every((id) => round.some((s) => s.id === id))) return seed;
+    if (check(round)) return seed;
   }
-  throw new Error(`No seed gives a ${section} round with ${ids.join(', ')}`);
+  throw new Error(`No seed gives a ${section} round with ${description}`);
 }
 
 export async function currentScenarioId(page) {

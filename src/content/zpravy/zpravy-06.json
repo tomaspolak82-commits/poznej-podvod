@@ -1,20 +1,37 @@
 {
   "id": "zpravy-06",
   "section": "zpravy",
-  "title": "Testovací zpráva Z6 (v pořádku)",
-  "isScam": false,
+  "title": "Kupující z bazaru pošle odkaz k přijetí platby",
+  "isScam": true,
   "message": {
-    "app": "sms",
-    "from": "Testovací odesílatel Z6",
+    "app": "chat",
+    "from": "+420 772 145 208",
     "inContacts": false,
+    "date": "Dnes 13:05",
     "messages": [
+      { "text": "Dobrý den, píšu kvůli vašemu inzerátu na šicí stroj za 1 800 Kč. Je ještě k mání?" },
+      { "text": "Beru ho. Zaplatím hned předem a kurýr si ho u vás vyzvedne, o nic se nestaráte." },
       {
-        "text": "Testovací zpráva 6, bublina 1.",
-        "link": "https://odkaz6.test.invalid"
+        "text": "Tady je odkaz, vyplňte tam údaje z karty, ať vám peníze přijdou.",
+        "link": "https://prijeti-platby-bazar.top/platba"
       }
     ]
   },
-  "threats": [],
-  "summary": "Testovací shrnutí zprávy Z6. Skutečný text doplníme v milníku 4.",
-  "sources": []
+  "threats": [
+    {
+      "target": "messages.2.link",
+      "alsoTargets": ["messages.2"],
+      "category": "zadost-o-udaje",
+      "title": "Údaje z karty „k přijetí peněz“",
+      "explanation": "K tomu, abyste peníze dostali, údaje z karty nepotřebujete. Air Bank popisuje tento trik takto: kupující pošle odkaz, kam vyplníte údaje z karty, a tak prý přijmete peníze."
+    },
+    {
+      "target": "messages.1",
+      "category": "neobvykla-zadost",
+      "title": "Podivně snadný obchod",
+      "explanation": "Kupující stroj neviděl, nesmlouvá a hned chce platit předem přes kurýra. Tím chystá půdu pro odkaz, který přijde vzápětí."
+    }
+  ],
+  "summary": "Nevyplňujte žádné údaje na odkazech, které vám někdo pošle, i když důvod zní věrohodně. Peníze za prodanou věc si nechte poslat na číslo svého účtu, nebo si je vezměte při osobním předání.",
+  "sources": ["airbank.cz/co-vas-nejvic-zajima/podvody-ktere-zrovna-leti/"]
 }

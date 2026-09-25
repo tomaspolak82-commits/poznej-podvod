@@ -1,22 +1,20 @@
 {
   "id": "zpravy-07",
   "section": "zpravy",
-  "title": "Testovací zpráva Z7 (v pořádku)",
+  "title": "Připomínka termínu u zubařky",
   "isScam": false,
   "message": {
-    "app": "chat",
-    "from": "Testovací odesílatel Z7",
+    "app": "sms",
+    "from": "Zubařka Veselá",
     "inContacts": true,
+    "date": "Včera 17:30",
     "messages": [
       {
-        "text": "Testovací zpráva 7, bublina 1."
-      },
-      {
-        "text": "Testovací zpráva 7, bublina 2."
+        "text": "Dobrý den, připomínáme Vám preventivní prohlídku u MUDr. Veselé v pátek v 9:30. Pokud nemůžete přijít, dejte nám prosím vědět telefonicky."
       }
     ]
   },
   "threats": [],
-  "summary": "Testovací shrnutí zprávy Z7. Skutečný text doplníme v milníku 4.",
+  "summary": "Zpráva jen připomíná termín a nic nechce: žádný odkaz, platbu ani údaje. Právě to rozhoduje, samotné uložené číslo nestačí, protože číslo odesílatele se dá podvrhnout. Kdyby vás ordinace přes zprávu žádala o platbu nebo o údaje, raději jí zavolejte na číslo, které znáte.",
   "sources": []
 }

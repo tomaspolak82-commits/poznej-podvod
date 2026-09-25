@@ -6,18 +6,26 @@ import {
   goToScenario,
   nextMessage,
   scenarioById,
+  seedWhere,
   seedWith,
   startRound,
 } from './helpers/game.js';
 
-// Seed 5: zpravy-01 (SMS, unknown number) first, then zpravy-03 (SMS, saved contact)
-// and zpravy-02 (chat, unknown number). Seed 2: zpravy-02 first.
-const SEED_ALL = 5;
-const SEED_CHAT_FIRST = 2;
+// Rounds chosen by their messages, not by a fixed seed (seedWhere):
+// SEED_ALL: zpravy-01 (SMS, unknown number) first, zpravy-02 (chat, unknown number) and
+// zpravy-03 (SMS, saved contact) later. SEED_CHAT_FIRST: zpravy-02 first.
+const ids = (round) => round.map((s) => s.id);
+const SEED_ALL = seedWhere(
+  'zpravy',
+  (round) => round[0].id === 'zpravy-01' && ['zpravy-02', 'zpravy-03'].every((id) => ids(round).includes(id)),
+  'zpravy-01 first, then zpravy-02 and zpravy-03',
+);
+const SEED_CHAT_FIRST = seedWhere('zpravy', (round) => round[0].id === 'zpravy-02', 'zpravy-02 first');
+const SEEDS = `seeds ${SEED_ALL} and ${SEED_CHAT_FIRST}`;
 
 test.beforeAll(() => {
   // Guard: the tests below rely on these rounds
-  const all = expectedRounds('zpravy', SEED_ALL, 1)[0].map((s) => s.id);
+  const all = ids(expectedRounds('zpravy', SEED_ALL, 1)[0]);
   expect(all[0]).toBe('zpravy-01');
   expect(all).toEqual(expect.arrayContaining(['zpravy-02', 'zpravy-03']));
   expect(expectedRounds('zpravy', SEED_CHAT_FIRST, 1)[0][0].id).toBe('zpravy-02');
@@ -30,7 +38,7 @@ const decide = (page, scam) => page.getByRole('button', { name: scam ? 'Je to po
 const statusOf = (page, target) => page.locator(`.review-part[data-target="${target}"] [data-status]`);
 const noScroll = (page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
 
-test.describe('conversation view', () => {
+test.describe(`conversation view (${SEEDS})`, () => {
   test('opens right away, no list of conversations and no inbox instruction', async ({ page }) => {
     await start(page);
     await expect(page.locator('article[data-scenario-id="zpravy-01"]')).toBeVisible();
@@ -84,7 +92,7 @@ test.describe('conversation view', () => {
   });
 });
 
-test.describe('chat: number not saved in contacts', () => {
+test.describe(`chat: number not saved in contacts (${SEEDS})`, () => {
   for (const level of ['základní', 'pokročilá']) {
     test(`${level}: the bar is shown, its buttons show the same notice and cannot be marked`, async ({ page }) => {
       await start(page, { seed: SEED_CHAT_FIRST, level });
@@ -114,7 +122,7 @@ test.describe('chat: number not saved in contacts', () => {
   });
 });
 
-test.describe('basic level', () => {
+test.describe(`basic level (${SEEDS})`, () => {
   test('a link shows the same notice in a scam (zpravy-01) and a legitimate message (zpravy-03)', async ({ page }) => {
     await start(page);
     const notices = [];
@@ -130,7 +138,7 @@ test.describe('basic level', () => {
   });
 });
 
-test.describe('advanced level: marking', () => {
+test.describe(`advanced level: marking (${SEEDS})`, () => {
   test('sender, bubble and link are three separate marks; a second click removes a mark', async ({ page }) => {
     await start(page, { level: 'pokročilá' });
     const from = page.locator('[data-mark="from"]');
@@ -207,7 +215,7 @@ test.describe('advanced level: marking', () => {
   });
 });
 
-test.describe('evaluation', () => {
+test.describe(`evaluation (${SEEDS})`, () => {
   test('zpravy-02: 4 bulbs, the sender bulb is at the number; an explanation opens and closes', async ({ page }) => {
     await start(page, { seed: SEED_CHAT_FIRST });
     await decide(page, true);
@@ -231,7 +239,7 @@ test.describe('evaluation', () => {
   });
 });
 
-test.describe('layout', () => {
+test.describe(`layout (${SEEDS})`, () => {
   test('phone frame only from tablet width; on a phone the app fills the width', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 740 });
     await start(page);
@@ -243,6 +251,8 @@ test.describe('layout', () => {
 
   test('touch targets at least 48 × 48 px in the chat (bar, link, marks)', async ({ page }) => {
     for (const level of ['základní', 'pokročilá']) {
+      // Fresh page load, so the round is drawn from the start of the seed (see the 200 % test)
+      await page.goto('about:blank');
       await start(page, { seed: SEED_ALL, level });
       await goToScenario(page, 'zpravy-02');
       const small = await page.evaluate(() =>
@@ -259,6 +269,9 @@ test.describe('layout', () => {
     test(`200 % text at ${width} px: no horizontal scroll in play, marking and evaluation`, async ({ page }) => {
       await page.setViewportSize({ width, height: 740 });
       for (const level of ['základní', 'pokročilá']) {
+        // Leave the page first: the same address with only a different part after "#" does not
+        // reload it, and the game would draw the next round from the same random sequence
+        await page.goto('about:blank');
         await start(page, { level });
         await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
         // zpravy-01: long number and link

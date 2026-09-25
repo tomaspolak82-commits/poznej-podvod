@@ -14,7 +14,7 @@ Všechny citace níže jsou doslova ověřené, pokud u nich není napsáno jina
 
 **Kontrola „co hráč označí podle nápovědy“** (sekce 7) je u každého scénáře v tabulce. Mezera v nápovědě u `zpravy-06` je vyřešená: zúžený bod 1 nápovědy Zpráv je ve hře od milníku 5.
 
-**Stav k 25. 9. 2026:** `zpravy-04` a `zpravy-05` jsou ve hře. `zpravy-06` až `zpravy-08` čekají na kontrolu textů. Otevřené body jsou na konci dokumentu.
+**Stav k 25. 9. 2026:** `zpravy-04` až `zpravy-08` jsou schválené a ve hře. Dokument zůstává jako záznam zdrojů a rozhodnutí.
 
 ---
 
@@ -129,7 +129,7 @@ Poznámky:
 
 Za koho se vydává: kupující z inzerátu. Co chce: údaje z karty. Tlak: rychlý obchod. Námět Z10.
 
-**Připraveno ke kontrole textů (25. 9. 2026).** Číslo schválené (druhé kolo odpovědí), štítek „Dnes 13:05“ s velkým písmenem. „+420 777 000 000“ se nepoužije: předvolba 777 je přidělená (v datech ČTÚ blok 776 000 000 až 777 999 999).
+**Schváleno a zabudováno 25. 9. 2026 (čtvrté kolo).** Číslo schválené (druhé kolo odpovědí), štítek „Dnes 13:05“ s velkým písmenem. „+420 777 000 000“ se nepoužije: předvolba 777 je přidělená (v datech ČTÚ blok 776 000 000 až 777 999 999).
 
 Číslo: **+420 772 145 208** (schváleno). Leží v bloku 772 100 000 až 772 199 999, který v otevřených datech ČTÚ „Přidělená čísla a kódy“ nemá žádného držitele (soubor stažený 24. 9. 2026, metadata aktualizovaná 5. 9. 2026, denní aktualizace). Sousední přidělené bloky: 772 000 000 až 772 009 999 (TT Quality s.r.o., od 11. 2. 2026) a 772 220 000 až 772 229 999 (Telefonzentrale s.r.o.). Riziko: ČTÚ může blok kdykoli přidělit, v roce 2026 se v předvolbě 772 přidělovalo. Data: https://data.ctu.gov.cz/dataset/pridelena-cisla-kody (CSV: https://data.ctu.gov.cz/sites/default/files/imports/import_numbers/pridelena_cisla_a_kody.csv). Vyhledávání na https://ctu.gov.cz/vyhledavaci-databaze/pridelena-cisla-a-kody nemá odkaz na konkrétní výsledek, je potřeba zadat „Hledat podle části čísla“ a 772.
 
@@ -150,7 +150,7 @@ https://prijeti-platby-bazar.top/platba
 | Část | Kategorie | Název | Vysvětlení pro hráče |
 |---|---|---|---|
 | `messages.2.link` + `alsoTargets: ["messages.2"]` | zadost-o-udaje | Údaje z karty „k přijetí peněz“ | K tomu, abyste peníze dostali, údaje z karty nepotřebujete. Air Bank popisuje tento trik takto: kupující pošle odkaz, kam vyplníte údaje z karty, a tak prý přijmete peníze. |
-| `messages.1` | neobvykla-zadost | Podivně snadný obchod | Kupující nic neviděl, nesmlouvá a hned chce platit přes kurýra. Tak se to chystá na odkaz, který přijde vzápětí. |
+| `messages.1` | neobvykla-zadost | Podivně snadný obchod | Kupující stroj neviděl, nesmlouvá a hned chce platit předem přes kurýra. Tím chystá půdu pro odkaz, který přijde vzápětí. |
 
 Shrnutí:
 ```
@@ -191,7 +191,7 @@ Hrozby: žádné.
 
 Shrnutí:
 ```
-Zpráva jen připomíná termín a nic nechce: žádný odkaz, platbu ani údaje. Přišla z čísla, které máte uložené. Kdyby vás ordinace přes zprávu žádala o platbu nebo o údaje, raději jí zavolejte na číslo, které znáte.
+Zpráva jen připomíná termín a nic nechce: žádný odkaz, platbu ani údaje. Právě to rozhoduje, samotné uložené číslo nestačí, protože číslo odesílatele se dá podvrhnout. Kdyby vás ordinace přes zprávu žádala o platbu nebo o údaje, raději jí zavolejte na číslo, které znáte.
 ```
 
 Zdroje: žádné tvrzení za firmu ani úřad (`sources: []`). Kontrola 25. 9. 2026: shrnutí popisuje jen samotnou zprávu a dává obecnou radu, nic za ordinaci ani pojišťovnu netvrdí.
@@ -239,9 +239,9 @@ Poznámky:
 ## Rozhodnutí z 24. 9. 2026 (Tomáš)
 
 - a. 158 ano, zdroj policie přes ČTK, doslovná věta ve vysvětlení. **Zapracováno.**
-- b. Číslo kupujícího nezabudovávat, 777 nepoužívat, najít nepřidělený blok. **Návrh +420 772 145 208, čeká na schválení.**
-- c. zpravy-04: starší bubliny, odesílatel bez −1, obecná rada, žádost o peníze jako nový námět Z13. **Texty zapracované v návrhu. Hra zatím neumí oddělovač data ani odesílatele bez ztráty, nic se nestaví.**
-- d. Vymyšlená obec. **Návrh „Javorná Lhota“, čeká na schválení.**
+- b. Číslo kupujícího: 777 nepoužívat, najít nepřidělený blok. **Schváleno +420 772 145 208 (druhé kolo), zabudováno v zpravy-06.**
+- c. zpravy-04: starší bubliny, odesílatel bez −1, obecná rada, žádost o peníze jako nový námět Z13. **Štítky s datem a neklikací odesílatel postavené, zpravy-04 zabudovaná a nasazená (třetí kolo).**
+- d. Vymyšlená obec. **Schválena „Javorná Lhota“ (druhé kolo), zabudováno v zpravy-08.**
 - e. Zkrácené znění podle Air Bank. **Zapracováno.**
 - f. Kategorie `zadost-o-udaje` u odkazu zpravy-04. **Zapracováno.**
 - g. Bez dat. **Zapracováno.**
@@ -250,8 +250,10 @@ Druhé kolo odpovědí (24. 9. 2026): číslo +420 772 145 208 schváleno, „Ja
 
 Třetí kolo (25. 9. 2026): texty zpravy-04 a zpravy-05 schválené s úpravami, **zabudované a nasazené** (commit `ce6fda8`). Platné znění je od té chvíle v `src/content/zpravy/`.
 
+Čtvrté kolo (25. 9. 2026): texty zpravy-06 až zpravy-08 schválené s úpravami. U zpravy-06 je nové vysvětlení u `messages.1` („Kupující stroj neviděl, nesmlouvá a hned chce platit předem přes kurýra. Tím chystá půdu pro odkaz, který přijde vzápětí.“), u zpravy-07 nové shrnutí (rozhoduje, co zpráva chce, samotné uložené číslo nestačí), zpravy-08 zůstala beze změny. **Zabudováno:** zpravy-06 a 07 nahradily testovací zprávy, přibyla zpravy-08. Platné znění je od té chvíle v `src/content/zpravy/`.
+
 ## Otevřené otázky
 
-1. Texty zpravy-06 až zpravy-08 ke kontrole (25. 9. 2026). Po schválení nahradí testovací `zpravy-06` a `zpravy-07` a přibude `zpravy-08`.
+Žádné.
 
 Vyřešeno 24. 9. 2026: štítky ve Zprávách začínají velkým písmenem („Dnes“, „Včera“, „Út“), i ve `zpravy-01` až `zpravy-03`. E-mail zůstává s malým písmenem.

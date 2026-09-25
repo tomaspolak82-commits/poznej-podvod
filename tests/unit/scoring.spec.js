@@ -189,6 +189,7 @@ test.describe('scoring: real scenarios, parts the hint leads to are hits', () =>
     ['zpravy-04', ['messages.2'], 'plea for help = emotional pressure'],
     ['zpravy-04', ['messages.3'], 'call to click = the link threat'],
     ['zpravy-04', ['messages.4'], 'code from SMS'],
+    ['zpravy-06', ['messages.2'], '"fill in your card details" = the link threat'],
   ];
   for (const [id, marks, why] of cases) {
     test(`${id}: ${why}`, () => {
@@ -215,6 +216,8 @@ test.describe('scoring: marking everything does not pay off (real scenarios)', (
     ['zpravy-02', ['messages.1']],
     // Older bubbles of the usual conversation; the sender cannot be marked (fromMarkable: false)
     ['zpravy-04', ['messages.0', 'messages.1']],
+    // A stranger answering an ad is normal: the number and the first question are innocent
+    ['zpravy-06', ['from', 'messages.0']],
   ]) {
     test(`${id}: marking everything leaves the innocent part as unnecessary`, () => {
       const result = markAll(scenarioById(id));
