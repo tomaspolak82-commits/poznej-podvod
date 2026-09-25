@@ -193,6 +193,7 @@ Další zásady pro legitimní zprávy a všechny scénáře (Tomáš, 25. 9. 20
 - **Uložené číslo nebo známé jméno odesílatele nikdy není ve vysvětlení legitimní zprávy důvodem důvěry.** Číslo jde podvrhnout, účet převzít. Důvodem je vždy to, co zpráva chce.
 - **Legitimní zpráva nesmí jako důvod důvěry uvádět, že nemá odkaz nebo přílohu.**
 - **Scénáře nesmí obsahovat rady nebo chování, které jsou samy nebezpečné** (klíč ve schránce, sdělování, kdy je byt prázdný, apod.).
+- **Oslovení:** obecné oslovení („Vážený kliente“) u zprávy od firmy, jejímž jste klientem, je varovný signál a nápověda k němu smí vést. Oslovení jménem ale není důkaz, že zpráva je pravá (jméno se dá zjistit, viz `email-06`). Vysvětlení legitimních zpráv proto jméno nikdy neuvádějí jako důvod důvěry.
 
 ### Banka zpráv
 - Zásoba (cíl milníku 6, změněno 25. 9. 2026): **11 scénářů v sekci E-mail i v sekci Zprávy**, z toho **aspoň 5 legitimních** (plán: 5 podvodů, 6 legitimních). Náměty jsou v `docs/napady-scenaru.md`.
