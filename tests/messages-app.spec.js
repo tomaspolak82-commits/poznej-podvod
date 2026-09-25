@@ -226,7 +226,7 @@ test.describe('evaluation', () => {
     await start(page);
     await decide(page, true);
     await expect(page.locator('.evaluation-summary')).toContainText(
-      'Podezřelou SMS můžete přeposlat na číslo 7726, operátor pak odesílatele zablokuje.',
+      'Podezřelou SMS můžete přeposlat na číslo 7726, tím ji nahlásíte operátorovi.',
     );
   });
 });

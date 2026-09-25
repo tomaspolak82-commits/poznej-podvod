@@ -60,7 +60,7 @@ export const HINTS = {
     ],
     note: 'Pozor: i zpráva v bezchybné češtině může být podvod. Podvodníci dnes píšou s pomocí umělé inteligence.',
     advice:
-      'Podezřelou SMS můžete přeposlat na číslo 7726, operátor pak odesílatele zablokuje. V chatu můžete podezřelý účet zablokovat a nahlásit přímo v aplikaci.',
+      'Podezřelou SMS můžete přeposlat na číslo 7726, tím ji nahlásíte operátorovi. V chatu můžete podezřelý účet zablokovat a nahlásit přímo v aplikaci.',
   },
 };
 

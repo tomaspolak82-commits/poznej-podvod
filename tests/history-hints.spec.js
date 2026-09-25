@@ -58,7 +58,7 @@ test.describe('hint "Na co si dát pozor?"', () => {
     await startRound(page, { section: 'zpravy' });
     await page.getByRole('button', { name: 'Na co si dát pozor?' }).click();
     const dialog = page.getByRole('dialog', { name: 'Na co si dát pozor ve zprávách' });
-    await expect(dialog).toContainText('Podezřelou SMS můžete přeposlat na číslo 7726, operátor pak odesílatele zablokuje.');
+    await expect(dialog).toContainText('Podezřelou SMS můžete přeposlat na číslo 7726, tím ji nahlásíte operátorovi.');
     await expect(dialog.locator('li')).toHaveCount(6);
     await expect(dialog).toContainText('Odkaz sám o sobě podvod není.');
   });
