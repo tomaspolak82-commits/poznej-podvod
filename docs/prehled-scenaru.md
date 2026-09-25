@@ -266,12 +266,12 @@ Vygenerováno příkazem `npm run prehled` ze souborů v `src/content/`. Neuprav
 - **Sekce:** E-mail
 - **Druh:** legitimní
 - **Vyvrací:** „Když je v e-mailu příloha, je to podvod.“
-- **Odesílatel:** Anička <anicka.novakova@seznam.cz>
+- **Odesílatel:** Anička <anicka.novakova@lhotanet.cz>
 
 **Zpráva po částech:**
 
 1. **Jméno odesílatele** `fromName`: Anička
-2. **Adresa odesílatele** `fromAddress`: anicka.novakova@seznam.cz
+2. **Adresa odesílatele** `fromAddress`: anicka.novakova@lhotanet.cz
 - _Datum: včera 20:15_
 3. **Předmět** `subject`: Fotka z výletu
 4. **Odstavec 1** `body.0`: Ahoj babi,
@@ -615,6 +615,6 @@ Vygenerováno příkazem `npm run prehled` ze souborů v `src/content/`. Neuprav
 2. **Bublina 1** `messages.0`: ahoj babi, diky moc za ten darek k narozkam, uz jsem ho vyzkousel a je super
 3. **Bublina 2** `messages.1`: v nedeli prijedem s mamkou, udelas ty tvoje livance? :)
 
-**Shrnutí:** Zpráva je bez háčků a čárek, a přesto je v pořádku. Takhle na mobilu píše spousta lidí, chyby samy o sobě nic neznamenají. Rozhoduje, že na nic nespěchá a nic nechce: žádné peníze, kód ani odkaz.
+**Shrnutí:** Zpráva je bez háčků a čárek, a přesto je v pořádku. Takhle na mobilu píše spousta lidí, chyby samy o sobě nic neznamenají. Rozhoduje, že na nic nespěchá a nic nechce: žádné peníze, kód ani kliknutí na odkaz.
 
 **Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
