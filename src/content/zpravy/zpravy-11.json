@@ -1,0 +1,19 @@
+{
+  "id": "zpravy-11",
+  "section": "zpravy",
+  "title": "Vnuk píše bez háčků a čárek",
+  "isScam": false,
+  "message": {
+    "app": "chat",
+    "from": "Honza",
+    "inContacts": true,
+    "date": "Dnes 18:45",
+    "messages": [
+      { "text": "ahoj babi, diky moc za ten darek k narozkam, uz jsem ho vyzkousel a je super" },
+      { "text": "v nedeli prijedem s mamkou, udelas ty tvoje livance? :)" }
+    ]
+  },
+  "threats": [],
+  "summary": "Zpráva je bez háčků a čárek, a přesto je v pořádku. Takhle na mobilu píše spousta lidí, chyby samy o sobě nic neznamenají. Rozhoduje, že na nic nespěchá a nic nechce: žádné peníze, kód ani odkaz.",
+  "sources": []
+}

@@ -1,0 +1,21 @@
+{
+  "id": "email-09",
+  "section": "email",
+  "title": "Obec připomíná poplatek za odpad",
+  "isScam": false,
+  "message": {
+    "fromName": "Obec Javorná Lhota",
+    "fromAddress": "podatelna@javornalhota.cz",
+    "date": "dnes 9:12",
+    "subject": "Poplatek za odpad na příští rok",
+    "body": [
+      "Dobrý den, paní Nováková,",
+      "připomínáme, že poplatek za odpad na příští rok je 850 Kč na osobu.",
+      "Zaplatit ho můžete v hotovosti na obecním úřadě v úředních hodinách, nebo převodem na účet obce, který najdete na úřední desce a na webu obce.",
+      "S pozdravem, Obecní úřad Javorná Lhota"
+    ]
+  },
+  "threats": [],
+  "summary": "Zpráva mluví o placení, a přesto je v pořádku: nikam vás neposílá a nechce žádné údaje. Zaplatit můžete na úřadě, nebo na účet, který si sami najdete na webu obce. Kdyby vás e-mail posílal platit přes odkaz, raději zavolejte na obecní úřad.",
+  "sources": []
+}

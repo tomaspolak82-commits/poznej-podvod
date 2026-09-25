@@ -18,12 +18,15 @@ export const CLOSE_AND_CONTINUE = 'Zavřít a pokračovat';
 export const HINTS = {
   email: {
     title: 'Na co si dát pozor v e-mailu',
-    // Items 4 and 5 revised in milestone 6 (approved by Tomáš): a link alone is not a scam;
-    // an unexpected attachment is risky even from a known sender
+    // Items 3, 4 and 5 revised in milestone 6 (approved by Tomáš): a plain deadline, a link
+    // alone is not a scam; an unexpected attachment is risky even from a known sender
     items: [
       ['Adresa odesílatele.', 'Jméno odesílatele si může napsat kdokoli. Vždy si klepnutím zobrazte i adresu, která se za ním skrývá.'],
       ['Oslovení.', 'Firma, u které máte účet, vás obvykle osloví jménem. Jméno ale samo o sobě nic nezaručuje.'],
-      ['Spěch a strach.', '„Do 24 hodin“, „jinak zablokujeme účet“, „hrozí exekuce“. Tlak má zabránit tomu, abyste si věc v klidu ověřili.'],
+      [
+        'Spěch a strach.',
+        '„Do 24 hodin“, „jinak zablokujeme účet“, „hrozí exekuce“. Tlak má zabránit tomu, abyste si věc v klidu ověřili. Obyčejná lhůta sama o sobě podvod není. Zpozorněte, když se spěch pojí s výhrůžkou, platbou nebo žádostí o údaje.',
+      ],
       [
         'Odkaz nebo tlačítko k penězům, přihlášení či údajům.',
         'Odkaz sám o sobě podvod není. Zpozorněte, když vás vede k placení nebo „vyzvednutí“ peněz, k přihlášení nebo k zadání údajů. Údaje z karty, PIN, heslo ani kód z SMS nikdy nezadávejte na stránce, kam vás poslal e-mail.',

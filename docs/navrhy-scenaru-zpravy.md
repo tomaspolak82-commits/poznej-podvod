@@ -295,7 +295,7 @@ Hrozby: žádné.
 
 Shrnutí:
 ```
-Zpráva je o balíku, a přesto je v pořádku: nechce žádnou platbu ani údaje a nemá odkaz. Jen oznamuje, kdy přijede kurýr s věcí, kterou jste si objednali. Kdyby zpráva chtěla doplatit poplatek nebo kliknout na odkaz, ověřte si zásilku sami přímo u e-shopu.
+Zpráva je o balíku, a přesto je v pořádku: nechce žádnou platbu ani údaje. Jen oznamuje, kdy přijede kurýr s věcí, kterou jste si objednali. Kdyby zpráva chtěla doplatit poplatek nebo zadat údaje, ověřte si zásilku sami přímo u e-shopu.
 ```
 
 Kontrola nápovědy:
@@ -314,14 +314,14 @@ Datum: Dnes 17:20
 [bublina 0]
 Ahoj Jani, prosím tě, mohla bys mi od pátku do neděle zalévat kytky? Jedu za dcerou do Brna.
 [bublina 1]
-Klíč ti nechám ve schránce jako minule. Až se vrátím, přinesu ti buchty.
+Klíč ti přinesu ve čtvrtek večer. Až se vrátím, přinesu ti buchty.
 ```
 
 Hrozby: žádné.
 
 Shrnutí:
 ```
-I známý vás může o něco poprosit, prosba sama o sobě podvod není. Rozhoduje, o co prosí: Věra nechce peníze, kód ani kliknutí na odkaz, jen pomoc se zaléváním, a píše, jak je u ní obvyklé. Kdyby vás známý přes zprávu nečekaně žádal o peníze nebo o kód, raději mu zavolejte.
+I známý vás může o něco poprosit, prosba sama o sobě podvod není. Rozhoduje, o co prosí: Věra nechce peníze, kód ani kliknutí na odkaz, jen pomoc se zaléváním. Kdyby vás známý přes zprávu nečekaně žádal o peníze nebo o kód, raději mu zavolejte.
 ```
 
 Kontrola nápovědy:
@@ -330,7 +330,9 @@ Kontrola nápovědy:
 - bod 3: žádný spěch ani „nikomu to neříkej“,
 - body 4 až 6: nevedou.
 
-Poznámka: „jako minule“ a „přinesu ti buchty“ jsou tu záměrně. Ukazují známý, obvyklý tón (stejná myšlenka jako starší bubliny u `zpravy-04`).
+Poznámka: původní „Klíč ti nechám ve schránce jako minule“ Tomáš nahradil (25. 9. 2026). Klíč ve schránce spolu se zprávou, kdy je byt prázdný, je bezpečnostní chyba a hra ji nesmí učit (nová zásada v sekci 7 CLAUDE.md).
+
+**Schváleno 25. 9. 2026 (Tomáš) s úpravami:** shrnutí zpravy-09, bublina 1 a shrnutí zpravy-10, poslední věta shrnutí zpravy-11. Ověřeno 25. 9. 2026: „Kniha pro radost“ má v ARES 0 výsledků, `knihaproradost.cz` je v registru volná (RDAP 404). Na webu existuje podobně pojmenovaný e-shop „Knihy radosti“ (knihyradosti-eshop.cz), jméno ale není stejné.
 
 ## zpravy-11: Vnuk píše bez háčků a čárek (chat, legitimní)
 
@@ -350,7 +352,7 @@ Hrozby: žádné.
 
 Shrnutí:
 ```
-Zpráva je bez háčků a čárek, a přesto je v pořádku. Takhle na mobilu píše spousta lidí, chyby samy o sobě nic neznamenají. Rozhoduje, že Honza píše z čísla, které máte uložené, na nic nespěchá a nic nechce: žádné peníze, kód ani odkaz.
+Zpráva je bez háčků a čárek, a přesto je v pořádku. Takhle na mobilu píše spousta lidí, chyby samy o sobě nic neznamenají. Rozhoduje, že na nic nespěchá a nic nechce: žádné peníze, kód ani odkaz.
 ```
 
 Kontrola nápovědy: nápověda Zpráv o jazyku nic neříká (jen poznámka, že i zpráva v bezchybné češtině může být podvod), k chybám tedy nevede. Bod 1: uložený kontakt. Body 2 až 6 nevedou.

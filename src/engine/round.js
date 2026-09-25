@@ -3,7 +3,11 @@
 import { shuffle } from './random.js';
 
 export const ROUND_SIZE = 5;
-export const MAX_LEGIT_PER_ROUND = 2;
+// 2–3 legitimate messages per round, so every round has at least 2 scams and 2 legitimate
+// (main principle, CLAUDE.md section 7). The number varies on purpose: a fixed count would
+// let the player count down instead of judging each message.
+export const MIN_LEGIT_PER_ROUND = 2;
+export const MAX_LEGIT_PER_ROUND = 3;
 export const DECISION_POINTS = 2;
 export const CLEAN_LEGIT_MARKING_POINTS = 2;
 
@@ -14,20 +18,20 @@ function pickPreferFresh(pool, count, previousIds, random) {
   return [...fresh, ...repeated].slice(0, count);
 }
 
-// Draws a round: 5 scenarios, 1–2 of them legitimate, avoiding the previous round
+// Draws a round: 5 scenarios, 2–3 of them legitimate, avoiding the previous round
 // of the same section when the bank allows it. Order is random.
 export function drawRound(scenarios, random, previousIds = []) {
   const previous = new Set(previousIds);
   const legitPool = scenarios.filter((s) => !s.isScam);
   const scamPool = scenarios.filter((s) => s.isScam);
 
-  // 1 or 2 legitimate, limited by what the bank has
-  let legitCount = random() < 0.5 ? 1 : 2;
+  // 2 or 3 legitimate, limited by what the bank has
+  let legitCount = random() < 0.5 ? MIN_LEGIT_PER_ROUND : MAX_LEGIT_PER_ROUND;
   legitCount = Math.min(legitCount, legitPool.length);
-  // Not enough scams → use more legitimate ones, still at most 2
+  // Not enough scams → use more legitimate ones, still at most 3
   if (ROUND_SIZE - legitCount > scamPool.length) legitCount = ROUND_SIZE - scamPool.length;
 
-  if (legitCount < 1 || legitCount > MAX_LEGIT_PER_ROUND || legitCount > legitPool.length) {
+  if (legitCount < MIN_LEGIT_PER_ROUND || legitCount > MAX_LEGIT_PER_ROUND || legitCount > legitPool.length) {
     throw new Error(`Nelze vylosovat kolo: ${scamPool.length} podvodů a ${legitPool.length} legitimních zpráv.`);
   }
 

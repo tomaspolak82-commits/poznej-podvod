@@ -189,9 +189,14 @@ Odkazy, tlačítka a přílohy nikam nevedou.
 
 Platí pro všechny současné i budoucí sekce hry.
 
+Další zásady pro legitimní zprávy a všechny scénáře (Tomáš, 25. 9. 2026):
+- **Uložené číslo nebo známé jméno odesílatele nikdy není ve vysvětlení legitimní zprávy důvodem důvěry.** Číslo jde podvrhnout, účet převzít. Důvodem je vždy to, co zpráva chce.
+- **Legitimní zpráva nesmí jako důvod důvěry uvádět, že nemá odkaz nebo přílohu.**
+- **Scénáře nesmí obsahovat rady nebo chování, které jsou samy nebezpečné** (klíč ve schránce, sdělování, kdy je byt prázdný, apod.).
+
 ### Banka zpráv
 - Zásoba (cíl milníku 6, změněno 25. 9. 2026): **11 scénářů v sekci E-mail i v sekci Zprávy**, z toho **aspoň 5 legitimních** (plán: 5 podvodů, 6 legitimních). Náměty jsou v `docs/napady-scenaru.md`.
-- Kolo vybere náhodně 5 zpráv. **V každém kole je 1–2 legitimní.** Zprávy z předchozího kola stejné sekce se v dalším kole neopakují, pokud to banka dovolí. Platí i mezi návštěvami (ID posledního kola se ukládá do `localStorage`, zvlášť pro každou sekci).
+- Kolo vybere náhodně 5 zpráv. **V každém kole jsou 2–3 legitimní**, tedy vždy aspoň 2 podvody a 2 legitimní (Tomášovo rozhodnutí 25. 9. 2026, hlavní zásada výše). Počet se záměrně mění, 2 nebo 3 náhodně: hráč nesmí jít odpočítávat („už byly dva podvody, tak zbytek je v pořádku“), musí posoudit každou zprávu. Pro losování je v sekci potřeba aspoň 3 podvody a 2 legitimní (`DRAW_MINIMUM`). Zprávy z předchozího kola stejné sekce se v dalším kole neopakují, pokud to banka dovolí. Platí i mezi návštěvami (ID posledního kola se ukládá do `localStorage`, zvlášť pro každou sekci).
 - Pro testy musí jít náhodu zafixovat parametrem `?seed=123`. Parametr stojí v adrese před `#`, např. `/?seed=123#/email`.
 
 ### Soubory a číslování
@@ -250,7 +255,7 @@ Kontrola obsahu (`src/engine/validate.js`) běží při každém `npm run build`
 - `id` = název souboru bez `.json`, `section` = název složky, ID jsou jedinečná napříč sekcemi
 - podvod má 1–4 hrozby, **legitimní zpráva nemá žádnou hrozbu** (`threats: []`)
 - žádný `target` se nesmí opakovat a musí odpovídat existující části zprávy (volitelné části jako `button` jen, když ve zprávě jsou)
-- v sekci je dost zpráv na losování (aspoň 4 podvody a 1 legitimní). Cíl 11 scénářů / aspoň 5 legitimních hlídá test v `tests/unit/content.spec.js`, který je do konce milníku 6 vypnutý (`ENFORCE_CONTENT_GOALS = false`).
+- v sekci je dost zpráv na losování (aspoň 3 podvody a 2 legitimní). Cíl 11 scénářů / aspoň 5 legitimních hlídá test v `tests/unit/content.spec.js`, který je do konce milníku 6 vypnutý (`ENFORCE_CONTENT_GOALS = false`).
 
 Losování se `seed`: jedna řada náhodných čísel na jedno načtení stránky. Kolo se losuje při otevření výběru úrovně, další kolo („Hrát dalších 5“) pokračuje ve stejné řadě. Bez `?seed=` je losování náhodné.
 
@@ -407,7 +412,7 @@ Projekty (zařízení): `Pixel 7`, `iPhone 13`, `Galaxy Tab S4` (nebo `iPad (gen
 Minimální sada:
 - hlavní stránka: tlačítko Zpět na Méně Starostí, logo vedle názvu, dlaždice sekcí, neaktivní dlaždice „Připravujeme“
 - ostatní obrazovky: tlačítko Zpět na Méně Starostí v hlavičce není (ani po návratu z hlavní stránky a zpět), je tam tlačítko pro krok zpět; v patičce je odkaz „menestarosti.cz“
-- kolo vybere 5 zpráv, obsahuje 1–2 legitimní, se stejným `seed` vždy stejné pořadí
+- kolo vybere 5 zpráv, obsahuje 2–3 legitimní (a v testu losování se musí objevit obojí), se stejným `seed` vždy stejné pořadí
 - základní úroveň: správné i špatné rozhodnutí → správné body a vyhodnocení
 - pokročilá úroveň: označení všech hrozeb, přehlédnutá hrozba, zbytečné označení, legitimní zpráva bez označení i s označením, zrušení označení druhým klepnutím → body přesně podle sekce 8
 - pokročilá úroveň: špatné rozhodnutí + správně označené hrozby → body za hrozby se připíšou; víc zbytečných označení než nalezených hrozeb → body za rozhodnutí zůstanou, za označování 0
@@ -489,7 +494,8 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **Nasazeno 24. 9. 2026** (commit `1b26bd8`): e-maily 01–08, nová nápověda e-mailu, text u přílohy. Ověřeno na https: JS `text/javascript`, CSS `text/css`, `noindex` na stránce, hra se vykreslí a příloha ukáže nový text (Chromium, bez chyb na stránce).
 - **Zprávy, stav 24. 9. 2026:** schválené číslo +420 772 145 208 (`zpravy-06`), obec „Javorná Lhota“ (`zpravy-08`), 158 jako odesílatel (`zpravy-05`), bez pevných dat (`zpravy-07`, `zpravy-08`). Postavené štítky s datem před bublinou a `fromMarkable: false` (sekce 6). **25. 9. 2026 zabudované `zpravy-04` (převzatý účet Jarky) a `zpravy-05` (158)** místo testovacích zpráv, **nasazené** (commit `ce6fda8`, ověřeno na živé stránce: JS `text/javascript`, `noindex`, štítky a neklikací odesílatel u zpravy-04, bez chyb). Testovací zůstávají `zpravy-06` a `zpravy-07`.
 - **Stav k 25. 9. 2026:** Zprávy `zpravy-01` až `zpravy-08` jsou skutečné (5 podvodů, 3 legitimní), `zpravy-06` až `zpravy-08` zabudované po schválení textů (čtvrté kolo v `docs/navrhy-scenaru-zpravy.md`). Obě sekce mají po 8 scénářích, žádnou testovací zprávu. Věta o 7726 je ve `zpravy-01` a v nápovědě Zpráv nahrazená. **Pushnuto a nasazeno** (commit `1338f99`). Ověřeno na živé stránce: JS `text/javascript`, `noindex`, `zpravy-06` až `zpravy-08` se zobrazí se správným odesílatelem a štítkem, bez chyb.
-- **Další krok (nový cíl milníku 6, 25. 9. 2026):** 3 legitimní e-maily a 3 legitimní Zprávy (návrhy v `docs/navrhy-scenaru-email.md` a `docs/navrhy-scenaru-zpravy.md` čekají na Tomášovu kontrolu), pak obě sekce po 11 scénářích. Na konci zapnout `ENFORCE_CONTENT_GOALS` a vytvořit `npm run prehled`.
+- **Obsah milníku 6 hotový (25. 9. 2026):** obě sekce mají po 11 scénářích (5 podvodů, 6 legitimních). Nové legitimní `email-09` až `email-11` a `zpravy-09` až `zpravy-11`, bod 3 nápovědy e-mailu („Obyčejná lhůta sama o sobě podvod není…“), v kole 2–3 legitimní. `ENFORCE_CONTENT_GOALS = true`.
+- **Další krok:** `npm run prehled` (přehled scénářů pro Tomáše, sekce 15) a Tomášova kontrola, pak milník 7. Otevřené: starší legitimní texty proti novým zásadám sekce 7 (viz STAV PRO CHAT z 25. 9. 2026: `zpravy-03`, `email-03`, `zpravy-07`, `zpravy-08`, `email-09`).
 
 **Otevřené úkoly:**
 - ~~Před zveřejněním odkazu na hru: testovací zprávy.~~ **Hotovo 25. 9. 2026:** všechny testovací zprávy (`email-04` až `email-07`, `zpravy-04` až `zpravy-07`) nahradily skutečné scénáře, v bance žádná testovací zpráva nezůstala.

@@ -4,10 +4,11 @@
 
 import { THREAT_CATEGORIES } from './categories.js';
 
-// Minimum a section needs so a round of 5 with 1–2 legitimate messages can be drawn.
+// Minimum a section needs so a round of 5 with 2–3 legitimate messages can always be drawn
+// (3 scams + 2 legitimate; with more legitimate the round simply takes 3 of them).
 // The content goal of milestone 6 (11 scenarios, at least 5 legitimate; changed from 20 on
 // 25. 9. 2026) is checked separately, see checkSectionGoals.
-export const DRAW_MINIMUM = { scam: 4, legit: 1 };
+export const DRAW_MINIMUM = { scam: 3, legit: 2 };
 export const CONTENT_GOAL = { total: 11, legit: 5 };
 
 const isNonEmptyString = (value) => typeof value === 'string' && value.trim() !== '';

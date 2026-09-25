@@ -375,7 +375,9 @@ Cíl: 3 nové legitimní e-maily, pak 11 e-mailů (5 podvodů, 6 legitimních). 
 
 **Zpráva od banky** je odložená (Tomášovo rozhodnutí 25. 9. 2026, námět L10 v `docs/napady-scenaru.md`). Na stránkách Air Bank, Monety ani ČSOB jsem doslova nenašel, z jaké adresy banka e-maily posílá. Potřebný zdroj je stránka banky, kde doslova píše, jaké e-maily nebo SMS klientům posílá a jaké nikdy.
 
-Všechna tři shrnutí jsou obecná rada, nic netvrdí za firmu ani úřad (`sources: []`). Domény: `javornalhota.cz` je v registru `.cz` volná (RDAP 404, kontrolní `nic.cz` 200, 25. 9. 2026). Obec je smyšlená a schválená („Javorná Lhota“, zpravy-08). Adresa `marie.kopecka@seznam.cz` je smyšlená schránka na skutečné službě, stejné riziko jako u `email-08`.
+Všechna tři shrnutí jsou obecná rada, nic netvrdí za firmu ani úřad (`sources: []`). Domény: `javornalhota.cz` je v registru `.cz` volná (RDAP 404, kontrolní `nic.cz` 200, 25. 9. 2026). Obec je smyšlená a schválená („Javorná Lhota“, zpravy-08). Adresa u `email-10` je na smyšlené doméně `lhotanet.cz` (RDAP 404, 25. 9. 2026). Skutečné freemailové adresy s běžným jménem se nepoužívají, mohou někomu patřit (Tomášovo rozhodnutí).
+
+**Schváleno 25. 9. 2026 (Tomáš) s úpravami:** email-10 `body.3` („Odpověz mi prosím na tento e-mail…“), nová adresa a poslední věta shrnutí. Bod 3 nápovědy ve znění z návrhu u email-11 schválen.
 
 ## email-09: Obec připomíná poplatek za odpad (legitimní)
 
@@ -413,14 +415,14 @@ Vyvrací: „Když e-mail chce odpověď, je to podvod.“ Odpověď sama o sob�
 
 ```
 Od: Marie Kopecká
-Adresa (po „▾ zobrazit adresu“): marie.kopecka@seznam.cz
+Adresa (po „▾ zobrazit adresu“): marie.kopecka@lhotanet.cz
 Datum: včera 16:40
 Předmět: Výlet klubu na zámek
 
 [body.0] Milá Jano,
 [body.1] jak jsme se v klubu domluvily, pojedeme za dva týdny ve čtvrtek na výlet na zámek.
 [body.2] Autobus odjíždí v 8 hodin od obecního úřadu, jízdné vybírám až v autobuse.
-[body.3] Napiš mi prosím odpovědí na tento e-mail, jestli pojedeš, ať vím, kolik objednat míst.
+[body.3] Odpověz mi prosím na tento e-mail, jestli pojedeš, ať vím, kolik objednat míst.
 [body.4] Měj se hezky, Marie
 ```
 
@@ -428,7 +430,7 @@ Hrozby: žádné.
 
 Shrnutí:
 ```
-Zpráva chce jen odpověď, jestli pojedete, a to je v pořádku. Nechce peníze předem, údaje ani kliknutí na odkaz. Marie píše o tom, na čem jste se v klubu domluvily, zprávu jste tedy čekali. Kdyby se vás někdo v odpovědi ptal na údaje nebo chtěl peníze předem, raději se ho zeptejte osobně.
+Zpráva chce jen odpověď, jestli pojedete, a to je v pořádku. Nechce peníze předem, údaje ani kliknutí na odkaz. Marie píše o tom, na čem jste se v klubu domluvily, zprávu jste tedy čekali. Kdyby vás někdo e-mailem nečekaně žádal o údaje nebo o peníze předem, raději se ho zeptejte osobně.
 ```
 
 Kontrola nápovědy:

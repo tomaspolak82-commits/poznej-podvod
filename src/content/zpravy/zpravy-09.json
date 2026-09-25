@@ -1,0 +1,20 @@
+{
+  "id": "zpravy-09",
+  "section": "zpravy",
+  "title": "E-shop hlásí čas doručení kurýrem",
+  "isScam": false,
+  "message": {
+    "app": "sms",
+    "from": "Kniha pro radost",
+    "inContacts": false,
+    "date": "Dnes 9:30",
+    "messages": [
+      {
+        "text": "Kniha pro radost: Vaši objednávku č. 58213 dnes doručí kurýr mezi 13. a 15. hodinou. Zásilka je zaplacená, kurýrovi nic neplatíte."
+      }
+    ]
+  },
+  "threats": [],
+  "summary": "Zpráva je o balíku, a přesto je v pořádku: nechce žádnou platbu ani údaje. Jen oznamuje, kdy přijede kurýr s věcí, kterou jste si objednali. Kdyby zpráva chtěla doplatit poplatek nebo zadat údaje, ověřte si zásilku sami přímo u e-shopu.",
+  "sources": []
+}

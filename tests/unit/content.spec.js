@@ -8,7 +8,7 @@ import { RECIPIENT } from '../../src/texts.js';
 
 const CONTENT_DIR = path.resolve('src/content');
 // Switch on in milestone 6, when the full bank of scenarios exists (CLAUDE.md, section 7)
-const ENFORCE_CONTENT_GOALS = false;
+const ENFORCE_CONTENT_GOALS = true;
 
 const validEmail = () => ({
   id: 'email-50',

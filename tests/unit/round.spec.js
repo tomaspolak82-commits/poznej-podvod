@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { createRandom, seedFromSearch, shuffle } from '../../src/engine/random.js';
 import { drawRound, maxPointsForRound, maxPointsForScenario } from '../../src/engine/round.js';
+import { DRAW_MINIMUM } from '../../src/engine/validate.js';
 
 function bank(scams, legits) {
   return [
@@ -60,16 +61,18 @@ test.describe('drawing a round', () => {
     expect(new Set(ids(round)).size).toBe(5);
   });
 
-  test('every round has 1–2 legitimate messages (500 seeds)', () => {
+  test('every round has 2–3 legitimate messages and at least 2 scams (500 seeds)', () => {
     const counts = new Set();
-    for (let seed = 0; seed < 500; seed += 1) {
-      const legit = drawRound(bank(20, 6), createRandom(seed)).filter((s) => !s.isScam).length;
-      expect(legit).toBeGreaterThanOrEqual(1);
-      expect(legit).toBeLessThanOrEqual(2);
-      counts.add(legit);
+    for (const scenarios of [bank(20, 6), bank(5, 6)]) {
+      for (let seed = 0; seed < 500; seed += 1) {
+        const legit = drawRound(scenarios, createRandom(seed)).filter((s) => !s.isScam).length;
+        expect(legit).toBeGreaterThanOrEqual(2);
+        expect(legit).toBeLessThanOrEqual(3);
+        counts.add(legit);
+      }
     }
-    // Both 1 and 2 actually occur
-    expect([...counts].sort()).toEqual([1, 2]);
+    // The number varies on purpose, so the player cannot count down: both 2 and 3 occur
+    expect([...counts].sort()).toEqual([2, 3]);
   });
 
   test('same seed always gives the same messages in the same order', () => {
@@ -87,7 +90,7 @@ test.describe('drawing a round', () => {
   });
 
   test('small bank: repeats only as many as necessary', () => {
-    // 5 scams + 2 legit (milestone 3 test content): the next round must reuse some messages
+    // 5 scams + 2 legit: the next round must reuse some messages
     const scenarios = bank(5, 2);
     const previous = ['s1', 's2', 's3', 's4', 'l1'];
     const round = drawRound(scenarios, createRandom(3), previous);
@@ -95,19 +98,28 @@ test.describe('drawing a round', () => {
     expect(ids(round)).toContain('l2');
   });
 
-  test('bank with only 1 legitimate message → every round has exactly 1', () => {
+  test('bank with only 2 legitimate messages → every round has exactly 2', () => {
     for (let seed = 0; seed < 50; seed += 1) {
-      expect(drawRound(bank(6, 1), createRandom(seed)).filter((s) => !s.isScam)).toHaveLength(1);
+      expect(drawRound(bank(6, 2), createRandom(seed)).filter((s) => !s.isScam)).toHaveLength(2);
     }
   });
 
-  test('bank with only 3 scams → 2 legitimate fill the round', () => {
-    expect(drawRound(bank(3, 4), createRandom(1)).filter((s) => !s.isScam)).toHaveLength(2);
+  test('bank with only 2 scams → 3 legitimate fill the round', () => {
+    for (let seed = 0; seed < 50; seed += 1) {
+      expect(drawRound(bank(2, 4), createRandom(seed)).filter((s) => !s.isScam)).toHaveLength(3);
+    }
+  });
+
+  test('a bank with exactly the draw minimum of the content check can always be drawn', () => {
+    for (let seed = 0; seed < 500; seed += 1) {
+      expect(() => drawRound(bank(DRAW_MINIMUM.scam, DRAW_MINIMUM.legit), createRandom(seed))).not.toThrow();
+    }
   });
 
   test('too small bank throws a clear error', () => {
     expect(() => drawRound(bank(2, 2), createRandom(1))).toThrow(/Nelze vylosovat kolo/);
-    expect(() => drawRound(bank(6, 0), createRandom(1))).toThrow(/Nelze vylosovat kolo/);
+    expect(() => drawRound(bank(6, 1), createRandom(1))).toThrow(/Nelze vylosovat kolo/);
+    expect(() => drawRound(bank(1, 6), createRandom(1))).toThrow(/Nelze vylosovat kolo/);
   });
 });
 

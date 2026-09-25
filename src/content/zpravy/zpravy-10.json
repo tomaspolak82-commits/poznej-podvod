@@ -1,0 +1,19 @@
+{
+  "id": "zpravy-10",
+  "section": "zpravy",
+  "title": "Kamarádka prosí o zalití kytek",
+  "isScam": false,
+  "message": {
+    "app": "chat",
+    "from": "Věra",
+    "inContacts": true,
+    "date": "Dnes 17:20",
+    "messages": [
+      { "text": "Ahoj Jani, prosím tě, mohla bys mi od pátku do neděle zalévat kytky? Jedu za dcerou do Brna." },
+      { "text": "Klíč ti přinesu ve čtvrtek večer. Až se vrátím, přinesu ti buchty." }
+    ]
+  },
+  "threats": [],
+  "summary": "I známý vás může o něco poprosit, prosba sama o sobě podvod není. Rozhoduje, o co prosí: Věra nechce peníze, kód ani kliknutí na odkaz, jen pomoc se zaléváním. Kdyby vás známý přes zprávu nečekaně žádal o peníze nebo o kód, raději mu zavolejte.",
+  "sources": []
+}

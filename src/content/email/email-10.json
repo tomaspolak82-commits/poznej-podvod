@@ -1,0 +1,22 @@
+{
+  "id": "email-10",
+  "section": "email",
+  "title": "Pozvánka na výlet klubu seniorů",
+  "isScam": false,
+  "message": {
+    "fromName": "Marie Kopecká",
+    "fromAddress": "marie.kopecka@lhotanet.cz",
+    "date": "včera 16:40",
+    "subject": "Výlet klubu na zámek",
+    "body": [
+      "Milá Jano,",
+      "jak jsme se v klubu domluvily, pojedeme za dva týdny ve čtvrtek na výlet na zámek.",
+      "Autobus odjíždí v 8 hodin od obecního úřadu, jízdné vybírám až v autobuse.",
+      "Odpověz mi prosím na tento e-mail, jestli pojedeš, ať vím, kolik objednat míst.",
+      "Měj se hezky, Marie"
+    ]
+  },
+  "threats": [],
+  "summary": "Zpráva chce jen odpověď, jestli pojedete, a to je v pořádku. Nechce peníze předem, údaje ani kliknutí na odkaz. Marie píše o tom, na čem jste se v klubu domluvily, zprávu jste tedy čekali. Kdyby vás někdo e-mailem nečekaně žádal o údaje nebo o peníze předem, raději se ho zeptejte osobně.",
+  "sources": []
+}

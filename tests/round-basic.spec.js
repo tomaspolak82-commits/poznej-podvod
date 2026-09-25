@@ -26,14 +26,14 @@ test.describe('level select with a drawn round', () => {
 });
 
 test.describe('basic level: round', () => {
-  test('same seed gives the same messages in the same order, with 1–2 legitimate', async ({ page }) => {
+  test('same seed gives the same messages in the same order, with 2–3 legitimate', async ({ page }) => {
     const [round] = expectedRounds('email', 123);
     await startRound(page);
     const played = await playRound(page, correctly);
     expect(played).toEqual(ids(round));
     const legit = played.filter((id) => !scenarioById(id).isScam).length;
-    expect(legit).toBeGreaterThanOrEqual(1);
-    expect(legit).toBeLessThanOrEqual(2);
+    expect(legit).toBeGreaterThanOrEqual(2);
+    expect(legit).toBeLessThanOrEqual(3);
   });
 
   test('the messages section works the same way', async ({ page }) => {

@@ -1,0 +1,21 @@
+{
+  "id": "email-11",
+  "section": "email",
+  "title": "Knihovna připomíná konec výpůjčky",
+  "isScam": false,
+  "message": {
+    "fromName": "Obecní knihovna Javorná Lhota",
+    "fromAddress": "knihovna@javornalhota.cz",
+    "date": "dnes 8:05",
+    "subject": "Zítra končí výpůjční lhůta",
+    "body": [
+      "Dobrý den, paní Nováková,",
+      "zítra Vám končí výpůjční lhůta u knihy Babiččiny recepty na každý den.",
+      "Knihu můžete vrátit v knihovně, nebo si výpůjčku prodloužit u nás na pultu či telefonicky v otevíracích hodinách.",
+      "Hezký den přeje Vaše knihovna"
+    ]
+  },
+  "threats": [],
+  "summary": "Zpráva připomíná lhůtu, a přesto je v pořádku. Lhůta sama o sobě podvod není: knihovna jen připomíná, kdy knihu vrátit, nic nechce a nabízí obvyklé cesty, jak knihu vrátit nebo výpůjčku prodloužit. Kdyby vás zpráva kvůli lhůtě tlačila k platbě přes odkaz nebo ke sdělení údajů, raději zavolejte do knihovny.",
+  "sources": []
+}
