@@ -357,3 +357,122 @@ Změna z „může v počítači spustit“ na „může obsahovat“ výsledek 
    [attachment] vylet_hrad.jpg
    ```
    Lekce (slíbená, čekaná příloha) zůstává stejná. `body.2` se mění, protože Honza už je na fotce.
+
+---
+
+# Legitimní e-maily pro nový cíl milníku 6 (návrh 25. 9. 2026, k Tomášově kontrole)
+
+Cíl: 3 nové legitimní e-maily, pak 11 e-mailů (5 podvodů, 6 legitimních). Každý vyvrací jedno falešné pravidlo, které si hráč může odnést z podvodů. Pravidla, která už vyvracejí dnešní legitimní e-maily, se neopakují:
+- `email-03` (ČEZ): zpráva o penězích od známé firmy, která nic nechce,
+- `email-07` (Zásilkovna): odkaz sám o sobě,
+- `email-08` (vnučka): příloha sama o sobě.
+
+| Návrh | Falešné pravidlo, které vyvrací | Námět |
+|---|---|---|
+| email-09 | „Když úřad píše o placení, je to podvod.“ | nový (obec), navazuje na zpravy-08 |
+| email-10 | „Když e-mail chce odpověď, je to podvod.“ | nový (klub seniorů) |
+| email-11 | „Když zpráva připomíná lhůtu, je to podvod.“ | nový (knihovna), **potřebuje úpravu bodu 3 nápovědy** |
+
+**Zpráva od banky** (Tomášův příklad) zatím chybí záměrně. Námět L6 („přihlaste se sami v aplikaci“) by potřeboval skutečnou adresu banky. Na stránkách Air Bank, Monety ani ČSOB jsem doslova nenašel, z jaké adresy banka e-maily posílá (25. 9. 2026). Bez toho by scénář tvrdil za banku něco, co nemám ověřené. Varianta se smyšlenou bankou je otázka pro Tomáše.
+
+Všechna tři shrnutí jsou obecná rada, nic netvrdí za firmu ani úřad (`sources: []`). Domény: `javornalhota.cz` je v registru `.cz` volná (RDAP 404, kontrolní `nic.cz` 200, 25. 9. 2026). Obec je smyšlená a schválená („Javorná Lhota“, zpravy-08). Adresa `marie.kopecka@seznam.cz` je smyšlená schránka na skutečné službě, stejné riziko jako u `email-08`.
+
+## email-09: Obec připomíná poplatek za odpad (legitimní)
+
+Vyvrací: „Když úřad píše o placení, je to podvod.“ Rozhoduje, že zpráva nikam neposílá a nechce údaje, zaplatit jde obvyklou cestou.
+
+```
+Od: Obec Javorná Lhota
+Adresa (po „▾ zobrazit adresu“): podatelna@javornalhota.cz
+Datum: dnes 9:12
+Předmět: Poplatek za odpad na příští rok
+
+[body.0] Dobrý den, paní Nováková,
+[body.1] připomínáme, že poplatek za odpad na příští rok je 850 Kč na osobu.
+[body.2] Zaplatit ho můžete v hotovosti na obecním úřadě v úředních hodinách, nebo převodem na účet obce, který najdete na úřední desce a na webu obce.
+[body.3] S pozdravem, Obecní úřad Javorná Lhota
+```
+
+Hrozby: žádné.
+
+Shrnutí:
+```
+Zpráva mluví o placení, a přesto je v pořádku: nikam vás neposílá a nechce žádné údaje. Zaplatit můžete na úřadě, nebo na účet, který si sami najdete na webu obce. Kdyby vás e-mail posílal platit přes odkaz, raději zavolejte na obecní úřad.
+```
+
+Kontrola nápovědy:
+- bod 1: adresa odpovídá jménu obce, nevede,
+- bod 2: oslovení jménem, nevede,
+- bod 3: žádná lhůta ani výhrůžka,
+- bod 4: žádný odkaz ani tlačítko,
+- body 5 a 6: nevedou.
+
+## email-10: Pozvánka na výlet klubu seniorů, odpovězte (legitimní)
+
+Vyvrací: „Když e-mail chce odpověď, je to podvod.“ Odpověď sama o sobě nic neprozradí, rozhoduje, na co se ptá.
+
+```
+Od: Marie Kopecká
+Adresa (po „▾ zobrazit adresu“): marie.kopecka@seznam.cz
+Datum: včera 16:40
+Předmět: Výlet klubu na zámek
+
+[body.0] Milá Jano,
+[body.1] jak jsme se v klubu domluvily, pojedeme za dva týdny ve čtvrtek na výlet na zámek.
+[body.2] Autobus odjíždí v 8 hodin od obecního úřadu, jízdné vybírám až v autobuse.
+[body.3] Napiš mi prosím odpovědí na tento e-mail, jestli pojedeš, ať vím, kolik objednat míst.
+[body.4] Měj se hezky, Marie
+```
+
+Hrozby: žádné.
+
+Shrnutí:
+```
+Zpráva chce jen odpověď, jestli pojedete, a to je v pořádku. Nechce peníze předem, údaje ani kliknutí na odkaz. Marie píše o tom, na čem jste se v klubu domluvily, zprávu jste tedy čekali. Kdyby se vás někdo v odpovědi ptal na údaje nebo chtěl peníze předem, raději se ho zeptejte osobně.
+```
+
+Kontrola nápovědy:
+- bod 1: adresa odpovídá jménu, nevede,
+- bod 2: oslovení jménem, nevede,
+- bod 3: žádný spěch,
+- bod 4: žádný odkaz,
+- bod 6: nic výhodného.
+
+Jízdné „až v autobuse“ je záměr: peníze se zmíní, ale platí se osobně, ne předem přes zprávu.
+
+Poznámka: ozdobná starší zpráva ve schránce „Spolek zahrádkářů: Zápis ze schůze“ je jiná věc. Nekryje se.
+
+## email-11: Knihovna připomíná konec výpůjčky (legitimní)
+
+Vyvrací: „Když zpráva připomíná lhůtu, je to podvod.“ Lhůta sama o sobě podvod není, podezřelá je, když ji doprovází výhrůžka, platba nebo žádost o údaje.
+
+```
+Od: Obecní knihovna Javorná Lhota
+Adresa (po „▾ zobrazit adresu“): knihovna@javornalhota.cz
+Datum: dnes 8:05
+Předmět: Zítra končí výpůjční lhůta
+
+[body.0] Dobrý den, paní Nováková,
+[body.1] zítra Vám končí výpůjční lhůta u knihy Babiččiny recepty na každý den.
+[body.2] Knihu můžete vrátit v knihovně, nebo si výpůjčku prodloužit u nás na pultu či telefonicky v otevíracích hodinách.
+[body.3] Hezký den přeje Vaše knihovna
+```
+
+Hrozby: žádné.
+
+Shrnutí:
+```
+Zpráva připomíná lhůtu, a přesto je v pořádku. Lhůta sama o sobě podvod není: knihovna jen připomíná, kdy knihu vrátit, nic nechce a nabízí obvyklé cesty, jak knihu vrátit nebo výpůjčku prodloužit. Kdyby vás zpráva kvůli lhůtě tlačila k platbě přes odkaz nebo ke sdělení údajů, raději zavolejte do knihovny.
+```
+
+**Rozpor s nápovědou, potřebuje rozhodnutí:** bod 3 nápovědy e-mailu („Spěch a strach.“) dnes vede k označení `body.1` („zítra končí lhůta“). U legitimní zprávy by za to hráč přišel o 2 body (sekce 7). Návrh nového textu bodu 3, nadpis zůstává:
+
+```
+„Do 24 hodin“, „jinak zablokujeme účet“, „hrozí exekuce“. Tlak má zabránit tomu, abyste si věc v klidu ověřili. Obyčejná lhůta sama o sobě podvod není. Zpozorněte, když se spěch pojí s výhrůžkou, platbou nebo žádostí o údaje.
+```
+
+Kontrola podvodů s novým zněním: spěch v `email-02` (`body.2`, lhůta a propadnutí peněz), `email-04` (`body.3`, vymáhání), `email-05` (`body.3`, zánik nároku) a `email-06` (`body.3`, výhrůžka) se pojí s výhrůžkou nebo penězi. Nápověda k nim dál vede a všechny leží na hrozbách.
+
+Poznámky:
+- Věta o poplatku za pozdní vrácení je záměrně vynechaná: spěch s platbou by k označení vedl i podle nového znění.
+- Název knihy „Babiččiny recepty na každý den“ je smyšlený. Nebyla ověřená, jestli taková kniha existuje. Kdyby ano, nevadí to, kniha se jen zmiňuje.

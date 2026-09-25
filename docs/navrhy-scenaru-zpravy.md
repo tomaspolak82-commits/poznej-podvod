@@ -257,3 +257,106 @@ Třetí kolo (25. 9. 2026): texty zpravy-04 a zpravy-05 schválené s úpravami,
 Žádné.
 
 Vyřešeno 24. 9. 2026: štítky ve Zprávách začínají velkým písmenem („Dnes“, „Včera“, „Út“), i ve `zpravy-01` až `zpravy-03`. E-mail zůstává s malým písmenem.
+
+---
+
+# Legitimní Zprávy pro nový cíl milníku 6 (návrh 25. 9. 2026, k Tomášově kontrole)
+
+Cíl: 3 nové legitimní Zprávy, pak 11 Zpráv (5 podvodů, 6 legitimních). Každá vyvrací jedno falešné pravidlo. Pravidla, která už vyvracejí dnešní legitimní Zprávy, se neopakují:
+- `zpravy-03` (syn Petr): odkaz v SMS,
+- `zpravy-07` (zubařka): uložené číslo samo nestačí, rozhoduje, co zpráva chce,
+- `zpravy-08` (obec): odesílatel, který není v kontaktech.
+
+| Návrh | Falešné pravidlo, které vyvrací | Námět |
+|---|---|---|
+| zpravy-09 | „Když SMS píše o balíku, je to podvod.“ | L3 (kurýr oznamuje čas doručení, bez platby) |
+| zpravy-10 | „Když mě známý přes zprávu o něco prosí, je to podvod.“ | nový, protiváha k `zpravy-02` a `zpravy-04` |
+| zpravy-11 | „Když zpráva nemá háčky a čárky nebo má chyby, je to podvod.“ | nový, navazuje na `email-08` (Honza) |
+
+**Proč ne L1 (SMS kód od banky):** Peníze.cz a Měšec.cz v titulcích článků (25. 9. 2026) píšou, že banky s potvrzovacími SMS končí a přecházejí na aplikace. Scénář by brzy nebyl věrohodný. Obsah článků jsem doslova neověřoval, tahle poznámka je jen důvod, proč námět nepoužít. „Zpráva od banky“ zatím chybí i v e-mailu, viz `docs/navrhy-scenaru-email.md`.
+
+Všechna tři shrnutí jsou obecná rada, nic netvrdí za firmu ani úřad (`sources: []`). E-shop „Kniha pro radost“ je smyšlený a už ve hře (`email-07`, ARES 0 výsledků, doména volná, ověřeno 24. 9. 2026). Věra a Honza jsou smyšlená jména. Honza je vnuk z `email-08`.
+
+## zpravy-09: E-shop hlásí čas doručení kurýrem (SMS, legitimní)
+
+Vyvrací: „Když SMS píše o balíku, je to podvod.“ Rozhoduje, že zpráva nechce platbu, údaje ani kliknutí.
+
+```
+Odesílatel: Kniha pro radost (není v kontaktech, textové jméno odesílatele)
+Datum: Dnes 9:30
+
+[bublina 0]
+Kniha pro radost: Vaši objednávku č. 58213 dnes doručí kurýr mezi 13. a 15. hodinou. Zásilka je zaplacená, kurýrovi nic neplatíte.
+```
+
+Hrozby: žádné.
+
+Shrnutí:
+```
+Zpráva je o balíku, a přesto je v pořádku: nechce žádnou platbu ani údaje a nemá odkaz. Jen oznamuje, kdy přijede kurýr s věcí, kterou jste si objednali. Kdyby zpráva chtěla doplatit poplatek nebo kliknout na odkaz, ověřte si zásilku sami přímo u e-shopu.
+```
+
+Kontrola nápovědy:
+- bod 1: textové jméno, ne číslo, které se vydává za blízkého, nevede,
+- bod 2: „nic neplatíte“ není žádost o peníze,
+- body 3 až 6: nevedou (žádný spěch, odkaz, kód ani aplikace).
+
+## zpravy-10: Kamarádka prosí o zalití kytek (chat, legitimní)
+
+Vyvrací: „Když mě známý přes zprávu o něco prosí, je to podvod.“ Prosba sama o sobě podvod není, rozhoduje, o co prosí. Protiváha k `zpravy-02` („Ahoj mami“, peníze) a `zpravy-04` (Jarka, kód).
+
+```
+Odesílatel: Věra (uložený kontakt)
+Datum: Dnes 17:20
+
+[bublina 0]
+Ahoj Jani, prosím tě, mohla bys mi od pátku do neděle zalévat kytky? Jedu za dcerou do Brna.
+[bublina 1]
+Klíč ti nechám ve schránce jako minule. Až se vrátím, přinesu ti buchty.
+```
+
+Hrozby: žádné.
+
+Shrnutí:
+```
+I známý vás může o něco poprosit, prosba sama o sobě podvod není. Rozhoduje, o co prosí: Věra nechce peníze, kód ani kliknutí na odkaz, jen pomoc se zaléváním, a píše, jak je u ní obvyklé. Kdyby vás známý přes zprávu nečekaně žádal o peníze nebo o kód, raději mu zavolejte.
+```
+
+Kontrola nápovědy:
+- bod 1: uložený kontakt, nevede,
+- bod 2: žádost o peníze tu není,
+- bod 3: žádný spěch ani „nikomu to neříkej“,
+- body 4 až 6: nevedou.
+
+Poznámka: „jako minule“ a „přinesu ti buchty“ jsou tu záměrně. Ukazují známý, obvyklý tón (stejná myšlenka jako starší bubliny u `zpravy-04`).
+
+## zpravy-11: Vnuk píše bez háčků a čárek (chat, legitimní)
+
+Vyvrací: „Když zpráva nemá háčky a čárky nebo má chyby, je to podvod.“ Chyby v jazyce samy o sobě nic neznamenají (v sekci 7 nejsou u podvodů nikdy jedinou stopou).
+
+```
+Odesílatel: Honza (uložený kontakt)
+Datum: Dnes 18:45
+
+[bublina 0]
+ahoj babi, diky moc za ten darek k narozkam, uz jsem ho vyzkousel a je super
+[bublina 1]
+v nedeli prijedem s mamkou, udelas ty tvoje livance? :)
+```
+
+Hrozby: žádné.
+
+Shrnutí:
+```
+Zpráva je bez háčků a čárek, a přesto je v pořádku. Takhle na mobilu píše spousta lidí, chyby samy o sobě nic neznamenají. Rozhoduje, že Honza píše z čísla, které máte uložené, na nic nespěchá a nic nechce: žádné peníze, kód ani odkaz.
+```
+
+Kontrola nápovědy: nápověda Zpráv o jazyku nic neříká (jen poznámka, že i zpráva v bezchybné češtině může být podvod), k chybám tedy nevede. Bod 1: uložený kontakt. Body 2 až 6 nevedou.
+
+Poznámky:
+- Text bublin je záměrně bez diakritiky a hovorový. Kontrola textů v `src/engine/validate.js` pravopis nehlídá, nic se nerozbije.
+- Emotikon „:)“ je obyčejný text, žádný obrázek.
+
+## Otevřené otázky k legitimním Zprávám
+
+Žádné vlastní. Společné otázky (banka, bod 3 nápovědy, počet legitimních zpráv v kole) jsou ve STAV PRO CHAT.
