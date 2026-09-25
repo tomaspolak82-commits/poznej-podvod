@@ -20,7 +20,7 @@
     }
   },
   "threats": [],
-  "summary": "Zpráva přišla z adresy noreply@zasilkovna.cz. Zásilkovna na svém webu uvádí, že upozornění na zásilky posílá právě z ní. Zpráva po vás nic nechce: žádnou platbu, žádné údaje. Odkaz sám o sobě podvod není. Jistější je ale otevřít si aplikaci nebo stránky Zásilkovny sami, ne přes odkaz ve zprávě.",
+  "summary": "Zpráva po vás nic nechce: žádnou platbu ani údaje, jen oznamuje, kde zásilka čeká. Odkaz sám o sobě podvod není. Jistější je ale otevřít si aplikaci nebo stránky Zásilkovny sami, ne přes odkaz ve zprávě.",
   "sources": [
     "zasilkovna.cz/blog/upozornujeme-na-novy-podvodny-e-mail (25. 6. 2024)",
     "zasilkovna.cz/bezpecnost-ochrana-dat/emaily"
