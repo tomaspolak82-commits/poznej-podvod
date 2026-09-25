@@ -59,8 +59,8 @@ test.describe('content: real scenario files', () => {
     expect(scenario.message.fromName).toBe(RECIPIENT);
   });
 
-  test('content goal: at least 20 scenarios and 5 legitimate per section (milestone 6)', () => {
-    test.skip(!ENFORCE_CONTENT_GOALS, 'Zapne se v milníku 6, teď jsou jen testovací zprávy.');
+  test('content goal: at least 11 scenarios and 5 legitimate per section (milestone 6)', () => {
+    test.skip(!ENFORCE_CONTENT_GOALS, 'Zapne se na konci milníku 6, až bude v každé sekci 11 scénářů.');
     for (const section of CONTENT_SECTIONS) {
       const scenarios = readSection(CONTENT_DIR, section).map((f) => f.data);
       expect(checkSectionGoals(scenarios, section)).toEqual([]);

@@ -181,8 +181,16 @@ Odkazy, tlačítka a přílohy nikam nevedou.
 
 ## 7. Obsah scénářů
 
+**Hlavní zásada hry:** hra nemá seniory vystrašit, ale naučit rozhodovat podle kontextu. Hráč se u každé zprávy ptá, co zpráva chce a jestli ji čekal, ne jestli „vypadá podezřele“. Proto:
+- banka každé sekce má přibližně polovinu legitimních zpráv,
+- každé kolo obsahuje aspoň jeden podvod a aspoň jednu legitimní zprávu,
+- legitimní zprávy vyvracejí konkrétní falešná pravidla (odkaz, příloha, neznámé číslo, spěch nebo banka samy o sobě podvod nejsou),
+- vysvětlení a shrnutí mají klidný tón, bez strašení.
+
+Platí pro všechny současné i budoucí sekce hry.
+
 ### Banka zpráv
-- Zásoba: **aspoň 20 scénářů v sekci E-mail i v sekci Zprávy**, z toho **aspoň 5 legitimních**. Náměty jsou v `docs/napady-scenaru.md`.
+- Zásoba (cíl milníku 6, změněno 25. 9. 2026): **11 scénářů v sekci E-mail i v sekci Zprávy**, z toho **aspoň 5 legitimních** (plán: 5 podvodů, 6 legitimních). Náměty jsou v `docs/napady-scenaru.md`.
 - Kolo vybere náhodně 5 zpráv. **V každém kole je 1–2 legitimní.** Zprávy z předchozího kola stejné sekce se v dalším kole neopakují, pokud to banka dovolí. Platí i mezi návštěvami (ID posledního kola se ukládá do `localStorage`, zvlášť pro každou sekci).
 - Pro testy musí jít náhodu zafixovat parametrem `?seed=123`. Parametr stojí v adrese před `#`, např. `/?seed=123#/email`.
 
@@ -242,7 +250,7 @@ Kontrola obsahu (`src/engine/validate.js`) běží při každém `npm run build`
 - `id` = název souboru bez `.json`, `section` = název složky, ID jsou jedinečná napříč sekcemi
 - podvod má 1–4 hrozby, **legitimní zpráva nemá žádnou hrozbu** (`threats: []`)
 - žádný `target` se nesmí opakovat a musí odpovídat existující části zprávy (volitelné části jako `button` jen, když ve zprávě jsou)
-- v sekci je dost zpráv na losování (aspoň 4 podvody a 1 legitimní). Cíl 20 scénářů / 5 legitimních hlídá test v `tests/unit/content.spec.js`, který je do milníku 6 vypnutý (`ENFORCE_CONTENT_GOALS = false`).
+- v sekci je dost zpráv na losování (aspoň 4 podvody a 1 legitimní). Cíl 11 scénářů / aspoň 5 legitimních hlídá test v `tests/unit/content.spec.js`, který je do konce milníku 6 vypnutý (`ENFORCE_CONTENT_GOALS = false`).
 
 Losování se `seed`: jedna řada náhodných čísel na jedno načtení stránky. Kolo se losuje při otevření výběru úrovně, další kolo („Hrát dalších 5“) pokračuje ve stejné řadě. Bez `?seed=` je losování náhodné.
 
@@ -415,7 +423,7 @@ Minimální sada:
 - stránka obsahuje `noindex` (do milníku 8), po milníku 8 už ne
 - štítek TRÉNINK je viditelný na všech obrazovkách simulace
 - 200% zvětšení textu: žádné vodorovné posouvání na 360 px
-- validace obsahu: každý JSON má povinná pole, každý `target` odpovídá existující části zprávy, každá `category` je z povoleného seznamu, v každé sekci je aspoň 20 scénářů a z nich aspoň 5 legitimních (v milníku 3 s testovacími zprávami se kontroluje jen minimum pro losování), žádný scénář nemá pole `relatedArticle`
+- validace obsahu: každý JSON má povinná pole, každý `target` odpovídá existující části zprávy, každá `category` je z povoleného seznamu, v každé sekci je aspoň 11 scénářů a z nich aspoň 5 legitimních (v milníku 3 s testovacími zprávami se kontroluje jen minimum pro losování), žádný scénář nemá pole `relatedArticle`
 - pojistky deploye (sekce 14): cesty s `..` nebo mimo povolené hodnoty skončí chybou; cílová složka s WordPressem (`wp-config.php`, `wp-admin`, `wp-content`, `wp-includes`) skončí chybou
 
 Po testech Tomáš projde aplikaci ručně na svém telefonu s velkým systémovým písmem.
@@ -434,7 +442,7 @@ Jak jsou testy postavené:
 
 Hotové milníky 1–5 jsou v docs/historie.md.
 
-6. **Doplnění obsahu** na aspoň 20 scénářů v každé sekci (z toho aspoň 5 legitimních, pravidla pestrosti a obtížnosti v sekci 7) + `npm run prehled` → Tomáš ověří texty. Zapnout kontrolu cíle: `ENFORCE_CONTENT_GOALS = true` v `tests/unit/content.spec.js`.
+6. **Doplnění obsahu** (cíl změněný 25. 9. 2026): 3 nové legitimní e-maily a 3 nové legitimní Zprávy, pak obě sekce po 11 scénářích (5 podvodů, 6 legitimních, pravidla v sekci 7) + `npm run prehled` → Tomáš ověří texty. Zapnout kontrolu cíle: `ENFORCE_CONTENT_GOALS = true` v `tests/unit/content.spec.js`.
 7. **Testy a kontrola** podle sekce 12, oprava nalezených chyb. Tomáš projde aplikaci ručně na telefonu s velkým systémovým písmem.
 8. **Vydání:** **odstraň `noindex`** z `index.html` (a uprav test), nasazení, ruční kontrola na telefonu (s velkým systémovým písmem) a tabletu.
 
@@ -481,7 +489,7 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **Nasazeno 24. 9. 2026** (commit `1b26bd8`): e-maily 01–08, nová nápověda e-mailu, text u přílohy. Ověřeno na https: JS `text/javascript`, CSS `text/css`, `noindex` na stránce, hra se vykreslí a příloha ukáže nový text (Chromium, bez chyb na stránce).
 - **Zprávy, stav 24. 9. 2026:** schválené číslo +420 772 145 208 (`zpravy-06`), obec „Javorná Lhota“ (`zpravy-08`), 158 jako odesílatel (`zpravy-05`), bez pevných dat (`zpravy-07`, `zpravy-08`). Postavené štítky s datem před bublinou a `fromMarkable: false` (sekce 6). **25. 9. 2026 zabudované `zpravy-04` (převzatý účet Jarky) a `zpravy-05` (158)** místo testovacích zpráv, **nasazené** (commit `ce6fda8`, ověřeno na živé stránce: JS `text/javascript`, `noindex`, štítky a neklikací odesílatel u zpravy-04, bez chyb). Testovací zůstávají `zpravy-06` a `zpravy-07`.
 - **Stav k 25. 9. 2026:** Zprávy `zpravy-01` až `zpravy-08` jsou skutečné (5 podvodů, 3 legitimní), `zpravy-06` až `zpravy-08` zabudované po schválení textů (čtvrté kolo v `docs/navrhy-scenaru-zpravy.md`). Obě sekce mají po 8 scénářích, žádnou testovací zprávu. Věta o 7726 je ve `zpravy-01` a v nápovědě Zpráv nahrazená. **Pushnuto a nasazeno** (commit `1338f99`). Ověřeno na živé stránce: JS `text/javascript`, `noindex`, `zpravy-06` až `zpravy-08` se zobrazí se správným odesílatelem a štítkem, bez chyb.
-- **Další krok:** doplňování obou sekcí na 20 scénářů (aspoň 5 legitimních), náměty v `docs/napady-scenaru.md`. Na konci zapnout `ENFORCE_CONTENT_GOALS` a vytvořit `npm run prehled`.
+- **Další krok (nový cíl milníku 6, 25. 9. 2026):** 3 legitimní e-maily a 3 legitimní Zprávy (návrhy v `docs/navrhy-scenaru-email.md` a `docs/navrhy-scenaru-zpravy.md` čekají na Tomášovu kontrolu), pak obě sekce po 11 scénářích. Na konci zapnout `ENFORCE_CONTENT_GOALS` a vytvořit `npm run prehled`.
 
 **Otevřené úkoly:**
 - ~~Před zveřejněním odkazu na hru: testovací zprávy.~~ **Hotovo 25. 9. 2026:** všechny testovací zprávy (`email-04` až `email-07`, `zpravy-04` až `zpravy-07`) nahradily skutečné scénáře, v bance žádná testovací zpráva nezůstala.
