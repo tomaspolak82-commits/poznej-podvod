@@ -3,6 +3,7 @@
   "section": "zpravy",
   "title": "Vnuk píše bez háčků a čárek",
   "isScam": false,
+  "refutes": "Když zpráva nemá háčky a čárky nebo má chyby, je to podvod.",
   "message": {
     "app": "chat",
     "from": "Honza",

@@ -3,6 +3,7 @@
   "section": "zpravy",
   "title": "Fotky od syna",
   "isScam": false,
+  "refutes": "Když je v SMS odkaz, je to podvod.",
   "message": {
     "app": "sms",
     "from": "Petr",

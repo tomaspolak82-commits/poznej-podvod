@@ -3,6 +3,7 @@
   "section": "email",
   "title": "Knihovna připomíná konec výpůjčky",
   "isScam": false,
+  "refutes": "Když zpráva připomíná lhůtu, je to podvod.",
   "message": {
     "fromName": "Obecní knihovna Javorná Lhota",
     "fromAddress": "knihovna@javornalhota.cz",

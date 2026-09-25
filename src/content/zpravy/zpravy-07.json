@@ -3,6 +3,7 @@
   "section": "zpravy",
   "title": "Připomínka termínu u zubařky",
   "isScam": false,
+  "refutes": "Když zpráva přijde z uloženého čísla, je pravá.",
   "message": {
     "app": "sms",
     "from": "Zubařka Veselá",

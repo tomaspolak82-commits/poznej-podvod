@@ -3,6 +3,7 @@
   "section": "email",
   "title": "Pozvánka na výlet klubu seniorů",
   "isScam": false,
+  "refutes": "Když e-mail chce odpověď, je to podvod.",
   "message": {
     "fromName": "Marie Kopecká",
     "fromAddress": "marie.kopecka@lhotanet.cz",

@@ -3,6 +3,7 @@
   "section": "email",
   "title": "ČEZ: vyúčtování elektřiny s přeplatkem",
   "isScam": false,
+  "refutes": "Když e-mail od firmy píše o penězích, je to podvod.",
   "message": {
     "fromName": "ČEZ Prodej",
     "fromAddress": "vyuctovani@cez.cz",

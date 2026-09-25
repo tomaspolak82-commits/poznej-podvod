@@ -3,6 +3,7 @@
   "section": "zpravy",
   "title": "Obec hlásí odstávku vody",
   "isScam": false,
+  "refutes": "Když odesílatel není v kontaktech, je to podvod.",
   "message": {
     "app": "sms",
     "from": "Obec Javorná Lhota",

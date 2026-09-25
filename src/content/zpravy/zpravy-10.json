@@ -3,6 +3,7 @@
   "section": "zpravy",
   "title": "Kamarádka prosí o zalití kytek",
   "isScam": false,
+  "refutes": "Když mě známý přes zprávu o něco prosí, je to podvod.",
   "message": {
     "app": "chat",
     "from": "Věra",

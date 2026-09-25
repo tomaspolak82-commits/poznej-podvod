@@ -3,6 +3,7 @@
   "section": "zpravy",
   "title": "E-shop hlásí čas doručení kurýrem",
   "isScam": false,
+  "refutes": "Když SMS píše o balíku, je to podvod.",
   "message": {
     "app": "sms",
     "from": "Kniha pro radost",

@@ -112,6 +112,15 @@ test.describe('content: validation rules', () => {
       /1 až 4 hrozby/,
     ],
     ['legitimate message with a threat', (s) => (s.isScam = false), /nesmí mít hrozby/],
+    [
+      'legitimate message without refutes',
+      (s) => {
+        s.isScam = false;
+        s.threats = [];
+      },
+      /musí mít refutes/,
+    ],
+    ['scam with refutes', (s) => (s.refutes = 'Když…, je to podvod.'), /podvod nesmí mít refutes/],
     ['same target twice', (s) => s.threats.push({ ...s.threats[0] }), /dvakrát/],
     ['empty body', (s) => (s.message.body = []), /body/],
     ['missing sender address', (s) => delete s.message.fromAddress, /fromAddress/],
@@ -128,6 +137,14 @@ test.describe('content: validation rules', () => {
       /"subject" je ve hrozbách dvakrát/,
     ],
   ];
+
+  test('e-mail: legitimate message with refutes and no threats is valid', () => {
+    const scenario = validEmail();
+    scenario.isScam = false;
+    scenario.threats = [];
+    scenario.refutes = 'Když je v e-mailu tlačítko, je to podvod.';
+    expect(validateScenario(scenario, { fileId: 'email-50', section: 'email' })).toEqual([]);
+  });
 
   test('e-mail: one threat on two parts (alsoTargets) is valid', () => {
     const scenario = validEmail();

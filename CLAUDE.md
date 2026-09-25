@@ -292,7 +292,8 @@ Pole `relatedArticle` ani jiné odkazy na články menestarosti.cz scénáře ne
 - **Legitimní zprávy nesmí učit falešná pravidla** jako „každý odkaz = podvod“ nebo „bez oslovení jménem = vždy podvod“. Vyhodnocení legitimní zprávy vysvětlí, podle čeho se pozná, že je pravá, a že jeden znak sám o sobě nestačí.
 - **Texty pro seniory bez odborných slov** (ne „phishing“, „doména“, „malware“, „DMARC“; místo toho „adresa za zavináčem“, „škodlivý program“).
 - Tón vysvětlení: vykání, krátké věty, klidně, „soused u plotu“. Bez strašení, bez vykřičníků a bez frází revoluční, unikátní, komplexní, neváhejte, v dnešní uspěchané době, řešení na míru.
-- `npm run prehled` vygeneruje `docs/prehled-scenaru.md`, čitelný přehled všech scénářů (text zprávy, hrozby, vysvětlení) pro Tomášovu kontrolu.
+- `npm run prehled` vygeneruje `docs/prehled-scenaru.md`, čitelný přehled všech scénářů (text zprávy, hrozby, vysvětlení) pro Tomášovu kontrolu. Generuje se jen ze souborů v `src/content/` (`scripts/prehled.mjs`), ručně se neupravuje. Po každé změně scénáře ho vygeneruj znovu.
+- **Legitimní zpráva má pole `refutes`**: falešné pravidlo, které vyvrací, ve tvaru „Když …, je to podvod.“ (bez uvozovek). Ve hře se nezobrazuje, jen v přehledu. Kontrola obsahu ho u legitimních zpráv vyžaduje a u podvodů zakazuje.
 
 ## 8. Body a historie hráče
 
@@ -482,7 +483,7 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - `npm run build`: sestavení do `dist/`
 - `npm run preview`: náhled sestavené verze
 - `npm test`: Playwright testy
-- `npm run prehled`: přehled scénářů do `docs/prehled-scenaru.md` (zatím neexistuje, vznikne v milníku 6)
+- `npm run prehled`: přehled scénářů do `docs/prehled-scenaru.md` (od milníku 6)
 - `npm run deploy` / `npm run deploy -- --dry-run` / `npm run deploy -- --check`: nasazení / zkouška bez připojení / kontrola serveru bez změn
 - `npx playwright test --project=unit`: jen rychlé testy logiky bez prohlížeče
 
@@ -496,7 +497,7 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **Zprávy, stav 24. 9. 2026:** schválené číslo +420 772 145 208 (`zpravy-06`), obec „Javorná Lhota“ (`zpravy-08`), 158 jako odesílatel (`zpravy-05`), bez pevných dat (`zpravy-07`, `zpravy-08`). Postavené štítky s datem před bublinou a `fromMarkable: false` (sekce 6). **25. 9. 2026 zabudované `zpravy-04` (převzatý účet Jarky) a `zpravy-05` (158)** místo testovacích zpráv, **nasazené** (commit `ce6fda8`, ověřeno na živé stránce: JS `text/javascript`, `noindex`, štítky a neklikací odesílatel u zpravy-04, bez chyb). Testovací zůstávají `zpravy-06` a `zpravy-07`.
 - **Stav k 25. 9. 2026:** Zprávy `zpravy-01` až `zpravy-08` jsou skutečné (5 podvodů, 3 legitimní), `zpravy-06` až `zpravy-08` zabudované po schválení textů (čtvrté kolo v `docs/navrhy-scenaru-zpravy.md`). Obě sekce mají po 8 scénářích, žádnou testovací zprávu. Věta o 7726 je ve `zpravy-01` a v nápovědě Zpráv nahrazená. **Pushnuto a nasazeno** (commit `1338f99`). Ověřeno na živé stránce: JS `text/javascript`, `noindex`, `zpravy-06` až `zpravy-08` se zobrazí se správným odesílatelem a štítkem, bez chyb.
 - **Obsah milníku 6 hotový (25. 9. 2026):** obě sekce mají po 11 scénářích (5 podvodů, 6 legitimních). Nové legitimní `email-09` až `email-11` a `zpravy-09` až `zpravy-11`, bod 3 nápovědy e-mailu („Obyčejná lhůta sama o sobě podvod není…“), v kole 2–3 legitimní. `ENFORCE_CONTENT_GOALS = true`. **Pushnuto a nasazeno** (commit `5ca0a0e`), ověřeno na živé stránce (JS `text/javascript`, 12 kol bez chyb, rozložení 2 : 3 legitimních na 1000 seedech 504 : 496).
-- **Další krok:** `npm run prehled` (přehled scénářů pro Tomáše, sekce 15) a Tomášova kontrola, pak milník 7. Shrnutí starších legitimních zpráv (`email-03`, `email-07`, `email-09`, `zpravy-03`, `zpravy-07`, `zpravy-08`) jsou upravená podle nových zásad sekce 7, pushnutá a nasazená (commit `618edca`, ověřeno na živé stránce: `noindex`, nová znění v JS, kolo se vykreslí bez chyb).
+- **Další krok:** Tomášova kontrola `docs/prehled-scenaru.md` (vytvořený 25. 9. 2026, `npm run prehled`) a rozhodnutí o nálezech z kontroly proti sekci 7, pak milník 7. Shrnutí starších legitimních zpráv (`email-03`, `email-07`, `email-09`, `zpravy-03`, `zpravy-07`, `zpravy-08`) jsou upravená podle nových zásad sekce 7, pushnutá a nasazená (commit `618edca`, ověřeno na živé stránce: `noindex`, nová znění v JS, kolo se vykreslí bez chyb).
 
 **Otevřené úkoly:**
 - ~~Před zveřejněním odkazu na hru: testovací zprávy.~~ **Hotovo 25. 9. 2026:** všechny testovací zprávy (`email-04` až `email-07`, `zpravy-04` až `zpravy-07`) nahradily skutečné scénáře, v bance žádná testovací zpráva nezůstala.

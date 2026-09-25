@@ -107,6 +107,12 @@ export function validateScenario(scenario, { fileId, section } = {}) {
   if (!isNonEmptyString(scenario.title)) errors.push('title chybí');
   if (typeof scenario.isScam !== 'boolean') errors.push('isScam musí být true nebo false');
   if (!isNonEmptyString(scenario.summary)) errors.push('summary chybí');
+  // refutes: the false rule a legitimate message disproves (main principle, CLAUDE.md section 7).
+  // Internal, shown only in docs/prehled-scenaru.md, not in the game.
+  if (scenario.isScam === false && !isNonEmptyString(scenario.refutes)) {
+    errors.push('legitimní zpráva musí mít refutes (falešné pravidlo, které vyvrací)');
+  }
+  if (scenario.isScam === true && scenario.refutes !== undefined) errors.push('podvod nesmí mít refutes');
   if (!Array.isArray(scenario.sources)) errors.push('sources musí být pole (může být prázdné)');
   if (containsKey(scenario, 'relatedArticle')) errors.push('pole relatedArticle je zakázané');
 

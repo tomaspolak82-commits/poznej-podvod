@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "playwright test",
-    "deploy": "node scripts/deploy.mjs"
+    "deploy": "node scripts/deploy.mjs",
+    "prehled": "node scripts/prehled.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

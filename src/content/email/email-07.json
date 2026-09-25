@@ -3,6 +3,7 @@
   "section": "email",
   "title": "Zásilkovna: zásilka je připravená k vyzvednutí",
   "isScam": false,
+  "refutes": "Když je v e-mailu odkaz, je to podvod.",
   "message": {
     "fromName": "Zásilkovna",
     "fromAddress": "noreply@zasilkovna.cz",

@@ -3,6 +3,7 @@
   "section": "email",
   "title": "Vnučka posílá fotku z výletu",
   "isScam": false,
+  "refutes": "Když je v e-mailu příloha, je to podvod.",
   "message": {
     "fromName": "Anička",
     "fromAddress": "anicka.novakova@seznam.cz",
