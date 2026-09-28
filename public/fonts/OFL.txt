@@ -2,7 +2,7 @@ Fonts in this folder:
 
 Montserrat (montserrat-700.woff2, montserrat-800.woff2: static Bold and ExtraBold from
 https://github.com/JulietaUla/Montserrat, fonts/webfonts; the original licence file of the
-project is OFL-Montserrat.txt; older variable files montserrat-var-*.woff2)
+project is OFL-Montserrat.txt)
 Copyright 2024 The Montserrat.Git Project Authors (https://github.com/JulietaUla/Montserrat.git)
 
 Lato 2.015, LatoLatin web version from https://www.latofonts.com/ (lato-*.woff2)
