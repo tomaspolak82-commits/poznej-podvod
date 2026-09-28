@@ -1,0 +1,53 @@
+{
+  "id": "email-12",
+  "section": "email",
+  "title": "Falešná ČSSZ, doplatek důchodu a chyby v češtině",
+  "isScam": true,
+  "message": {
+    "fromName": "Česká správa sociálního zabezpečení",
+    "fromAddress": "klientske.centrum@doplatky-cssz.cz",
+    "date": "dnes 9:47",
+    "subject": "Doplatek důchodu – ověření údajů",
+    "body": [
+      "Dobrý den, paní Nováková,",
+      "při kontrole vašeho starobní důchod bylo zjištěno, že vám náleží doplatek ve výši 3 842 Kč za uplynulé období. Doplatek bude vyplacen po ověření vašich udaju.",
+      "Pro vyplacení prosím odpovězte na tento e-mail a uvedte své rodné číslo, číslo bankovního účtu a telefon, na kterém vás zastihne naš pracovník.",
+      "Pokud údaje nezašlete do 3 pracovních dnů, nárok na doplatek zaniká.",
+      "S pozdravem, Klientské centrum ČSSZ"
+    ]
+  },
+  "threats": [
+    {
+      "target": "body.2",
+      "alsoTargets": ["subject"],
+      "category": "zadost-o-udaje",
+      "title": "Rodné číslo a účet e-mailem",
+      "explanation": "Zpráva chce, abyste rodné číslo, číslo účtu a telefon poslali odpovědí na e-mail. Klientské centrum ČSSZ upozorňuje, že citlivé údaje e-mailem nikdy nežádá. Po takovém e-mailu může zavolat falešný úředník."
+    },
+    {
+      "target": "body.1",
+      "category": "jazyk-chyby",
+      "title": "Chyby v češtině",
+      "explanation": "Ve zprávě jsou chyby: „vašeho starobní důchod“, „udaju“. Od úřadu nebo banky čekáte pečlivou, spisovnou češtinu, proto jsou tu chyby jedna ze stop. Ve zprávě od známého chyby nic neznamenají, každý píše jinak. Pozor ale: bezchybný text nezaručuje, že je zpráva pravá."
+    },
+    {
+      "target": "fromAddress",
+      "alsoTargets": ["fromName", "body.4"],
+      "category": "odesilatel",
+      "title": "Adresa odesílatele",
+      "explanation": "Jméno odesílatele si může napsat kdokoli. Adresa za ním končí na doplatky-cssz.cz. Zkratka úřadu v adrese nic nezaručuje, takovou adresu si může založit kdokoli."
+    },
+    {
+      "target": "body.3",
+      "category": "casovy-tlak",
+      "title": "Spěch",
+      "explanation": "Krátká lhůta a hrozba, že o peníze přijdete, mají zabránit tomu, abyste si to v klidu ověřili."
+    }
+  ],
+  "summary": "Zpráva chce, abyste e-mailem poslali rodné číslo, číslo účtu a telefon. Klientské centrum ČSSZ upozorňuje, že citlivé údaje e-mailem nikdy nežádá. Chyby v češtině byly jen jedna ze stop, i bezchybně napsaná zpráva může být podvod. Když si nejste jistí, zavolejte na číslo ČSSZ z jejích oficiálních stránek. Kdyby vám po takovém e-mailu volal „úředník“, zavěste.",
+  "sources": [
+    "cssz.gov.cz/web/cz/-/cssz-varuje-pred-dalsimi-podvodnymi-e-maily (27. 5. 2026)",
+    "cssz.gov.cz/web/cz/-/upozorneni-na-podvodne-e-maily-a-telefonaty-vydavajici-se-za-cssz (3. 9. 2026)",
+    "nukib.gov.cz/cs/infoservis/doporuceni/1494-phishing-stale-aktualni-hrozba/ (12. 1. 2015)"
+  ]
+}

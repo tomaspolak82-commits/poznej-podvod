@@ -257,8 +257,7 @@ Kontrola obsahu (`src/engine/validate.js`) běží při každém `npm run build`
 - `id` = název souboru bez `.json`, `section` = název složky, ID jsou jedinečná napříč sekcemi
 - podvod má 1–4 hrozby, **legitimní zpráva nemá žádnou hrozbu** (`threats: []`)
 - žádný `target` se nesmí opakovat a musí odpovídat existující části zprávy (volitelné části jako `button` jen, když ve zprávě jsou)
-- v sekci je dost zpráv na losování (aspoň 3 podvody a 2 legitimní). Cíl zásoby pro každou sekci (`CONTENT_GOAL` v `src/engine/validate.js`) hlídá test v `tests/unit/content.spec.js`. Kontrola cíle u e-mailu je vypnutá, dokud není `email-12` zabudovaný (`EMAIL_12_BUILT = false`).
-
+- v sekci je dost zpráv na losování (aspoň 3 podvody a 2 legitimní). Cíl zásoby pro každou sekci (`CONTENT_GOAL` v `src/engine/validate.js`) hlídá test v `tests/unit/content.spec.js`.
 Losování se `seed`: jedna řada náhodných čísel na jedno načtení stránky. Kolo se losuje při otevření výběru úrovně, další kolo („Hrát dalších 5“) pokračuje ve stejné řadě. Bez `?seed=` je losování náhodné.
 
 Kategorie hrozeb (pro statistiku nejčastějších chyb):
@@ -500,9 +499,10 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **Obsah milníku 6 hotový (25. 9. 2026):** obě sekce mají po 11 scénářích (5 podvodů, 6 legitimních). Nové legitimní `email-09` až `email-11` a `zpravy-09` až `zpravy-11`, bod 3 nápovědy e-mailu („Obyčejná lhůta sama o sobě podvod není…“), v kole 2–3 legitimní. `ENFORCE_CONTENT_GOALS = true`. **Pushnuto a nasazeno** (commit `5ca0a0e`), ověřeno na živé stránce (JS `text/javascript`, 12 kol bez chyb, rozložení 2 : 3 legitimních na 1000 seedech 504 : 496).
 - **Další krok:** milník 7 (testy a kontrola, Tomáš projde hru na telefonu s velkým systémovým písmem). Nálezy z kontroly přehledu proti sekci 7 jsou vyřešené a nasazené (commit `33bd09c`, ověřeno na živé stránce). `docs/prehled-scenaru.md` odpovídá obsahu. Shrnutí starších legitimních zpráv (`email-03`, `email-07`, `email-09`, `zpravy-03`, `zpravy-07`, `zpravy-08`) jsou upravená podle nových zásad sekce 7, pushnutá a nasazená (commit `618edca`, ověřeno na živé stránce: `noindex`, nová znění v JS, kolo se vykreslí bez chyb).
 
-- **28. 9. 2026:** návrh `email-12` (falešná ČSSZ, doplatek důchodu, chyby v češtině, 4 hrozby) je v `docs/navrhy-scenaru-email.md` a čeká na Tomášovo schválení. Nic se nestavělo. Cíl E-mailu je 12 scénářů (6 podvodů, 6 legitimních); test cíle u e-mailu se zapne `EMAIL_12_BUILT = true` po zabudování. Zásada o gramatických chybách je v sekci 7.
+- **28. 9. 2026:** `email-12` (falešná ČSSZ, doplatek důchodu, chyby v češtině, 4 hrozby) je schválený a zabudovaný. E-mail má 12 scénářů (6 podvodů, 6 legitimních), Zprávy 11. `EMAIL_12_BUILT = true`. Zásada o gramatických chybách je v sekci 7. Záznam zdrojů a rozhodnutí je v `docs/navrhy-scenaru-email.md`.
 
 **Otevřené úkoly:**
+- **Přilepená lišta kola při velkém písmu (nález 28. 9. 2026):** v testu s 200% písmem na 360 × 740 px zabírá lišta 472 px z 740, protože zvětšené písmo v testu podmínku `min-height: 40em` nevypne. Zpráva ve schránce pak může být středem pod lištou (test `200 % text at 360 px` proto klepe na její spodní část). Na skutečném telefonu s velkým systémovým písmem ověřit v milníku 7, jestli se lišta odlepí. Když ne, je to k rozhodnutí (Tomáš).
 - ~~Před zveřejněním odkazu na hru: testovací zprávy.~~ **Hotovo 25. 9. 2026:** všechny testovací zprávy (`email-04` až `email-07`, `zpravy-04` až `zpravy-07`) nahradily skutečné scénáře, v bance žádná testovací zpráva nezůstala.
 - **Před zveřejněním odkazu na hru: číslo kupujícího v `zpravy-06`.** Znovu ověřit v otevřených datech ČTÚ „Přidělená čísla a kódy“ (https://data.ctu.gov.cz/dataset/pridelena-cisla-kody), že blok 772 100 000 až 772 199 999 (číslo +420 772 145 208) nemá držitele. Ověřeno 24. 9. 2026, ČTÚ ale může blok kdykoli přidělit.
 - **Před zveřejněním odkazu na hru: zdroje Finanční správy.** Tomáš si sám přečte oba zdroje ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.

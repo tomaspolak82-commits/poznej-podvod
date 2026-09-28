@@ -560,3 +560,11 @@ Poznámky:
 - Skutečný podvod z 3. 9. 2026 měl dokument v příloze a pak telefonát. Přílohu jsem vynechal kvůli pestrosti (příloha je už v `email-04`), žádost o údaje odpovědí je v e-mailu nová.
 - Částka 3 842 Kč je smyšlená, žádné telefonní číslo ve zprávě není.
 - „Paní Nováková“ je pevná postava hry (`RECIPIENT`). Adresa ČSSZ ani její linka ve hře nejsou.
+
+## Rozhodnutí z 28. 9. 2026 (Tomáš)
+
+- email-12 schválený s úpravami a **zabudovaný** (`src/content/email/email-12.json`). Platné znění je tam, tabulka a shrnutí výše jsou původní návrh.
+- Vysvětlení u `body.2` a shrnutí: „Klientské centrum ČSSZ upozorňuje…“ místo „Česká správa sociálního zabezpečení upozorňuje…“. Zdroj doslova mluví o Klientském centru ČSSZ, ne o celé ČSSZ.
+- Vysvětlení u `fromAddress`: „Jméno odesílatele si může napsat kdokoli. Adresa za ním končí na doplatky-cssz.cz. Zkratka úřadu v adrese nic nezaručuje, takovou adresu si může založit kdokoli.“
+- Chyby v textu schválené. Nápověda e-mailu beze změny.
+- Doména `doplatky-cssz.cz`: stačí ověření v registru, v `nic.cz` a v DNS.

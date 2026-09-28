@@ -6,7 +6,7 @@ Vygenerováno příkazem `npm run prehled` ze souborů v `src/content/`. Neuprav
 
 | Sekce | Scénářů | Podvodů | Legitimních |
 |---|---|---|---|
-| E-mail | 11 | 5 | 6 |
+| E-mail | 12 | 6 | 6 |
 | Zprávy | 11 | 5 | 6 |
 
 **Falešná pravidla, která legitimní zprávy vyvracejí:**
@@ -356,6 +356,42 @@ Vygenerováno příkazem `npm run prehled` ze souborů v `src/content/`. Neuprav
 **Shrnutí:** Zpráva připomíná lhůtu, a přesto je v pořádku. Lhůta sama o sobě podvod není: knihovna jen připomíná, kdy knihu vrátit, nic nechce a nabízí obvyklé cesty, jak knihu vrátit nebo výpůjčku prodloužit. Kdyby vás zpráva kvůli lhůtě tlačila k platbě přes odkaz nebo ke sdělení údajů, raději zavolejte do knihovny.
 
 **Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
+
+---
+
+### email-12: Falešná ČSSZ, doplatek důchodu a chyby v češtině
+
+- **Sekce:** E-mail
+- **Druh:** podvod
+- **Odesílatel:** Česká správa sociálního zabezpečení <klientske.centrum@doplatky-cssz.cz>
+
+**Zpráva po částech:**
+
+1. **Jméno odesílatele** `fromName`: Česká správa sociálního zabezpečení
+   - součást hrozby „Adresa odesílatele“ (hlavní část `fromAddress`)
+2. **Adresa odesílatele** `fromAddress`: klientske.centrum@doplatky-cssz.cz
+   - **Hrozba** · `odesilatel` (adresa nebo jméno odesílatele) · „Adresa odesílatele“: Jméno odesílatele si může napsat kdokoli. Adresa za ním končí na doplatky-cssz.cz. Zkratka úřadu v adrese nic nezaručuje, takovou adresu si může založit kdokoli. Platí i pro: `fromName`, `body.4`.
+- _Datum: dnes 9:47_
+3. **Předmět** `subject`: Doplatek důchodu – ověření údajů
+   - součást hrozby „Rodné číslo a účet e-mailem“ (hlavní část `body.2`)
+4. **Odstavec 1** `body.0`: Dobrý den, paní Nováková,
+   - nevinná část
+5. **Odstavec 2** `body.1`: při kontrole vašeho starobní důchod bylo zjištěno, že vám náleží doplatek ve výši 3 842 Kč za uplynulé období. Doplatek bude vyplacen po ověření vašich udaju.
+   - **Hrozba** · `jazyk-chyby` (chyby v češtině) · „Chyby v češtině“: Ve zprávě jsou chyby: „vašeho starobní důchod“, „udaju“. Od úřadu nebo banky čekáte pečlivou, spisovnou češtinu, proto jsou tu chyby jedna ze stop. Ve zprávě od známého chyby nic neznamenají, každý píše jinak. Pozor ale: bezchybný text nezaručuje, že je zpráva pravá.
+6. **Odstavec 3** `body.2`: Pro vyplacení prosím odpovězte na tento e-mail a uvedte své rodné číslo, číslo bankovního účtu a telefon, na kterém vás zastihne naš pracovník.
+   - **Hrozba** · `zadost-o-udaje` (žádost o údaje nebo kódy) · „Rodné číslo a účet e-mailem“: Zpráva chce, abyste rodné číslo, číslo účtu a telefon poslali odpovědí na e-mail. Klientské centrum ČSSZ upozorňuje, že citlivé údaje e-mailem nikdy nežádá. Po takovém e-mailu může zavolat falešný úředník. Platí i pro: `subject`.
+7. **Odstavec 4** `body.3`: Pokud údaje nezašlete do 3 pracovních dnů, nárok na doplatek zaniká.
+   - **Hrozba** · `casovy-tlak` (spěch ve zprávě) · „Spěch“: Krátká lhůta a hrozba, že o peníze přijdete, mají zabránit tomu, abyste si to v klidu ověřili.
+8. **Odstavec 5** `body.4`: S pozdravem, Klientské centrum ČSSZ
+   - součást hrozby „Adresa odesílatele“ (hlavní část `fromAddress`)
+
+**Shrnutí:** Zpráva chce, abyste e-mailem poslali rodné číslo, číslo účtu a telefon. Klientské centrum ČSSZ upozorňuje, že citlivé údaje e-mailem nikdy nežádá. Chyby v češtině byly jen jedna ze stop, i bezchybně napsaná zpráva může být podvod. Když si nejste jistí, zavolejte na číslo ČSSZ z jejích oficiálních stránek. Kdyby vám po takovém e-mailu volal „úředník“, zavěste.
+
+**Zdroje:**
+
+- [cssz.gov.cz/web/cz/-/cssz-varuje-pred-dalsimi-podvodnymi-e-maily](https://cssz.gov.cz/web/cz/-/cssz-varuje-pred-dalsimi-podvodnymi-e-maily) (27. 5. 2026)
+- [cssz.gov.cz/web/cz/-/upozorneni-na-podvodne-e-maily-a-telefonaty-vydavajici-se-za-cssz](https://cssz.gov.cz/web/cz/-/upozorneni-na-podvodne-e-maily-a-telefonaty-vydavajici-se-za-cssz) (3. 9. 2026)
+- [nukib.gov.cz/cs/infoservis/doporuceni/1494-phishing-stale-aktualni-hrozba/](https://nukib.gov.cz/cs/infoservis/doporuceni/1494-phishing-stale-aktualni-hrozba/) (12. 1. 2015)
 
 ## Zprávy
 

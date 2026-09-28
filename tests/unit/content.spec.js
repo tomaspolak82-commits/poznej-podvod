@@ -10,7 +10,7 @@ const CONTENT_DIR = path.resolve('src/content');
 // Switch on in milestone 6, when the full bank of scenarios exists (CLAUDE.md, section 7)
 const ENFORCE_CONTENT_GOALS = true;
 // Switch on when email-12 is in src/content/email (the e-mail goal is 12 scenarios from 28. 9. 2026)
-const EMAIL_12_BUILT = false;
+const EMAIL_12_BUILT = true;
 
 const validEmail = () => ({
   id: 'email-50',

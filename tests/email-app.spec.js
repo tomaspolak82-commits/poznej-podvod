@@ -227,7 +227,14 @@ test.describe('round bar and layout on a phone', () => {
     await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
     await page.getByRole('button', { name: 'Složky' }).click();
     expect(await noScroll()).toBe(true);
-    await openCurrentMessage(page);
+    // The injected 200 % font does not switch off the sticky round bar (the media query uses the
+    // browser default font size). The bar then covers about 470 of 740 px and a tall message item
+    // can have its middle under it, so tap the visible lower part of the item, as a player would
+    const task = page.locator('[data-mail="open"]');
+    await task.evaluate((el) => el.scrollIntoView({ block: 'end' }));
+    const { height } = await task.boundingBox();
+    await task.click({ position: { x: 24, y: height - 24 } });
+    await page.locator('article[data-scenario-id]').waitFor();
     await showAddress(page);
     expect(await noScroll()).toBe(true);
   });
