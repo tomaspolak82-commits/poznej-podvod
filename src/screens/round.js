@@ -187,7 +187,8 @@ async function confirmDecision(decision, markCount) {
         : null;
   if (!check) return true;
   const choice = await openDialog({
-    title: TRAINING_LABEL,
+    // The mismatch itself is the title (TRÉNINK is always visible in the bar above)
+    title: check.title,
     body: `<p>${check.text}</p>`,
     describeBody: true,
     actions: [

@@ -5,18 +5,23 @@ import { currentScenarioId, scenarioById, startRound } from './helpers/game.js';
 // Advanced level: a decision that does not match the marks is confirmed in a window
 // (Tomáš, 28. 9. 2026). Scoring does not change; the basic level has no window.
 
-const SCAM_TEXT =
-  'Zprávu hodnotíte jako podvod, ale nemáte označené žádné podezřelé místo. Chcete ještě označit, co vám přišlo podezřelé?';
-const OK_TEXT = 'Máte označená podezřelá místa, ale zprávu hodnotíte jako v pořádku. Je to tak?';
+const SCAM_TITLE = 'Nemáte označené žádné podezřelé místo';
+const SCAM_TEXT = 'Zprávu ale hodnotíte jako podvod. Chcete ještě označit, co vám přišlo podezřelé?';
+const OK_TITLE = 'Máte označená podezřelá místa';
+const OK_TEXT = 'Zprávu ale hodnotíte jako v pořádku. Je to tak?';
 
 const click = (page, name) => page.getByRole('button', { name, exact: true }).click();
 const dialog = (page) => page.getByRole('dialog');
 const evaluation = (page) => page.getByTestId('evaluation');
 
-async function expectAccessibleWindow(page, text, back, confirm) {
+async function expectAccessibleWindow(page, title, text, back, confirm) {
   await expect(dialog(page)).toBeVisible();
-  // The screen reader gets the text as the description of the window
+  // The screen reader announces the mismatch as the name of the window and the text as its description;
+  // TRÉNINK is not repeated in the window (it stays in the bar above)
+  await expect(dialog(page)).toHaveAccessibleName(title);
+  await expect(dialog(page).getByRole('heading')).toHaveText(title);
   await expect(dialog(page)).toHaveAccessibleDescription(text);
+  await expect(dialog(page)).not.toContainText('TRÉNINK');
   // Focus on the first button, the safe way back to the message
   const buttons = dialog(page).getByRole('button');
   await expect(buttons).toHaveText([back, confirm]);
@@ -33,7 +38,7 @@ test.describe('advanced level: "scam" with nothing marked', () => {
   });
 
   test('the window asks, is accessible and has the safe choice first', async ({ page }) => {
-    await expectAccessibleWindow(page, SCAM_TEXT, 'Označit místa', 'Ano, je to podvod');
+    await expectAccessibleWindow(page, SCAM_TITLE, SCAM_TEXT, 'Označit místa', 'Ano, je to podvod');
   });
 
   test('"Označit místa" returns to the message; after marking the decision goes through', async ({ page }) => {
@@ -72,7 +77,7 @@ test.describe('advanced level: "ok" with a part marked', () => {
   });
 
   test('the window asks, is accessible and has the safe choice first', async ({ page }) => {
-    await expectAccessibleWindow(page, OK_TEXT, 'Zpět ke zprávě', 'Ano, je v pořádku');
+    await expectAccessibleWindow(page, OK_TITLE, OK_TEXT, 'Zpět ke zprávě', 'Ano, je v pořádku');
   });
 
   test('"Zpět ke zprávě" returns to the message with the mark kept', async ({ page }) => {

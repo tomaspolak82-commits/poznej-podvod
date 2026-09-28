@@ -184,12 +184,14 @@ export const DELETE_HISTORY = {
 // Shown only then; scoring does not change.
 export const DECISION_CHECK = {
   scamWithoutMarks: {
-    text: 'Zprávu hodnotíte jako podvod, ale nemáte označené žádné podezřelé místo. Chcete ještě označit, co vám přišlo podezřelé?',
+    title: 'Nemáte označené žádné podezřelé místo',
+    text: 'Zprávu ale hodnotíte jako podvod. Chcete ještě označit, co vám přišlo podezřelé?',
     back: 'Označit místa',
     confirm: 'Ano, je to podvod',
   },
   okWithMarks: {
-    text: 'Máte označená podezřelá místa, ale zprávu hodnotíte jako v pořádku. Je to tak?',
+    title: 'Máte označená podezřelá místa',
+    text: 'Zprávu ale hodnotíte jako v pořádku. Je to tak?',
     back: 'Zpět ke zprávě',
     confirm: 'Ano, je v pořádku',
   },
