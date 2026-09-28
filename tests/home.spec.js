@@ -52,6 +52,19 @@ test.describe('home page', () => {
     expect(title.y).toBeLessThan(logo.y + logo.height);
   });
 
+  // During a round the header is compact (no subtitle); the logo must stay next to the title
+  // on every device, the desktop included (bug fixed on 28. 9. 2026)
+  test('in a round the logo still sits next to the title', async ({ page }) => {
+    await page.goto('/?seed=123#/email');
+    await page.getByRole('button', { name: /Začít: základní/ }).click();
+    await expect(page.getByTestId('training-label')).toBeVisible();
+    const logo = await page.getByRole('img', { name: 'Méně Starostí' }).boundingBox();
+    const title = await page.getByText('Poznej podvod', { exact: true }).boundingBox();
+    expect(logo.x + logo.width).toBeLessThanOrEqual(title.x);
+    expect(logo.y).toBeLessThan(title.y + title.height);
+    expect(title.y).toBeLessThan(logo.y + logo.height);
+  });
+
   test('footer has main site, Facebook and privacy policy links', async ({ page }) => {
     await expect(page.getByRole('contentinfo').getByRole('link', { name: 'menestarosti.cz' })).toHaveAttribute(
       'href',

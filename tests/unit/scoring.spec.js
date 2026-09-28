@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { maxPointsForScenario } from '../../src/engine/round.js';
 import { scoreMessage } from '../../src/engine/scoring.js';
 import { listTargets } from '../../src/engine/validate.js';
-import { scenarioById } from '../helpers/game.js';
+import { scenarioById, scenarios } from '../helpers/game.js';
 
 // Scam with 3 threats (like the example in CLAUDE.md, section 7)
 const scam = {
@@ -162,6 +162,34 @@ test.describe('scoring: one threat on two parts (alsoTargets, CLAUDE.md section 
   });
 });
 
+// "Označeno zbytečně" must never appear on a part listed in alsoTargets (CLAUDE.md, section 7):
+// checked on every real scenario, for each such part alone, with its main target, and with
+// every part of every threat marked at once; with a correct and a wrong decision.
+test.describe('scoring: real scenarios, a part in alsoTargets is never "unnecessary"', () => {
+  const real = [...scenarios('email'), ...scenarios('zpravy')].filter((s) => s.threats.some((t) => t.alsoTargets));
+
+  test('the bank has scenarios with alsoTargets to check', () => {
+    expect(real.length).toBeGreaterThan(0);
+  });
+
+  for (const scenario of real) {
+    test(`${scenario.id}: every alsoTargets part counts as a hit`, () => {
+      const allThreatParts = scenario.threats.flatMap((t) => [t.target, ...(t.alsoTargets ?? [])]);
+      for (const threat of scenario.threats.filter((t) => t.alsoTargets)) {
+        for (const part of threat.alsoTargets) {
+          for (const decision of ['scam', 'ok']) {
+            for (const marks of [[part], [threat.target, part], allThreatParts]) {
+              const result = scoreMessage(scenario, 'pokrocila', decision, marks);
+              expect(result.extra, `${part} marked with ${marks.join(', ')}`).toEqual([]);
+              expect(result.found).toContain(threat);
+            }
+          }
+        }
+      }
+    });
+  }
+});
+
 // A player who follows the hint must not lose a point (CLAUDE.md, section 7): every part
 // the hint leads to lies on a threat. Checked on the real scenario files (milestone 5).
 test.describe('scoring: real scenarios, parts the hint leads to are hits', () => {
@@ -218,6 +246,7 @@ test.describe('scoring: marking everything does not pay off (real scenarios)', (
     ['email-04', ['fromName', 'fromAddress', 'body.4', 'body.5']],
     ['email-05', ['body.0']],
     ['email-06', ['body.1']],
+    ['email-12', ['body.0']],
     ['zpravy-02', ['messages.1']],
     // Older bubbles of the usual conversation; the sender cannot be marked (fromMarkable: false)
     ['zpravy-04', ['messages.0', 'messages.1']],

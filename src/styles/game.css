@@ -19,6 +19,13 @@
   font-size: 1.25rem;
 }
 
+/* Without the subtitle the title alone is narrower than the 12rem basis of the text, so on a
+   wide screen (brand sized to its content) the title wrapped under the logo. Here the text is
+   as wide as the title: it moves under the logo only when it really does not fit (huge text). */
+.is-in-round .site-header__text {
+  flex-basis: auto;
+}
+
 .is-in-round .site-main {
   padding-block-start: var(--space-2);
 }

@@ -507,13 +507,13 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **28. 9. 2026:** barvy ve vyhodnocení (zelená/červená podle odpovědi hráče, shrnutí ve žlutém rámečku, sekce 9) a okno nesouladu v pokročilé úrovni (sekce 5). **Pushnuto a nasazeno** (commit `ea81f1f`), ověřeno na živé stránce: JS `text/javascript`, `noindex`, nové barvy v CSS, okno „Zprávu hodnotíte jako podvod…“ se v pokročilé úrovni ukáže, bez chyb v konzoli. Nadpisy oken nesouladu („Nemáte označené žádné podezřelé místo“ / „Máte označená podezřelá místa“) **pushnuté a nasazené** (commit `f04a319`), ověřeno na živé stránce v prohlížeči.
 
 **Otevřené úkoly:**
-- **Přilepená lišta kola při velkém písmu (nález 28. 9. 2026):** v testu s 200% písmem na 360 × 740 px zabírá lišta 472 px z 740, protože zvětšené písmo v testu podmínku `min-height: 40em` nevypne. Zpráva ve schránce pak může být středem pod lištou (test `200 % text at 360 px` proto klepe na její spodní část). Na skutečném telefonu s velkým systémovým písmem ověřit v milníku 7, jestli se lišta odlepí. Když ne, je to k rozhodnutí (Tomáš).
+- **Přilepená lišta kola při velkém písmu (nález 28. 9. 2026):** v testu s 200% písmem na 360 × 740 px zabírá lišta 472 px z 740, protože zvětšené písmo v testu podmínku `min-height: 40em` nevypne. Zpráva ve schránce pak může být středem pod lištou. Test `200 % text at 360 px` (`tests/email-app.spec.js`) je proto označený `test.fail` (očekávané selhání): „přilepená lišta při 200% písmu na malém displeji (360×740) zakrývá zprávu; na Tomášově telefonu při 200% bez problému“. **Nízká priorita, ověřeno na jednom zařízení** (Tomáš, 28. 9. 2026). Až se to opraví, Playwright ohlásí, že test „nečekaně prošel“, a `test.fail` se odstraní.
 - ~~Před zveřejněním odkazu na hru: testovací zprávy.~~ **Hotovo 25. 9. 2026:** všechny testovací zprávy (`email-04` až `email-07`, `zpravy-04` až `zpravy-07`) nahradily skutečné scénáře, v bance žádná testovací zpráva nezůstala.
-- **Před zveřejněním odkazu na hru: číslo kupujícího v `zpravy-06`.** Znovu ověřit v otevřených datech ČTÚ „Přidělená čísla a kódy“ (https://data.ctu.gov.cz/dataset/pridelena-cisla-kody), že blok 772 100 000 až 772 199 999 (číslo +420 772 145 208) nemá držitele. Ověřeno 24. 9. 2026, ČTÚ ale může blok kdykoli přidělit.
+- **Před zveřejněním odkazu na hru: číslo kupujícího v `zpravy-06`.** Znovu ověřit v otevřených datech ČTÚ „Přidělená čísla a kódy“ (https://data.ctu.gov.cz/dataset/pridelena-cisla-kody), že blok 772 100 000 až 772 199 999 (číslo +420 772 145 208) nemá držitele. Ověřeno 24. 9. a znovu 28. 9. 2026: CSV https://data.ctu.gov.cz/sites/default/files/imports/import_numbers/pridelena_cisla_a_kody.csv, 13 206 řádků, žádný rozsah blok nepřekrývá (kontrola výpočtem, stejný výpočet najde přidělený rozsah 772 720 000–772 729 999). ČTÚ ale může blok kdykoli přidělit, proto znovu v den zveřejnění (sekce 17, A2).
 - **Před zveřejněním odkazu na hru: zdroje Finanční správy.** Tomáš si sám přečte oba zdroje ke scénáři `email-02` (odkazy v `docs/napady-scenaru.md` u námětu E4). Ověřeno zatím jen přes WebFetch v chatu, formulace se v obou zdrojích shodují.
-- **Logo nad názvem:** na počítači je během kola logo v hlavičce nad názvem „Poznej podvod“, ne vedle něj (sekce 5). Hlavička se v milníku 4 neměnila; ověřit, jestli to bylo už před milníkem 4, a opravit.
-- **Tenký Montserrat ve WebKitu:** v Playwright WebKitu na Windows se Montserrat (proměnné písmo) kreslí velmi tence místo tučně, v Chromiu správně. Písma se od milníku 2 neměnila. Nejspíš omezení WebKitu na Windows, na skutečném iPhonu neověřeno: Tomáš zkontroluje živou stránku v Safari na iPhonu nebo iPadu (nadpisy a tlačítka mají být tučné).
-- **Přesměrování http → https:** web zatím funguje na obou adresách. Nejdřív zjistit, jaký postup Subreg podporuje (nastavení hostingu, nebo soubor na serveru). Samostatný úkol (sekce 4).
+- ~~Logo nad názvem během kola na počítači.~~ **Opraveno 28. 9. 2026:** bez podtitulu byl samotný název užší než základ šířky textu (12rem), a tak se na širokém displeji zalomil pod logo. Během kola se šířka textu řídí názvem (`.is-in-round .site-header__text` v `game.css`). Hlídá test „in a round the logo still sits next to the title“ v `tests/home.spec.js`.
+- **Tenký Montserrat ve WebKitu (ověřeno 28. 9. 2026):** v Playwright WebKitu (iPhone 13) se nadpisy a tlačítka kreslí velmi tence, v Chromiu tučně. Šířky textu jsou ale v obou stejné (váha 400 / 700 / 800 = 599 / 627 / 637 px), WebKit na Windows tedy váhu proměnného písma použije pro rozměry, ne pro kreslení. Na skutečném iPhonu neověřeno: Tomáš zkontroluje v Safari (sekce 17, B14). Když bude tence i tam, možná oprava: doplnit statické tučné řezy Montserratu (woff2, sady latin + latin-ext) k proměnnému, potřebuje Tomášovo OK ke stažení.
+- **Přesměrování http → https:** web zatím funguje na obou adresách. **Odloženo, řeší se zvlášť** (Tomáš, 28. 9. 2026). Návrh pravidla je v `docs/navrh-presmerovani-https.md`, podpora `.htaccess` u Subregu neověřena. `.htaccess` nevytvářet ani nenasazovat bez Tomášova OK.
 - **Obnova certifikátu:** certifikát Let's Encrypt platí do 23. 12. 2026. Kolem 10. 12. 2026 zkontrolovat, jestli ho Subreg obnovil (datum platnosti na https://poznej-podvod.menestarosti.cz).
 
 **Pravidla, repozitář a hosting:**
@@ -521,3 +521,55 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **Repozitář** https://github.com/tomaspolak82-commits/poznej-podvod je **veřejný** (ukázka do portfolia), je v něm `README.md`. E-mail autora v commitech zůstává (Tomášovo rozhodnutí). V historii (commit `4f52284`) je jméno starého FTP účtu; ten účet je už zrušený, historie se nepřepisuje.
 - **Kvůli veřejnému repozitáři před každým commitem ověř**, že připravené soubory neobsahují hesla, jméno FTP účtu ani obsah `.env`: projdi `git status` (`.env` v něm nesmí být) a prohledej připravené soubory (`git grep --cached`) na přihlašovací údaje. Když si nejsi jistý, necommituj a zeptej se.
 - **Hosting:** nasazuje se přes samostatný FTP účet subdomény, šifrované spojení funguje (ověřeno `--check`).
+
+## 17. Před zveřejněním odkazu (kontrolní seznamy, připraveno 28. 9. 2026)
+
+Odkaz se zveřejní až po Tomášově výslovném pokynu (sekce 2a). Do té doby musí být hotové body B, C a D. Pak proběhne A.
+
+### A. Vydání (dělá Claude po Tomášově pokynu ke zveřejnění)
+1. Body B, C a D jsou odškrtnuté. Poznáte to tak, že v sekci 16 u nich je „hotovo“.
+2. Týž den znovu ověřit blok 772 100 000 až 772 199 999 v datech ČTÚ (`zpravy-06`). Poznáte to tak, že blok nemá držitele.
+3. Znovu ověřit smyšlené domény v podvodných scénářích (registr vrací 404, DNS neexistuje). Poznáte to tak, že všechny jsou dál volné.
+4. Odstranit `<meta name="robots" content="noindex">` z `index.html` a upravit test na „noindex už není“. Poznáte to tak, že test to hlídá.
+5. Spustit celou sadu testů. Poznáte to tak, že všechny projdou (očekávané selhání `test.fail` se počítá jako v pořádku).
+6. Commit, push, `npm run deploy -- --dry-run`, nasazení. Poznáte to tak, že výpis obsahuje jen nahrání souborů a mazání ve složkách assets a fonts.
+7. Živá stránka: JS `text/javascript`, `noindex` pryč, kolo se vykreslí v Chromiu i WebKitu bez chyb. Poznáte to tak, že je to zapsané v sekci 16.
+8. Konec pravidla „po každém push nasaď sám“: od teď se nasazuje jen na Tomášův pokyn (sekce 2a).
+
+### B. Ruční kontrola na telefonu (Tomáš, asi 20 minut)
+Podrobný postup s tím, na co se dívat, je v `docs/kontrola-na-telefonu.md`. Stručně:
+1. V telefonu nastavte největší systémové písmo.
+2. Otevřete https://poznej-podvod.menestarosti.cz (ne v anonymním okně).
+3. Hlavní stránka a výběr úrovně jsou celé čitelné, nic nepřetéká do strany.
+4. E-mail, základní úroveň: zprávu jde otevřít, „▾ zobrazit adresu“ jde trefit, nápověda se otevře i zavře.
+5. Vyhodnocení: správná odpověď má zelený rámeček, špatná červený. U obou je ikona a text. Shrnutí je ve žlutém rámečku.
+6. Odkaz, tlačítko nebo příloha ukážou okno „Tohle je jen trénink…“.
+7. Dohrajte kolo. Konec kola je čitelný.
+8. Zprávy, pokročilá úroveň: označte a odznačte část zprávy.
+9. Klepněte na „Je to podvod“ bez označení. Ukáže se okno „Nemáte označené žádné podezřelé místo“, „Označit místa“ vrátí ke zprávě.
+10. Označte část a klepněte na „Je to v pořádku“. Ukáže se okno „Máte označená podezřelá místa“.
+11. Ve vyhodnocení jsou u částí texty „Našli jste“ (zeleně), „Tohle místo stojí za druhý pohled“ nebo „Označeno zbytečně…“ (červeně).
+12. Hlavní stránka: panel „Vítejte zpět“ a odkaz „Smazat moji historii“.
+13. Otočte telefon na šířku a zpět. Nic se nerozbije.
+14. Jen iPhone nebo iPad (Safari): nadpisy a tlačítka jsou tučné.
+15. Na počítači během kola: logo v hlavičce je vedle názvu „Poznej podvod“, ne nad ním.
+16. Vraťte velikost písma v telefonu zpět.
+
+### C. Zdroje, které si Tomáš před zveřejněním přečte sám
+Ve hře o nich tvrdíme věci za úřady. Ověřeno doslova jen Claudem, ne člověkem.
+- **`email-02` (Finanční správa):** hra tvrdí, že Finanční správa „e-mailem nežádá přihlašovací ani bankovní údaje“ a „neposílá e-mailem odkazy pro platby ani pro přihlášení“.
+  - https://financnisprava.gov.cz/cs/financni-sprava/media-a-verejnost/tiskove-zpravy-gfr/tiskove-zpravy-2025/dalsi-intenzivni-vlna-podvodnych-emailu-a-sms (30. 10. 2025)
+  - https://financnisprava.gov.cz/cs/financni-sprava/novinky/novinky-2025/financni-sprava-varuje-pred-dalsi-vlnou-podvodnych-mailu (17. 12. 2025)
+- **`zpravy-01` (Ministerstvo dopravy, 7726):** hra tvrdí, že skutečná zpráva o přestupku vždy obsahuje konkrétní popis (místo, čas, vozidlo), že se informace o přestupcích takto nerozesílají, a radí na odkazy neklikat. Dále rada „Podezřelou SMS můžete přeposlat na číslo 7726“.
+  - https://md.gov.cz/Media/Media-a-tiskove-zpravy/Pozor-na-falesne-SMS-o-pokutach (12. 6. 2026)
+  - https://policie.gov.cz/kyberkriminalita/podvodne-sms-zpravy (věta o lince 7726)
+- **`zpravy-02` (policie, „Ahoj mami, nové číslo“):** hra tvrdí, že podvodníci často používají zahraniční předvolby a začínají větou o novém čísle, že tlak na rychlé jednání je podezřelý a že prosba o rychlé peníze se slibem vrácení je typický znak.
+  - https://archiv.policie.gov.cz/clanek/pozor-na-podvodne-zpravy-na-whatsappu-mami-mam-nove-cislo.aspx (25. 9. 2025)
+  - https://archiv.policie.gov.cz/clanek/ahoj-mami-mam-nove-cislo-napis-mi-na-whatsapp-tohle-neni-vase-dite-ale-podvodnik.aspx (17. 9. 2025)
+  - https://bezpecnejsi.ostrava.cz/ahoj-tati-rozbil-se-mi-telefon-nehoda-nebo-podvod/ (20. 10. 2025)
+
+### D. Další úkoly před zveřejněním
+1. **Zkouška s 1–2 seniory** (doplněno 28. 9. 2026): senior hraje sám na svém telefonu, Tomáš jen pozoruje a nenapovídá. Postřehy se zapisují podle `docs/plany/plan-milnik-7.md` (sekce 2, testeři jen jako T1, T2). Poznáte to tak, že je zapsaná aspoň jedna celá hra od začátku do konce kola.
+2. Tučný Montserrat na skutečném iPhonu (krok B14): v emulaci WebKitu je tenký (sekce 16).
+3. Přesměrování http → https: odložené, řeší se zvlášť (návrh v `docs/navrh-presmerovani-https.md`).
+4. Přilepená lišta při 200% písmu: nízká priorita, zveřejnění neblokuje (sekce 16).

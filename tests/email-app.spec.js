@@ -221,19 +221,23 @@ test.describe('round bar and layout on a phone', () => {
   });
 
   test('200 % text at 360 px: no horizontal scroll in the inbox and the detail', async ({ page }) => {
+    // Known issue, low priority (Tomáš, 28. 9. 2026): the injected 200 % font does not switch off
+    // the sticky round bar (the media query uses the browser default font size); the bar covers
+    // about 470 of 740 px and the middle of the message under it cannot be tapped.
+    test.fail(
+      true,
+      'přilepená lišta při 200% písmu na malém displeji (360×740) zakrývá zprávu; na Tomášově telefonu při 200% bez problému',
+    );
     const noScroll = () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
     await page.setViewportSize({ width: 360, height: 740 });
     await startRound(page, { open: false });
     await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
     await page.getByRole('button', { name: 'Složky' }).click();
     expect(await noScroll()).toBe(true);
-    // The injected 200 % font does not switch off the sticky round bar (the media query uses the
-    // browser default font size). The bar then covers about 470 of 740 px and a tall message item
-    // can have its middle under it, so tap the visible lower part of the item, as a player would
-    const task = page.locator('[data-mail="open"]');
-    await task.evaluate((el) => el.scrollIntoView({ block: 'end' }));
-    const { height } = await task.boundingBox();
-    await task.click({ position: { x: 24, y: height - 24 } });
+    // Same tap as openCurrentMessage, with its own time limit: the test must fail on the covered
+    // message (an error), not run out of the whole test time (Playwright does not count a test
+    // timeout as the expected failure of test.fail)
+    await page.locator('[data-mail="open"]').click({ timeout: 5000 });
     await page.locator('article[data-scenario-id]').waitFor();
     await showAddress(page);
     expect(await noScroll()).toBe(true);
