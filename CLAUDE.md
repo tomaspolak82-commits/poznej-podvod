@@ -52,6 +52,7 @@ Cíl: pracuj co nejvíc samostatně. Zastav se jen v případech níže.
 
 ### Nasazení do veřejného vydání
 - Po každém push nasaď sám. Vždy nejdřív --dry-run.
+- **Pozor na starší výpisy:** do 28. 9. 2026 se `--dry-run` k serveru nepřipojoval a mazání nevypisoval (jen obecnou větu „smazaly by se staré soubory ve složkách assets, fonts“). Konkrétní mazané soubory ukázalo až skutečné nasazení. Od opravy (sekce 14) se zkouška připojí jen ke čtení a vypíše přesně, co by nahrála a co by smazala.
 - Když výpis obsahuje cokoli jiného než nahrání souborů a mazání starých souborů ve složkách assets a fonts, nebo skript ohlásí WordPress či jinou chybu, NENASAZUJ a pošli mi celý výpis.
 - Do vydání musí stránka mít <meta name="robots" content="noindex">. Odstranit až na můj pokyn. Žádný robots.txt se zákazem: vyhledávač by pak stránku nepřečetl, `noindex` by neviděl a adresa by se mohla ve výsledcích objevit bez popisu (Tomášovo rozhodnutí 24. 9. 2026).
 - Před veřejným vydáním (zveřejnění odkazu) toto pravidlo končí a nasazuje se jen na můj výslovný pokyn.
@@ -471,12 +472,12 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - **Pojistka 1 (cesta, před připojením):** `FTP_REMOTE_DIR` nesmí obsahovat `..` ani `\` a musí být `/` (kořen samostatného FTP účtu subdomény), přesně `/poznej-podvod.menestarosti.cz`, nebo začínat `/poznej-podvod.menestarosti.cz/`. Jinak skript skončí srozumitelnou chybou dřív, než cokoli sestaví nebo se připojí.
 - **Pojistka 2 (hlavní, obsah cílové složky, po připojení):** před jakýmkoli nahráním nebo mazáním skript vypíše obsah cílové složky. Pokud v ní najde cokoli z WordPressu (`wp-config.php`, `wp-admin`, `wp-content`, `wp-includes`, bez ohledu na velikost písmen), skončí chybou a nic nenahraje ani nesmaže. Totéž platí v režimu `--check`.
 - Obě pojistky jsou v `scripts/deploy-guard.mjs` a pokrývají je testy v `tests/unit/deploy-guard.spec.js`.
-- `--dry-run` sestaví aplikaci, vypíše, co by nahrál, a nepřipojí se.
+- `--dry-run` sestaví aplikaci a připojí se **jen ke čtení** (od 28. 9. 2026). Projde pojistku 2, porovná `dist/` se serverem a vypíše, co by nahrál (u každého souboru „nový“, „jiná velikost“ nebo „stejná velikost“, nahrávají se vždy všechny) a které soubory by smazal. Na serveru nic nezmění: klient je obalený `readOnlyClient` (`deploy-guard.mjs`) a každá zapisovací metoda `basic-ftp` skončí chybou dřív, než se cokoli odešle. Zkouška i skutečné nasazení počítají plán stejnou funkcí `planDeploy`, takže nasazení smaže přesně to, co zkouška vypsala. Hlídají to testy v `tests/unit/deploy-guard.spec.js` (i to, že nová metoda v budoucí verzi `basic-ftp` neprojde bez zařazení).
 - `--check` se připojí přes FTPS, provede pojistku 2, vypíše obsah cílové složky a nic nezmění.
 - Před nahráním spustí build. Když selže, nenahrává.
 - Nahraje obsah `dist/` do `FTP_REMOTE_DIR`. Staré soubory maže až po úspěšném připojení a pojistce 2, a jen ve složkách `assets/` a `fonts/`, které patří našemu buildu.
 - Na konci vypíše adresu, kde si má Tomáš výsledek ověřit: https://poznej-podvod.menestarosti.cz/ (sekce 4).
-- `--check` se připojuje k serveru, proto ho spouštěj jen na Tomášův pokyn (kdy smíš nasazovat, určuje sekce 2a). `--dry-run` se nepřipojuje, ten spouštět smíš.
+- `--check` se připojuje k serveru, proto ho spouštěj jen na Tomášův pokyn (kdy smíš nasazovat, určuje sekce 2a). `--dry-run` se připojuje jen ke čtení a spouštět ho smíš (před každým nasazením).
 - Soubor `.env` nikdy nečti ani nevypisuj (obsahuje heslo). Když je potřeba něco ověřit, vypiš jen ano/ne (např. „FTP_USER je vyplněný“).
 - Když v Git Bash zadáváš `FTP_REMOTE_DIR` přímo v příkazu (ne v `.env`), Git Bash přepíše hodnotu začínající `/` na cestu `C:/Program Files/Git/…` a pojistka ji odmítne. Předřaď `MSYS_NO_PATHCONV=1`. V PowerShellu ani v `.env` se to neděje.
 - Po nasazení ověř živou stránku: typy souborů (JS musí být `text/javascript`, jinak zůstane stránka prázdná) a vykreslení v prohlížeči přes Playwright.
@@ -488,7 +489,7 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - `npm run preview`: náhled sestavené verze
 - `npm test`: Playwright testy
 - `npm run prehled`: přehled scénářů do `docs/prehled-scenaru.md` (od milníku 6)
-- `npm run deploy` / `npm run deploy -- --dry-run` / `npm run deploy -- --check`: nasazení / zkouška bez připojení / kontrola serveru bez změn
+- `npm run deploy` / `npm run deploy -- --dry-run` / `npm run deploy -- --check`: nasazení / zkouška s připojením jen ke čtení (co by nahrál a smazal) / kontrola serveru bez změn
 - `npx playwright test --project=unit`: jen rychlé testy logiky bez prohlížeče
 
 ## 16. Stav projektu (k 24. 9. 2026)

@@ -1,23 +1,23 @@
 // Deploys dist/ to Subreg hosting over FTPS (CLAUDE.md, section 14).
 //
-//   npm run deploy -- --dry-run   build and list what would be uploaded, no connection
+//   npm run deploy -- --dry-run   build, connect read-only, compare with the server and list
+//                                 what would be uploaded and deleted; changes nothing
 //   npm run deploy -- --check     connect, run the safety checks, list the remote folder, change nothing
 //   npm run deploy                build, connect, safety checks, upload, remove stale files in assets/ and fonts/
 
 import { spawnSync } from 'node:child_process';
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
 import { Client } from 'basic-ftp';
-import { checkForWordPress, checkRemoteDir } from './deploy-guard.mjs';
+import { OWNED_DIRS, checkForWordPress, checkRemoteDir, planDeploy, readOnlyClient } from './deploy-guard.mjs';
 
 const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST_DIR = path.join(PROJECT_ROOT, 'dist');
 // HTTPS works since 24. 9. 2026 (http still works too, the redirect is a separate task)
 const PUBLIC_URL = 'https://poznej-podvod.menestarosti.cz/';
-// Folders fully owned by our build: stale files inside them may be deleted
-const OWNED_DIRS = ['assets', 'fonts'];
+const UPLOAD_STATUS = { new: 'nový          ', changed: 'jiná velikost ', 'same-size': 'stejná velikost' };
 
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has('--dry-run');
@@ -86,9 +86,16 @@ async function openTarget(client, remoteDir) {
   return entries;
 }
 
-async function removeStaleFiles(client, localFiles) {
-  const local = new Set(localFiles);
-  const removed = [];
+// Files of dist/ with their sizes, paths with "/"
+function localFilesWithSize(files) {
+  return files.map((file) => ({ path: file, size: statSync(path.join(DIST_DIR, file)).size }));
+}
+
+// Files on the server that a deploy may touch: the target folder itself and OWNED_DIRS
+// (only reading: list). Paths relative to the target folder, the client must be inside it.
+async function listRemoteFiles(client, rootEntries) {
+  const remote = new Map();
+  for (const entry of rootEntries) if (entry.isFile) remote.set(entry.name, entry.size);
   for (const dir of OWNED_DIRS) {
     let entries;
     try {
@@ -96,15 +103,17 @@ async function removeStaleFiles(client, localFiles) {
     } catch {
       continue; // folder does not exist on the server yet
     }
-    for (const entry of entries) {
-      const relative = `${dir}/${entry.name}`;
-      if (entry.isFile && !local.has(relative)) {
-        await client.remove(relative);
-        removed.push(relative);
-      }
-    }
+    for (const entry of entries) if (entry.isFile) remote.set(`${dir}/${entry.name}`, entry.size);
   }
-  return removed;
+  return remote;
+}
+
+function printPlan({ upload, remove }) {
+  console.log(`  Nahrálo by se (${upload.length}, nahrávají se vždy všechny soubory z dist/):`);
+  for (const { path: file, status } of upload) console.log(`    ${UPLOAD_STATUS[status]}  ${file}`);
+  console.log(`  Smazalo by se (${remove.length}, jen ve složkách ${OWNED_DIRS.join(', ')}):`);
+  for (const file of remove) console.log(`    − ${file}`);
+  if (remove.length === 0) console.log('    (nic)');
 }
 
 async function main() {
@@ -116,10 +125,9 @@ async function main() {
   const guardError = checkRemoteDir(remoteDir);
   if (guardError) fail(`${guardError}\n  Nic se nenahrálo ani nesmazalo.`);
 
-  if (!dryRun) {
-    const missing = ['FTP_HOST', 'FTP_USER', 'FTP_PASSWORD'].filter((key) => !env[key]);
-    if (missing.length) fail(`V souboru .env chybí: ${missing.join(', ')}.`);
-  }
+  // The dry run connects too (read-only), so it needs the same credentials
+  const missing = ['FTP_HOST', 'FTP_USER', 'FTP_PASSWORD'].filter((key) => !env[key]);
+  if (missing.length) fail(`V souboru .env chybí: ${missing.join(', ')}.`);
 
   if (checkOnly) {
     const client = await connect(env);
@@ -137,27 +145,37 @@ async function main() {
   if (!existsSync(DIST_DIR)) fail('Složka dist/ neexistuje.');
   const files = listLocalFiles(DIST_DIR);
 
+  const localFiles = localFilesWithSize(files);
+
   if (dryRun) {
-    console.log(`\n▶ Zkouška nasazení (--dry-run): nic se neodesílá.`);
-    console.log(`  Server: ${env.FTP_HOST || '(FTP_HOST není vyplněný)'}`);
-    console.log(`  Cílová složka: ${remoteDir}`);
-    console.log(`  Soubory k nahrání (${files.length}):`);
-    for (const file of files) console.log(`    ${file}`);
-    console.log('  Kontrola, že v cílové složce není WordPress, proběhne až po připojení.');
-    console.log(`  Po nahrání by se smazaly staré soubory jen ve složkách: ${OWNED_DIRS.join(', ')}.`);
+    console.log(`\n▶ Zkouška nasazení (--dry-run): připojení jen ke čtení, na serveru se nic nemění.`);
+    console.log(`  Server: ${env.FTP_HOST}`);
+    // Every write method of this client throws before anything is sent (readOnlyClient)
+    const client = readOnlyClient(await connect(env));
+    try {
+      const rootEntries = await openTarget(client, remoteDir);
+      printPlan(planDeploy(localFiles, await listRemoteFiles(client, rootEntries)));
+      console.log('\nZkouška: nic se nenahrálo ani nesmazalo.');
+    } catch (error) {
+      fail(`Zkouška nasazení selhala: ${error.message}`);
+    } finally {
+      client.close();
+    }
     return;
   }
 
   const client = await connect(env);
   try {
-    await openTarget(client, remoteDir);
+    const rootEntries = await openTarget(client, remoteDir);
+    // Same plan as the dry run, computed before the upload
+    const plan = planDeploy(localFiles, await listRemoteFiles(client, rootEntries));
     console.log(`▶ Nahrávám ${files.length} souborů do ${remoteDir}…`);
     await client.uploadFromDir(DIST_DIR);
     // Stale-file cleanup is relative to the target folder
     await client.cd(remoteDir);
-    const removed = await removeStaleFiles(client, files);
-    console.log(`✔ Nahráno. Smazáno starých souborů: ${removed.length}`);
-    for (const file of removed) console.log(`    − ${file}`);
+    for (const file of plan.remove) await client.remove(file);
+    console.log(`✔ Nahráno. Smazáno starých souborů: ${plan.remove.length}`);
+    for (const file of plan.remove) console.log(`    − ${file}`);
     console.log(`\nVýsledek si ověřte na ${PUBLIC_URL}\n`);
   } catch (error) {
     fail(`Nahrávání selhalo: ${error.message}`);
