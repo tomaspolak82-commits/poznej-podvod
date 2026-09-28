@@ -19,6 +19,7 @@ import {
   ATTACHMENT_NOTICE,
   CATEGORY_LABELS,
   CLOSE_AND_CONTINUE,
+  DECISION_CHECK,
   EMAIL_APP,
   EVALUATION,
   HINTS,
@@ -174,6 +175,29 @@ function showHints(section) {
   });
 }
 
+// Advanced level: asks only when the decision does not match the marks ("scam" with nothing
+// marked, "ok" with something marked). Resolves true to go on with the decision; the safe
+// choice (back to the message) is first and focused, Esc and a click outside mean back too.
+async function confirmDecision(decision, markCount) {
+  const check =
+    decision === 'scam' && markCount === 0
+      ? DECISION_CHECK.scamWithoutMarks
+      : decision === 'ok' && markCount > 0
+        ? DECISION_CHECK.okWithMarks
+        : null;
+  if (!check) return true;
+  const choice = await openDialog({
+    title: TRAINING_LABEL,
+    body: `<p>${check.text}</p>`,
+    describeBody: true,
+    actions: [
+      { label: check.back, value: 'back', primary: true, autofocus: true },
+      { label: check.confirm, value: 'confirm' },
+    ],
+  });
+  return choice === 'confirm';
+}
+
 function showThreat(scenario, index) {
   const threat = scenario.threats[index];
   return openDialog({
@@ -270,6 +294,11 @@ export function renderRound(container, section) {
 
     const decision = target.closest('[data-decision]');
     if (decision && round.phase === 'question') {
+      if (round.level === 'pokrocila' && !(await confirmDecision(decision.dataset.decision, round.marks.size))) {
+        // Back to the message: start again at its first part
+        container.querySelector('[data-mark]')?.focus();
+        return;
+      }
       answer(decision.dataset.decision);
       redraw();
       return;

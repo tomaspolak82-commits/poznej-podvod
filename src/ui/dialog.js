@@ -9,18 +9,22 @@ let counter = 0;
 
 // focusTitle: for long content, start at the top (title gets focus) instead of
 // scrolling down to the first button
-export function openDialog({ title, body, actions, className = '', focusTitle = false }) {
+// describeBody: screen readers read the (short) body together with the title when the
+// window opens, not only the focused button
+export function openDialog({ title, body, actions, className = '', focusTitle = false, describeBody = false }) {
   counter += 1;
   const titleId = `dialog-title-${counter}`;
+  const bodyId = `dialog-body-${counter}`;
   const opener = document.activeElement;
 
   const dialog = document.createElement('dialog');
   dialog.className = `dialog ${className}`.trim();
   dialog.setAttribute('aria-labelledby', titleId);
+  if (describeBody) dialog.setAttribute('aria-describedby', bodyId);
   dialog.innerHTML = `
     <div class="dialog__inner">
       <h2 class="dialog__title" id="${titleId}" tabindex="-1" ${focusTitle ? 'autofocus' : ''}>${title}</h2>
-      <div class="dialog__body">${body}</div>
+      <div class="dialog__body" id="${bodyId}">${body}</div>
       <div class="dialog__actions">
         ${actions
           .map(

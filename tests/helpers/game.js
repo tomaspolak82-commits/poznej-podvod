@@ -79,15 +79,23 @@ export async function showAddress(page) {
   await page.locator('[data-mail="address"]').click();
 }
 
-// decide(scenario) → 'scam' | 'ok'; returns the list of played scenario IDs.
+// Clicks a decision ('scam' | 'ok'). At the advanced level a decision that does not match the
+// marks opens a confirmation window; this confirms it, so the answer counts as before.
+// Tests of the window itself click the decision button directly.
+export async function decide(page, choice) {
+  await page.getByRole('button', { name: choice === 'scam' ? 'Je to podvod' : 'Je to v pořádku' }).click();
+  const confirm = page.locator('dialog[open] [data-value="confirm"]');
+  if (await confirm.count()) await confirm.click();
+}
+
+// choose(scenario) → 'scam' | 'ok'; returns the list of played scenario IDs.
 // Expects the first message to be open already.
-export async function playRound(page, decide) {
+export async function playRound(page, choose) {
   const played = [];
   for (let i = 0; i < 5; i += 1) {
     const id = await currentScenarioId(page);
     played.push(id);
-    const choice = decide(scenarioById(id));
-    await page.getByRole('button', { name: choice === 'scam' ? 'Je to podvod' : 'Je to v pořádku' }).click();
+    await decide(page, choose(scenarioById(id)));
     if (i < 4) await nextMessage(page);
     else await page.getByRole('button', { name: /Zobrazit výsledek/ }).click();
   }
@@ -99,8 +107,7 @@ export async function goToScenario(page, id) {
   for (let i = 0; i < 5; i += 1) {
     const current = await currentScenarioId(page);
     if (current === id) return;
-    const decision = scenarioById(current).isScam ? 'Je to podvod' : 'Je to v pořádku';
-    await page.getByRole('button', { name: decision }).click();
+    await decide(page, scenarioById(current).isScam ? 'scam' : 'ok');
     await nextMessage(page);
   }
   throw new Error(`Scenario ${id} is not in this round`);

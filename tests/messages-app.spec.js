@@ -2,6 +2,7 @@
 import { test, expect } from '@playwright/test';
 import {
   currentScenarioId,
+  decide as decideAndConfirm,
   expectedRounds,
   goToScenario,
   nextMessage,
@@ -34,7 +35,7 @@ test.beforeAll(() => {
 const start = (page, { seed = SEED_ALL, level = 'základní' } = {}) =>
   startRound(page, { section: 'zpravy', seed, level });
 const mark = (page, target) => page.locator(`[data-mark="${target}"]`).click();
-const decide = (page, scam) => page.getByRole('button', { name: scam ? 'Je to podvod' : 'Je to v pořádku' }).click();
+const decide = (page, scam) => decideAndConfirm(page, scam ? 'scam' : 'ok');
 const statusOf = (page, target) => page.locator(`.review-part[data-target="${target}"] [data-status]`);
 const noScroll = (page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
 

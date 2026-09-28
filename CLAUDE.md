@@ -123,6 +123,7 @@ Každá úroveň má krátký popis a **maximální počet bodů pro toto kolo**
 - Trvale viditelný štítek nad simulací: **„TRÉNINK: cvičná ukázka, nic se neodesílá“**. Nejde zavřít.
 - Obnovení stránky uprostřed kola: hráč se vrátí na výběr úrovně, rozehrané kolo se neuloží do historie.
 - Adresy: `#/` hlavní stránka, `#/<sekce>` výběr úrovně (vylosuje nové kolo), `#/<sekce>/kolo` kolo. Kolo je jen v paměti: adresa `#/…/kolo` bez rozehraného kola přesměruje na výběr úrovně. Odchod z kola jakoukoli cestou (i tlačítkem Zpět v prohlížeči) kolo zahodí, tlačítko Vpřed ho neobnoví.
+- **Kontrola nesouladu v pokročilé úrovni** (Tomáš, 28. 9. 2026, texty v `DECISION_CHECK` v `src/texts.js`): „Je to podvod“ bez označeného místa, nebo „Je to v pořádku“ s označeným místem, otevře potvrzovací okno (nadpis je štítek TRÉNINK jako u ostatních oken tréninku). První tlačítko je bezpečná cesta zpět ke zprávě („Označit místa“ / „Zpět ke zprávě“) a má fokus. Esc a klepnutí mimo okno znamenají také návrat. Druhé tlačítko („Ano, je to podvod“ / „Ano, je v pořádku“) pokračuje jako dřív. Text okna čtečka přečte jako popis okna (`aria-describedby`). Při souladu ani v základní úrovni se okno neobjeví. Bodování se nemění. Testy: `tests/decision-check.spec.js`, ostatní testy rozhodují přes `decide()` v `tests/helpers/game.js`, která okno potvrdí.
 - Okna (nápověda, vysvětlení u žárovky, upozornění na odkaz, potvrzení) používají `src/ui/dialog.js` (prvek `<dialog>`): zavírají se tlačítkem, Esc i klepnutím mimo a fokus se vrátí na prvek, který okno otevřel. Potvrzovací okna mají fokus na bezpečné volbě („Hrát dál“, „Ponechat historii“). Dlouhé okno nápovědy začíná nahoře (fokus na nadpisu).
 - Nápověda „Na co si dát pozor?“ je v liště kola i ve vyhodnocení. U e-mailu má 6 bodů (bod 2 „Oslovení“ přibyl v milníku 4; body 4 a 5 upravené v milníku 6: „Odkaz sám o sobě podvod není“, příloha, o které nic nevíte, je riziko i od známého odesílatele), u Zpráv také 6 (upravené v milníku 5: bod o odkazech říká „Odkaz sám o sobě podvod není“, instalace aplikace má vlastní bod), pod nimi poznámku o bezchybné češtině a radu (u Zpráv s číslem 7726 a radou zablokovat účet v chatu, u e-mailu bez nich).
 
@@ -336,7 +337,9 @@ Vzhled vychází z hlavního webu menestarosti.cz: bílá hlavička, světle še
   --color-red-dark: #c93030;    /* tlačítka, nadpisy sekcí, název v hlavičce, odkazy */
   --color-red-hover: #a82626;   /* stisknuté / najeté červené tlačítko */
   --color-red-tint: #fbeaea;    /* podklad červených ikon, najeté obrysové tlačítko */
-  --color-teal: #008080;        /* jen doplňková barva: ikona (fajfka) u správné odpovědi */
+  --color-green: #1e7b34;       /* vyhodnocení: hráč odpověděl správně (ikona, rámeček); jako text na bílé 5,3:1 */
+  --color-green-tint: #e8f5eb;  /* světlý podklad správné odpovědi */
+  --color-yellow-tint: #fff6dc; /* žlutý rámeček shrnutí „Co si z toho vzít“ */
   --color-dark: #2a2f35;        /* tmavé drobnosti (štítek „Připravujeme“) */
   --color-yellow: #ffb302;      /* žárovky nápovědy; vždy s tmavým textem */
   --color-text: #4a5568;        /* běžný text */
@@ -352,7 +355,8 @@ Vzhled vychází z hlavního webu menestarosti.cz: bílá hlavička, světle še
 - **Tlačítka** jsou plná červená `--color-red-dark` s bílým tučným textem (kontrast 5,3:1). Vedlejší tlačítka mají červený obrys a červený text na bílé. Světlá `--color-red` (#ff4d4d) má s bílým textem jen 3,3:1, proto se na tlačítka ani text nepoužívá.
 - **Tlačítka rozhodnutí ve hře** („Je to podvod“ / „Je to v pořádku“) mají **stejný neutrální vzhled**, ne červený. Červená se čte jako „nebezpečí“ a nesmí napovídat odpověď.
 - **Ikony v aktivních kartách** (dlaždice sekcí, výběr úrovně) jsou červené `--color-red-dark` na světle červeném podkladu (`--color-red-tint`). Ikony neaktivních dlaždic „Připravujeme“ jsou šedé, aby bylo vidět, že jsou teprve v plánu.
-- **Tyrkysová** jen doplňkově: ikona fajfky u správné odpovědi ve vyhodnocení (vždy spolu s textem). Ne na tlačítka, odkazy ani text.
+- **Barvy ve vyhodnocení** (Tomáš, 28. 9. 2026; nahradily tyrkysovou fajfku): barva ukazuje, **jak hráč odpověděl**, ne jestli zpráva byla podvod. Správně = zelená (`--color-green`: rámeček výsledku se světle zeleným podkladem, u části proužek, podklad a ikona), špatně = červená (`--color-red-dark`) jen mírně: rámeček nebo proužek a ikona, nikdy červený blok. U části je „Našli jste“ zelené, „Tohle místo stojí za druhý pohled“ a „Označeno zbytečně“ červené. Vždy s ikonou a textem. Kontrast hlídá `tests/evaluation-colors.spec.js`. Zelená ne na tlačítka ani odkazy.
+- **Shrnutí „Co si z toho vzít“** je ve žlutém rámečku: okraj `--color-yellow`, podklad `--color-yellow-tint`, tmavý text.
 - **Chybové značky ve hře nikdy nespoléhají jen na barvu.** Každý chybový nebo varovný stav má vždy ikonu s výrazným tvarem (např. křížek v kroužku, vykřičník v trojúhelníku) a srozumitelný text. Správná odpověď stejně: fajfka + text, ne jen zelená. Červená sama o sobě nesmí nést význam, protože ji část seniorů špatně rozliší a v aplikaci je zároveň barvou tlačítek. (Platí i pro sekci 10.)
 - Žlutá nikdy jako barva textu na světlém pozadí (nedostatečný kontrast). Chybový stav = ikona + tmavý text.
 - Písma hostuj lokálně ve `public/fonts/` (woff2), žádné Google Fonts CDN. Tomáš souhlasil se stažením Montserrat a Lato (řezy 400 a vyšší) **včetně sady latin-ext**. K nim patří licenční soubor OFL (`public/fonts/OFL.txt`). Nejsou to npm závislosti. Po stažení ověř, že se správně vykreslí všechny české znaky, malé i velké (ěščřžýáíéúůťďňó), i běžné speciální znaky („“ – … € Kč). Žádné náhradní písmo u diakritiky. Ověřuje to test `tests/fonts.spec.js`.

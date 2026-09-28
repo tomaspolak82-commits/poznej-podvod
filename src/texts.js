@@ -180,6 +180,21 @@ export const DELETE_HISTORY = {
   done: 'Historie je smazaná.',
 };
 
+// Advanced level: the decision does not match the marks (approved by Tomáš, 28. 9. 2026).
+// Shown only then; scoring does not change.
+export const DECISION_CHECK = {
+  scamWithoutMarks: {
+    text: 'Zprávu hodnotíte jako podvod, ale nemáte označené žádné podezřelé místo. Chcete ještě označit, co vám přišlo podezřelé?',
+    back: 'Označit místa',
+    confirm: 'Ano, je to podvod',
+  },
+  okWithMarks: {
+    text: 'Máte označená podezřelá místa, ale zprávu hodnotíte jako v pořádku. Je to tak?',
+    back: 'Zpět ke zprávě',
+    confirm: 'Ano, je v pořádku',
+  },
+};
+
 export const LEAVE_ROUND = {
   title: 'Opravdu chcete kolo ukončit?',
   text: 'Body z tohoto kola se neuloží.',

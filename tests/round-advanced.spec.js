@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { maxPointsForRound } from '../src/engine/round.js';
 import {
+  decide as decideAndConfirm,
   expectedRounds,
   goToScenario,
   nextMessage,
@@ -23,7 +24,7 @@ async function startAdvanced(page) {
 }
 
 const mark = (page, target) => page.locator(`[data-mark="${target}"]`).click();
-const decide = (page, scam) => page.getByRole('button', { name: scam ? 'Je to podvod' : 'Je to v pořádku' }).click();
+const decide = (page, scam) => decideAndConfirm(page, scam ? 'scam' : 'ok');
 const statusOf = (page, target) => page.locator(`.review-part[data-target="${target}"] [data-status]`);
 
 test.beforeAll(() => {
