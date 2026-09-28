@@ -488,3 +488,75 @@ Nápověda tedy s novým zněním bodu 3 k žádné části těchto legitimních
 Poznámky:
 - Věta o poplatku za pozdní vrácení je záměrně vynechaná: spěch s platbou by k označení vedl i podle nového znění.
 - Název knihy „Babiččiny recepty na každý den“ je smyšlený. Nebyla ověřená, jestli taková kniha existuje. Kdyby ano, nevadí to, kniha se jen zmiňuje.
+
+---
+
+# email-12: Falešná ČSSZ, doplatek důchodu a chyby v češtině (návrh 28. 9. 2026, k Tomášovu schválení)
+
+Podvod. Doplňuje `zpravy-11` (legitimní SMS bez háčků a čárek): u soukromé zprávy chyby nic neznamenají, u zprávy od instituce jsou jedna ze stop. Chyby nejsou jediná stopa, hlavní stopa je žádost o citlivé údaje e-mailem (zásada o gramatických chybách v sekci 7 CLAUDE.md, 28. 9. 2026).
+
+Za koho se vydává: úřad (ČSSZ). Co chce: odpovědět a poslat údaje (v e-mailu zatím žádný podvod s odpovědí). Tlak: peníze navíc, spěch. Obtížnost: střední.
+
+Po zabudování by sekce E-mail měla 12 scénářů (6 podvodů, 6 legitimních), z toho 2 podvody s chybami v zápisu (`email-01`, `email-12`) a 4 bezchybné.
+
+```
+Od: Česká správa sociálního zabezpečení
+Adresa (po „▾ zobrazit adresu“): klientske.centrum@doplatky-cssz.cz
+Datum: dnes 9:47
+Předmět: Doplatek důchodu – ověření údajů
+
+[body.0] Dobrý den, paní Nováková,
+[body.1] při kontrole vašeho starobní důchod bylo zjištěno, že vám náleží doplatek ve výši 3 842 Kč za uplynulé období. Doplatek bude vyplacen po ověření vašich udaju.
+[body.2] Pro vyplacení prosím odpovězte na tento e-mail a uvedte své rodné číslo, číslo bankovního účtu a telefon, na kterém vás zastihne naš pracovník.
+[body.3] Pokud údaje nezašlete do 3 pracovních dnů, nárok na doplatek zaniká.
+[body.4] S pozdravem, Klientské centrum ČSSZ
+```
+
+Chyby jsou jako ze strojového překladu, ne karikatura: špatný pád („vašeho starobní důchod“), chybějící diakritika („udaju“, „uvedte“, „naš“). Bez chyb jsou předmět, `body.0`, `body.3` a `body.4`. Kdo označí jen místa s chybami, najde 2 hrozby ze 4.
+
+| Část | Kategorie | Název | Vysvětlení pro hráče |
+|---|---|---|---|
+| `body.2` + `alsoTargets: ["subject"]` | zadost-o-udaje | Rodné číslo a účet e-mailem | Zpráva chce, abyste rodné číslo, číslo účtu a telefon poslali odpovědí na e-mail. Česká správa sociálního zabezpečení upozorňuje, že citlivé údaje e-mailem nikdy nežádá. Po takovém e-mailu může zavolat falešný úředník. |
+| `body.1` | jazyk-chyby | Chyby v češtině | Ve zprávě jsou chyby: „vašeho starobní důchod“, „udaju“. Od úřadu nebo banky čekáte pečlivou, spisovnou češtinu, proto jsou tu chyby jedna ze stop. Ve zprávě od známého chyby nic neznamenají, každý píše jinak. Pozor ale: bezchybný text nezaručuje, že je zpráva pravá. |
+| `fromAddress` + `alsoTargets: ["fromName", "body.4"]` | odesilatel | Adresa odesílatele | Jméno odesílatele si může napsat kdokoli. Adresa za ním končí na doplatky-cssz.cz a s Českou správou sociálního zabezpečení nemá nic společného. |
+| `body.3` | casovy-tlak | Spěch | Krátká lhůta a hrozba, že o peníze přijdete, mají zabránit tomu, abyste si to v klidu ověřili. |
+
+Nevinná část: `body.0` (oslovení jménem). Bod 2 nápovědy k němu nevede. Shrnutí nic neříká o tom, že by jméno zprávu dělalo pravou.
+
+Shrnutí:
+```
+Zpráva chce, abyste e-mailem poslali rodné číslo, číslo účtu a telefon. Česká správa sociálního zabezpečení upozorňuje, že citlivé údaje e-mailem nikdy nežádá. Chyby v češtině byly jen jedna ze stop, i bezchybně napsaná zpráva může být podvod. Když si nejste jistí, zavolejte na číslo ČSSZ z jejích oficiálních stránek. Kdyby vám po takovém e-mailu volal „úředník“, zavěste.
+```
+
+Zdroje (`sources`), všechny citace **doslova ověřené**:
+- cssz.gov.cz/web/cz/-/cssz-varuje-pred-dalsimi-podvodnymi-e-maily (27. 5. 2026, staženo `curl`)
+  - „Klientské centrum ČSSZ nebude nikdy požadovat zaslání jakýchkoliv citlivých údajů prostřednictvím e-mailu.“
+  - „Česká správa sociálního zabezpečení (ČSSZ) varuje před šířením podvodných emailů, které se neoprávněně vydávají za oficiální oznámení Klientského centra ČSSZ.“
+- cssz.gov.cz/web/cz/-/upozorneni-na-podvodne-e-maily-a-telefonaty-vydavajici-se-za-cssz (3. 9. 2026, staženo `curl`)
+  - „Podvod může začít e-mailovou nebo jinou elektronickou zprávou s dokumentem napodobujícím oficiální písemnost ČSSZ .“ a dál „údaje o údajném přepočtu důchodu či výši doplatku“
+  - „Na e-mail může následně navázat telefonát osoby vydávající se za zaměstnance ČSSZ .“
+  - „nereagujte, ukončete telefonát a nesdělujte žádné přihlašovací údaje, PINy ani autorizační kódy“
+  - „pravost informace si ověřte přímo u ČSSZ prostřednictvím jejích oficiálních kontaktů.“
+- nukib.gov.cz/cs/infoservis/doporuceni/1494-phishing-stale-aktualni-hrozba/ (12. leden 2015, `curl` vrací 403, text jsem přečetl přímo ze stránky v prohlížeči)
+  - „Dalším takovým výrazným znakem podvrženého e-mailu je lámaná a často nepříliš dokonalá čeština obsahující gramatické a stylistické chyby.“
+
+Co zdroje **neříkají**, a hra to proto netvrdí: že ČSSZ píše vždy spisovně, jaké adresy ČSSZ používá, že by ČSSZ e-mailem nikdy nepsala o doplatku. Věta „Od úřadu nebo banky čekáte pečlivou, spisovnou češtinu“ je popis očekávání hráče (znění ze zadání), ne tvrzení za úřad.
+
+Zdroj ČSOB („7 znaků, jak bezpečně poznat podvodný e-mail“, 03/2020) jsem zamítl: sám uvádí, že je starý a „některé věci už nemusí platit“, popisuje chyby „jako máku“ (karikatura, kterou nechceme) a oslovení jménem v něm je „poměrně spolehlivé vodítko“ důvěry, což odporuje zásadě o oslovení v sekci 7.
+
+Kontrola nápovědy:
+- bod 1 (adresa) → `fromAddress`, `fromName` ✓; podpis „Klientské centrum ČSSZ“ (`body.4`) ✓ v `alsoTargets`
+- bod 2 (oslovení) → oslovení jménem, nevede (nevinná část)
+- bod 3 (spěch s hrozbou ztráty peněz) → `body.3` ✓
+- bod 4 (odkaz nebo tlačítko k údajům) → zpráva odkaz nemá. Žádost o údaje (`body.2`) je hrozba i bez toho, předmět „ověření údajů“ ✓ v `alsoTargets`.
+- bod 5 (příloha) → zpráva přílohu nemá
+- bod 6 (peníze „zpět“ bez důvodu) → doplatek v `body.1` ✓ (leží na hrozbě `jazyk-chyby`), předmět „Doplatek důchodu“ ✓
+- poznámka pod nápovědou („i zpráva v bezchybné češtině může být podvod“) → vede nanejvýš k místům s chybami: `body.1` ✓, `body.2` ✓
+
+**Nápověda e-mailu o jazyku:** body 1–6 o chybách nic neříkají, jen poznámka pod nimi. Nový bod podle mě potřeba není: kdo chyby označí, je odměněn (obě místa s chybami leží na hrozbách), a nikdo, kdo nápovědu poslechne, není potrestán. Sekce 7 navíc chce, aby chyby nebyly jedinou stopou, a zvláštní bod by jim dával víc váhy.
+
+Poznámky:
+- Doména `doplatky-cssz.cz`: registr `.cz` (RDAP) vrací 404, kontrolní `nic.cz` 200, DNS (8.8.8.8) „Non-existent domain“ (28. 9. 2026). Adresy ze skutečného varování ČSSZ (`kontakt-cssz.cz`, `portal-cssz.com`, `platby-cssz.com`) jsem záměrně nepoužil.
+- Skutečný podvod z 3. 9. 2026 měl dokument v příloze a pak telefonát. Přílohu jsem vynechal kvůli pestrosti (příloha je už v `email-04`), žádost o údaje odpovědí je v e-mailu nová.
+- Částka 3 842 Kč je smyšlená, žádné telefonní číslo ve zprávě není.
+- „Paní Nováková“ je pevná postava hry (`RECIPIENT`). Adresa ČSSZ ani její linka ve hře nejsou.

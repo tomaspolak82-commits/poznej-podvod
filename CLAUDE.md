@@ -194,9 +194,10 @@ Další zásady pro legitimní zprávy a všechny scénáře (Tomáš, 25. 9. 20
 - **Legitimní zpráva nesmí jako důvod důvěry uvádět, že nemá odkaz nebo přílohu.**
 - **Scénáře nesmí obsahovat rady nebo chování, které jsou samy nebezpečné** (klíč ve schránce, sdělování, kdy je byt prázdný, apod.).
 - **Oslovení:** obecné oslovení („Vážený kliente“) u zprávy od firmy, jejímž jste klientem, je varovný signál a nápověda k němu smí vést. Oslovení jménem ale není důkaz, že zpráva je pravá (jméno se dá zjistit, viz `email-06`). Vysvětlení legitimních zpráv proto jméno nikdy neuvádějí jako důvod důvěry.
+- **Gramatické chyby** (Tomáš, 28. 9. 2026) smí být stopou podvodu jen u zpráv, které se vydávají za instituci (úřad, banka, firma). U zpráv od soukromých osob chyby nic neznamenají (člověku nemusí jít čeština, píše rychle na mobilu) a vysvětlení je nikdy neuvádí jako důvod podezření. Ani u institucí nesmí být chyby jedinou stopou a bezchybný text nezaručuje, že zpráva je pravá.
 
 ### Banka zpráv
-- Zásoba (cíl milníku 6, změněno 25. 9. 2026): **11 scénářů v sekci E-mail i v sekci Zprávy**, z toho **aspoň 5 legitimních** (plán: 5 podvodů, 6 legitimních). Náměty jsou v `docs/napady-scenaru.md`.
+- Zásoba (změněno 28. 9. 2026): **E-mail 12 scénářů (6 podvodů, 6 legitimních)**, 12. je `email-12` (falešná ČSSZ s chybami v češtině). **Zprávy 11 scénářů** (5 podvodů, 6 legitimních, aspoň 5 legitimních). Náměty jsou v `docs/napady-scenaru.md`.
 - Kolo vybere náhodně 5 zpráv. **V každém kole jsou 2–3 legitimní**, tedy vždy aspoň 2 podvody a 2 legitimní (Tomášovo rozhodnutí 25. 9. 2026, hlavní zásada výše). Počet se záměrně mění, 2 nebo 3 náhodně: hráč nesmí jít odpočítávat („už byly dva podvody, tak zbytek je v pořádku“), musí posoudit každou zprávu. Pro losování je v sekci potřeba aspoň 3 podvody a 2 legitimní (`DRAW_MINIMUM`). Zprávy z předchozího kola stejné sekce se v dalším kole neopakují, pokud to banka dovolí. Platí i mezi návštěvami (ID posledního kola se ukládá do `localStorage`, zvlášť pro každou sekci).
 - Pro testy musí jít náhodu zafixovat parametrem `?seed=123`. Parametr stojí v adrese před `#`, např. `/?seed=123#/email`.
 
@@ -256,7 +257,7 @@ Kontrola obsahu (`src/engine/validate.js`) běží při každém `npm run build`
 - `id` = název souboru bez `.json`, `section` = název složky, ID jsou jedinečná napříč sekcemi
 - podvod má 1–4 hrozby, **legitimní zpráva nemá žádnou hrozbu** (`threats: []`)
 - žádný `target` se nesmí opakovat a musí odpovídat existující části zprávy (volitelné části jako `button` jen, když ve zprávě jsou)
-- v sekci je dost zpráv na losování (aspoň 3 podvody a 2 legitimní). Cíl 11 scénářů / aspoň 5 legitimních hlídá test v `tests/unit/content.spec.js`, který je do konce milníku 6 vypnutý (`ENFORCE_CONTENT_GOALS = false`).
+- v sekci je dost zpráv na losování (aspoň 3 podvody a 2 legitimní). Cíl zásoby pro každou sekci (`CONTENT_GOAL` v `src/engine/validate.js`) hlídá test v `tests/unit/content.spec.js`. Kontrola cíle u e-mailu je vypnutá, dokud není `email-12` zabudovaný (`EMAIL_12_BUILT = false`).
 
 Losování se `seed`: jedna řada náhodných čísel na jedno načtení stránky. Kolo se losuje při otevření výběru úrovně, další kolo („Hrát dalších 5“) pokračuje ve stejné řadě. Bez `?seed=` je losování náhodné.
 
@@ -430,7 +431,7 @@ Minimální sada:
 - stránka obsahuje `noindex` (do milníku 8), po milníku 8 už ne
 - štítek TRÉNINK je viditelný na všech obrazovkách simulace
 - 200% zvětšení textu: žádné vodorovné posouvání na 360 px
-- validace obsahu: každý JSON má povinná pole, každý `target` odpovídá existující části zprávy, každá `category` je z povoleného seznamu, v každé sekci je aspoň 11 scénářů a z nich aspoň 5 legitimních (v milníku 3 s testovacími zprávami se kontroluje jen minimum pro losování), žádný scénář nemá pole `relatedArticle`
+- validace obsahu: každý JSON má povinná pole, každý `target` odpovídá existující části zprávy, každá `category` je z povoleného seznamu, v každé sekci je zásoba podle cíle (E-mail 12 scénářů: 6 podvodů a 6 legitimních, Zprávy 11 scénářů, z nich aspoň 5 legitimních) (v milníku 3 s testovacími zprávami se kontroluje jen minimum pro losování), žádný scénář nemá pole `relatedArticle`
 - pojistky deploye (sekce 14): cesty s `..` nebo mimo povolené hodnoty skončí chybou; cílová složka s WordPressem (`wp-config.php`, `wp-admin`, `wp-content`, `wp-includes`) skončí chybou
 
 Po testech Tomáš projde aplikaci ručně na svém telefonu s velkým systémovým písmem.
@@ -498,6 +499,8 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **Stav k 25. 9. 2026:** Zprávy `zpravy-01` až `zpravy-08` jsou skutečné (5 podvodů, 3 legitimní), `zpravy-06` až `zpravy-08` zabudované po schválení textů (čtvrté kolo v `docs/navrhy-scenaru-zpravy.md`). Obě sekce mají po 8 scénářích, žádnou testovací zprávu. Věta o 7726 je ve `zpravy-01` a v nápovědě Zpráv nahrazená. **Pushnuto a nasazeno** (commit `1338f99`). Ověřeno na živé stránce: JS `text/javascript`, `noindex`, `zpravy-06` až `zpravy-08` se zobrazí se správným odesílatelem a štítkem, bez chyb.
 - **Obsah milníku 6 hotový (25. 9. 2026):** obě sekce mají po 11 scénářích (5 podvodů, 6 legitimních). Nové legitimní `email-09` až `email-11` a `zpravy-09` až `zpravy-11`, bod 3 nápovědy e-mailu („Obyčejná lhůta sama o sobě podvod není…“), v kole 2–3 legitimní. `ENFORCE_CONTENT_GOALS = true`. **Pushnuto a nasazeno** (commit `5ca0a0e`), ověřeno na živé stránce (JS `text/javascript`, 12 kol bez chyb, rozložení 2 : 3 legitimních na 1000 seedech 504 : 496).
 - **Další krok:** milník 7 (testy a kontrola, Tomáš projde hru na telefonu s velkým systémovým písmem). Nálezy z kontroly přehledu proti sekci 7 jsou vyřešené a nasazené (commit `33bd09c`, ověřeno na živé stránce). `docs/prehled-scenaru.md` odpovídá obsahu. Shrnutí starších legitimních zpráv (`email-03`, `email-07`, `email-09`, `zpravy-03`, `zpravy-07`, `zpravy-08`) jsou upravená podle nových zásad sekce 7, pushnutá a nasazená (commit `618edca`, ověřeno na živé stránce: `noindex`, nová znění v JS, kolo se vykreslí bez chyb).
+
+- **28. 9. 2026:** návrh `email-12` (falešná ČSSZ, doplatek důchodu, chyby v češtině, 4 hrozby) je v `docs/navrhy-scenaru-email.md` a čeká na Tomášovo schválení. Nic se nestavělo. Cíl E-mailu je 12 scénářů (6 podvodů, 6 legitimních); test cíle u e-mailu se zapne `EMAIL_12_BUILT = true` po zabudování. Zásada o gramatických chybách je v sekci 7.
 
 **Otevřené úkoly:**
 - ~~Před zveřejněním odkazu na hru: testovací zprávy.~~ **Hotovo 25. 9. 2026:** všechny testovací zprávy (`email-04` až `email-07`, `zpravy-04` až `zpravy-07`) nahradily skutečné scénáře, v bance žádná testovací zpráva nezůstala.

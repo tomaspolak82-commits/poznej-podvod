@@ -6,10 +6,14 @@ import { THREAT_CATEGORIES } from './categories.js';
 
 // Minimum a section needs so a round of 5 with 2–3 legitimate messages can always be drawn
 // (3 scams + 2 legitimate; with more legitimate the round simply takes 3 of them).
-// The content goal of milestone 6 (11 scenarios, at least 5 legitimate; changed from 20 on
-// 25. 9. 2026) is checked separately, see checkSectionGoals.
+// The content goal per section is checked separately, see checkSectionGoals.
+// Milestone 6: 11 scenarios, at least 5 legitimate (changed from 20 on 25. 9. 2026);
+// e-mail raised to 12 (6 scams, 6 legitimate) with email-12 on 28. 9. 2026.
 export const DRAW_MINIMUM = { scam: 3, legit: 2 };
-export const CONTENT_GOAL = { total: 11, legit: 5 };
+export const CONTENT_GOAL = {
+  email: { total: 12, scam: 6, legit: 6 },
+  zpravy: { total: 11, scam: 5, legit: 5 },
+};
 
 const isNonEmptyString = (value) => typeof value === 'string' && value.trim() !== '';
 
@@ -173,9 +177,13 @@ export function checkSectionForDraw(scenarios, section) {
 
 // Content goal from milestone 6 on (CLAUDE.md, section 7). Returns problems in Czech.
 export function checkSectionGoals(scenarios, section) {
+  const goal = CONTENT_GOAL[section];
+  if (!goal) return [`sekce ${section}: nemá stanovený cíl obsahu`];
   const legit = scenarios.filter((s) => !s.isScam).length;
+  const scam = scenarios.length - legit;
   const errors = [];
-  if (scenarios.length < CONTENT_GOAL.total) errors.push(`sekce ${section}: ${scenarios.length} scénářů, cíl je aspoň ${CONTENT_GOAL.total}`);
-  if (legit < CONTENT_GOAL.legit) errors.push(`sekce ${section}: ${legit} legitimních, cíl je aspoň ${CONTENT_GOAL.legit}`);
+  if (scenarios.length < goal.total) errors.push(`sekce ${section}: ${scenarios.length} scénářů, cíl je aspoň ${goal.total}`);
+  if (scam < goal.scam) errors.push(`sekce ${section}: ${scam} podvodů, cíl je aspoň ${goal.scam}`);
+  if (legit < goal.legit) errors.push(`sekce ${section}: ${legit} legitimních, cíl je aspoň ${goal.legit}`);
   return errors;
 }
