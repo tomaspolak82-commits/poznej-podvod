@@ -2,7 +2,6 @@
 :root {
   --color-white: #ffffff;       /* main background */
   --color-bg: #f7fafc;          /* secondary surfaces */
-  --color-teal: #008080;        /* supporting colour only: check icon of a correct answer */
   --color-dark: #2a2f35;        /* dark surfaces (badges) */
   --color-red: #ff4d4d;         /* logo and decorative marks; never as text or behind text */
   --color-yellow: #ffb302;      /* hint bulbs; always with dark text */
@@ -16,6 +15,10 @@
   --color-red-hover: #a82626;   /* pressed / hover state of red buttons, 7.1:1 */
   --color-red-tint: #fbeaea;    /* icon backgrounds, hover background of outlined buttons */
   --color-border: #d5dde6;      /* card borders (decorative) */
+  /* Evaluation: how the player answered (correct = green, wrong = red), always with icon + text */
+  --color-green: #1e7b34;       /* correct: icons, frames; as text on white 5.3:1 */
+  --color-green-tint: #e8f5eb;  /* soft background of a correct part status; green on it 4.8:1 */
+  --color-yellow-tint: #fff6dc; /* summary box; --color-heading on it ~15:1 */
   --color-muted-icon: #718096;  /* inactive icons, ~4:1 on --color-bg */
   --color-focus: #1a202c;       /* focus ring on light surfaces */
 

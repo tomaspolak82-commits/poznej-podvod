@@ -334,11 +334,16 @@
   flex-wrap: wrap;
 }
 
+/* Colour shows how the player answered (correct = green, wrong = red), never whether the part is
+   a threat, and always together with the icon and the text. Red stays mild: frame and icon only. */
 .part-status {
   display: flex;
   flex-basis: 100%;
   align-items: center;
   gap: var(--space-1);
+  padding: 0.25rem var(--space-1);
+  border-left: 4px solid;
+  border-radius: 0 8px 8px 0;
   color: var(--color-heading);
   font-weight: 700;
 }
@@ -349,16 +354,23 @@
   height: 1.5rem;
 }
 
+.part-status--found {
+  border-color: var(--color-green);
+  background: var(--color-green-tint);
+}
+
 .part-status--found svg {
-  color: var(--color-teal);
+  color: var(--color-green);
 }
 
-.part-status--missed svg {
-  color: var(--color-red-dark);
+.part-status--missed,
+.part-status--extra {
+  border-color: var(--color-red-dark);
 }
 
+.part-status--missed svg,
 .part-status--extra svg {
-  color: var(--color-text);
+  color: var(--color-red-dark);
 }
 
 .part-status--missed {
@@ -425,9 +437,21 @@
   height: 100%;
 }
 
-/* Colour only supports the icon and the text, it never carries the meaning alone */
+/* Colour shows how the player answered, not whether the message was a scam. It only supports
+   the icon and the text; red stays mild (frame and icon, no red block). */
+.evaluation-result--correct {
+  border-color: var(--color-green);
+  border-left-width: 8px;
+  background: var(--color-green-tint);
+}
+
 .evaluation-result--correct .evaluation-result__icon {
-  color: var(--color-teal);
+  color: var(--color-green);
+}
+
+.evaluation-result--wrong {
+  border-color: var(--color-red-dark);
+  border-left-width: 8px;
 }
 
 .evaluation-result--wrong .evaluation-result__icon {
@@ -502,13 +526,15 @@
   height: 1.5rem;
 }
 
+/* Highlighted box in the Méně Starostí yellow: dark text on a light yellow background */
 .evaluation-summary {
   display: grid;
   gap: var(--space-1);
   padding: var(--space-3) var(--space-2);
   border-radius: var(--radius-card);
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
+  background: var(--color-yellow-tint);
+  border: 2px solid var(--color-yellow);
+  color: var(--color-heading);
 }
 
 .evaluation-summary h2 {
