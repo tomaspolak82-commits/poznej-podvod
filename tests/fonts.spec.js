@@ -6,7 +6,7 @@ const CHARACTERS = 'ěščřžýáíéúůťďňóĚŠČŘŽÝÁÍÉÚŮŤĎŇÓ
 const FACES = [
   ['Lato', 400],
   ['Lato', 700],
-  ['Montserrat', 400],
+  // The site uses Montserrat only at 700 and 800 (static cuts, 28. 9. 2026)
   ['Montserrat', 700],
   ['Montserrat', 800],
 ];
@@ -39,7 +39,36 @@ test('local fonts load and contain every Czech character (no fallback font)', as
   );
 
   expect(result.missing).toEqual([]);
-  // Montserrat: latin + latin-ext (variable), Lato: 400 + 700
+  // Montserrat: 700 + 800 (static), Lato: 400 + 700
   expect(result.loaded.filter((family) => family.includes('Montserrat'))).toHaveLength(2);
   expect(result.loaded.filter((family) => family.includes('Lato'))).toHaveLength(2);
+});
+
+// Headings must look bold, not only be wide: WebKit on Windows drew the former variable
+// Montserrat with bold widths but hairline strokes. "Ink" = share of dark pixels of the same text.
+// Measured 28. 9. 2026: Montserrat 700 / 800 ≈ 1.85× / 2.1× the ink of Lato 400 (Chromium and
+// WebKit alike); the thin variable font in WebKit had 0.3×.
+test('Montserrat headings are really drawn bold (ink compared with regular Lato)', async ({ page }) => {
+  await page.goto('/');
+  const ink = await page.evaluate(async () => {
+    await Promise.all(['700 40px Montserrat', '800 40px Montserrat', '400 40px Lato'].map((f) => document.fonts.load(f)));
+    const measure = (font) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 600;
+      canvas.height = 80;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, 600, 80);
+      ctx.fillStyle = '#000';
+      ctx.font = font;
+      ctx.fillText('Poznej podvod', 10, 55);
+      const { data } = ctx.getImageData(0, 0, 600, 80);
+      let sum = 0;
+      for (let i = 0; i < data.length; i += 4) sum += 255 - data[i];
+      return sum / 255;
+    };
+    return { lato: measure('400 40px Lato'), m700: measure('700 40px Montserrat'), m800: measure('800 40px Montserrat') };
+  });
+  expect(ink.m700 / ink.lato).toBeGreaterThan(1.5);
+  expect(ink.m800 / ink.lato).toBeGreaterThan(1.5);
 });
