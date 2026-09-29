@@ -53,6 +53,8 @@ Cíl: pracuj co nejvíc samostatně. Zastav se jen v případech níže.
 ### Nasazení do veřejného vydání
 - Po každém push nasaď sám. Vždy nejdřív --dry-run.
 - **Pozor na starší výpisy:** do 28. 9. 2026 se `--dry-run` k serveru nepřipojoval a mazání nevypisoval (jen obecnou větu „smazaly by se staré soubory ve složkách assets, fonts“). Konkrétní mazané soubory ukázalo až skutečné nasazení. Od opravy (sekce 14) se zkouška připojí jen ke čtení a vypíše přesně, co by nahrála a co by smazala.
+- Po každém nasazení ověř, že `http://poznej-podvod.menestarosti.cz` vrací 301 s `Location` na `https://` (od 29. 9. 2026).
+- **`.htaccess` a nasazení:** soubor je v `public/`, takže ho každé nasazení nahraje (přepíše ten na serveru). Skript ho **nikdy nesmaže**, ani kdyby v `dist/` chyběl: maže jen soubory přímo ve složkách `assets/` a `fonts/`, soubory v kořeni ne. Když se `.htaccess` na serveru změní ručně, přepíše ho další nasazení. Zkouška to ukáže jako „jiná velikost .htaccess“, a to je důvod zastavit se a zeptat se Tomáše.
 - Když výpis obsahuje cokoli jiného než nahrání souborů a mazání starých souborů ve složkách assets a fonts, nebo skript ohlásí WordPress či jinou chybu, NENASAZUJ a pošli mi celý výpis.
 - Do vydání musí stránka mít <meta name="robots" content="noindex">. Odstranit až na můj pokyn. Žádný robots.txt se zákazem: vyhledávač by pak stránku nepřečetl, `noindex` by neviděl a adresa by se mohla ve výsledcích objevit bez popisu (Tomášovo rozhodnutí 24. 9. 2026).
 - Před veřejným vydáním (zveřejnění odkazu) toto pravidlo končí a nasazuje se jen na můj výslovný pokyn.
@@ -512,7 +514,10 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - ~~Před zveřejněním odkazu na hru: zdroje Finanční správy.~~ **Hotovo 28. 9. 2026:** oba zdroje ke scénáři `email-02` znovu ověřeno Claudem v chatu 28. 9. 2026, tvrzení sedí. Tomáš rozhodl, že je číst nebude a stačí toto ověření (sekce 17 C).
 - ~~Logo nad názvem během kola na počítači.~~ **Opraveno 28. 9. 2026:** bez podtitulu byl samotný název užší než základ šířky textu (12rem), a tak se na širokém displeji zalomil pod logo. Během kola se šířka textu řídí názvem (`.is-in-round .site-header__text` v `game.css`). Hlídá test „in a round the logo still sits next to the title“ v `tests/home.spec.js`.
 - ~~Tenký Montserrat ve WebKitu.~~ **Vyřešeno 28. 9. 2026:** proměnný řez kreslil WebKit na Windows tence (šířky tučné, tahy vlasové). Tmavé body textu „Poznej podvod“: proměnný řez 627, Lato 400 2141. Nahrazen statickými řezy 700 a 800 (sekce 9): ve WebKitu 3970 / 4579, v Chromiu 3929 / 4550, na snímku vizuálně tučné. Hlídá test v `tests/fonts.spec.js`. Na skutečném iPhonu neověřeno (Tomáš ho nemá). Nevyužité soubory `public/fonts/montserrat-var-*.woff2` jsou po Tomášově OK smazané. Předtím prošla kontrola, že Montserrat se kreslí jen v tloušťce 700 a 800 (CSS i výchozí hodnoty nadpisů a `<strong>`).
-- **Přesměrování http → https:** web zatím funguje na obou adresách. **Odloženo, řeší se zvlášť** (Tomáš, 28. 9. 2026). Návrh pravidla je v `docs/navrh-presmerovani-https.md`, podpora `.htaccess` u Subregu neověřena. `.htaccess` nevytvářet ani nenasazovat bez Tomášova OK.
+- ~~Přesměrování http → https.~~ **Běží od 29. 9. 2026:** Tomáš nahrál `.htaccess` do kořene subdomény ručně přes FTP. Pravidlo: `http://` → `https://` kódem 301 (trvalé), výjimka pro `/.well-known/acme-challenge/` (obnova certifikátu Let's Encrypt). V repozitáři je jako `public/.htaccess`, Vite ho kopíruje do `dist/`, obsah hlídá `tests/unit/htaccess.spec.js`.
+  - **Ověření:** `curl.exe -I http://poznej-podvod.menestarosti.cz` vrací `301` a `Location: https://poznej-podvod.menestarosti.cz/`. Ověřeno 29. 9. 2026: 301 s Location na https, `https://` vrací 200, `/.well-known/acme-challenge/…` se nepřesměrovává.
+  - **Návrat:** na hostingu (FileZilla) přejmenovat `.htaccess` na `htaccess-vypnuto.txt`. `curl.exe -I http://…` pak vrací 200. Pozor: další nasazení by `.htaccess` z `dist/` nahrálo znovu, proto ho při vypnutí smazat i z `public/`.
+  - **Rozdíl proti serveru (29. 9. 2026):** ručně nahraný soubor má na serveru 176 B, `public/.htaccess` 165 B. Obsah serverového souboru Claude nevidí, nasazení by ho přepsalo verzí z repozitáře.
 - **Obnova certifikátu:** certifikát Let's Encrypt platí do 23. 12. 2026. Kolem 10. 12. 2026 zkontrolovat, jestli ho Subreg obnovil (datum platnosti na https://poznej-podvod.menestarosti.cz).
 
 **Pravidla, repozitář a hosting:**
@@ -532,7 +537,7 @@ Odkaz se zveřejní až po Tomášově výslovném pokynu (sekce 2a). Do té dob
 4. Odstranit `<meta name="robots" content="noindex">` z `index.html` a upravit test na „noindex už není“. Poznáte to tak, že test to hlídá.
 5. Spustit celou sadu testů. Poznáte to tak, že všechny projdou (očekávané selhání `test.fail` se počítá jako v pořádku).
 6. Commit, push, `npm run deploy -- --dry-run`, nasazení. Poznáte to tak, že výpis obsahuje jen nahrání souborů a mazání ve složkách assets a fonts.
-7. Živá stránka: JS `text/javascript`, `noindex` pryč, kolo se vykreslí v Chromiu i WebKitu bez chyb. Poznáte to tak, že je to zapsané v sekci 16.
+7. Živá stránka: JS `text/javascript`, `noindex` pryč, kolo se vykreslí v Chromiu i WebKitu bez chyb, `http://` vrací 301 s `Location` na `https://`. Poznáte to tak, že je to zapsané v sekci 16.
 8. Konec pravidla „po každém push nasaď sám“: od teď se nasazuje jen na Tomášův pokyn (sekce 2a).
 
 ### B. Ruční kontrola na telefonu (Tomáš, asi 20 minut)
@@ -570,5 +575,5 @@ Znovu ověřeno Claudem v chatu 28. 9. 2026 proti zdrojům, všechna tvrzení se
 ### D. Další úkoly před zveřejněním
 1. **Zkouška s 1–2 seniory** (doplněno 28. 9. 2026): senior hraje sám na svém telefonu, Tomáš jen pozoruje a nenapovídá. Postřehy se zapisují podle `docs/plany/plan-milnik-7.md` (sekce 2, testeři jen jako T1, T2). Poznáte to tak, že je zapsaná aspoň jedna celá hra od začátku do konce kola.
 2. ~~Tučný Montserrat.~~ **Hotovo 28. 9. 2026:** statické řezy 700 a 800, ve WebKitu i Chromiu vizuálně tučné (test v `tests/fonts.spec.js`). Skutečný iPhone neověřen, Tomáš ho nemá (krok B14).
-3. Přesměrování http → https: odložené, řeší se zvlášť (návrh v `docs/navrh-presmerovani-https.md`). Udělat brzy po vydání, adresa zadaná ručně bez https může v prohlížeči ukázat varování „nezabezpečeno“.
+3. ~~Přesměrování http → https.~~ **Hotovo 29. 9. 2026** (sekce 16: pravidlo, ověření a návrat).
 4. Přilepená lišta při 200% písmu: nízká priorita, zveřejnění neblokuje (sekce 16).

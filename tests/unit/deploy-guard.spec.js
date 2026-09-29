@@ -111,9 +111,9 @@ test.describe('deploy plan: what would be uploaded and deleted', () => {
 
   test('every local file is uploaded, marked new / other size / same size', () => {
     expect(planDeploy(local, remote).upload).toEqual([
-      { path: 'index.html', status: 'same-size' },
-      { path: 'assets/index-NEW.js', status: 'new' },
-      { path: 'fonts/montserrat-700.woff2', status: 'changed' },
+      { path: 'index.html', status: 'same-size', localSize: 610, remoteSize: 610 },
+      { path: 'assets/index-NEW.js', status: 'new', localSize: 72870, remoteSize: undefined },
+      { path: 'fonts/montserrat-700.woff2', status: 'changed', localSize: 130012, remoteSize: 130000 },
     ]);
   });
 

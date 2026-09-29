@@ -110,7 +110,10 @@ async function listRemoteFiles(client, rootEntries) {
 
 function printPlan({ upload, remove }) {
   console.log(`  Nahrálo by se (${upload.length}, nahrávají se vždy všechny soubory z dist/):`);
-  for (const { path: file, status } of upload) console.log(`    ${UPLOAD_STATUS[status]}  ${file}`);
+  for (const { path: file, status, localSize, remoteSize } of upload) {
+    const sizes = status === 'changed' ? ` (server ${remoteSize} B, dist ${localSize} B)` : '';
+    console.log(`    ${UPLOAD_STATUS[status]}  ${file}${sizes}`);
+  }
   console.log(`  Smazalo by se (${remove.length}, jen ve složkách ${OWNED_DIRS.join(', ')}):`);
   for (const file of remove) console.log(`    − ${file}`);
   if (remove.length === 0) console.log('    (nic)');

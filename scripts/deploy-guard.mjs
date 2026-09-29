@@ -22,6 +22,8 @@ export function planDeploy(localFiles, remoteFiles, ownedDirs = OWNED_DIRS) {
   const upload = localFiles.map(({ path, size }) => ({
     path,
     status: !remoteFiles.has(path) ? 'new' : remoteFiles.get(path) === size ? 'same-size' : 'changed',
+    localSize: size,
+    remoteSize: remoteFiles.get(path),
   }));
   const inOwnedDir = (path) =>
     ownedDirs.some((dir) => path.startsWith(`${dir}/`) && !path.slice(dir.length + 1).includes('/'));
