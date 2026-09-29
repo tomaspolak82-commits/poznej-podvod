@@ -531,7 +531,7 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 Odkaz se zveřejní až po Tomášově výslovném pokynu (sekce 2a). Do té doby musí být hotové body B, C a D1–D2. Body D3 (přesměrování http → https) a D4 (přilepená lišta) zveřejnění neblokují. Pak proběhne A.
 
 ### A. Vydání (dělá Claude po Tomášově pokynu ke zveřejnění)
-1. Body B, C a D jsou odškrtnuté. Poznáte to tak, že v sekci 17 u nich je „hotovo“.
+1. Body B, C a D1–D2 jsou odškrtnuté. Poznáte to tak, že v sekci 17 u nich je „hotovo“.
 2. Týž den znovu ověřit blok 772 100 000 až 772 199 999 v datech ČTÚ (`zpravy-06`). Poznáte to tak, že blok nemá držitele. **Poslední ověření:** 28. 9. 2026 na datech ČTÚ z 28. 9. 2026 (CSV https://data.ctu.gov.cz/sites/default/files/imports/import_numbers/pridelena_cisla_a_kody.csv, server hlásí poslední změnu 28. 9. 2026 02:35 GMT), 13 206 řádků, žádný rozsah blok nepřekrývá. Kontrola metody: stejný výpočet najde přidělený rozsah 772 720 000 až 772 729 999 (držitel IPEX TELCO a.s.).
 3. Znovu ověřit smyšlené domény v podvodných scénářích (registr vrací 404, DNS neexistuje). Poznáte to tak, že všechny jsou dál volné.
 4. Odstranit `<meta name="robots" content="noindex">` z `index.html` a upravit test na „noindex už není“. Poznáte to tak, že test to hlídá.
