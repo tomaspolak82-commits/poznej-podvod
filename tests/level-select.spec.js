@@ -10,9 +10,9 @@ test.describe('level select', () => {
 
     // Basic level: 5 messages × 2 points
     await expect(page.getByTestId('max-points-zakladni')).toHaveText('10');
-    // Advanced max depends on drawn messages (milestone 3); for now just a positive number
-    const advanced = Number(await page.getByTestId('max-points-pokrocila').textContent());
-    expect(advanced).toBeGreaterThan(10);
+    // Advanced max depends on the drawn messages (no seed here): a whole number above 10
+    // (11–99 or more digits). The exact value is checked with a seed in round-basic.spec.js.
+    await expect(page.getByTestId('max-points-pokrocila')).toHaveText(/^(1[1-9]|[2-9]\d|\d{3,})$/);
   });
 
   test('messages section has its own level select', async ({ page }) => {

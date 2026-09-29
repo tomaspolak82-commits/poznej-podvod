@@ -257,7 +257,7 @@ Pro sekci Zprávy se `message` liší: `app` („sms“ / „chat“), `from` (�
 
 `target` odkazuje na část zprávy (`fromName`, `fromAddress`, `subject`, `body.N`, `button`, `link`, `attachment`, `from`, `messages.N`, `messages.N.link` = odkaz uvnitř bubliny). Klikání je vázané na prvky, ne na souřadnice. Volitelné pole `alsoTargets` (pole dalších částí) naváže jednu hrozbu na víc částí zprávy, např. `"target": "fromAddress", "alsoTargets": ["fromName"]`: označení kterékoli z nich je jeden zásah, žárovka a „Tohle místo stojí za druhý pohled“ jsou u hlavního `target`.
 
-Kontrola obsahu (`src/engine/validate.js`) běží při každém `npm run build` i `npm run dev` a chybný scénář build zastaví s českým popisem chyby. Kromě povinných polí hlídá:
+Kontrola obsahu (`src/engine/validate.js`) běží při každém `npm run build` a chybný scénář build zastaví s českým popisem chyby. Při `npm run dev` běží jen jednou, při startu serveru (Vite volá `buildStart` jen při startu, `docs/audit-dokumentace.md`, nález 6): scénář upravený za běhu `npm run dev` se zkontroluje až při dalším startu nebo buildu. Kromě povinných polí hlídá:
 - `id` = název souboru bez `.json`, `section` = název složky, ID jsou jedinečná napříč sekcemi
 - podvod má 1–4 hrozby, **legitimní zpráva nemá žádnou hrozbu** (`threats: []`)
 - žádný `target` se nesmí opakovat a musí odpovídat existující části zprávy (volitelné části jako `button` jen, když ve zprávě jsou)
@@ -579,3 +579,4 @@ Znovu ověřeno Claudem v chatu 28. 9. 2026 proti zdrojům, všechna tvrzení se
 2. ~~Tučný Montserrat.~~ **Hotovo 28. 9. 2026:** statické řezy 700 a 800, ve WebKitu i Chromiu vizuálně tučné (test v `tests/fonts.spec.js`). Skutečný iPhone neověřen, Tomáš ho nemá (krok B14).
 3. ~~Přesměrování http → https.~~ **Hotovo 29. 9. 2026** (sekce 16: pravidlo, ověření a návrat).
 4. Přilepená lišta při 200% písmu: nízká priorita, zveřejnění neblokuje (sekce 16).
+5. **Po zkoušce se seniory (D1): aktualizace Vite a dotenv** (audit 29. 9. 2026, `docs/audit-dokumentace.md`). `npm outdated` hlásí vite 8.3.0 → 8.3.1 a dotenv 18.0.3 → 18.0.4, obě jen opravné verze v rozsahu `^`. Co se v nich změnilo, Context7 neukazuje (má Vite jen do 8.0.10, dotenv bez čísla verze), proto před aktualizací přečíst jejich seznam změn. Pak `npm update vite dotenv`, celá sada, zkouška nasazení. Zveřejnění neblokuje.

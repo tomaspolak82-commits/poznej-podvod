@@ -11,7 +11,8 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: `http://localhost:${PORT}`,
-    trace: 'on-first-retry',
+    // Locally there are no retries, so 'on-first-retry' would never record; this keeps a trace of every failed run
+    trace: 'retain-on-failure',
   },
   // Devices from CLAUDE.md, section 12. Browser tests skip tests/unit/,
   // which runs once in the "unit" project (pure Node, no browser needed).

@@ -112,8 +112,12 @@ test('page loads nothing from other servers (privacy)', async ({ page, baseURL }
     if (!request.url().startsWith(baseURL)) foreign.push(request.url());
   });
   await page.goto('/');
+  // networkidle is discouraged for waiting on the page (Playwright docs), but here the test is
+  // about the network itself: it waits until nothing more is requested, so late requests
+  // (fonts, images) to other servers are caught too. No page element marks "all requests done".
   await page.waitForLoadState('networkidle');
   await page.goto('/#/email');
+  // Same reason as above: collect every request of the level select screen
   await page.waitForLoadState('networkidle');
   expect(foreign).toEqual([]);
 });

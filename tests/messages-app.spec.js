@@ -1,5 +1,6 @@
 // Simulated messages app, SMS and chat (milestone 5, CLAUDE.md sections 6 and 12).
 import { test, expect } from '@playwright/test';
+import { LINK_NOTICE, MESSAGES_APP } from '../src/texts.js';
 import {
   currentScenarioId,
   decide as decideAndConfirm,
@@ -100,16 +101,15 @@ test.describe(`chat: number not saved in contacts (${SEEDS})`, () => {
       const bar = page.getByTestId('not-in-contacts');
       await expect(bar).toContainText('Toto číslo není ve vašich kontaktech');
       await expect(bar.locator('[data-mark]')).toHaveCount(0);
-      const texts = [];
+      // Both buttons show the same text
       for (const name of ['Přidat', 'Nahlásit a zablokovat']) {
         await bar.getByRole('button', { name, exact: true }).click();
         const dialog = page.getByRole('dialog');
-        texts.push(await dialog.locator('.dialog__body').textContent());
+        await expect(dialog.locator('.dialog__body')).toHaveText(MESSAGES_APP.buttonNotice);
         await dialog.getByRole('button', { name: 'Zavřít a pokračovat' }).click();
         await expect(dialog).toHaveCount(0);
       }
-      expect(texts[0]).toBe(texts[1]);
-      expect(texts[0]).toContain('Tohle je jen trénink, tlačítko nic nedělá.');
+      expect(MESSAGES_APP.buttonNotice).toContain('Tohle je jen trénink, tlačítko nic nedělá.');
       // Nothing got marked by the bar
       await expect(page.locator('[data-mark][aria-pressed="true"]')).toHaveCount(0);
     });
@@ -126,16 +126,15 @@ test.describe(`chat: number not saved in contacts (${SEEDS})`, () => {
 test.describe(`basic level (${SEEDS})`, () => {
   test('a link shows the same notice in a scam (zpravy-01) and a legitimate message (zpravy-03)', async ({ page }) => {
     await start(page);
-    const notices = [];
+    // Both messages show the same text
     for (const id of ['zpravy-01', 'zpravy-03']) {
       await goToScenario(page, id);
       await page.locator('[data-action="notice"]').first().click();
       const dialog = page.getByRole('dialog');
-      notices.push(await dialog.locator('.dialog__body').textContent());
+      await expect(dialog.locator('.dialog__body')).toHaveText(LINK_NOTICE);
       await dialog.getByRole('button', { name: 'Zavřít a pokračovat' }).click();
     }
-    expect(notices[0]).toBe(notices[1]);
-    expect(notices[0]).toContain('Tohle je jen trénink, odkaz nikam nevede');
+    expect(LINK_NOTICE).toContain('Tohle je jen trénink, odkaz nikam nevede');
   });
 });
 

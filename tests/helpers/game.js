@@ -2,6 +2,7 @@
 // functions and the same seed as the app, so tests know which messages come.
 
 import path from 'node:path';
+import { expect } from '@playwright/test';
 import { readSection } from '../../scripts/content-files.mjs';
 import { createRandom } from '../../src/engine/random.js';
 import { drawRound } from '../../src/engine/round.js';
@@ -52,12 +53,16 @@ export async function currentScenarioId(page) {
   return page.locator('[data-scenario-id]').getAttribute('data-scenario-id');
 }
 
-// E-mail: every message starts in the inbox; opens the task message when the inbox is shown.
-// Sections without an inbox (Zprávy until milestone 5) show the message right away.
+// E-mail: every message starts in the inbox, so the task message must be there and is opened.
+// Zprávy has no inbox and shows the message right away. The section comes from the address
+// (#/email…), not from what happens to be on the page, so a missing inbox fails the test.
 export async function openCurrentMessage(page) {
   await page.locator('[data-scenario-id]').waitFor();
-  const task = page.locator('[data-mail="open"]');
-  if (await task.count()) await task.click();
+  if (new URL(page.url()).hash.startsWith('#/email')) {
+    const task = page.locator('[data-mail="open"]');
+    await expect(task).toBeVisible();
+    await task.click();
+  }
   await page.locator('article[data-scenario-id]').waitFor();
 }
 
@@ -80,12 +85,25 @@ export async function showAddress(page) {
 }
 
 // Clicks a decision ('scam' | 'ok'). At the advanced level a decision that does not match the
-// marks opens a confirmation window; this confirms it, so the answer counts as before.
-// Tests of the window itself click the decision button directly.
+// marks ("scam" with nothing marked, "ok" with something marked) must open a confirmation
+// window; this confirms it, so the answer counts as before. Without a mismatch the window must
+// not appear. Tests of the window itself click the decision button directly.
 export async function decide(page, choice) {
+  // Level and marks are read from the open message before the click: parts to mark exist only
+  // at the advanced level, and aria-pressed is set as soon as a part is clicked.
+  const { advanced, marked } = await page.locator('article[data-scenario-id]').evaluate((message) => ({
+    advanced: message.querySelector('[data-mark]') !== null,
+    marked: message.querySelectorAll('[data-mark][aria-pressed="true"]').length,
+  }));
+  const mismatch = advanced && (choice === 'scam' ? marked === 0 : marked > 0);
+
   await page.getByRole('button', { name: choice === 'scam' ? 'Je to podvod' : 'Je to v pořádku' }).click();
-  const confirm = page.locator('dialog[open] [data-value="confirm"]');
-  if (await confirm.count()) await confirm.click();
+  const dialog = page.locator('dialog[open]');
+  if (mismatch) {
+    await expect(dialog).toBeVisible();
+    await dialog.locator('[data-value="confirm"]').click();
+  }
+  await expect(dialog).toHaveCount(0);
 }
 
 // choose(scenario) → 'scam' | 'ok'; returns the list of played scenario IDs.
