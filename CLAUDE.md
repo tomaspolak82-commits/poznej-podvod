@@ -547,7 +547,7 @@ Podrobný postup s tím, na co se dívat, je v `docs/kontrola-na-telefonu.md`. S
 2. Otevřete https://poznej-podvod.menestarosti.cz (ne v anonymním okně).
 3. Hlavní stránka a výběr úrovně jsou celé čitelné, nic nepřetéká do strany.
 4. E-mail, základní úroveň: zprávu jde otevřít, „▾ zobrazit adresu“ jde trefit, nápověda se otevře i zavře.
-5. Vyhodnocení: správná odpověď má zelený rámeček, špatná červený. U obou je ikona a text. Shrnutí je ve žlutém rámečku.
+5. Vyhodnocení: správná odpověď má světle zelený podklad, špatná červený rámeček na bílé. U obou je ikona a text. Shrnutí je ve žlutém rámečku.
 6. Odkaz, tlačítko nebo příloha ukážou okno „Tohle je jen trénink…“.
 7. Dohrajte kolo. Konec kola je čitelný.
 8. Zprávy, pokročilá úroveň: označte a odznačte část zprávy.
@@ -560,8 +560,8 @@ Podrobný postup s tím, na co se dívat, je v `docs/kontrola-na-telefonu.md`. S
 15. Na počítači během kola: logo v hlavičce je vedle názvu „Poznej podvod“, ne nad ním.
 16. Vraťte velikost písma v telefonu zpět.
 
-### C. Zdroje, které si Tomáš před zveřejněním přečte sám
-Ve hře o nich tvrdíme věci za úřady. Ověřeno doslova jen Claudem, ne člověkem.
+### C. Zdroje, které si Tomáš před zveřejněním přečte sám — **hotovo 28. 9. 2026**
+Znovu ověřeno Claudem v chatu 28. 9. 2026 proti zdrojům, všechna tvrzení sedí. Stránky policie.gov.cz jen přes výtah vyhledávače (web nepovoluje automatické čtení). Tomáš je nečetl, rozhodl, že stačí toto ověření.
 - **`email-02` (Finanční správa):** hra tvrdí, že Finanční správa „e-mailem nežádá přihlašovací ani bankovní údaje“ a „neposílá e-mailem odkazy pro platby ani pro přihlášení“.
   - https://financnisprava.gov.cz/cs/financni-sprava/media-a-verejnost/tiskove-zpravy-gfr/tiskove-zpravy-2025/dalsi-intenzivni-vlna-podvodnych-emailu-a-sms (30. 10. 2025)
   - https://financnisprava.gov.cz/cs/financni-sprava/novinky/novinky-2025/financni-sprava-varuje-pred-dalsi-vlnou-podvodnych-mailu (17. 12. 2025)
