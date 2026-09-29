@@ -492,17 +492,11 @@ Architektura musí umožnit přidat sekci tak, že přibude obrazovka simulovan�
 - `npm run deploy` / `npm run deploy -- --dry-run` / `npm run deploy -- --check`: nasazení / zkouška s připojením jen ke čtení (co by nahrál a smazal) / kontrola serveru bez změn
 - `npx playwright test --project=unit`: jen rychlé testy logiky bez prohlížeče
 
-## 16. Stav projektu (k 24. 9. 2026)
+## 16. Stav projektu (k 29. 9. 2026)
 
 Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 
-- **Milník 6 probíhá.** E-mail: scénáře `email-01` až `email-08` jsou skutečné (5 podvodů, 3 legitimní), `email-04` až `email-08` a body 4 a 5 nápovědy e-mailu zabudované 24. 9. 2026 (záznam zdrojů a rozhodnutí v `docs/navrhy-scenaru-email.md`). Návrhy Zpráv čekají v `docs/navrhy-scenaru-zpravy.md`.
-- Vlastní text po klepnutí na přílohu (`ATTACHMENT_NOTICE`) zabudovaný 24. 9. 2026.
-- **Nasazeno 24. 9. 2026** (commit `1b26bd8`): e-maily 01–08, nová nápověda e-mailu, text u přílohy. Ověřeno na https: JS `text/javascript`, CSS `text/css`, `noindex` na stránce, hra se vykreslí a příloha ukáže nový text (Chromium, bez chyb na stránce).
-- **Zprávy, stav 24. 9. 2026:** schválené číslo +420 772 145 208 (`zpravy-06`), obec „Javorná Lhota“ (`zpravy-08`), 158 jako odesílatel (`zpravy-05`), bez pevných dat (`zpravy-07`, `zpravy-08`). Postavené štítky s datem před bublinou a `fromMarkable: false` (sekce 6). **25. 9. 2026 zabudované `zpravy-04` (převzatý účet Jarky) a `zpravy-05` (158)** místo testovacích zpráv, **nasazené** (commit `ce6fda8`, ověřeno na živé stránce: JS `text/javascript`, `noindex`, štítky a neklikací odesílatel u zpravy-04, bez chyb). Testovací zůstávají `zpravy-06` a `zpravy-07`.
-- **Stav k 25. 9. 2026:** Zprávy `zpravy-01` až `zpravy-08` jsou skutečné (5 podvodů, 3 legitimní), `zpravy-06` až `zpravy-08` zabudované po schválení textů (čtvrté kolo v `docs/navrhy-scenaru-zpravy.md`). Obě sekce mají po 8 scénářích, žádnou testovací zprávu. Věta o 7726 je ve `zpravy-01` a v nápovědě Zpráv nahrazená. **Pushnuto a nasazeno** (commit `1338f99`). Ověřeno na živé stránce: JS `text/javascript`, `noindex`, `zpravy-06` až `zpravy-08` se zobrazí se správným odesílatelem a štítkem, bez chyb.
-- **Obsah milníku 6 hotový (25. 9. 2026):** obě sekce mají po 11 scénářích (5 podvodů, 6 legitimních). Nové legitimní `email-09` až `email-11` a `zpravy-09` až `zpravy-11`, bod 3 nápovědy e-mailu („Obyčejná lhůta sama o sobě podvod není…“), v kole 2–3 legitimní. `ENFORCE_CONTENT_GOALS = true`. **Pushnuto a nasazeno** (commit `5ca0a0e`), ověřeno na živé stránce (JS `text/javascript`, 12 kol bez chyb, rozložení 2 : 3 legitimních na 1000 seedech 504 : 496).
-- **Další krok:** milník 7 (testy a kontrola, Tomáš projde hru na telefonu s velkým systémovým písmem). Nálezy z kontroly přehledu proti sekci 7 jsou vyřešené a nasazené (commit `33bd09c`, ověřeno na živé stránce). `docs/prehled-scenaru.md` odpovídá obsahu. Shrnutí starších legitimních zpráv (`email-03`, `email-07`, `email-09`, `zpravy-03`, `zpravy-07`, `zpravy-08`) jsou upravená podle nových zásad sekce 7, pushnutá a nasazená (commit `618edca`, ověřeno na živé stránce: `noindex`, nová znění v JS, kolo se vykreslí bez chyb).
+- **Stav k 29. 9. 2026:** milník 6 je hotový. E-mail má 12 scénářů (6 podvodů, 6 legitimních), Zprávy 11 (5 podvodů, 6 legitimních), v bance není žádná testovací zpráva. Probíhá milník 7 (testy a kontrola). Před zveřejněním zbývá Tomášova ruční kontrola na telefonu (sekce 17 B) a zkouška s 1–2 seniory (17 D1). Web se naposledy změnil commitem `e55996c` (28. 9. 2026), pozdější commity mění jen dokumentaci a nasazovací skript. Starší záznamy stavu milníku 6 (24. a 25. 9. 2026) jsou v `docs/historie.md`.
 
 - **28. 9. 2026:** `email-12` (falešná ČSSZ, doplatek důchodu, chyby v češtině, 4 hrozby) je schválený a zabudovaný. E-mail má 12 scénářů (6 podvodů, 6 legitimních), Zprávy 11. `EMAIL_12_BUILT = true`. Zásada o gramatických chybách je v sekci 7. Záznam zdrojů a rozhodnutí je v `docs/navrhy-scenaru-email.md`. **Pushnuto a nasazeno** (commit `e720878`), ověřeno na živé stránce: JS `text/javascript`, `noindex`, texty `email-12` v JS, kolo se vykreslí bez chyb.
 - **28. 9. 2026:** barvy ve vyhodnocení (zelená/červená podle odpovědi hráče, shrnutí ve žlutém rámečku, sekce 9) a okno nesouladu v pokročilé úrovni (sekce 5). **Pushnuto a nasazeno** (commit `ea81f1f`), ověřeno na živé stránce: JS `text/javascript`, `noindex`, nové barvy v CSS, okno „Zprávu hodnotíte jako podvod…“ se v pokročilé úrovni ukáže, bez chyb v konzoli. Nadpisy oken nesouladu („Nemáte označené žádné podezřelé místo“ / „Máte označená podezřelá místa“) **pushnuté a nasazené** (commit `f04a319`), ověřeno na živé stránce v prohlížeči.
@@ -529,10 +523,10 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 
 ## 17. Před zveřejněním odkazu (kontrolní seznamy, připraveno 28. 9. 2026)
 
-Odkaz se zveřejní až po Tomášově výslovném pokynu (sekce 2a). Do té doby musí být hotové body B, C a D. Pak proběhne A.
+Odkaz se zveřejní až po Tomášově výslovném pokynu (sekce 2a). Do té doby musí být hotové body B, C a D1–D2. Body D3 (přesměrování http → https) a D4 (přilepená lišta) zveřejnění neblokují. Pak proběhne A.
 
 ### A. Vydání (dělá Claude po Tomášově pokynu ke zveřejnění)
-1. Body B, C a D jsou odškrtnuté. Poznáte to tak, že v sekci 16 u nich je „hotovo“.
+1. Body B, C a D jsou odškrtnuté. Poznáte to tak, že v sekci 17 u nich je „hotovo“.
 2. Týž den znovu ověřit blok 772 100 000 až 772 199 999 v datech ČTÚ (`zpravy-06`). Poznáte to tak, že blok nemá držitele. **Poslední ověření:** 28. 9. 2026 na datech ČTÚ z 28. 9. 2026 (CSV https://data.ctu.gov.cz/sites/default/files/imports/import_numbers/pridelena_cisla_a_kody.csv, server hlásí poslední změnu 28. 9. 2026 02:35 GMT), 13 206 řádků, žádný rozsah blok nepřekrývá. Kontrola metody: stejný výpočet najde přidělený rozsah 772 720 000 až 772 729 999 (držitel IPEX TELCO a.s.).
 3. Znovu ověřit smyšlené domény v podvodných scénářích (registr vrací 404, DNS neexistuje). Poznáte to tak, že všechny jsou dál volné.
 4. Odstranit `<meta name="robots" content="noindex">` z `index.html` a upravit test na „noindex už není“. Poznáte to tak, že test to hlídá.
@@ -576,5 +570,5 @@ Znovu ověřeno Claudem v chatu 28. 9. 2026 proti zdrojům, všechna tvrzení se
 ### D. Další úkoly před zveřejněním
 1. **Zkouška s 1–2 seniory** (doplněno 28. 9. 2026): senior hraje sám na svém telefonu, Tomáš jen pozoruje a nenapovídá. Postřehy se zapisují podle `docs/plany/plan-milnik-7.md` (sekce 2, testeři jen jako T1, T2). Poznáte to tak, že je zapsaná aspoň jedna celá hra od začátku do konce kola.
 2. ~~Tučný Montserrat.~~ **Hotovo 28. 9. 2026:** statické řezy 700 a 800, ve WebKitu i Chromiu vizuálně tučné (test v `tests/fonts.spec.js`). Skutečný iPhone neověřen, Tomáš ho nemá (krok B14).
-3. Přesměrování http → https: odložené, řeší se zvlášť (návrh v `docs/navrh-presmerovani-https.md`).
+3. Přesměrování http → https: odložené, řeší se zvlášť (návrh v `docs/navrh-presmerovani-https.md`). Udělat brzy po vydání, adresa zadaná ručně bez https může v prohlížeči ukázat varování „nezabezpečeno“.
 4. Přilepená lišta při 200% písmu: nízká priorita, zveřejnění neblokuje (sekce 16).
