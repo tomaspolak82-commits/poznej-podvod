@@ -1,118 +1,85 @@
-# Plán sekce Prohlížeč (návrh 1. 10. 2026)
+# Milník 8: sekce Prohlížeč (plán 1. 10. 2026, aktualizováno týž den)
 
-Diagram: `docs/plany/plan-prohlizec.html`. Jen plán, nic se nestaví ani nenasazuje bez Tomášova OK. Sekce zůstává na hlavní stránce jako „Připravujeme“ (`active: false` v `src/sections.js`), dokud není celá hotová.
+Diagram: `docs/plany/plan-prohlizec.html` (14 fází). Texty pro hráče (schválené): `docs/navrhy-scenaru-prohlizec.md`. Náčrt vzhledu: `docs/plany/nacrt-prohlizec.html`. Vydání (odstranění `noindex`) je milník 9.
 
-Všechny texty v tomto plánu jsou **pracovní popisy**, ne znění pro hráče. Znění přijde později v jedné dávce (`docs/navrhy-scenaru-prohlizec.md`).
+Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14, Tomášova kontrola na telefonu na živém webu.
 
 ## 1. Rozhraní simulovaného prohlížeče
 
-**Co zůstává stejné jako u E-mailu a Zpráv** (nic nového se nevymýšlí): dvě úrovně, losování 5 zpráv s 2–3 legitimními, bodování (sekce 8), rozhodnutí „Je to podvod“ / „Je to v pořádku“, okno nesouladu v pokročilé úrovni, vyhodnocení se žárovkami a stavy částí, nápověda „Na co si dát pozor?“, historie, štítek TRÉNINK, rám telefonu `phoneFrame` (na počítači a tabletu) a celá obrazovka na mobilu. Engine, bodování a historie se nemění. Přibude jen `src/apps/prohlizec.js` se třemi režimy `play` / `mark` / `review` a sekce v `listTargets` a kontrole obsahu.
+**Stejné jako u E-mailu a Zpráv:** dvě úrovně, losování 5 stránek s 2–3 legitimními, bodování (sekce 8 CLAUDE.md), rozhodnutí „Je to podvod“ / „Je to v pořádku“, okno nesouladu v pokročilé úrovni, vyhodnocení se žárovkami a stavy částí, nápověda „Na co si dát pozor?“, historie, štítek TRÉNINK, rám telefonu (na počítači a tabletu) a celá obrazovka na mobilu. Engine, bodování a historie se nemění. Prohlížeč je `src/apps/browser.js` se třemi režimy `play` / `mark` / `review`.
 
-**Jak prohlížeč vypadá** (neutrální mobilní prohlížeč, žádné logo ani barvy Chrome, Safari či Samsung):
+**Jak prohlížeč vypadá** (neutrální, žádné logo ani barvy skutečných prohlížečů):
 
-- **Adresní řádek nahoře:** ikonka (zámek nebo „Nezabezpečeno“) a adresa. Jako v mobilu jen adresa za `https://` bez dalšího textu, celá a zalomitelná (dlouhé adresy typu `banka.cz.overeni-online.com` musí být vidět celé, aby šly přečíst).
-- **Obsah stránky:** nadpis, odstavce, banner (reklama), formulářová pole, tlačítko.
-- **Vyskakovací okno** (volitelně): okno, které nakreslila stránka (falešné „systémové“ varování, výhra, souhlas s cookies). Když scénář okno má, stránka pod ním je ztmavená a **nejde označit**; okno je obsah. Tím odpadá problém, jak na malém displeji označovat stránku schovanou pod oknem. Odpovídá to realitě: falešná technická podpora bývá jen to okno.
-- **Dekorace** (počet karet, menu ⋮, spodní lišta) jsou `aria-hidden` a nic nedělají, stejně jako pole „Zpráva“ v chatu.
-- **Karta „Jak jste se sem dostali“** nad prohlížečem (nová, viz otázka 2): jedna věta, např. „Klepli jste na odkaz v SMS o zásilce“ nebo „Adresu jste napsali sami“. U prohlížeče je to hlavní kontext: e-mail má odesílatele, stránka ne. Kartu nejde označit, je to popis situace. Aby karta neprozradila odpověď, musí se střídat: legitimní stránka i přes odkaz z čekaného e-mailu, podvod i přes vyhledávání nebo reklamu.
+- **Karta „Jak jste se sem dostali“** nad adresním řádkem: jedna věta o příchodu na stránku. Modrošedá (`#e8eef8`, tmavomodrý proužek a nadpis), **ne žlutá**: žlutá je barva varování a světle žlutý podklad má označená část. Kontrast textu i nadpisu hlídá `tests/evaluation-colors.spec.js`. Kartu nejde označit. Aby neprozradila odpověď, mají podvody 02 a 04 nevinný příchod a legitimní 06 příchod přes odkaz.
+- **Adresní řádek:** adresa, celá a zalomitelná. U nezabezpečeného připojení vlevo **jen žlutý trojúhelník s vykřičníkem**, v obou úrovních bez nápisu. Čtečka obrazovky čte „Varování: připojení není zabezpečené“, klepací plocha aspoň 48 px. Ve vyhodnocení trojúhelník s nápisem „Nezabezpečeno“ a žárovkou. U zabezpečeného připojení žádné varování. **Zámek se nepoužívá.**
+- **Obsah stránky:** nadpis, odstavce, reklama nebo „varování“ nakreslené stránkou (pruh), formulářová pole, tlačítko.
+- **Vyskakovací okno** (02, 06): stránka pod ním je ztmavená (šedé čáry bez textu) a nejde označit, okno je obsah. Okno nemá křížek.
+- **Dekorace** (ikona karet, menu ⋮) jsou skryté pro čtečku a nic nedělají.
 
-**Co jde označit** (nejmenší část = jeden blok, stejně jako bublina): `address`, `heading`, `body.N`, `banner`, `fields.N` (každé pole formuláře zvlášť, třeba „Číslo karty“), `button`, a u okna `popup.title`, `popup.body.N`, `popup.button`. Ikonka zámku není samostatná část, patří k adrese.
+**Co jde označit:** `security` (trojúhelník, jen u nezabezpečeného připojení), `address`, `heading`, `body.N`, `banner`, `fields.N`, `button`, `popup.title`, `popup.body.N`, `popup.button.N`.
 
-**Chování v základní úrovni:** tlačítka, banner a tlačítka okna (i křížek) ukážou stávající `LINK_NOTICE`. **Formulářová pole nejsou skutečná pole**, nedá se do nich psát (hráč nesmí mít chuť zkusit vlastní číslo karty, ani když se nic neodesílá). Klepnutí ukáže vlastní upozornění „sem nic nepište“, stejné u podvodu i legitimní stránky (nový text, půjde do dávky).
+**Základní úroveň:** reklama ukáže upozornění na odkaz, tlačítka stránky i okna upozornění „tlačítko nic nedělá“, formulářová pole upozornění „do pole se psát nedá“. Vše stejné u podvodu i legitimní stránky. Pole nejsou skutečná, nedá se do nich psát.
 
-**Zásada pro vysvětlení u prohlížeče:** adresa v řádku je jediné, co stránka nezfalšuje, ale může být podobná skutečné. Důvodem důvěry u legitimní stránky proto není „adresa vypadá správně“ ani „je tam zámek“, ale to, co stránka chce, a že jste na ni přišli sami (napsali adresu, záložka). Zámek znamená jen šifrované spojení a mají ho i podvodné stránky. To je falešné pravidlo, které vyvracejí podvody (ne legitimní stránky, pole `refutes` mají jen ty).
+**Úvod o adresním řádku:** samostatná obrazovka jen při prvním vstupu do sekce, s tlačítkem „Rozumím, vybrat úroveň“. Tlačítko uloží záznam (`poznej-podvod:browser-intro:v1`, `src/engine/intro.js`) a vede na výběr úrovně. Při dalších vstupech se jde rovnou na výběr úrovně. Když paměť prohlížeče nejde přečíst nebo zapsat, úvod se ukáže vždy. Historie se nemění.
 
-**Nová kategorie hrozby** `adresa-stranky` (otázka 4). Stávající `odesilatel` má štítek „adresa odesílatele“, u stránky by byl nepravdivý.
+**Hlavní myšlenka sekce:** když připojení není zabezpečené, do stránky nic nezadávat. Pravidlo zní „nezadávejte údaje“, ne „je to podvod“. Vždy v páru: to, že prohlížeč nevaruje, neznamená, že stránka je poctivá.
 
-## 2. Typy scénářů
+**Texty podle sekce:** v Prohlížeči „Stránka 2 z 5“, „Další stránka“, „5 stránek“ a „Vyberte si úroveň. V obou uvidíte 5 stránek.“. E-mail a Zprávy beze změny (hlídají testy). Nová kategorie hrozby `adresa-stranky` („adresa stránky nebo varování u ní“).
 
-| # | Podvod | Co chce, jaký tlak | Legitimní protějšek | Falešné pravidlo, které vyvrací |
-|---|---|---|---|---|
-| 1 | **Banner „Vyhráli jste“**: jste vybraný návštěvník, vyplňte údaje a zaplaťte poštovné, odpočet | údaje + malá platba; výhra, spěch | zpravodajská stránka s běžnou reklamou na slevu v obchodě | „Když je na stránce reklama nebo sleva, je to podvod.“ |
-| 2 | **Falešná technická podpora**: okno „telefon je napadený, nevypínejte ho, volejte podporu“ s číslem | zavolat; strach, spěch | stránka se souhlasem s cookies (okno, které chce jen volbu) | „Když na stránce vyskočí okno, je to podvod.“ |
-| 3 | **Falešná přihlašovací stránka** (přes odkaz ze SMS): přihlášení do bankovnictví na cizí adrese, pak PIN a celé číslo karty | údaje; strach o účet | přihlášení na stránku obchodu nebo dopravce, kterou jste si sami otevřeli | „Když stránka chce heslo, je to podvod.“ |
-| 4 | **Falešné varování o nezabezpečeném připojení**: stránka napodobí varování a chce instalaci aplikace „pro ochranu“ | nainstalovat aplikaci; strach | **doporučuji:** pokladna e-shopu, který jste si sami vybrali, platba kartou | „Když stránka chce číslo karty, je to podvod.“ |
-| – | (alternativa k 4) | | stránka obce s otevírací dobou, u adresy „Nezabezpečeno“, nic nechce | „Když prohlížeč píše Nezabezpečeno, je to podvod.“ |
-| později | **Falešný e-shop** (velká sleva, jen platba předem převodem) | zaplatit; výhodná nabídka | – | – |
+## 2. Scénáře (8: 4 podvody, 4 legitimní)
 
-Poznámky:
-- **Proč u 4 nedoporučuji „Nezabezpečeno“:** skutečné varování prohlížeče není podvod ani „v pořádku“, správná reakce je odejít. Do volby podvod / v pořádku nezapadá. Stránka bez zámku navíc dnes bývá vzácná a prohlížeče u ní stále častěji ukazují celostránkové varování (podrobnosti a data u jednotlivých prohlížečů jsem neověřoval). Hrozí, že by scénář neodpovídal tomu, co senior uvidí.
-- **Falešná přihlašovací stránka bez jména banky:** stránka napíše „Internetové bankovnictví“, žádná skutečná banka se nejmenuje. Poučení je v adrese a v tom, jak se tam hráč dostal. Proto tu není potřeba zdroj za konkrétní banku.
-- **Falešná technická podpora je v obrázcích podvodníků hlavně na počítači.** Rám je ale telefon (stejný jako ostatní sekce, senioři hrají hlavně na mobilu), proto varianta „telefon je napadený“. Pokud ke zdrojům najdu jen počítačovou podobu, scénář navrhnu jinak, nebo ho vyřadím, nebudu podobu domýšlet.
-- **Falešný e-shop** odkládám na doplnění banky: falešné přihlášení vede k vybrání účtu, falešný e-shop „jen“ ke ztrátě zaplacené částky. V první verzi má přednost větší škoda.
-- **Každý podvod má nevinnou část** (např. obyčejný nadpis stránky), u přihlašovací stránky třeba pole „Přihlašovací jméno“, které samo o sobě v pořádku je. Ověřím u každého scénáře proti nápovědě (sekce 7).
+| # | Podvod | Legitimní protějšek | Falešné pravidlo, které vyvrací |
+|---|---|---|---|
+| 1 | `prohlizec-01` výhra telefonu za poštovné, nezabezpečené připojení | `prohlizec-05` zpravodajská stránka s reklamou | „Když je na stránce reklama nebo sleva, je to podvod.“ |
+| 2 | `prohlizec-02` „telefon je zablokovaný, volejte podporu“ (okno) | `prohlizec-06` souhlas s cookies (okno) | „Když na stránce vyskočí okno, je to podvod.“ |
+| 3 | `prohlizec-03` ověření účtu ve smyšlené Bance Javor (odkaz ze SMS) | `prohlizec-07` přihlášení do e-shopu otevřeného sami | „Když stránka chce heslo, je to podvod.“ |
+| 4 | `prohlizec-04` „varování“ nakreslené stránkou a instalace aplikace | `prohlizec-08` placení kartou v e-shopu | „Když stránka chce číslo karty, je to podvod.“ |
 
-**Nápověda „Na co si dát pozor?“ pro Prohlížeč** (6 bodů, jen témata, znění v dávce): jak jste se na stránku dostali; adresa v řádku nahoře, ne to, co píše stránka; zámek nic nezaručuje; výhra nebo odměna za nic; okno, které straší a chce zavolat nebo instalovat (stačí zavřít kartu); stránka chce víc údajů, než potřebuje (PIN, kód z SMS, celé číslo karty mimo placení). Rada na konec: adresu napište sami. Pozor na bod o adrese: musí znít „adresa, která nesedí“, ne „adresa“, jinak by nápověda vedla k označení adresy i u legitimní stránky.
+Později doplnit: falešný e-shop, investiční reklama se „známou osobností“ (bez skutečných jmen a fotek). Legitimní stránka s nezabezpečeným připojením do první verze nepatří (důvody v `docs/navrhy-scenaru-prohlizec.md`, část D).
 
-## 3. Banka pro první verzi
+## 3. Vysvětlení a zdroje
 
-**Doporučuji 8 scénářů: 4 podvody a 4 legitimní** (řádky 1–4 tabulky).
+Zrychlený režim: vysvětlení a nápověda jsou obecné rady vlastními slovy, bez tvrzení za úřady a firmy. Banka, obchody a stránky jsou smyšlené. Zdroj k typu podvodu se nevyžaduje (Tomáš, 1. 10. 2026).
 
-- Splní losování: minimum je 3 podvody a 2 legitimní (`DRAW_MINIMUM`), kolo potřebuje 2–3 legitimní a aspoň 2 podvody, 4 + 4 obojí pokryje.
-- Každý typ podvodu má svůj protějšek, takže kolo nikdy nevypadá jako „všechny stránky s oknem jsou podvod“.
-- Scénář prohlížeče je pracnější než e-mail (rozvržení stránky, okno, formulář), menší banka zkrátí cestu ke zveřejnění.
-- **Nevýhoda:** při 8 scénářích má další kolo jen 3 nové a 2 se zopakují (pravidlo „neopakovat, pokud to banka dovolí“). Úplné neopakování by chtělo 10. Při 6 (3 + 3) by se opakovaly 4 z 5, to nedoporučuji.
-- Doplnění později: falešný e-shop a jeho protějšek, pak k cíli 10–12.
+## 4. Povinné kontroly (hotovo 1. 10. 2026)
 
-## 4. Vysvětlení, nápověda a zdroje
+- **Adresy stránek** (i legitimních): všech 8 volných, registr CZ.NIC vrací 404, DNS neexistuje. Znovu v den zveřejnění (sekce 17 A3 CLAUDE.md).
+- **Telefonní číslo** +420 772 163 940 (`prohlizec-02`): blok 772 100 000 až 772 199 999 bez držitele podle dat ČTÚ z 1. 10. 2026. Znovu v den zveřejnění (sekce 17 A2).
+- **Názvy** „Banka Javor“, „Kniha pro radost“ a „Domácí pomocník“: Tomáš ověřil v ARES, že nepatří žádnému subjektu. Názvy zůstávají.
 
-- Vysvětlení a nápověda jsou obecné rady vlastními slovy („Okno na stránce nepozná, jestli máte v telefonu virus. Stačí kartu zavřít.“), bez „policie varuje“ a „banka nikdy“.
-- Instituce se jmenuje jen tam, kde bez ní scénář nedává smysl. V návrhu výše takové místo **není**: banka zůstává bezejmenná, obchod a dopravce smyšlené.
-- Pole `sources` ale potřebuje každý podvod kvůli pravidlu „jen reálné situace z ČR“ (že se ten typ u nás děje). Návrh, kde hledat (**zatím neověřeno**, adresy konkrétních stránek nevymýšlím):
-  - výhra a falešné přihlášení: policie.gov.cz (sekce kyberkriminalita), nukib.gov.cz, weby bank, Česká bankovní asociace (cbaonline.cz);
-  - falešná technická podpora: policie.gov.cz, nukib.gov.cz;
-  - falešné varování s instalací aplikace: zatím zdroj neznám. Když se pro ČR nenajde, typ nahradím falešným e-shopem (zdroj: seznam rizikových e-shopů České obchodní inspekce, coi.cz).
+## 5. Spojení, pojistka a návrat
 
-## 5. Rizika (povinné kontroly)
+Postup spojení, podmínky „hotovo“, vrácení spojení (`git revert -m 1 4b25c70`) a nové spojení po opravě: sekce 17 E CLAUDE.md. Termíny se do plánu ani do CLAUDE.md nezapisují, řídí je Tomáš.
 
-- **Telefonní číslo** (falešná technická podpora): z bloku, který ČTÚ nepřidělil, stejnou metodou jako u `zpravy-06` (CSV „Přidělená čísla a kódy“, výpočet překryvu, kontrola metody na známém přiděleném rozsahu). Když bude číslo vypadat jako bezplatná linka 800, ověřím i tento rozsah. Číslo přidám do kroku 17 A2 (znovu ověřit v den zveřejnění).
-- **Adresy stránek:** všechny smyšlené, **i u legitimních scénářů** (legitimní stránka se skutečnou adresou by hráče posílala na cizí web). Ověření: registr vrací 404, DNS neexistuje. Žádná adresa nesmí obsahovat značku skutečné banky nebo obchodu. Přidám je do kroku 17 A3. Tomáše u každé nové adresy upozorním, ať ověří, že nepatří reálnému webu.
-- **Obsah stránek jde do repozitáře a na server ve stejném souboru JS jako hra** (`import.meta.glob` v `src/engine/content.js` přibalí každý JSON ze `src/content/`, i když je sekce vypnutá). Proto scénáře vzniknou až po schválení textů. Viz otázka 5.
-- **Společné texty mluví o „zprávě“** („Zpráva 2 z 5“, „Další zpráva“, „Zpět ke zprávě“, popis úrovní „Přečtete si zprávu“). U stránky to nesedí. Návrh: slovo podle sekce („Stránka 2 z 5“). Změna textů půjde do dávky.
-- **Kategorie a statistika:** nová kategorie `adresa-stranky` přidá štítek do „Nejčastěji vám unikalo“ (text do dávky).
-- **Tvrzení o prohlížečích** (co ukazují bez zámku, jak vypadá adresa) ve vysvětleních jen obecně. Konkrétní chování jednotlivých prohlížečů ověřené nemám.
+## 6. Fáze milníku 8 (Prohlížeč)
 
-## 6. Fáze milníku 9 (Prohlížeč)
+14 fází podle diagramu, z toho 5 „čeká na tebe“. Stav k 1. 10. 2026:
 
-14 fází podle diagramu `docs/plany/plan-prohlizec.html`, z toho 5 „čeká na tebe“. Stav k 1. 10. 2026:
-
-1. **Rozhodnutí k plánu** · čeká na tebe · hotovo 1. 10. (rozhodnutí níže).
-2. **Zdroje k typům podvodů** · hotovo. Zrychlený režim zdroj k typu podvodu nevyžaduje (Tomáš, 1. 10.).
-3. **Čísla a adresy** · hotovo. 8 adres volných, číslo z bloku bez držitele (data ČTÚ z 1. 10.).
-4. **Náčrt prohlížeče** · hotovo (`docs/plany/nacrt-prohlizec.html`).
-5. **Schválení vzhledu** · čeká na tebe · hotovo 1. 10., spolu s fází 7 v jedné dávce.
-6. **Návrh všech textů** · hotovo (`docs/navrhy-scenaru-prohlizec.md`).
-7. **Schválení textů** · čeká na tebe · hotovo 1. 10., včetně oprav a doplňků (úvod při prvním vstupu, nový první bod nápovědy).
+1. **Rozhodnutí k plánu** · čeká na tebe · hotovo.
+2. **Zdroje k typům podvodů** · hotovo. Zrychlený režim zdroj nevyžaduje.
+3. **Čísla a adresy** · hotovo.
+4. **Náčrt prohlížeče** · hotovo.
+5. **Schválení vzhledu** · čeká na tebe · hotovo, spolu s fází 7 v jedné dávce.
+6. **Návrh všech textů** · hotovo.
+7. **Schválení textů** · čeká na tebe · hotovo, včetně oprav a doplňků.
 8. **Stavba prohlížeče** · hotovo.
 9. **Scénáře do hry** · hotovo, přehled scénářů vygenerovaný.
 10. **Testy** · hotovo, celá sada prošla ve větvi i na `main`.
-11. **Kontrola na snímcích** · čeká na tebe · hotovo 1. 10. Místo snímků všech 8 scénářů stačil na tvůj pokyn výsledek kontroly označeného trojúhelníku v pokročilé úrovni.
-12. **Zpřístupnění sekce** · hotovo 1. 10. Spojení do `main` (`4b25c70`) a push na tvůj pokyn.
-13. **Ověření na živé stránce** · hotovo 1. 10.
-14. **Kontrola na telefonu** · čeká na tebe.
+11. **Kontrola na snímcích** · **vynechaná, nahrazena fází 14.** Neprovedla se, ověřil se jen označený trojúhelník v pokročilé úrovni (na 360 px dobře vidět).
+12. **Zpřístupnění sekce** · hotovo. Spojení do `main` (`4b25c70`) a push na Tomášův pokyn.
+13. **Ověření na živé stránce** · hotovo.
+14. **Kontrola na telefonu** · čeká na tebe. Tomáš projde Prohlížeč na živém webu, nahrazuje i fázi 11.
 
-Proti původnímu plánu: fáze 5 a 7 proběhly najednou a fáze 11 se zúžila na jeden výsledek. Počet fází se nezměnil.
+Proti původnímu plánu: fáze 5 a 7 proběhly najednou, fáze 11 je vynechaná. Počet fází v diagramu se nezměnil.
 
-## Rozhodnutí 1. 10. 2026 (Tomáš)
+## Rozhodnutí (Tomáš, 1. 10. 2026)
 
-1. Banka 8 scénářů (4 podvody + 4 legitimní), falešný e-shop až při doplnění. Falešné přihlášení jen u smyšlené služby, žádná skutečná banka ani firma.
-2. Karta „Jak jste se sem dostali“ ano, nejde označit. Nesmí sama prozradit výsledek: aspoň jeden podvod má nevinný příchod (např. vyhledávání) a aspoň jedna legitimní stránka má příchod přes odkaz.
-3. Legitimní protějšek k falešnému varování je pokladna e-shopu. Má učit, že zámek neznamená bezpečí (zámek mají i podvodné stránky). Jak to sladit s polem `refutes`, viz otevřené otázky.
-4. Nová kategorie „adresa stránky“. V Prohlížeči „Stránka 2 z 5“, E-mail a Zprávy dál „Zpráva 2 z 5“, hlídá to nový test.
-5. Práce ve větvi `sekce-prohlizec`. Z ní se nikdy nenasazuje, automatické nasazení po push platí jen pro `main`. Push větve na GitHub kvůli záloze je povolený.
-
-**Harmonogram:** zkouška se seniory za 5–6 dní. Sekce musí být spojená do `main` a nasazená nejpozději 2 dny před zkouškou. Den před zkouškou ji Tomáš projde na telefonu a rozhodne. V den zkoušky se nic nenasazuje.
-
-**Sekce je hotová, když:** všechny texty pro hráče jsou schválené; telefonní čísla jsou ověřená v datech ČTÚ jako nepřidělená; domény jsou ověřené jako volné; prošla celá sada testů včetně nových testů Prohlížeče a ověření, že E-mail a Zprávy se nezměnily.
-
-**Pojistka:** když sekce není hotová 2 dny před zkouškou, nespojuje se. Na webu zůstane „Připravujeme“ a senioři zkoušejí jen E-mail a Zprávy. Postup při chybě po spojení a nasazení: pokyn došel neúplný, čeká na doplnění.
-
-**Doplnění 1. 10. 2026 (Tomáš):** pokladna e-shopu vyvrací „Když stránka chce číslo karty, je to podvod.“, její vysvětlení i vysvětlení zabezpečených podvodů říkají, že zabezpečení samo nerozhoduje. Hlavní myšlenka sekce: nezabezpečená stránka = nic nezadávat (ne „je to podvod“). Vzhled varování podle úrovní, vrácení spojení a termíny: CLAUDE.md, sekce 16 a 17 E. Texty: `docs/navrhy-scenaru-prohlizec.md`, náčrt: `docs/plany/nacrt-prohlizec.html`.
-
-## Otázky k rozhodnutí (vyřešené 1. 10. 2026, viz výše)
-
-1. **Banka 8 (4 + 4)** s typy 1–4 z tabulky, falešný e-shop až při doplnění? Doporučuji ano.
-2. **Karta „Jak jste se sem dostali“** nad prohlížečem (nejde označit)? Doporučuji ano: bez ní chybí kontext, podle kterého má hráč rozhodovat.
-3. **Legitimní protějšek k typu 4:** pokladna e-shopu s platbou kartou, nebo stránka obce s „Nezabezpečeno“? Doporučuji e-shop.
-4. **Nová kategorie `adresa-stranky` a slovo podle sekce ve společných textech** („Stránka 2 z 5“)? Doporučuji ano, znění přijde v dávce.
-5. **Práce ve zvláštní větvi Gitu `sekce-prohlizec`**, do `main` se spojí až při zpřístupnění? Doporučuji ano: `main` se dál nasazuje podle sekce 2a a na server nic z prohlížeče nedojde, dokud není hotové. Bez větve by na server šel nepoužitý kód a schválené, ale skryté scénáře, a testy vypnuté sekce by potřebovaly zvláštní obchvat.
+1. Banka 8 scénářů (4 + 4), falešný e-shop až při doplnění. Falešné přihlášení jen u smyšlené služby.
+2. Karta „Jak jste se sem dostali“, nejde označit a nesmí prozradit výsledek.
+3. Pokladna e-shopu vyvrací „Když stránka chce číslo karty, je to podvod.“. Její vysvětlení i vysvětlení podvodů bez varování říkají, že to, že prohlížeč nevaruje, samo nerozhoduje.
+4. Nová kategorie `adresa-stranky`, „Stránka 2 z 5“ jen v Prohlížeči.
+5. Práce ve větvi `sekce-prohlizec`, nasazuje se jen z `main`.
+6. Varování u adresy jen žlutý trojúhelník v obou úrovních, zámek se nepoužívá.
+7. Úvod o adresním řádku jen při prvním vstupu, jako samostatná obrazovka. Nový první bod nápovědy „Adresní řádek.“.
+8. Na 360 × 740 je první tlačítko úrovně vidět bez posouvání, druhé po jednom posunutí o obrazovku. Karty úrovní se nezmenšují.
+9. Číslování: Prohlížeč je milník 8, Vydání milník 9.

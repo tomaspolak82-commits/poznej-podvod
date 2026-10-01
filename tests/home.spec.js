@@ -83,7 +83,7 @@ test.describe('home page', () => {
     );
   });
 
-  test('page is not indexable before release (milestone 8)', async ({ page }) => {
+  test('page is not indexable before release (milestone 9)', async ({ page }) => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
   });
 

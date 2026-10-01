@@ -38,7 +38,7 @@ Testeři dostali odkaz 25. 9. 2026.
 | 4 | **Ostatní zdroje dnes znovu neověřené**: Česká pošta (`email-01`), Ministerstvo dopravy (`zpravy-01`), policie (`zpravy-02`) | stáhnu stránky a citace ověřím doslova, výsledek pošlu | nic, jen OK, když by bylo potřeba text změnit |
 | 5 | **Přesměrování http → https** | zjistím z dokumentace Subregu, jestli jde nastavit v administraci, nebo souborem na serveru; bez ověření nic nenahraju | nastavení v administraci Subregu, případně dotaz na podporu |
 | 6 | **Znovu ověřit blok 772 1xx xxx** (`zpravy-06`) a smyšlené domény | těsně před zveřejněním: data ČTÚ a registr domén, výsledek pošlu | nic |
-| 7 | **Odstranit `noindex`** a zveřejnit (milník 8) | po tvém pokynu | pokyn ke zveřejnění |
+| 7 | **Odstranit `noindex`** a zveřejnit (milník 9, do 1. 10. 2026 číslo 8) | po tvém pokynu | pokyn ke zveřejnění |
 | – | Obnova certifikátu (kolem 10. 12. 2026) | připomenu | zkontroluješ datum platnosti |
 
 Pořadí: nejdřív věci, které potřebují tvůj čas nebo odpověď Subregu (běží souběžně), poslední je kontrola čísla a domén, aby byla co nejčerstvější.

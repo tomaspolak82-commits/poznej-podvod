@@ -57,7 +57,7 @@ Cíl: pracuj co nejvíc samostatně. Zastav se jen v případech níže.
 
 ### Nasazení do veřejného vydání
 - Po každém push nasaď sám. Vždy nejdřív --dry-run.
-- **Nasazuje se jen z větve `main`** (Tomáš, 1. 10. 2026). Z větve `sekce-prohlizec` (a z žádné jiné větve) se nikdy nenasazuje. Push větve na GitHub kvůli záloze je povolený. Do `main` se větev spojí až po splnění podmínek v `docs/plany/plan-prohlizec.md` (sekce „Rozhodnutí 1. 10. 2026“).
+- **Nasazuje se jen z větve `main`** (Tomáš, 1. 10. 2026). Z větve `sekce-prohlizec` (a z žádné jiné větve) se nikdy nenasazuje. Push větve na GitHub kvůli záloze je povolený. Do `main` se větev spojuje jen po splnění podmínek v sekci 17 E (spojeno 1. 10. 2026, `4b25c70`).
 - **Pozor na starší výpisy:** do 28. 9. 2026 se `--dry-run` k serveru nepřipojoval a mazání nevypisoval (jen obecnou větu „smazaly by se staré soubory ve složkách assets, fonts“). Konkrétní mazané soubory ukázalo až skutečné nasazení. Od opravy (sekce 14) se zkouška připojí jen ke čtení a vypíše přesně, co by nahrála a co by smazala.
 - Po každém nasazení ověř, že `http://poznej-podvod.menestarosti.cz` vrací 301 s `Location` na `https://` (od 29. 9. 2026).
 - **`.htaccess` a nasazení:** soubor je v `public/`, takže ho každé nasazení nahraje (přepíše ten na serveru). Skript ho **nikdy nesmaže**, ani kdyby v `dist/` chyběl: maže jen soubory přímo ve složkách `assets/` a `fonts/`, soubory v kořeni ne. Když se `.htaccess` na serveru změní ručně, přepíše ho další nasazení. Zkouška to ukáže jako „jiná velikost .htaccess“, a to je důvod zastavit se a zeptat se Tomáše.
@@ -412,7 +412,7 @@ Než se začne stavět engine, připrav v milníku 2 hlavní stránku a výběr 
 - Žádný časový limit.
 - `prefers-reduced-motion`, animace krátké a nepovinné.
 - Funguje od šířky 320 px.
-- Automatický test 200% písma je jen přiblížení (zvětšení základního písma přes CSS). Skutečné systémové písmo telefonu nasimulovat nejde, proto je povinná Tomášova ruční kontrola na telefonu s velkým systémovým písmem (milníky 7 a 8).
+- Automatický test 200% písma je jen přiblížení (zvětšení základního písma přes CSS). Skutečné systémové písmo telefonu nasimulovat nejde, proto je povinná Tomášova ruční kontrola na telefonu s velkým systémovým písmem (milníky 7 a 9).
 
 ## 11. Soukromí
 
@@ -440,7 +440,7 @@ Minimální sada:
 - historie: po kole se uloží skóre a chyby, po obnovení stránky se zobrazí „Vítejte zpět“, smazání historie funguje
 - obnovení stránky uprostřed kola → výběr úrovně, rozehrané kolo se neuloží
 - neopakování: se stejnou historií nevybere další kolo zprávy z předchozího kola, pokud to banka dovolí
-- stránka obsahuje `noindex` (do milníku 8), po milníku 8 už ne
+- stránka obsahuje `noindex` (do milníku 9, Vydání), po milníku 9 už ne
 - štítek TRÉNINK je viditelný na všech obrazovkách simulace
 - 200% zvětšení textu: žádné vodorovné posouvání na 360 px
 - validace obsahu: každý JSON má povinná pole, každý `target` odpovídá existující části zprávy, každá `category` je z povoleného seznamu, v každé sekci je zásoba podle cíle (E-mail 12 scénářů: 6 podvodů a 6 legitimních, Zprávy 11 scénářů, z nich aspoň 5 legitimních) (v milníku 3 s testovacími zprávami se kontroluje jen minimum pro losování), žádný scénář nemá pole `relatedArticle`
@@ -464,8 +464,8 @@ Hotové milníky 1–5 jsou v docs/historie.md.
 
 6. **Doplnění obsahu** (cíl změněný 25. 9. 2026): 3 nové legitimní e-maily a 3 nové legitimní Zprávy, pak obě sekce po 11 scénářích (5 podvodů, 6 legitimních, pravidla v sekci 7) + `npm run prehled` → Tomáš ověří texty. Zapnout kontrolu cíle: `ENFORCE_CONTENT_GOALS = true` v `tests/unit/content.spec.js`.
 7. **Testy a kontrola** podle sekce 12, oprava nalezených chyb. Tomáš projde aplikaci ručně na telefonu s velkým systémovým písmem.
-8. **Vydání:** **odstraň `noindex`** z `index.html` (a uprav test), nasazení, ruční kontrola na telefonu (s velkým systémovým písmem) a tabletu.
-9. **Prohlížeč** (od 1. 10. 2026): plán `docs/plany/plan-prohlizec.md`, diagram `docs/plany/plan-prohlizec.html` (14 fází). Nasazeno 1. 10. 2026, zbývá fáze 14 (Tomášova kontrola na telefonu). Doplnění banky později: falešný e-shop, investiční reklama se „známou osobností“ (bez skutečných jmen a fotek).
+8. **Prohlížeč** (od 1. 10. 2026): plán `docs/plany/plan-prohlizec.md`, diagram `docs/plany/plan-prohlizec.html` (14 fází). Nasazeno 1. 10. 2026, fáze 11 vynechaná (nahrazena fází 14), zbývá fáze 14 (Tomášova kontrola na telefonu na živém webu). Doplnění banky později: falešný e-shop, investiční reklama se „známou osobností“ (bez skutečných jmen a fotek).
+9. **Vydání:** **odstraň `noindex`** z `index.html` (a uprav test), nasazení, ruční kontrola na telefonu (s velkým systémovým písmem) a tabletu. (Do 1. 10. 2026 to byl milník 8, Tomáš ho přečísloval.)
 
 ### Pozdější milníky (teď nedělat, jen počítat s nimi v architektuře)
 - **QR platba:** kontrola příjemce a částky v simulované bankovní aplikaci před odesláním.
@@ -518,6 +518,7 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **1. 10. 2026: sekce Prohlížeč** se dělá ve větvi `sekce-prohlizec` (plán a rozhodnutí v `docs/plany/plan-prohlizec.md`). Z větve se nenasazuje (sekce 2a). **Hlavní myšlenka sekce:** když připojení není zabezpečené, nezadávat do stránky žádné údaje. Pojmy: vždy „zabezpečené připojení“ / „připojení není zabezpečené“, ne „stránka je zabezpečená“. Pravidlo zní „nezadávejte údaje“, ne „je to podvod“. Hráč se neučí jeden symbol (prohlížeče se liší: Chrome na telefonu varuje přes celou obrazovku, Edge žlutým trojúhelníkem, jinde nápisem „Nezabezpečeno“, Chrome u zabezpečených stránek místo zámku ukazuje ikonu nastavení; Tomáš ověřil na skutečných prohlížečích), ale kde se dívat (vlevo od adresy) a co dělat. Vždy v páru: chybějící varování neznamená poctivou stránku. Adresní řádek: u nezabezpečeného připojení v obou úrovních jen žlutý trojúhelník s vykřičníkem bez nápisu (úrovně se liší jen označováním), ve vyhodnocení trojúhelník s nápisem „Nezabezpečeno“ a žárovkou. Zabezpečené připojení bez varování (zámek není hlavní znak). Ikona má v obou úrovních popis pro čtečku „Varování: připojení není zabezpečené“ a klepací plochu aspoň 48 px (Tomáš, 1. 10. 2026).
 - **1. 10. 2026: Prohlížeč je hotový** (podmínky v sekci 17 E): texty schválené (`docs/navrhy-scenaru-prohlizec.md`), 8 adres volných (registr CZ.NIC 404, DNS neexistuje), číslo +420 772 163 940 z bloku bez držitele (data ČTÚ z 1. 10. 2026), celá sada ve větvi prošla (1203 testů, 4 přeskočené). Tomáš ověřil v ARES, že názvy „Banka Javor“, „Kniha pro radost“ a „Domácí pomocník“ nepatří žádnému subjektu, názvy zůstávají. Termíny zkoušky se seniory řídí Tomáš, do CLAUDE.md se nezapisují.
 - **1. 10. 2026: Prohlížeč spojený do `main` (commit `4b25c70`), pushnutý a nasazený.** Celá sada na `main` před push prošla (1203 testů, 4 přeskočené, `--workers=2`). Zkouška: nahrát 11, smazat 2 staré soubory v assets; nasazení smazalo přesně je. Ověřeno na živé stránce: `http://` vrací 301 na `https://`, `noindex` platí, JS `text/javascript`, dlaždice Prohlížeče je aktivní, úvod při prvním vstupu, kolo „Stránka 1 z 5“, v Chromiu i WebKitu bez chyb v konzoli. Návrat: sekce 17 E.
+- **Milník 8 (Prohlížeč), fáze 11 „Kontrola na snímcích“ je vynechaná** (Tomáš, 1. 10. 2026): neprovedla se, ověřil se jen označený trojúhelník v pokročilé úrovni. Nahrazuje ji fáze 14, Tomášova kontrola na telefonu na živém webu. Prohlížeč je milník 8, Vydání milník 9 (přečíslováno 1. 10. 2026).
 
 **Otevřené úkoly:**
 - **Přilepená lišta kola při velkém písmu (nález 28. 9. 2026):** v testu s 200% písmem na 360 × 740 px zabírá lišta 472 px z 740, protože zvětšené písmo v testu podmínku `min-height: 40em` nevypne. Zpráva ve schránce pak může být středem pod lištou. Test `200 % text at 360 px` (`tests/email-app.spec.js`) je proto označený `test.fail` (očekávané selhání): „přilepená lišta při 200% písmu na malém displeji (360×740) zakrývá zprávu; na Tomášově telefonu při 200% bez problému“. **Nízká priorita, ověřeno na jednom zařízení** (Tomáš, 28. 9. 2026). Až se to opraví, Playwright ohlásí, že test „nečekaně prošel“, a `test.fail` se odstraní.
