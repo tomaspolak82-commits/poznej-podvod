@@ -1,8 +1,8 @@
 # Milník 8: sekce Prohlížeč (plán 1. 10. 2026, aktualizováno týž den)
 
-Diagram: `docs/plany/plan-prohlizec.html` (14 fází). Texty pro hráče (schválené): `docs/navrhy-scenaru-prohlizec.md`. Náčrt vzhledu: `docs/plany/nacrt-prohlizec.html`. Vydání (odstranění `noindex`) je milník 9.
+Diagram: `docs/plany/plan-prohlizec.html` (15 fází). Texty pro hráče (schválené): `docs/navrhy-scenaru-prohlizec.md`. Náčrt vzhledu: `docs/plany/nacrt-prohlizec.html`. Vydání (odstranění `noindex`) je milník 9.
 
-Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14, Tomášova kontrola na telefonu na živém webu.
+Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14 (úprava úvodu a scénáře `prohlizec-03` ve větvi `uprava-prohlizec`) a fáze 15, Tomášova kontrola na telefonu na živém webu.
 
 ## 1. Rozhraní simulovaného prohlížeče
 
@@ -53,7 +53,7 @@ Postup spojení, podmínky „hotovo“, vrácení spojení (`git revert -m 1 4b
 
 ## 6. Fáze milníku 8 (Prohlížeč)
 
-14 fází podle diagramu, z toho 5 „čeká na tebe“. Stav k 1. 10. 2026:
+15 fází podle diagramu, z toho 6 „čeká na tebe“. Stav k 1. 10. 2026:
 
 1. **Rozhodnutí k plánu** · čeká na tebe · hotovo.
 2. **Zdroje k typům podvodů** · hotovo. Zrychlený režim zdroj nevyžaduje.
@@ -65,12 +65,13 @@ Postup spojení, podmínky „hotovo“, vrácení spojení (`git revert -m 1 4b
 8. **Stavba prohlížeče** · hotovo.
 9. **Scénáře do hry** · hotovo, přehled scénářů vygenerovaný.
 10. **Testy** · hotovo, celá sada prošla ve větvi i na `main`.
-11. **Kontrola na snímcích** · **vynechaná, nahrazena fází 14.** Neprovedla se, ověřil se jen označený trojúhelník v pokročilé úrovni (na 360 px dobře vidět).
+11. **Kontrola na snímcích** · **vynechaná, nahrazena fází 15.** Neprovedla se, ověřil se jen označený trojúhelník v pokročilé úrovni (na 360 px dobře vidět).
 12. **Zpřístupnění sekce** · hotovo. Spojení do `main` (`4b25c70`) a push na Tomášův pokyn.
 13. **Ověření na živé stránce** · hotovo.
-14. **Kontrola na telefonu** · čeká na tebe. Tomáš projde Prohlížeč na živém webu, nahrazuje i fázi 11.
+14. **Úprava úvodu a scénáře `prohlizec-03`** · čeká na tebe (schválení dávky a snímků). Ve větvi `uprava-prohlizec`, z ní se nenasazuje. Úvod jako malé okno prohlížeče s čísly ①②③ a řádkem „Bez varování“, nový název banky v `prohlizec-03`. Pak spojení do `main` a nasazení.
+15. **Kontrola na telefonu** · čeká na tebe. Tomáš projde Prohlížeč na živém webu, nahrazuje i fázi 11.
 
-Proti původnímu plánu: fáze 5 a 7 proběhly najednou, fáze 11 je vynechaná. Počet fází v diagramu se nezměnil.
+Proti původnímu plánu: fáze 5 a 7 proběhly najednou, fáze 11 je vynechaná. Fáze 14 přibyla 1. 10. 2026 (Tomáš), kontrola na telefonu zůstává poslední.
 
 ## Rozhodnutí (Tomáš, 1. 10. 2026)
 
