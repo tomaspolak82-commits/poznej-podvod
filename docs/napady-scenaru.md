@@ -47,6 +47,7 @@ U podvodných SMS patří do vysvětlení rada: „Podezřelou SMS můžete pře
 | Z11 | Brigáda z domu: lajkování, pak Telegram, pak zaplatit za „rozšířenou nabídku“. | tamtéž jako Z10 |
 | Z12 | Láska přes internet, „voják v zahraničí“ chce peníze na cestu. | tamtéž jako Z10 |
 | Z13 | Převzatý účet známého, který nikdy nechce peníze, najednou naléhavě žádá o půjčku. Navazuje na Z3: po převzetí účtu podvodník rozesílá kontaktům žádosti o peníze. Starší bubliny v obvyklém tónu, pak změna chování. (Nápad z 24. 9. 2026, do `zpravy-04` se záměrně nepřidává.) | tamtéž jako Z2 (doslova ověřen úsek „začne rozesílat žádosti o peníze“) |
+| Z14 | Podvodná registrace (např. „ověření věku“ nebo „registrace zdarma“) chce číslo karty. Pak přijde SMS „k potvrzení registrace“ s kódem, který je ve skutečnosti kód k platbě. Lekce: v SMS si přečíst, za co a kolik platíte, a kód nezadávat, když nesedí. (Tomáš, 1. 10. 2026, navazuje na nápovědu Prohlížeče bod 6.) | **zdroj doplnit** |
 
 ## Legitimní zprávy – náměty
 

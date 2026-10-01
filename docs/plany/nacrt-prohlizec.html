@@ -23,8 +23,10 @@
   /* Neutral phone frame */
   .phone { border: 10px solid #30343a; border-radius: 28px; background: var(--white); overflow: hidden; }
   .training { background: var(--dark); color: #fff; font-size: .8rem; font-weight: 700; text-align: center; padding: 4px 8px; }
-  .ctx { margin: 10px; padding: 10px 12px; border-radius: 12px; background: #eef2f7; font-size: .9rem; }
-  .ctx b { display: block; color: var(--heading); }
+  /* Arrival card: blue-grey, never yellow (yellow = warning, light yellow = marked part) */
+  .ctx { margin: 10px; padding: 10px 12px; border-radius: 12px; background: #e8eef8; border-left: 5px solid #3a5a8c;
+    color: var(--heading); font-size: .9rem; }
+  .ctx b { display: block; color: #3a5a8c; }
 
   /* Browser chrome */
   .bar { display: flex; align-items: center; gap: 6px; margin: 0 10px; padding: 6px 8px;
@@ -43,14 +45,15 @@
   .page p { margin: 0 0 8px; padding: 4px; border-radius: 8px; }
   .field { display: block; margin: 0 0 8px; padding: 4px; border-radius: 8px; }
   .field span { display: block; font-size: .85rem; color: var(--heading); }
+  .field span.tag { display: inline-flex; color: #fff; font-size: .75rem; }
   .field i { display: block; height: 40px; border: 1px solid #b8c0cc; border-radius: 8px; background: #fafbfc; }
   .pbtn { display: block; width: 100%; padding: 12px; border: 0; border-radius: 10px; background: #3b4a5c; color: #fff; font-weight: 700; margin: 4px 0 8px; }
   .banner { background: #f1ede4; border: 1px dashed #b8a98a; border-radius: 10px; padding: 10px; font-size: .9rem; margin: 0 0 8px; }
   .fakewarn { background: #ffe9a8; border-radius: 10px; padding: 10px; font-weight: 700; color: var(--dark); margin: 0 0 8px; }
 
-  /* Marked part (advanced level) */
-  .marked { outline: 3px solid var(--mark); background: var(--mark-tint); position: relative; }
-  .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--mark); color: #fff; font-size: .75rem;
+  /* Marked part (advanced level), same look as in the game (game.css .msg-mark.is-marked) */
+  .marked { outline: 3px solid var(--heading); background: #fff4d6; position: relative; }
+  .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--heading); color: #fff; font-size: .75rem;
     font-weight: 700; border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: middle; }
 
   /* Popup over a dimmed page */
@@ -100,23 +103,22 @@
     <div class="card">
       <h2>Než začnete: adresní řádek</h2>
       <div class="mini">
-        <div class="bar"><span class="sec"><svg><use href="#warn"/></svg>Nezabezpečeno</span><span class="addr">priklad-stranky.cz</span></div>
-        <div class="callout">↑ vlevo od adresy: tady prohlížeč ukazuje varování</div>
+        <div class="bar"><span class="sec" role="img" aria-label="Varování: připojení není zabezpečené"><svg><use href="#warn"/></svg></span><span class="addr">priklad-stranky.cz</span></div>
+        <div class="callout">↑ Tady prohlížeč ukazuje varování</div>
       </div>
-      <p>Nahoře v prohlížeči je adresní řádek. Je v něm adresa stránky, na které právě jste, třeba poznej-podvod.menestarosti.cz. Adresu tam píše prohlížeč, ne stránka.</p>
-      <p>Vlevo od adresy prohlížeč ukazuje, jestli je stránka zabezpečená. Když je tam varování, například nápis „Nezabezpečeno“, trojúhelník s vykřičníkem nebo přeškrtnutý zámek, nic do stránky nezadávejte. Údaje by šly jako pohlednice: nepřečte je každý, ale kdo chce, cestou je přečte, třeba na veřejné Wi-Fi.</p>
-      <p>Platí to ale jen jedním směrem. Když varování chybí, stránka tím ještě není poctivá. Zabezpečení mají i podvodné stránky. Vždy se ptejte, jak jste se na stránku dostali a co po vás chce.</p>
-      <p>Každý prohlížeč to ukazuje trochu jinak. V tréninku uvidíte žlutý trojúhelník s vykřičníkem.</p>
+      <p>Nahoře v prohlížeči je adresní řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka.</p>
+      <p>Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi, tedy internetu, ke kterému se připojíte v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce. Když prohlížeč u adresy varuje, do stránky nic nezadávejte. V tréninku je varováním žlutý trojúhelník s vykřičníkem. Jiné prohlížeče ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek.</p>
+      <p>Obálka ale neříká nic o tom, kdo dopis poslal. To, že vás prohlížeč nevaruje, neznamená, že na stránce nemůže být podvod. Vždy se ptejte, jak jste se na stránku dostali a co po vás chce.</p>
       <p>Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte.</p>
     </div>
   </figure>
 
   <figure>
-    <figcaption>2. Základní úroveň, nezabezpečená stránka<small>prohlizec-01: trojúhelník i nápis „Nezabezpečeno“</small></figcaption>
+    <figcaption>2. Základní úroveň, nezabezpečené připojení<small>prohlizec-01: jen žlutý trojúhelník, bez nápisu</small></figcaption>
     <div class="phone">
       <div class="training">TRÉNINK: cvičná ukázka, nic se neodesílá</div>
       <div class="ctx"><b>Jak jste se sem dostali</b>Hledali jste recept na švestkový koláč. Na stránce s recepty jste klepli na barevný pruh „Vyhrajte nový telefon“.</div>
-      <div class="bar"><span class="sec"><svg><use href="#warn"/></svg>Nezabezpečeno</span><span class="addr">telefon-vyhra-dnes.cz</span><span class="tabs">2</span><span class="dots">⋮</span></div>
+      <div class="bar"><span class="sec" role="img" aria-label="Varování: připojení není zabezpečené"><svg><use href="#warn"/></svg></span><span class="addr">telefon-vyhra-dnes.cz</span><span class="tabs">2</span><span class="dots">⋮</span></div>
       <div class="page">
         <h2>Gratulujeme! Jste dnešní výherce.</h2>
         <p>Nový chytrý telefon je váš. Zaplatíte jen poštovné 49 Kč.</p>
@@ -131,11 +133,11 @@
   </figure>
 
   <figure>
-    <figcaption>3. Pokročilá úroveň, označování<small>Stejná stránka: jen trojúhelník, bez nápisu. Označené části mají modrý rámeček a štítek.</small></figcaption>
+    <figcaption>3. Pokročilá úroveň, označování<small>Stejná stránka, stejný trojúhelník. Označené části vypadají jako dnes v E-mailu a Zprávách.</small></figcaption>
     <div class="phone">
       <div class="training">TRÉNINK: cvičná ukázka, nic se neodesílá</div>
       <div class="ctx"><b>Jak jste se sem dostali</b>Hledali jste recept na švestkový koláč. Na stránce s recepty jste klepli na barevný pruh „Vyhrajte nový telefon“.</div>
-      <div class="bar"><span class="sec marked" title="Varování: stránka není zabezpečená"><svg><use href="#warn"/></svg></span><span class="addr">telefon-vyhra-dnes.cz</span><span class="tabs">2</span><span class="dots">⋮</span></div>
+      <div class="bar"><span class="sec marked" role="img" aria-label="Varování: připojení není zabezpečené"><svg><use href="#warn"/></svg></span><span class="addr">telefon-vyhra-dnes.cz</span><span class="tabs">2</span><span class="dots">⋮</span></div>
       <div class="callout">↑ označená ikona varování (klepací plocha aspoň 48 px)</div>
       <div class="page">
         <h2 class="marked">Gratulujeme! Jste dnešní výherce. <span class="tag">✓ Označeno</span></h2>
@@ -171,7 +173,7 @@
   </figure>
 
   <figure>
-    <figcaption>5. Zabezpečená stránka<small>prohlizec-08: u adresy žádné varování a žádný zámek</small></figcaption>
+    <figcaption>5. Zabezpečené připojení<small>prohlizec-08: u adresy žádné varování a žádný zámek</small></figcaption>
     <div class="phone">
       <div class="training">TRÉNINK: cvičná ukázka, nic se neodesílá</div>
       <div class="ctx"><b>Jak jste se sem dostali</b>V e-shopu Domácí pomocník, kde už jste nakupovali, jste si do košíku dali rychlovarnou konvici a klepli na „Zaplatit“.</div>
@@ -208,7 +210,9 @@
   <ul>
     <li>Prohlížeč je neutrální: žádné logo ani barvy skutečného prohlížeče. Počet karet a menu ⋮ jsou jen dekorace.</li>
     <li>Varování je trojúhelník s tmavým obrysem, takže je dobře vidět i na světlém pozadí. Žlutá není nikdy barvou textu (sekce 9).</li>
-    <li>Barva rámečku u označených částí bude stejná jako dnes v E-mailu a Zprávách, modrá je v náčrtu jen pro ilustraci.</li>
+    <li>Označená část má stejný vzhled jako dnes v E-mailu a Zprávách: tmavý rámeček, světle žlutý podklad a štítek „Označeno“.</li>
+    <li>Karta „Jak jste se sem dostali“ je modrošedá s tmavomodrým proužkem vlevo. Žlutou nemá, protože žlutá je barva varování a světle žlutý podklad má označená část. Kontrast textu je asi 14 : 1.</li>
+    <li>Varování je v obou úrovních jen trojúhelník, popis pro čtečku „Varování: připojení není zabezpečené“. Nápis „Nezabezpečeno“ se ukáže až ve vyhodnocení.</li>
     <li>Pole formuláře nejsou skutečná pole: nedá se do nich psát, klepnutí ukáže upozornění „Tohle je jen trénink…“.</li>
     <li>Úroveň pozná simulovaný prohlížeč podle režimu, se kterým ho hra volá. Společný kód E-mailu a Zpráv se kvůli tomu nemění.</li>
   </ul>

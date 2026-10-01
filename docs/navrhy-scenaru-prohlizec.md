@@ -31,18 +31,21 @@ Falešné výhry, vyskakovací okna a přihlašovací stránky. Naučíte se, ka
 
 ### Úvod o adresním řádku (na výběru úrovně Prohlížeče, nad volbou úrovně)
 
-Navrhuji ho ukazovat **pokaždé**, ne jen při prvním vstupu. Je krátký, opakování seniorům pomůže a nepotřebuje paměť prohlížeče, takže funguje i v anonymním okně. Vedle textu bude malý obrázek adresního řádku (viz náčrt).
+Navrhuji ho ukazovat **pokaždé**, ne jen při prvním vstupu. Je krátký, opakování seniorům pomůže a nepotřebuje paměť prohlížeče, takže funguje i v anonymním okně. Nad textem bude malý obrázek adresního řádku jen s trojúhelníkem a popiskem (viz náčrt).
+
+Popisek u obrázku:
+```
+Tady prohlížeč ukazuje varování
+```
 
 ```
 Než začnete: adresní řádek
 
-Nahoře v prohlížeči je adresní řádek. Je v něm adresa stránky, na které právě jste, třeba poznej-podvod.menestarosti.cz. Adresu tam píše prohlížeč, ne stránka.
+Nahoře v prohlížeči je adresní řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka.
 
-Vlevo od adresy prohlížeč ukazuje, jestli je stránka zabezpečená. Když je tam varování, například nápis „Nezabezpečeno“, trojúhelník s vykřičníkem nebo přeškrtnutý zámek, nic do stránky nezadávejte. Údaje by šly jako pohlednice: nepřečte je každý, ale kdo chce, cestou je přečte, třeba na veřejné Wi-Fi.
+Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi, tedy internetu, ke kterému se připojíte v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce. Když prohlížeč u adresy varuje, do stránky nic nezadávejte. V tréninku je varováním žlutý trojúhelník s vykřičníkem. Jiné prohlížeče ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek.
 
-Platí to ale jen jedním směrem. Když varování chybí, stránka tím ještě není poctivá. Zabezpečení mají i podvodné stránky. Vždy se ptejte, jak jste se na stránku dostali a co po vás chce.
-
-Každý prohlížeč to ukazuje trochu jinak. V tréninku uvidíte žlutý trojúhelník s vykřičníkem.
+Obálka ale neříká nic o tom, kdo dopis poslal. To, že vás prohlížeč nevaruje, neznamená, že na stránce nemůže být podvod. Vždy se ptejte, jak jste se na stránku dostali a co po vás chce.
 
 Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte.
 ```
@@ -61,15 +64,15 @@ Na co si dát pozor v prohlížeči
 
 1. Jak jste se na stránku dostali. Stránka, kterou jste otevřeli sami, je jiná situace než stránka, kam vás poslal odkaz ve zprávě nebo reklama. Na přihlášení a placení choďte adresou, kterou si napíšete sami nebo máte uloženou.
 
-2. Varování vlevo od adresy. Když tam prohlížeč ukazuje varování (nápis „Nezabezpečeno“, trojúhelník s vykřičníkem nebo přeškrtnutý zámek), nic do stránky nezadávejte. Údaje by šly jako pohlednice: nepřečte je každý, ale kdo chce, cestou je přečte, třeba na veřejné Wi-Fi.
+2. Varování vlevo od adresy. Když tam prohlížeč varuje (žlutý trojúhelník s vykřičníkem, nápis „Nezabezpečeno“ nebo přeškrtnutý zámek), připojení není zabezpečené. Do stránky nic nezadávejte. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce.
 
-3. Bez varování ještě neznamená poctivě. Zabezpečení mají i podvodné stránky. Vždy se ptejte, co po vás stránka chce.
+3. To, že vás prohlížeč nevaruje, ještě neznamená, že na stránce nemůže být podvod. Obálku může poslat i podvodník. Vždy se ptejte, co po vás stránka chce.
 
 4. Adresa, která nesedí. Věřte adrese v řádku nahoře, ne tomu, co o sobě píše stránka. Pozor na adresy, které jen obsahují známé jméno, třeba jméno vaší banky s dalšími slovy.
 
 5. Stránka nebo okno, které straší nebo slibuje výhru. „Telefon je napadený“, „Vyhráli jste“. Stránka nepozná, co máte v telefonu. Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Nevolejte, nic neinstalujte a stránku zavřete.
 
-6. Údaje, které stránka nepotřebuje. PIN, kód z SMS nebo číslo karty jinde než při placení za věc, kterou jste si sami vybrali.
+6. Údaje, které stránka nepotřebuje. PIN ke kartě do stránky nezadávejte nikdy. Číslo karty a kód z SMS jen při placení za věc, kterou jste si sami vybrali. I tehdy si v SMS nebo v aplikaci banky přečtěte, za co a kolik platíte.
 
 Pozor: i stránka v bezchybné češtině může být podvod. Podvodníci dnes píšou s pomocí umělé inteligence.
 
@@ -101,13 +104,12 @@ Karta nad prohlížečem, nadpis:
 ```
 Jak jste se sem dostali
 ```
+Barva karty: světle modrošedý podklad `#e8eef8` s tmavomodrým proužkem vlevo `#3a5a8c`, text `--color-heading` (kontrast asi 14 : 1). Neplete se se žlutým varováním ani s označenou částí (ta má ve hře tmavý rámeček a světle žlutý podklad `#fff4d6`).
 
-Varování vlevo od adresy (jen u nezabezpečené stránky):
-- základní úroveň, viditelný text: `Nezabezpečeno`
-- pokročilá úroveň: jen ikona, bez textu
-- popis pro čtečku obrazovky v základní úrovni (obsahuje viditelný text): `Nezabezpečeno: stránka není zabezpečená`
-- popis pro čtečku v pokročilé úrovni: `Varování: stránka není zabezpečená`
-- ve vyhodnocení vždy ikona i nápis `Nezabezpečeno` (obě úrovně), aby bylo jasné, na co žárovka ukazuje
+Varování vlevo od adresy (jen u nezabezpečeného připojení):
+- v obou úrovních jen žlutý trojúhelník s vykřičníkem, bez nápisu (úrovně se liší jen označováním)
+- popis pro čtečku obrazovky v obou úrovních: `Varování: připojení není zabezpečené`
+- ve vyhodnocení trojúhelník s nápisem `Nezabezpečeno` a žárovkou
 
 Popis adresy pro čtečku:
 ```
@@ -130,7 +132,7 @@ Reklama (banner) po klepnutí ukáže stávající upozornění na odkaz („Toh
 ```
 adresa stránky nebo varování u ní
 ```
-Kategorie `adresa-stranky`. Varování o nezabezpečené stránce do ní patří taky, aby nevznikala další nová kategorie.
+Kategorie `adresa-stranky`. Varování o nezabezpečeném připojení do ní patří taky, aby nevznikala další nová kategorie.
 
 ## C. Scénáře
 
@@ -140,12 +142,12 @@ Rozložení příchodů (rozhodnutí 2): nevinný příchod mají podvody 02 (č
 
 ---
 
-### prohlizec-01: Výhra telefonu za poštovné (podvod, nezabezpečená stránka)
+### prohlizec-01: Výhra telefonu za poštovné (podvod, nezabezpečené připojení)
 
 ```
 Jak jste se sem dostali: Hledali jste recept na švestkový koláč. Na stránce s recepty jste klepli na barevný pruh „Vyhrajte nový telefon“.
 
-[security] ⚠ Nezabezpečeno
+[security] ⚠ (žlutý trojúhelník, bez nápisu)
 [address] telefon-vyhra-dnes.cz
 [heading] Gratulujeme! Jste dnešní výherce.
 [body.0] Nový chytrý telefon je váš. Zaplatíte jen poštovné 49 Kč.
@@ -159,7 +161,7 @@ Jak jste se sem dostali: Hledali jste recept na švestkový koláč. Na stránce
 Hrozby:
 1. `security` + `address`, `fields.0`, `fields.1` · adresa-stranky · **Varování u adresy**
 ```
-Vlevo od adresy prohlížeč ukazuje, že stránka není zabezpečená. Na takové stránce nic nezadávejte, ani jméno a adresu. Údaje by šly jako pohlednice: nepřečte je každý, ale kdo chce, cestou je přečte, třeba na veřejné Wi-Fi.
+Vlevo od adresy prohlížeč varuje, že připojení není zabezpečené. Na takové stránce nic nezadávejte, ani jméno a adresu. Údaje by šly jako pohlednice: kdo chce, cestou je přečte.
 ```
 2. `heading` + `body.0` · vyhra-nabidka · **Výhra za poštovné**
 ```
@@ -202,11 +204,11 @@ Okno:
 Hrozby:
 1. `popup.title` + `popup.body.0` · emocni-natlak · **Strašení viry**
 ```
-Okno na stránce nepozná, co máte v telefonu. Nenakreslil ho váš telefon, ale stránka. Strach z virů a ukradených peněz má zabránit tomu, abyste se v klidu zamysleli. U adresy přitom žádné varování není: zabezpečení samo nerozhoduje, mají ho i podvodné stránky.
+Okno na stránce nepozná, co máte v telefonu. Nenakreslil ho váš telefon, ale stránka. Strach z virů a ukradených peněz má zabránit tomu, abyste se v klidu zamysleli. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá.
 ```
 2. `popup.body.1` + `popup.button.0` · neobvykla-zadost · **Výzva k zavolání**
 ```
-Na druhé straně by vás čekal podvodník, který by chtěl peníze nebo přístup do vašeho telefonu. Spěch „do 5 minut“ k tomu patří.
+Na druhé straně by vás čekal podvodník, který by chtěl peníze nebo přístup do vašeho telefonu, třeba tím, že vás požádá o instalaci aplikace. Spěch „do 5 minut“ k tomu patří.
 ```
 Nevinná část: `address` (stránka s článkem, kterou jste četli).
 
@@ -237,7 +239,7 @@ Jak jste se sem dostali: Máte účet v Bance Javor. Přišla vám SMS, že vá�
 Hrozby:
 1. `address` · adresa-stranky · **Adresa stránky**
 ```
-Na přihlášení do banky choďte adresou, kterou si napíšete sami nebo máte uloženou. Tahle stránka se otevřela z odkazu v SMS a adresa jen obsahuje slovo „javor“. U adresy přitom žádné varování není: zabezpečení samo nerozhoduje, mají ho i podvodné stránky.
+Na přihlášení do banky choďte adresou, kterou si napíšete sami nebo máte uloženou. Tahle stránka se otevřela z odkazu v SMS a adresa jen obsahuje slovo „javor“. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá.
 ```
 2. `body.0` · emocni-natlak · **Omezený účet**
 ```
@@ -266,7 +268,7 @@ Jak jste se sem dostali: Hledali jste jízdní řád autobusu a otevřeli jste j
 [address] autobusy-jizdni-rad.cz
 [heading] Jízdní řády autobusů
 [banner] ⚠ Vaše připojení není zabezpečené!
-[body.0] Váš prohlížeč je zastaralý a vaše údaje může kdokoli vidět. Nainstalujte si aplikaci Bezpečný surf a chraňte se.
+[body.0] Váš prohlížeč je zastaralý a vaše údaje může kdokoli vidět. Nainstalujte si aplikaci Ochrana telefonu a chraňte se.
 [button] Stáhnout ochranu
 ```
 Žlutý pruh s vykřičníkem nakreslila stránka uprostřed obsahu. Prohlížeč u adresy žádné varování neukazuje.
@@ -274,7 +276,7 @@ Jak jste se sem dostali: Hledali jste jízdní řád autobusu a otevřeli jste j
 Hrozby:
 1. `banner` + `body.0` · emocni-natlak · **Varování od stránky**
 ```
-Skutečné varování ukazuje prohlížeč vlevo od adresy nebo přes celou obrazovku, ne stránka uprostřed textu. U adresy tu žádné varování není. Tohle „varování“ si nakreslila stránka sama, aby vás vystrašila. A naopak: že u adresy varování chybí, ještě neznamená, že je stránka poctivá.
+Skutečné varování ukazuje prohlížeč vlevo od adresy nebo přes celou obrazovku, ne stránka uprostřed textu. U adresy tu žádné varování není. Tohle „varování“ si nakreslila stránka sama, aby vás vystrašila. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá.
 ```
 2. `button` · instalace-aplikace · **Stažení aplikace**
 ```
@@ -284,12 +286,12 @@ Nevinné části: `address`, `heading`.
 
 Shrnutí:
 ```
-Varování o bezpečnosti hledejte vlevo od adresy, tam ho ukazuje prohlížeč. Co nakreslí stránka, může být past. Když stránka chce, abyste si kvůli bezpečí něco stáhli, zavřete ji.
+Varování o bezpečnosti hledejte vlevo od adresy, tam ho ukazuje prohlížeč. Co nakreslí stránka, může být past. Když stránka chce, abyste si kvůli bezpečí něco stáhli, zavřete ji. Prohlížeč ani telefon se neaktualizují přes tlačítko na stránce.
 ```
 
 Kontrola nápovědy: bod 2 (varování vlevo od adresy) k pruhu na stránce nevede, pruh ale straší → bod 5 → hrozba 1; bod 5 „nic neinstalujte“ → hrozba 2. Bod 4: adresa odpovídá hledání, nevede.
 
-Zdroj, že se tento typ v ČR děje: zatím nemám. Když ho nenajdu, navrhnu náhradu (falešnou platební stránku pro prodávající z bazaru, k té zdroje jsou).
+Zdroj k typu podvodu: zrychlený režim ho nevyžaduje, scénář zůstává (Tomáš, 1. 10. 2026).
 
 ---
 
@@ -301,8 +303,8 @@ Vyvrací: „Když je na stránce reklama nebo sleva, je to podvod.“
 Jak jste se sem dostali: Otevřeli jste si zpravodajskou stránku, kterou čtete každý den. Máte ji uloženou v záložkách.
 
 [address] regionalni-zpravodaj-dnes.cz
-[heading] Obec opraví most přes řeku do konce října
-[body.0] Oprava začne v pondělí. Po dobu prací pojede autobus objížďkou přes Horní Lhotu.
+[heading] Obec opraví most přes řeku do zimy
+[body.0] Oprava začne v pondělí. Po dobu prací pojede autobus objížďkou přes Javornou Lhotu.
 [banner] Zimní bundy se slevou 30 % · Obchod U Lípy
 [body.1] Starosta prosí řidiče o trpělivost a o dodržování dočasného značení.
 ```
@@ -393,14 +395,14 @@ Hrozby: žádné.
 
 Shrnutí:
 ```
-Číslo karty se zadává, když za něco platíte. Tady jste si zboží vybrali sami a částka odpovídá objednávce. Že prohlížeč u adresy neukazuje žádné varování, samo nerozhoduje, zabezpečení mají i podvodné stránky. Rozhoduje, že platíte za věc, kterou jste si sami vybrali.
+Číslo karty se zadává, když za něco platíte. Tady jste si zboží vybrali sami a částka odpovídá objednávce. To, že vás prohlížeč nevaruje, samo nerozhoduje. Rozhoduje, že platíte za věc, kterou jste si sami vybrali. Když pak přijde SMS nebo zpráva v aplikaci banky na potvrzení platby, přečtěte si, za co a kolik platíte.
 ```
 
 Kontrola nápovědy: bod 6 výslovně říká „jinde než při placení za věc, kterou jste si sami vybrali“, k číslu karty tu nevede. Body 1, 4, 5 nevedou.
 
 ## D. Co do první verze nepatří a proč (k rozhodnutí)
 
-**Legitimní nezabezpečená stránka** (např. stránka obce s otevírací dobou, „Nezabezpečeno“, nic nechce) by nejlíp ukázala tvoje pravidlo „nezadávejte údaje, ne je to podvod“. Do první verze ji ale nenavrhuji:
+**Legitimní stránka s nezabezpečeným připojením** (např. stránka obce s otevírací dobou, varování u adresy, nic nechce) by nejlíp ukázala tvoje pravidlo „nezadávejte údaje, ne je to podvod“. Do první verze ji ale nenavrhuji:
 - Nápověda (bod 2) k varování vede. U legitimní zprávy podle sekce 7 nesmí nápověda k označení vést nic. Hráč, který varování označí, by přišel o 2 body za označování.
 - Vyhodnocení by u varování napsalo „Označeno zbytečně, tady je vše v pořádku“. U varování to není pravda.
 - Vyřešit by to šlo jen změnou bodování nebo vyhodnocení ve společném kódu, a na to do zkoušky není čas.
