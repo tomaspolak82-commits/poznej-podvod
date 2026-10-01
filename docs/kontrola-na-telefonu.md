@@ -1,6 +1,6 @@
 # Kontrola na telefonu s velkým písmem (milník 7)
 
-Asi 15 minut. Hrajte normálně, nemusíte odpovídat správně. U každého kroku je, na co se dívat. Když něco nesedí, zapište si číslo kroku a udělejte snímek obrazovky.
+Asi 20 minut (s Prohlížečem). Hrajte normálně, nemusíte odpovídat správně. U každého kroku je, na co se dívat. Když něco nesedí, zapište si číslo kroku a udělejte snímek obrazovky.
 
 **Na co se díváte pořád:**
 - text není useknutý ani přes sebe,
@@ -49,14 +49,38 @@ Asi 15 minut. Hrajte normálně, nemusíte odpovídat správně. U každého kro
     - Ve vyhodnocení jsou u částí texty („Našli jste“, „Tohle místo stojí za druhý pohled“ nebo „Označeno zbytečně…“) a nejsou useknuté.
 14. U zprávy od „Jarky“ (když ji v kole máte): štítky „Út 18:05“ a „Dnes 11:40“ jsou vidět uprostřed.
 
+## Prohlížeč (6 minut)
+
+Nový úvod a „Lipová banka“ jsou zatím jen ve větvi `uprava-prohlizec`. Tuhle část dělejte, až bude větev spojená do `main` a nasazená. Úvod se ukáže jen při prvním vstupu do Prohlížeče a „Smazat moji historii“ ho nevrátí, proto se tahle část dělá v anonymním okně, kde je paměť prázdná.
+
+15. Otevřete v anonymním okně https://poznej-podvod.menestarosti.cz/?seed=1#/prohlizec
+    - Místo výběru úrovně se ukáže úvod „Než začnete: adresní řádek“. Nahoře je obrázek malého okna prohlížeče se žlutým trojúhelníkem a čísly 1, 2 a 3 v kroužcích, pod ním tři odstavce se stejnými čísly, řádek „Bez varování“ a tlačítko „Rozumím, vybrat úroveň“.
+    - Adresa v obrázku se nezalomí u pomlčky. Buď je celá na jednom řádku, nebo celá na dalším.
+16. Klepněte na „Rozumím, vybrat úroveň“.
+    - Otevře se výběr úrovně s textem „Vyberte si úroveň. V obou uvidíte 5 stránek.“.
+17. Klepněte na „Zpět na výběr tréninku“ a pak znovu na Prohlížeč.
+    - Úvod se už neukáže, jdete rovnou na výběr úrovně.
+18. Otevřete v tomtéž anonymním okně znovu https://poznej-podvod.menestarosti.cz/?seed=1#/prohlizec (každé otevření výběru úrovně losuje nové kolo, nové otevření adresy vrátí kolo s Lipovou bankou). Začněte základní úroveň a otevřete „Na co si dát pozor?“.
+    - První bod nápovědy je „Adresní řádek.“. Okno jde přečíst celé a zavřít.
+19. Dohrajte celé kolo (5 stránek).
+    - Stránka 5 je „Lipová banka: ověření účtu“. Na kartě „Jak jste se sem dostali“ je pravá adresa banky `lipova-banka.cz`, v adresním řádku `lipova-banka-overeni.cz`. Ve vyhodnocení klepněte na žárovku u adresy: ve vysvětlení jsou obě adresy. Žádná z nich se nezalomí u pomlčky.
+    - V tomto kole není stránka s nezabezpečeným připojením, trojúhelník přijde v dalším kole.
+20. Po poslední stránce klepněte na „Zobrazit výsledek“, na konci kola na „Zpět na hlavní stránku“ a v anonymním okně znovu otevřete https://poznej-podvod.menestarosti.cz/?seed=1#/prohlizec
+    - Úvod se neukáže (v tomto okně jste ho už viděli). Hra si pamatuje minulé kolo a vybere jiné stránky (výpočtem ověřeno 1. 10. 2026): Lipová banka v něm nebude, zato je tam stránka s výhrou telefonu a nezabezpečeným připojením.
+21. Začněte pokročilou úroveň. Na stránce s výhrou telefonu se podívejte vlevo od adresy.
+    - Je tam jen žlutý trojúhelník s vykřičníkem, bez nápisu. Jde trefit prstem napoprvé a po klepnutí ukáže „Označeno“.
+    - Ve vyhodnocení je u trojúhelníku nápis „Nezabezpečeno“, žárovka a „Našli jste“.
+22. Dohrajte kolo a zavřete anonymní okno.
+    - Konec kola je čitelný.
+
 ## Na závěr (3 minuty)
 
-15. Vraťte se na hlavní stránku.
+23. Vraťte se na hlavní stránku (v normálním okně).
     - Je tam panel „Vítejte zpět“ s výsledky a úplně dole odkaz „Smazat moji historii“.
-16. Otočte telefon na šířku a zpět.
+24. Otočte telefon na šířku a zpět.
     - Nic se nerozbije, text nepřetéká.
-17. Jen na iPhonu nebo iPadu (Safari): podívejte se na nadpisy a tlačítka.
+25. Jen na iPhonu nebo iPadu (Safari): podívejte se na nadpisy a tlačítka.
     - Mají být **tučné**. Když jsou tenké, napište mi to (otevřený úkol „Tenký Montserrat“).
-18. Vraťte velikost písma v telefonu, jak ji máte normálně.
+26. Vraťte velikost písma v telefonu, jak ji máte normálně.
 
 **Co mi poslat:** čísla kroků, kde něco nesedělo, a snímky obrazovky. Když bylo všechno v pořádku, stačí „kontrola bez nálezů“ a typ telefonu.
