@@ -46,6 +46,88 @@ const validChat = () => ({
   sources: [],
 });
 
+const validBrowser = () => ({
+  id: 'prohlizec-50',
+  section: 'prohlizec',
+  title: 'Test',
+  isScam: true,
+  message: {
+    arrival: 'Klepli jste na odkaz.',
+    address: 'test.invalid',
+    secure: false,
+    heading: 'Nadpis',
+    body: ['Odstavec 1', 'Odstavec 2'],
+    banner: { text: 'Reklama', style: 'ad', position: 1 },
+    fields: ['Jméno'],
+    button: { label: 'Odeslat' },
+  },
+  threats: [{ target: 'security', alsoTargets: ['address'], category: 'adresa-stranky', title: 'T', explanation: 'E' }],
+  summary: 'Shrnutí',
+  sources: [],
+});
+
+const validPopup = () => ({
+  ...validBrowser(),
+  message: {
+    arrival: 'Četli jste článek.',
+    address: 'test.invalid',
+    secure: true,
+    popup: { title: 'Okno', body: ['Text'], buttons: ['Ano', 'Ne'] },
+  },
+  threats: [{ target: 'popup.title', category: 'emocni-natlak', title: 'T', explanation: 'E' }],
+});
+
+test.describe('content: browser pages (prohlizec)', () => {
+  test('valid page and popup pass', () => {
+    expect(validateScenario(validBrowser(), { fileId: 'prohlizec-50', section: 'prohlizec' })).toEqual([]);
+    expect(validateScenario(validPopup(), { fileId: 'prohlizec-50', section: 'prohlizec' })).toEqual([]);
+  });
+
+  test('parts in the order the browser shows them; the warning only without a secure connection', () => {
+    expect(listTargets('prohlizec', validBrowser().message)).toEqual([
+      'security',
+      'address',
+      'heading',
+      'body.0',
+      'banner',
+      'body.1',
+      'fields.0',
+      'button',
+    ]);
+    expect(listTargets('prohlizec', validPopup().message)).toEqual([
+      'address',
+      'popup.title',
+      'popup.body.0',
+      'popup.button.0',
+      'popup.button.1',
+    ]);
+  });
+
+  const broken = [
+    ['secure missing', (s) => delete s.message.secure, /secure/],
+    ['arrival missing', (s) => delete s.message.arrival, /arrival/],
+    ['banner with unknown style', (s) => (s.message.banner.style = 'blink'), /banner/],
+    ['banner position out of range', (s) => (s.message.banner.position = 3), /banner\.position/],
+    ['page without heading and popup', (s) => delete s.message.heading, /heading/],
+    ['warning target on a secure page', (s) => (s.message.secure = true), /"security" neodpovídá/],
+    ['page content under a popup', (s) => (s.message.popup = { title: 'Okno' }), /nesmí mít message\.heading/],
+  ];
+  for (const [name, breakIt, expected] of broken) {
+    test(`${name} is reported`, () => {
+      const scenario = validBrowser();
+      breakIt(scenario);
+      expect(validateScenario(scenario, { fileId: 'prohlizec-50', section: 'prohlizec' }).join('\n')).toMatch(expected);
+    });
+  }
+
+  test('real browser pages never point to a real link (no tel:, http) and the phone number is the checked one', () => {
+    const files = readSection(CONTENT_DIR, 'prohlizec').map((f) => JSON.stringify(f.data.message));
+    expect(files.join('')).not.toMatch(/https?:\/\/|tel:/);
+    const numbers = files.join('').match(/\+420[\d ]{9,12}/g) ?? [];
+    expect(numbers.map((n) => n.trim())).toEqual(['+420 772 163 940']);
+  });
+});
+
 test.describe('content: real scenario files', () => {
   test('every scenario in src/content is valid and every section can draw a round', () => {
     expect(validateContent(CONTENT_DIR)).toEqual([]);

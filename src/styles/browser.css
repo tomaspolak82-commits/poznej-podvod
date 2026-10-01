@@ -1,0 +1,309 @@
+/* Simulated mobile browser (sketch docs/plany/nacrt-prohlizec.html): neutral colours,
+   no logos or colours of real browsers. The phone frame is in game.css. */
+
+.browser {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ---------- Card "Jak jste se sem dostali": blue-grey, never yellow ----------
+   Yellow is the warning and light yellow the marked part (Tomáš, 1. 10. 2026) */
+
+.browser__arrival {
+  margin: var(--space-2) var(--space-2) var(--space-1);
+  padding: 0.75rem var(--space-2);
+  border-left: 5px solid #3a5a8c;
+  border-radius: 12px;
+  background: #e8eef8;
+  color: var(--color-heading);
+}
+
+.browser__arrival-title {
+  color: #3a5a8c;
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+/* ---------- Address bar ---------- */
+
+.browser__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  margin: var(--space-1) var(--space-2) var(--space-2);
+  padding: 0.25rem var(--space-1);
+  border-radius: 1.5rem;
+  background: #edf2f7;
+}
+
+/* The warning icon: at least 48 × 48 px to tap (CLAUDE.md, section 10) */
+.browser__security {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.browser__security svg,
+.browser__banner svg,
+.browser-intro__icon svg {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.browser__address {
+  flex: 1 1 6rem;
+  min-width: 0;
+  padding: 0.25rem;
+  color: var(--color-heading);
+  overflow-wrap: anywhere;
+}
+
+.browser__chrome {
+  display: inline-flex;
+  gap: 0.25rem;
+  color: #4a5568;
+}
+
+.browser__chrome svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Inside a marking button (a column) the address must not take the flex size as its height */
+.msg-mark > .browser__address {
+  flex: none;
+}
+
+/* Marking inside the bar: the icon keeps its own small width, the address takes the rest */
+.browser__bar .msg-mark {
+  width: auto;
+}
+
+.browser__bar .msg-mark:has(.browser__address),
+.browser__bar .review-part:has(.browser__address) {
+  flex: 1 1 6rem;
+  min-width: 0;
+}
+
+/* Marking: the warning (with its "Označeno" badge) and the decoration share the first row,
+   the address gets a whole row, so it does not shrink to a narrow column */
+.msg--mark .browser__bar:has(.browser__security) .msg-mark:has(.browser__address) {
+  flex-basis: 100%;
+  order: 2;
+}
+
+.msg--mark .browser__bar:has(.browser__security) .browser__chrome {
+  order: 1;
+  margin-left: auto;
+}
+
+/* ---------- Page ---------- */
+
+.browser__page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: 0 var(--space-2) var(--space-3);
+}
+
+.browser__heading {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.browser__paragraph {
+  overflow-wrap: anywhere;
+}
+
+.browser__banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--tap-min);
+  padding: 0.75rem var(--space-2);
+  border-radius: 10px;
+  font: inherit;
+  text-align: left;
+}
+
+.browser__banner--ad {
+  border: 1px dashed #8a7a5c;
+  background: #f1ede4;
+  color: var(--color-heading);
+}
+
+/* A "warning" drawn by the page itself (prohlizec-04), not by the browser */
+.browser__banner--warning {
+  border: 0;
+  background: #ffe9a8;
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.browser__field {
+  display: grid;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-heading);
+  font: inherit;
+  text-align: left;
+}
+
+.browser__field-box {
+  display: block;
+  min-height: var(--tap-min);
+  border: 1px solid #a0aec0;
+  border-radius: 8px;
+  background: #fafbfc;
+}
+
+.browser__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: stretch;
+  min-height: var(--tap-min);
+  padding: var(--space-1) var(--space-3);
+  border: 0;
+  border-radius: 10px;
+  background: #3b4a5c;
+  color: var(--color-white);
+  font: inherit;
+  font-weight: 700;
+}
+
+/* ---------- Popup over a dimmed page ---------- */
+
+.browser__dimmed {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: #5b6472;
+}
+
+.browser__ghosts {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.browser__ghost {
+  display: block;
+  height: 0.75rem;
+  border-radius: 4px;
+  background: #79828f;
+}
+
+.browser__ghost:nth-child(2) {
+  width: 80%;
+}
+
+.browser__popup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: 14px;
+  background: var(--color-white);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
+  color: var(--color-heading);
+}
+
+.browser__popup-title {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.browser__popup-buttons {
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* ---------- Evaluation ---------- */
+
+.browser .review-part > .browser__button,
+.browser .review-part > .browser__banner,
+.browser .review-part > .browser__field {
+  flex: 1 1 auto;
+}
+
+/* ---------- Intro on the level select (shown every time) ---------- */
+
+.browser-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+  overflow-wrap: break-word;
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+}
+
+@media (min-width: 40em) {
+  .browser-intro {
+    padding: var(--space-3);
+  }
+}
+
+.browser-intro__title {
+  color: var(--color-red-dark);
+  font-size: 1.375rem;
+}
+
+.browser-intro__figure {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+}
+
+.browser-intro__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--tap-min);
+  padding: 0.25rem var(--space-2);
+  border-radius: 1.5rem;
+  background: #edf2f7;
+}
+
+.browser-intro__icon {
+  display: inline-flex;
+}
+
+/* Grey stand-in for an address: the picture shows where to look, not a real page */
+.browser-intro__address {
+  flex: 1 1 auto;
+  height: 0.75rem;
+  border-radius: 4px;
+  background: #a0aec0;
+}
+
+.browser-intro__figure figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.browser-intro__figure figcaption svg {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+}

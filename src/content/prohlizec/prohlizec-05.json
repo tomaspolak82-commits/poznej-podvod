@@ -1,0 +1,21 @@
+{
+  "id": "prohlizec-05",
+  "section": "prohlizec",
+  "title": "Zpravodajská stránka s reklamou",
+  "isScam": false,
+  "refutes": "Když je na stránce reklama nebo sleva, je to podvod.",
+  "message": {
+    "arrival": "Otevřeli jste si zpravodajskou stránku, kterou čtete každý den. Máte ji uloženou v záložkách.",
+    "address": "regionalni-zpravodaj-dnes.cz",
+    "secure": true,
+    "heading": "Obec opraví most přes řeku do zimy",
+    "body": [
+      "Oprava začne v pondělí. Po dobu prací pojede autobus objížďkou přes Javornou Lhotu.",
+      "Starosta prosí řidiče o trpělivost a o dodržování dočasného značení."
+    ],
+    "banner": { "text": "Zimní bundy se slevou 30 % · Obchod U Lípy", "style": "ad", "position": 1 }
+  },
+  "threats": [],
+  "summary": "Reklama je na většině stránek a sama o sobě podvod není. Tahle nabízí slevu na zboží, ale nic po vás nechce: žádné údaje, žádnou platbu za výhru. Kdybyste na reklamu klepli, dívejte se znovu, kam jste se dostali a co stránka chce.",
+  "sources": []
+}

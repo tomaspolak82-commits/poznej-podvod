@@ -1,0 +1,19 @@
+{
+  "id": "prohlizec-07",
+  "section": "prohlizec",
+  "title": "Přihlášení do e-shopu, který jste otevřeli sami",
+  "isScam": false,
+  "refutes": "Když stránka chce heslo, je to podvod.",
+  "message": {
+    "arrival": "Chcete si v e-shopu Kniha pro radost, kde občas nakupujete, zkontrolovat objednávku. Adresu jste napsali sami.",
+    "address": "kniha-pro-radost-eshop.cz",
+    "secure": true,
+    "heading": "Přihlášení",
+    "body": ["Přihlaste se e-mailem a heslem, které jste zadali při registraci."],
+    "fields": ["E-mail", "Heslo"],
+    "button": { "label": "Přihlásit se" }
+  },
+  "threats": [],
+  "summary": "Přihlásit se heslem je běžné, když jste stránku otevřeli sami. Tahle chce jen e-mail a heslo k vašemu účtu v obchodě, nic navíc: žádné číslo karty ani kód z SMS. Kdyby vás na přihlášení poslal odkaz ve zprávě, adresu si raději napište sami.",
+  "sources": []
+}

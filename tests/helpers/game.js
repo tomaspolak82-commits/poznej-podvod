@@ -16,7 +16,7 @@ export function scenarios(section) {
 }
 
 export function scenarioById(id) {
-  const section = id.startsWith('email') ? 'email' : 'zpravy';
+  const section = id.split('-')[0];
   return scenarios(section).find((s) => s.id === id);
 }
 
@@ -66,9 +66,10 @@ export async function openCurrentMessage(page) {
   await page.locator('article[data-scenario-id]').waitFor();
 }
 
-// Opens the next message in the round ("Další zpráva" + open it from the inbox)
+// Opens the next message in the round ("Další zpráva", in the browser "Další stránka",
+// + open it from the inbox)
 export async function nextMessage(page) {
-  await page.getByRole('button', { name: /Další zpráva/ }).click();
+  await page.getByRole('button', { name: /Další (zpráva|stránka)/ }).click();
   await openCurrentMessage(page);
 }
 

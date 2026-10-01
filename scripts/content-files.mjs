@@ -3,9 +3,9 @@
 
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
-import { checkSectionForDraw, validateScenario } from '../src/engine/validate.js';
+import { checkSectionForDraw, SECTIONS_WITH_CONTENT, validateScenario } from '../src/engine/validate.js';
 
-export const CONTENT_SECTIONS = ['email', 'zpravy'];
+export const CONTENT_SECTIONS = SECTIONS_WITH_CONTENT;
 
 export function readSection(contentDir, section) {
   const dir = path.join(contentDir, section);

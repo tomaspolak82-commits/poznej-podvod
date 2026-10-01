@@ -21,9 +21,11 @@ export const sections = [
   {
     id: 'prohlizec',
     title: 'Prohlížeč',
-    description: 'Falešné reklamy, výhry a vyskakovací okna.',
+    shortTitle: 'Prohlížeč',
+    // Approved by Tomáš on 1. 10. 2026. Active only in the branch sekce-prohlizec until it is merged
+    description: 'Falešné výhry, vyskakovací okna a přihlašovací stránky. Naučíte se, kam se v prohlížeči dívat.',
     icon: 'browser',
-    active: false,
+    active: true,
   },
   {
     id: 'qr-platba',

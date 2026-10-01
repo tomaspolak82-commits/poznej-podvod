@@ -1,0 +1,38 @@
+{
+  "id": "prohlizec-03",
+  "section": "prohlizec",
+  "title": "Ověření účtu v Bance Javor",
+  "isScam": true,
+  "message": {
+    "arrival": "Máte účet v Bance Javor. Přišla vám SMS, že váš účet bude zablokován, pokud se dnes neověříte. Klepli jste na odkaz v ní.",
+    "address": "javor-overeni-uctu.cz",
+    "secure": true,
+    "heading": "Banka Javor: ověření účtu",
+    "body": ["Z bezpečnostních důvodů jsme omezili váš účet. Pro obnovení se přihlaste a ověřte svou kartu."],
+    "fields": ["Přihlašovací jméno", "Heslo", "Číslo karty", "Kód z SMS"],
+    "button": { "label": "Přihlásit a ověřit" }
+  },
+  "threats": [
+    {
+      "target": "address",
+      "category": "adresa-stranky",
+      "title": "Adresa stránky",
+      "explanation": "Na přihlášení do banky choďte adresou, kterou si napíšete sami nebo máte uloženou. Tahle stránka se otevřela z odkazu v SMS a adresa jen obsahuje slovo „javor“. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá."
+    },
+    {
+      "target": "body.0",
+      "category": "emocni-natlak",
+      "title": "Omezený účet",
+      "explanation": "Hrozba zablokováním má vystrašit, abyste jednali hned a nepřemýšleli."
+    },
+    {
+      "target": "fields.0",
+      "alsoTargets": ["fields.1", "fields.2", "fields.3"],
+      "category": "zadost-o-udaje",
+      "title": "Přihlášení, karta i kód",
+      "explanation": "Stránka, na kterou vás poslal odkaz ze zprávy, chce přihlašovací údaje, číslo karty i kód z SMS. Kvůli přihlášení není potřeba zadávat číslo karty. Kód z SMS je jako klíč: kdo ho má, může potvrdit platbu z vašeho účtu."
+    }
+  ],
+  "summary": "Když vám zpráva hrozí zablokováním účtu, neklikejte na odkaz v ní. Otevřete si bankovnictví sami, jako obvykle, nebo zavolejte na číslo, které máte na kartě.",
+  "sources": []
+}

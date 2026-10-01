@@ -114,6 +114,12 @@
   color: var(--color-heading);
 }
 
+/* The text may shrink below its longest word (200 % text on 320 px) */
+.note > :last-child {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
 .note__icon {
   display: inline-flex;
   align-items: center;

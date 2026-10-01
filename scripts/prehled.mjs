@@ -7,8 +7,9 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { CONTENT_SECTIONS, readSection } from './content-files.mjs';
 import { CATEGORY_LABELS } from '../src/texts.js';
+import { listTargets } from '../src/engine/validate.js';
 
-const SECTION_TITLES = { email: 'E-mail', zpravy: 'Zprávy' };
+const SECTION_TITLES = { email: 'E-mail', zpravy: 'Zprávy', prohlizec: 'Prohlížeč' };
 const APP_TITLES = { sms: 'SMS', chat: 'chat' };
 
 // Parts of the message in the order the app shows them: { target, label, text } or a date line
@@ -23,6 +24,26 @@ function messageParts(section, m) {
     if (m.attachment) parts.push({ target: 'attachment', label: 'Příloha', text: m.attachment.name });
     if (m.link) parts.push({ target: 'link', label: 'Odkaz', text: m.link.label });
     if (m.button) parts.push({ target: 'button', label: 'Tlačítko', text: m.button.label });
+  } else if (section === 'prohlizec') {
+    parts.push({ info: `Jak jste se sem dostali: ${m.arrival}` });
+    // Same order and targets as listTargets() in src/engine/validate.js
+    const text = (target) => {
+      const [kind, index] = target.split('.');
+      if (target === 'security') return { label: 'Varování u adresy', text: 'nezabezpečené připojení (žlutý trojúhelník)' };
+      if (target === 'address') return { label: 'Adresa stránky', text: m.address };
+      if (target === 'heading') return { label: 'Nadpis stránky', text: m.heading };
+      if (kind === 'body') return { label: `Odstavec ${Number(index) + 1}`, text: m.body[index] };
+      if (kind === 'banner') return { label: m.banner.style === 'warning' ? 'Pruh s „varováním“ od stránky' : 'Reklama', text: m.banner.text };
+      if (kind === 'fields') return { label: `Pole formuláře ${Number(index) + 1}`, text: m.fields[index] };
+      if (kind === 'button') return { label: 'Tlačítko', text: m.button.label };
+      if (target === 'popup.title') return { label: 'Okno: nadpis', text: m.popup.title };
+      const n = Number(target.split('.')[2]);
+      if (target.startsWith('popup.body.')) return { label: `Okno: odstavec ${n + 1}`, text: m.popup.body[n] };
+      return { label: `Okno: tlačítko ${n + 1}`, text: m.popup.buttons[n] };
+    };
+    if (m.secure) parts.push({ info: 'Připojení zabezpečené, u adresy žádné varování' });
+    if (m.popup) parts.push({ info: 'Stránka pod oknem je ztmavená a nejde označit' });
+    for (const target of listTargets(section, m)) parts.push({ target, ...text(target) });
   } else {
     parts.push(
       m.fromMarkable === false
@@ -67,9 +88,13 @@ function scenarioBlock(scenario) {
   const app = scenario.section === 'zpravy' ? `, ${APP_TITLES[m.app]}` : '';
   const lines = [`### ${scenario.id}: ${scenario.title}`, '', `- **Sekce:** ${SECTION_TITLES[scenario.section]}${app}`, `- **Druh:** ${kind}`];
   if (!scenario.isScam) lines.push(`- **Vyvrací:** „${scenario.refutes}“`);
-  const sender = scenario.section === 'email' ? `${m.fromName} <${m.fromAddress}>` : m.from;
-  const contact = scenario.section === 'zpravy' ? (m.inContacts ? ' (uložený kontakt)' : ' (není v kontaktech)') : '';
-  lines.push(`- **Odesílatel:** ${sender}${contact}`, '', '**Zpráva po částech:**', '');
+  if (scenario.section === 'prohlizec') {
+    lines.push(`- **Adresa:** ${m.address}${m.secure ? '' : ' (nezabezpečené připojení)'}`, '', '**Stránka po částech:**', '');
+  } else {
+    const sender = scenario.section === 'email' ? `${m.fromName} <${m.fromAddress}>` : m.from;
+    const contact = scenario.section === 'zpravy' ? (m.inContacts ? ' (uložený kontakt)' : ' (není v kontaktech)') : '';
+    lines.push(`- **Odesílatel:** ${sender}${contact}`, '', '**Zpráva po částech:**', '');
+  }
 
   let n = 0;
   for (const part of messageParts(scenario.section, m)) {

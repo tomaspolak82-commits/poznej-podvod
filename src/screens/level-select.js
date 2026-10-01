@@ -1,17 +1,18 @@
 import { prepareRound, startRound } from '../engine/session.js';
 import { maxPointsForRound, ROUND_SIZE } from '../engine/round.js';
 import { levels } from '../sections.js';
+import { BROWSER_APP, sectionTexts } from '../texts.js';
 import { icon } from '../ui/icons.js';
 import { pointsWord } from '../ui/format.js';
 
-function levelCard(level, max) {
+function levelCard(level, max, description) {
   return `
     <li class="level-card" data-testid="level-${level.id}">
       <div class="level-card__head">
         <span class="icon-bubble">${icon(level.icon)}</span>
         <h2>${level.title}</h2>
       </div>
-      <p class="level-card__text">${level.description}</p>
+      <p class="level-card__text">${description}</p>
       <p class="level-card__points">
         <span>V tomto kole můžete získat až</span>
         <span class="level-card__points-value" data-testid="max-points-${level.id}">${max}</span>
@@ -24,9 +25,27 @@ function levelCard(level, max) {
   `;
 }
 
+// Browser only, shown every time (Tomáš, 1. 10. 2026): where the browser shows its warning
+function browserIntro() {
+  const { intro, insecureLabel } = BROWSER_APP;
+  return `
+    <section class="browser-intro" data-testid="browser-intro" aria-labelledby="browser-intro-title">
+      <h2 class="browser-intro__title" id="browser-intro-title">${intro.title}</h2>
+      <figure class="browser-intro__figure">
+        <div class="browser-intro__bar" aria-hidden="true">
+          <span class="browser-intro__icon">${icon('warning')}</span>
+          <span class="browser-intro__address"></span>
+        </div>
+        <figcaption><span class="visually-hidden">${insecureLabel}. </span>${icon('arrowUp')}${intro.caption}</figcaption>
+      </figure>
+      ${intro.paragraphs.map((text) => `<p>${text}</p>`).join('')}
+    </section>`;
+}
+
 export function renderLevelSelect(container, section) {
   // The round is drawn now, so the real maximum can be shown before the start (CLAUDE.md, section 5)
   const round = prepareRound(section.id);
+  const { levelDescriptions } = sectionTexts(section.id);
 
   container.innerHTML = `
     <div class="screen level">
@@ -42,8 +61,12 @@ export function renderLevelSelect(container, section) {
         </div>
       </div>
 
+      ${section.id === 'prohlizec' ? browserIntro() : ''}
+
       <ul class="level-list">
-        ${levels.map((level) => levelCard(level, maxPointsForRound(round, level.id))).join('')}
+        ${levels
+          .map((level) => levelCard(level, maxPointsForRound(round, level.id), levelDescriptions[level.id] ?? level.description))
+          .join('')}
       </ul>
 
       <p class="note">

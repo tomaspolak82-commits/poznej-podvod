@@ -27,11 +27,12 @@ test.describe('home page', () => {
       'href',
       '#/zpravy',
     );
+    await expect(page.getByRole('link', { name: /^Prohlížeč/ })).toHaveAttribute('href', '#/prohlizec');
   });
 
   test('shows upcoming sections as inactive tiles', async ({ page }) => {
+    // Prohlížeč is active in the branch sekce-prohlizec (1. 10. 2026)
     for (const [id, title] of [
-      ['prohlizec', 'Prohlížeč'],
       ['qr-platba', 'QR platba'],
       ['telefonat', 'Telefonát'],
     ]) {
@@ -101,7 +102,7 @@ test.describe('routing', () => {
   });
 
   test('upcoming section cannot be opened by typing its address', async ({ page }) => {
-    await page.goto('/#/prohlizec');
+    await page.goto('/#/qr-platba');
     await expect(page.getByRole('heading', { level: 1, name: 'Vyberte, co chcete trénovat' })).toBeVisible();
   });
 });

@@ -1,0 +1,19 @@
+{
+  "id": "prohlizec-08",
+  "section": "prohlizec",
+  "title": "Placení kartou v e-shopu",
+  "isScam": false,
+  "refutes": "Když stránka chce číslo karty, je to podvod.",
+  "message": {
+    "arrival": "V e-shopu Domácí pomocník, kde už jste nakupovali, jste si do košíku dali rychlovarnou konvici a klepli na „Zaplatit“.",
+    "address": "domaci-pomocnik-obchod.cz",
+    "secure": true,
+    "heading": "Platba kartou",
+    "body": ["Objednávka č. 4417: rychlovarná konvice, 890 Kč."],
+    "fields": ["Číslo karty", "Platnost", "Kód ze zadní strany karty"],
+    "button": { "label": "Zaplatit 890 Kč" }
+  },
+  "threats": [],
+  "summary": "Číslo karty se zadává, když za něco platíte. Tady jste si zboží vybrali sami a částka odpovídá objednávce. To, že vás prohlížeč nevaruje, samo nerozhoduje. Rozhoduje, že platíte za věc, kterou jste si sami vybrali. Když pak přijde SMS nebo zpráva v aplikaci banky na potvrzení platby, přečtěte si, za co a kolik platíte.",
+  "sources": []
+}

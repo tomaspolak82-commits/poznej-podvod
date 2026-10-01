@@ -1,0 +1,32 @@
+{
+  "id": "prohlizec-04",
+  "section": "prohlizec",
+  "title": "Falešné varování na stránce s jízdními řády",
+  "isScam": true,
+  "message": {
+    "arrival": "Hledali jste jízdní řád autobusu a otevřeli jste jeden z výsledků hledání.",
+    "address": "autobusy-jizdni-rad.cz",
+    "secure": true,
+    "heading": "Jízdní řády autobusů",
+    "banner": { "text": "Vaše připojení není zabezpečené!", "style": "warning", "position": 0 },
+    "body": ["Váš prohlížeč je zastaralý a vaše údaje může kdokoli vidět. Nainstalujte si aplikaci Ochrana telefonu a chraňte se."],
+    "button": { "label": "Stáhnout ochranu" }
+  },
+  "threats": [
+    {
+      "target": "banner",
+      "alsoTargets": ["body.0"],
+      "category": "emocni-natlak",
+      "title": "Varování od stránky",
+      "explanation": "Skutečné varování ukazuje prohlížeč vlevo od adresy nebo přes celou obrazovku, ne stránka uprostřed textu. U adresy tu žádné varování není. Tohle „varování“ si nakreslila stránka sama, aby vás vystrašila. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá."
+    },
+    {
+      "target": "button",
+      "category": "instalace-aplikace",
+      "title": "Stažení aplikace",
+      "explanation": "Aplikace instalujte jen z obchodu s aplikacemi ve svém telefonu, ne přes tlačítko na stránce. Aplikace z neznámé stránky může v telefonu napáchat škody."
+    }
+  ],
+  "summary": "Varování o bezpečnosti hledejte vlevo od adresy, tam ho ukazuje prohlížeč. Co nakreslí stránka, může být past. Když stránka chce, abyste si kvůli bezpečí něco stáhli, zavřete ji. Prohlížeč ani telefon se neaktualizují přes tlačítko na stránce.",
+  "sources": []
+}
