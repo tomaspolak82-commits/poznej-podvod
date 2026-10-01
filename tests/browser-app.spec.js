@@ -110,12 +110,15 @@ test.describe('level select', () => {
     }
   });
 
-  test('360 × 740: the level buttons are visible without scrolling', async ({ page }) => {
+  // Tomáš, 1. 10. 2026: the level cards keep their size (same as E-mail and Zprávy)
+  test('360 × 740: the first level button without scrolling, the second after scrolling one screen', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 740 });
     await page.goto('/?seed=1#/prohlizec');
-    for (const level of ['základní', 'pokročilá']) {
-      await expect(page.getByRole('button', { name: new RegExp(`Začít: ${level}`) })).toBeInViewport({ ratio: 1 });
-    }
+    const first = page.getByRole('button', { name: /Začít: základní/ });
+    const second = page.getByRole('button', { name: /Začít: pokročilá/ });
+    await expect(first).toBeInViewport({ ratio: 1 });
+    await page.evaluate(() => window.scrollBy(0, window.innerHeight));
+    await expect(second).toBeInViewport({ ratio: 1 });
   });
 });
 
