@@ -32,7 +32,7 @@ Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14 (úprava úvod
 |---|---|---|---|
 | 1 | `prohlizec-01` výhra telefonu za poštovné, nezabezpečené připojení | `prohlizec-05` zpravodajská stránka s reklamou | „Když je na stránce reklama nebo sleva, je to podvod.“ |
 | 2 | `prohlizec-02` „telefon je zablokovaný, volejte podporu“ (okno) | `prohlizec-06` souhlas s cookies (okno) | „Když na stránce vyskočí okno, je to podvod.“ |
-| 3 | `prohlizec-03` ověření účtu ve smyšlené Bance Javor (odkaz ze SMS) | `prohlizec-07` přihlášení do e-shopu otevřeného sami | „Když stránka chce heslo, je to podvod.“ |
+| 3 | `prohlizec-03` ověření účtu ve smyšlené Lipové bance (odkaz ze SMS; karta uvádí pravou adresu lipova-banka.cz, stránka je na lipova-banka-overeni.cz) | `prohlizec-07` přihlášení do e-shopu otevřeného sami | „Když stránka chce heslo, je to podvod.“ |
 | 4 | `prohlizec-04` „varování“ nakreslené stránkou a instalace aplikace | `prohlizec-08` placení kartou v e-shopu | „Když stránka chce číslo karty, je to podvod.“ |
 
 Později doplnit: falešný e-shop, investiční reklama se „známou osobností“ (bez skutečných jmen a fotek). Legitimní stránka s nezabezpečeným připojením do první verze nepatří (důvody v `docs/navrhy-scenaru-prohlizec.md`, část D).
@@ -45,7 +45,7 @@ Zrychlený režim: vysvětlení a nápověda jsou obecné rady vlastními slovy,
 
 - **Adresy stránek** (i legitimních): všech 8 volných, registr CZ.NIC vrací 404, DNS neexistuje. Znovu v den zveřejnění (sekce 17 A3 CLAUDE.md). Adresa v obrázku úvodu `prihlaseni-ucet-online.cz` také volná (1. 10. 2026, registr 404, DNS neexistuje; kontrola metody: `menestarosti.cz` vrací 200).
 - **Telefonní číslo** +420 772 163 940 (`prohlizec-02`): blok 772 100 000 až 772 199 999 bez držitele podle dat ČTÚ z 1. 10. 2026. Znovu v den zveřejnění (sekce 17 A2).
-- **Názvy** „Banka Javor“, „Kniha pro radost“ a „Domácí pomocník“: Tomáš ověřil v ARES, že nepatří žádnému subjektu. Názvy zůstávají.
+- **Názvy** „Kniha pro radost“ a „Domácí pomocník“: Tomáš ověřil v ARES, že nepatří žádnému subjektu. Názvy zůstávají. „Banka Javor“ nahradila ve fázi 14 „Lipová banka“, Tomáš ji ověřil v ARES 1. 10. 2026. Adresy `lipova-banka.cz`, `lipovabanka.cz` a `lipova-banka-overeni.cz` volné (1. 10. 2026, registr 404, DNS neexistuje).
 
 ## 5. Spojení, pojistka a návrat
 
