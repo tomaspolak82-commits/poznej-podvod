@@ -9,7 +9,7 @@
 import { createPart, phoneFrame } from './parts.js';
 import { bannerPosition } from '../engine/validate.js';
 import { BROWSER_APP, LINK_NOTICE } from '../texts.js';
-import { escapeHtml } from '../ui/html.js';
+import { escapeHtml, escapeWithAddresses, wholeAddress } from '../ui/html.js';
 import { icon } from '../ui/icons.js';
 
 export const hasInbox = false;
@@ -25,7 +25,7 @@ function arrivalCard(m) {
   return `
     <div class="browser__arrival" data-testid="arrival">
       <p class="browser__arrival-title">${BROWSER_APP.arrivalTitle}</p>
-      <p>${escapeHtml(m.arrival)}</p>
+      <p>${escapeWithAddresses(m.arrival)}</p>
     </div>`;
 }
 
@@ -43,7 +43,7 @@ function addressBar(m, mode, part) {
     'address',
     'span',
     'browser__address',
-    `<span class="visually-hidden">${BROWSER_APP.addressLabel}</span>${escapeHtml(m.address)}`,
+    `<span class="visually-hidden">${BROWSER_APP.addressLabel}</span>${wholeAddress(escapeHtml(m.address))}`,
   );
   return `
     <div class="browser__bar">

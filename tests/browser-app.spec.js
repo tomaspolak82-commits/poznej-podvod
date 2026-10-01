@@ -365,3 +365,64 @@ test.describe(`layout (${SEEDS})`, () => {
     }
   }
 });
+
+// Tomáš, 1. 10. 2026: a web address wraps only as a whole, never at a hyphen or a dot. Only an
+// address longer than the whole line may break anywhere, and the page never scrolls sideways.
+test.describe('web addresses wrap only as a whole', () => {
+  const SEED_BANK = seedWith('prohlizec', ['prohlizec-03']);
+  test.beforeEach(({ page }) => skipBrowserIntro(page));
+
+  // For every address on the screen: its text, the number of lines it takes and whether it would
+  // fit on one line of its parent (natural width measured on a hidden copy without wrapping)
+  const addresses = (page) =>
+    page.evaluate(() =>
+      [...document.querySelectorAll('.addr')].map((el) => {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const lines = new Set([...range.getClientRects()].map((rect) => Math.round(rect.top))).size;
+        const copy = el.cloneNode(true);
+        copy.style.cssText = 'position: absolute; visibility: hidden; white-space: nowrap; max-width: none;';
+        el.parentElement.append(copy);
+        const natural = copy.getBoundingClientRect().width;
+        copy.remove();
+        const style = getComputedStyle(el.parentElement);
+        const line = el.parentElement.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        return { text: el.textContent, lines, fits: natural <= line };
+      }),
+    );
+  const openExplanation = async (page) => {
+    await decide(page, 'scam');
+    await page.locator('[data-target="address"] [data-threat]').first().click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+  };
+
+  test(`360 px, seed ${SEED_BANK}: the bank addresses stay on one line on the card, in the address bar and in the explanation`, async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 740 });
+    await open(page, 'prohlizec-03', { seed: SEED_BANK });
+    expect(await addresses(page)).toEqual([
+      { text: 'lipova-banka.cz', lines: 1, fits: true },
+      { text: 'lipova-banka-overeni.cz', lines: 1, fits: true },
+    ]);
+    await openExplanation(page);
+    const inDialog = (await addresses(page)).slice(2);
+    expect(inDialog).toEqual([
+      { text: 'lipova-banka.cz', lines: 1, fits: true },
+      { text: 'lipova-banka-overeni.cz', lines: 1, fits: true },
+    ]);
+  });
+
+  test(`200 % text at 320 px, seed ${SEED_BANK}: no sideways scroll, an address that fits its line is on one line`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 740 });
+    await open(page, 'prohlizec-03', { seed: SEED_BANK });
+    await page.addStyleTag({ content: 'html { font-size: 200% !important; } .round-bar { position: static !important; }' });
+    const check = async () => {
+      expect(await noScroll(page)).toBe(true);
+      const list = await addresses(page);
+      expect(list.length).toBeGreaterThan(0);
+      for (const address of list.filter((a) => a.fits)) expect(address, address.text).toMatchObject({ lines: 1 });
+    };
+    await check();
+    await openExplanation(page);
+    await check();
+  });
+});

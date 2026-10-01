@@ -3,6 +3,7 @@ import { prepareRound, startRound } from '../engine/session.js';
 import { maxPointsForRound, ROUND_SIZE } from '../engine/round.js';
 import { levels } from '../sections.js';
 import { BROWSER_APP, sectionTexts } from '../texts.js';
+import { wholeAddress } from '../ui/html.js';
 import { icon } from '../ui/icons.js';
 import { pointsWord } from '../ui/format.js';
 
@@ -33,7 +34,7 @@ const introNumber = (number) => `<span class="browser-intro__num" aria-hidden="t
 const introBar = (address, warning) => `
   <div class="browser-intro__bar">
     ${warning ? `<span class="browser-intro__icon">${icon('warning')}${introNumber(2)}</span>` : ''}
-    <span class="browser-intro__address">${address}</span>
+    <span class="browser-intro__address">${wholeAddress(address)}</span>
     ${warning ? introNumber(1) : ''}
   </div>
 `;

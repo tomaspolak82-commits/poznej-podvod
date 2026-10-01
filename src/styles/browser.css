@@ -9,6 +9,16 @@
   overflow: hidden;
 }
 
+/* ---------- Web address in the text (Tomáš, 1. 10. 2026) ----------
+   As one inline block the address moves to the next line as a whole and never breaks at a
+   hyphen or a dot. Only an address longer than the whole line breaks inside (max-width), so
+   the page never scrolls sideways. The text itself is not changed. */
+.addr {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
 /* ---------- Card "Jak jste se sem dostali": blue-grey, never yellow ----------
    Yellow is the warning and light yellow the marked part (Tomáš, 1. 10. 2026) */
 
