@@ -30,6 +30,19 @@ function contrastOf(locator, property = 'color') {
   }, property);
 }
 
+// Browser: card "Jak jste se sem dostali" (Tomáš, 1. 10. 2026): blue-grey, never yellow,
+// title and text at least AA (4.5:1), measured in play and in the evaluation
+test('browser: card "Jak jste se sem dostali" has AA contrast and is not yellow', async ({ page }) => {
+  await startRound(page, { section: 'prohlizec', seed: 1 });
+  for (const phase of ['play', 'evaluation']) {
+    const card = page.getByTestId('arrival');
+    await expect(card).toHaveCSS('background-color', 'rgb(232, 238, 248)');
+    expect(await contrastOf(card.locator('.browser__arrival-title'))).toBeGreaterThanOrEqual(4.5);
+    expect(await contrastOf(card.locator('p').nth(1))).toBeGreaterThanOrEqual(4.5);
+    if (phase === 'play') await page.getByRole('button', { name: 'Je to podvod' }).click();
+  }
+});
+
 test.describe(`evaluation colours (seed ${SEED})`, () => {
   test('advanced, correct decision: green result, part statuses green / red with icon and text, AA contrast', async ({ page }) => {
     await startRound(page, { seed: SEED, level: 'pokročilá' });

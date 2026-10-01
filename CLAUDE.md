@@ -510,6 +510,9 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 
 - **29. 9. 2026:** `public/.htaccess` v repozitáři, test a velikosti ve zkoušce nasazení (commity `1732a29`, `66eea93`). Celá sada před push prošla (982 testů, 4 přeskočené). **Pushnuto a nasazeno.** Zkouška: 10 souborů „stejná velikost“, `.htaccess` „jiná velikost“ (server 176 B, dist 165 B, rozdíl jen v bílých znacích, nasazení Tomáš schválil), smazat 0. Nasazení nahrálo 11 a smazalo 0. Nová zkouška po nasazení: všech 11 „stejná velikost“. Ověřeno na živé stránce: `http://` vrací 301 s `Location: https://poznej-podvod.menestarosti.cz/`, `https://` vrací 200, `http://…/.well-known/acme-challenge/test` vrací 404 bez přesměrování, `noindex` platí, JS `text/javascript`.
 
+- **1. 10. 2026: sekce Prohlížeč** se dělá ve větvi `sekce-prohlizec` (plán a rozhodnutí v `docs/plany/plan-prohlizec.md`). Z větve se nenasazuje (sekce 2a). **Hlavní myšlenka sekce:** když připojení není zabezpečené, nezadávat do stránky žádné údaje. Pojmy: vždy „zabezpečené připojení“ / „připojení není zabezpečené“, ne „stránka je zabezpečená“. Pravidlo zní „nezadávejte údaje“, ne „je to podvod“. Hráč se neučí jeden symbol (prohlížeče se liší: Chrome na telefonu varuje přes celou obrazovku, Edge žlutým trojúhelníkem, jinde nápisem „Nezabezpečeno“, Chrome u zabezpečených stránek místo zámku ukazuje ikonu nastavení; Tomáš ověřil na skutečných prohlížečích), ale kde se dívat (vlevo od adresy) a co dělat. Vždy v páru: chybějící varování neznamená poctivou stránku. Adresní řádek: u nezabezpečeného připojení v obou úrovních jen žlutý trojúhelník s vykřičníkem bez nápisu (úrovně se liší jen označováním), ve vyhodnocení trojúhelník s nápisem „Nezabezpečeno“ a žárovkou. Zabezpečené připojení bez varování (zámek není hlavní znak). Ikona má v obou úrovních popis pro čtečku „Varování: připojení není zabezpečené“ a klepací plochu aspoň 48 px (Tomáš, 1. 10. 2026).
+- **1. 10. 2026: Prohlížeč je hotový** (podmínky v sekci 17 E): texty schválené (`docs/navrhy-scenaru-prohlizec.md`), 8 adres volných (registr CZ.NIC 404, DNS neexistuje), číslo +420 772 163 940 z bloku bez držitele (data ČTÚ z 1. 10. 2026), celá sada ve větvi prošla (1203 testů, 4 přeskočené). Tomáš ověřil v ARES, že názvy „Banka Javor“, „Kniha pro radost“ a „Domácí pomocník“ nepatří žádnému subjektu, názvy zůstávají. Termíny zkoušky se seniory řídí Tomáš, do CLAUDE.md se nezapisují.
+
 **Otevřené úkoly:**
 - **Přilepená lišta kola při velkém písmu (nález 28. 9. 2026):** v testu s 200% písmem na 360 × 740 px zabírá lišta 472 px z 740, protože zvětšené písmo v testu podmínku `min-height: 40em` nevypne. Zpráva ve schránce pak může být středem pod lištou. Test `200 % text at 360 px` (`tests/email-app.spec.js`) je proto označený `test.fail` (očekávané selhání): „přilepená lišta při 200% písmu na malém displeji (360×740) zakrývá zprávu; na Tomášově telefonu při 200% bez problému“. **Nízká priorita, ověřeno na jednom zařízení** (Tomáš, 28. 9. 2026). Až se to opraví, Playwright ohlásí, že test „nečekaně prošel“, a `test.fail` se odstraní.
 - ~~Před zveřejněním odkazu na hru: testovací zprávy.~~ **Hotovo 25. 9. 2026:** všechny testovací zprávy (`email-04` až `email-07`, `zpravy-04` až `zpravy-07`) nahradily skutečné scénáře, v bance žádná testovací zpráva nezůstala.
@@ -535,7 +538,7 @@ Odkaz se zveřejní až po Tomášově výslovném pokynu (sekce 2a). Do té dob
 
 ### A. Vydání (dělá Claude po Tomášově pokynu ke zveřejnění)
 1. Body B, C a D1–D2 jsou odškrtnuté. Poznáte to tak, že v sekci 17 u nich je „hotovo“.
-2. Týž den znovu ověřit blok 772 100 000 až 772 199 999 v datech ČTÚ (`zpravy-06`). Poznáte to tak, že blok nemá držitele. **Poslední ověření:** 28. 9. 2026 na datech ČTÚ z 28. 9. 2026 (CSV https://data.ctu.gov.cz/sites/default/files/imports/import_numbers/pridelena_cisla_a_kody.csv, server hlásí poslední změnu 28. 9. 2026 02:35 GMT), 13 206 řádků, žádný rozsah blok nepřekrývá. Kontrola metody: stejný výpočet najde přidělený rozsah 772 720 000 až 772 729 999 (držitel IPEX TELCO a.s.).
+2. Týž den znovu ověřit blok 772 100 000 až 772 199 999 v datech ČTÚ (`zpravy-06`, od 1. 10. 2026 i `prohlizec-02` s číslem +420 772 163 940). Poznáte to tak, že blok nemá držitele. **Poslední ověření:** 28. 9. 2026 na datech ČTÚ z 28. 9. 2026 (CSV https://data.ctu.gov.cz/sites/default/files/imports/import_numbers/pridelena_cisla_a_kody.csv, server hlásí poslední změnu 28. 9. 2026 02:35 GMT), 13 206 řádků, žádný rozsah blok nepřekrývá. Kontrola metody: stejný výpočet najde přidělený rozsah 772 720 000 až 772 729 999 (držitel IPEX TELCO a.s.).
 3. Znovu ověřit smyšlené domény v podvodných scénářích (registr vrací 404, DNS neexistuje). Poznáte to tak, že všechny jsou dál volné.
 4. Odstranit `<meta name="robots" content="noindex">` z `index.html` a upravit test na „noindex už není“. Poznáte to tak, že test to hlídá.
 5. Spustit celou sadu testů. Poznáte to tak, že všechny projdou (očekávané selhání `test.fail` se počítá jako v pořádku).
@@ -581,3 +584,30 @@ Znovu ověřeno Claudem v chatu 28. 9. 2026 proti zdrojům, všechna tvrzení se
 3. ~~Přesměrování http → https.~~ **Hotovo 29. 9. 2026** (sekce 16: pravidlo, ověření a návrat).
 4. Přilepená lišta při 200% písmu: nízká priorita, zveřejnění neblokuje (sekce 16).
 5. **Po zkoušce se seniory (D1): aktualizace Vite a dotenv** (audit 29. 9. 2026, `docs/audit-dokumentace.md`). `npm outdated` hlásí vite 8.3.0 → 8.3.1 a dotenv 18.0.3 → 18.0.4, obě jen opravné verze v rozsahu `^`. Co se v nich změnilo, Context7 neukazuje (má Vite jen do 8.0.10, dotenv bez čísla verze), proto před aktualizací přečíst jejich seznam změn. Pak `npm update vite dotenv`, celá sada, zkouška nasazení. Zveřejnění neblokuje.
+
+### E. Sekce Prohlížeč: spojení do `main`, vrácení a nové spojení (Tomáš, 1. 10. 2026)
+
+**Termíny:** řídí Tomáš sám, do tohoto souboru se nezapisují (Tomáš, 1. 10. 2026).
+
+**Sekce je hotová, když:**
+1. Tomáš schválil všechny texty pro hráče. Poznáte to tak, že v `docs/navrhy-scenaru-prohlizec.md` je u dávky „schváleno“ s datem.
+2. Telefonní čísla jsou podle dat ČTÚ nepřidělená (metoda jako v kroku A2). Poznáte to tak, že je výsledek s datem zapsaný v sekci 16.
+3. Domény jsou volné (registr vrací 404, DNS neexistuje), a to i u legitimních scénářů. Poznáte to tak, že je výsledek s datem zapsaný v sekci 16.
+4. Prošla celá sada včetně nových testů Prohlížeče a testů, že E-mail a Zprávy se nezměnily (mimo jiné „Zpráva 2 z 5“). Poznáte to tak, že výsledek je zapsaný v sekci 16.
+
+**Spojení** (jen po splnění podmínek, pak nasazení podle sekce 2a):
+1. `git switch main` (přepne na hlavní větev). Poznáte to tak, že `git status` hlásí „On branch main“.
+2. `git merge --no-ff sekce-prohlizec` (spojí větev a vždy vytvoří samostatný commit spojení, který jde vrátit jedním příkazem). Poznáte to tak, že `git log --oneline -1` ukazuje commit „Merge branch 'sekce-prohlizec'“.
+3. Celá sada, push, `--dry-run`, nasazení, ověření živé stránky (sekce 2a). Hash commitu spojení zapsat do sekce 16.
+
+**Vrácení po chybě** (když Tomáš po nasazení najde chybu):
+1. `git revert -m 1 <hash commitu spojení>` (vytvoří nový commit, který změny ze spojení zruší; `-m 1` říká, že se zachová stav hlavní větve). Historie se nemaže. Poznáte to tak, že vznikne commit „Revert "Merge branch 'sekce-prohlizec'"“.
+2. Celá sada, push, `--dry-run` (jako vždy), nasazení `main` bez Prohlížeče.
+3. Ověřit živou stránku: na hlavní stránce je Prohlížeč jako „Připravujeme“ a `http://` vrací 301 s `Location` na `https://`. Poznáte to tak, že je to zapsané v sekci 16.
+
+**Nové spojení po opravě:** po vrácení spojení si Git pamatuje, že commity z větve už v `main` jsou. Obyčejné nové spojení by proto přineslo jen nové opravy, ne původní práci. Ověřeno 1. 10. 2026 na zkušebním repozitáři: po vrácení a novém spojení chyběl původní soubor a přibyla jen oprava. Postup:
+1. Opravit chybu ve větvi `sekce-prohlizec` a commitnout.
+2. `git switch main`.
+3. `git revert <hash commitu „Revert …“>` (vrátí vrácení, takže se původní práce do `main` znovu objeví). Poznáte to tak, že v `main` jsou zase soubory Prohlížeče.
+4. `git merge --no-ff sekce-prohlizec` (přidá opravy). Na zkušebním repozitáři byly po tomto postupu v `main` původní soubor i oprava.
+5. Zase podmínky „Sekce je hotová“, celá sada, push, `--dry-run`, nasazení, ověření.

@@ -1,0 +1,37 @@
+{
+  "id": "prohlizec-02",
+  "section": "prohlizec",
+  "title": "Telefon je zablokovaný, volejte podporu",
+  "isScam": true,
+  "message": {
+    "arrival": "Četli jste na internetu článek o pěstování rajčat. Najednou se přes stránku objevilo okno.",
+    "address": "rajcata-na-zahrade.cz",
+    "secure": true,
+    "popup": {
+      "title": "Váš telefon je zablokovaný",
+      "body": [
+        "Bezpečnostní kontrola našla 3 viry. Vaše fotky, hesla a údaje z banky mohou být ukradeny.",
+        "Telefon nevypínejte a do 5 minut zavolejte technickou podporu: +420 772 163 940."
+      ],
+      "buttons": ["Zavolat podporu"]
+    }
+  },
+  "threats": [
+    {
+      "target": "popup.title",
+      "alsoTargets": ["popup.body.0"],
+      "category": "emocni-natlak",
+      "title": "Strašení viry",
+      "explanation": "Okno na stránce nepozná, co máte v telefonu. Nenakreslil ho váš telefon, ale stránka. Strach z virů a ukradených peněz má zabránit tomu, abyste se v klidu zamysleli. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá."
+    },
+    {
+      "target": "popup.body.1",
+      "alsoTargets": ["popup.button.0"],
+      "category": "neobvykla-zadost",
+      "title": "Výzva k zavolání",
+      "explanation": "Na druhé straně by vás čekal podvodník, který by chtěl peníze nebo přístup do vašeho telefonu, třeba tím, že vás požádá o instalaci aplikace. Spěch „do 5 minut“ k tomu patří."
+    }
+  ],
+  "summary": "Když na vás stránka vybafne, že máte virus, nevolejte a na nic v okně neklepejte. Stránku zavřete. Když nejde zavřít, zavřete celý prohlížeč. Když se bojíte, že je s telefonem něco v nepořádku, zeptejte se někoho, komu věříte.",
+  "sources": ["Telefonní číslo +420 772 163 940: blok 772 100 000 až 772 199 999 bez držitele podle dat ČTÚ z 1. 10. 2026 (https://data.ctu.gov.cz/dataset/pridelena-cisla-kody)"]
+}

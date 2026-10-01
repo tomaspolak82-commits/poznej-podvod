@@ -19,17 +19,18 @@ import {
   ATTACHMENT_NOTICE,
   CATEGORY_LABELS,
   CLOSE_AND_CONTINUE,
-  DECISION_CHECK,
   EMAIL_APP,
-  EVALUATION,
   HINTS,
   LEAVE_ROUND,
   LINK_NOTICE,
   MESSAGES_APP,
-  ROUND,
-  ROUND_END,
+  sectionTexts,
   TRAINING_LABEL,
 } from '../texts.js';
+
+// Texts of the section being played (the browser says "stránka" instead of "zpráva");
+// set by renderRound before anything is drawn
+let ROUND, EVALUATION, ROUND_END, DECISION_CHECK;
 import { openDialog } from '../ui/dialog.js';
 import { escapeHtml } from '../ui/html.js';
 import { icon } from '../ui/icons.js';
@@ -212,6 +213,7 @@ function showThreat(scenario, index) {
 export function renderRound(container, section) {
   if (!getActiveRound(section)) return false;
 
+  ({ ROUND, EVALUATION, ROUND_END, DECISION_CHECK } = sectionTexts(section));
   const app = appFor(section);
   // State of the simulated app for the current message; every new message starts in the inbox
   const freshUi = () => ({ view: app.hasInbox ? 'inbox' : 'detail', foldersOpen: false, addressShown: false });
@@ -307,9 +309,11 @@ export function renderRound(container, section) {
 
     const notice = target.closest('[data-action="notice"]');
     if (notice && round.phase === 'question') {
+      const where = notice.dataset.target;
+      const text = app.noticeFor?.(where) ?? (where === 'attachment' ? ATTACHMENT_NOTICE : LINK_NOTICE);
       await openDialog({
         title: TRAINING_LABEL,
-        body: `<p>${notice.dataset.target === 'attachment' ? ATTACHMENT_NOTICE : LINK_NOTICE}</p>`,
+        body: `<p>${text}</p>`,
         actions: [{ label: CLOSE_AND_CONTINUE, value: 'close', primary: true, autofocus: true }],
       });
       return;

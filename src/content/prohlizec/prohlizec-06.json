@@ -1,0 +1,22 @@
+{
+  "id": "prohlizec-06",
+  "section": "prohlizec",
+  "title": "Souhlas s cookies na stránce o výletech",
+  "isScam": false,
+  "refutes": "Když na stránce vyskočí okno, je to podvod.",
+  "message": {
+    "arrival": "Vnučka vám ve zprávě poslala odkaz na článek o výletech s vnoučaty. Klepli jste na něj.",
+    "address": "vylety-s-vnoucaty.cz",
+    "secure": true,
+    "popup": {
+      "title": "Souhlas s cookies",
+      "body": [
+        "Tato stránka si do vašeho prohlížeče ukládá malé soubory (cookies), aby fungovala a aby mohla měřit návštěvnost. Můžete souhlasit, nebo odmítnout."
+      ],
+      "buttons": ["Přijmout vše", "Jen nezbytné"]
+    }
+  },
+  "threats": [],
+  "summary": "Okno se souhlasem s cookies uvidíte na velké části stránek. Chce jen vaši volbu, ne peníze, údaje ani kód. Klidně zvolte tu možnost, která dovolí méně, třeba „Jen nezbytné“. Ani to, že vás sem poslal odkaz, neznamená samo o sobě podvod. Rozhoduje, co stránka chce.",
+  "sources": []
+}

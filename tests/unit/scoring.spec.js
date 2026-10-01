@@ -223,6 +223,21 @@ test.describe('scoring: real scenarios, parts the hint leads to are hits', () =>
     ['zpravy-04', ['messages.3'], 'call to click = the link threat'],
     ['zpravy-04', ['messages.4'], 'code from SMS'],
     ['zpravy-06', ['messages.2'], '"fill in your card details" = the link threat'],
+    // Browser (1. 10. 2026): hint item 3 "nothing into a page with a warning" leads to every field
+    ['prohlizec-01', ['security'], 'warning next to the address'],
+    ['prohlizec-01', ['address'], 'address that does not fit = the warning threat'],
+    ['prohlizec-01', ['fields.0'], 'name on a page with a warning = the warning threat'],
+    ['prohlizec-01', ['fields.1'], 'address on a page with a warning = the warning threat'],
+    ['prohlizec-01', ['body.0'], 'prize for postage = the prize threat'],
+    ['prohlizec-01', ['fields.2'], 'card number'],
+    ['prohlizec-02', ['popup.body.0'], 'viruses = scaring window'],
+    ['prohlizec-02', ['popup.button.0'], '"Zavolat podporu" = call request'],
+    ['prohlizec-03', ['address'], 'address with the bank name only in it'],
+    ['prohlizec-03', ['fields.1'], 'password on a page opened from an SMS = request for data'],
+    ['prohlizec-03', ['fields.3'], 'code from SMS = request for data'],
+    ['prohlizec-04', ['banner'], 'warning drawn by the page = scaring page'],
+    ['prohlizec-04', ['body.0'], '"install protection" text = scaring page'],
+    ['prohlizec-04', ['button'], 'download button = install request'],
   ];
   for (const [id, marks, why] of cases) {
     test(`${id}: ${why}`, () => {
@@ -252,6 +267,11 @@ test.describe('scoring: marking everything does not pay off (real scenarios)', (
     ['zpravy-04', ['messages.0', 'messages.1']],
     // A stranger answering an ad is normal: the number and the first question are innocent
     ['zpravy-06', ['from', 'messages.0']],
+    // Browser: the button "Odeslat" / the article page / the heading and the button / the page
+    ['prohlizec-01', ['button']],
+    ['prohlizec-02', ['address']],
+    ['prohlizec-03', ['heading', 'button']],
+    ['prohlizec-04', ['address', 'heading']],
   ]) {
     test(`${id}: marking everything leaves the innocent part as unnecessary`, () => {
       const result = markAll(scenarioById(id));

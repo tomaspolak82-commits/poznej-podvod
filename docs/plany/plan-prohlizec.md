@@ -99,6 +99,8 @@ Hrubý odhad práce: 6–9 sezení (bez čekání na schválení).
 
 **Pojistka:** když sekce není hotová 2 dny před zkouškou, nespojuje se. Na webu zůstane „Připravujeme“ a senioři zkoušejí jen E-mail a Zprávy. Postup při chybě po spojení a nasazení: pokyn došel neúplný, čeká na doplnění.
 
+**Doplnění 1. 10. 2026 (Tomáš):** pokladna e-shopu vyvrací „Když stránka chce číslo karty, je to podvod.“, její vysvětlení i vysvětlení zabezpečených podvodů říkají, že zabezpečení samo nerozhoduje. Hlavní myšlenka sekce: nezabezpečená stránka = nic nezadávat (ne „je to podvod“). Vzhled varování podle úrovní, vrácení spojení a termíny: CLAUDE.md, sekce 16 a 17 E. Texty: `docs/navrhy-scenaru-prohlizec.md`, náčrt: `docs/plany/nacrt-prohlizec.html`.
+
 ## Otázky k rozhodnutí (vyřešené 1. 10. 2026, viz výše)
 
 1. **Banka 8 (4 + 4)** s typy 1–4 z tabulky, falešný e-shop až při doplnění? Doporučuji ano.

@@ -65,6 +65,44 @@ export const HINTS = {
     advice:
       'Podezřelou SMS můžete přeposlat na číslo 7726, tím ji nahlásíte operátorovi. V chatu můžete podezřelý účet zablokovat a nahlásit přímo v aplikaci.',
   },
+  // Approved by Tomáš on 1. 10. 2026 (docs/navrhy-scenaru-prohlizec.md)
+  prohlizec: {
+    title: 'Na co si dát pozor v prohlížeči',
+    // Item 1 added on 1. 10. 2026, when the intro became a first-visit screen
+    items: [
+      [
+        'Adresní řádek.',
+        'Nahoře v prohlížeči je řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka. Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené.',
+      ],
+      [
+        'Jak jste se na stránku dostali.',
+        'Stránka, kterou jste otevřeli sami, je jiná situace než stránka, kam vás poslal odkaz ve zprávě nebo reklama. Na přihlášení a placení choďte adresou, kterou si napíšete sami nebo máte uloženou.',
+      ],
+      [
+        'Varování vlevo od adresy.',
+        'Když tam prohlížeč varuje (žlutý trojúhelník s vykřičníkem, nápis „Nezabezpečeno“ nebo přeškrtnutý zámek), připojení není zabezpečené. Do stránky nic nezadávejte. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce.',
+      ],
+      [
+        'To, že vás prohlížeč nevaruje, ještě neznamená, že na stránce nemůže být podvod.',
+        'Obálku může poslat i podvodník. Vždy se ptejte, co po vás stránka chce.',
+      ],
+      [
+        'Adresa, která nesedí.',
+        'Věřte adrese v řádku nahoře, ne tomu, co o sobě píše stránka. Pozor na adresy, které jen obsahují známé jméno, třeba jméno vaší banky s dalšími slovy.',
+      ],
+      [
+        'Stránka nebo okno, které straší nebo slibuje výhru.',
+        '„Telefon je napadený“, „Vyhráli jste“. Stránka nepozná, co máte v telefonu. Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Nevolejte, nic neinstalujte a stránku zavřete.',
+      ],
+      [
+        'Údaje, které stránka nepotřebuje.',
+        'PIN ke kartě do stránky nezadávejte nikdy. Číslo karty a kód z SMS jen při placení za věc, kterou jste si sami vybrali. I tehdy si v SMS nebo v aplikaci banky přečtěte, za co a kolik platíte.',
+      ],
+    ],
+    note: 'Pozor: i stránka v bezchybné češtině může být podvod. Podvodníci dnes píšou s pomocí umělé inteligence.',
+    advice:
+      'Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte. Když si nejste jistí, stránku zavřete a adresu napište sami.',
+  },
 };
 
 export const ROUND = {
@@ -125,6 +163,8 @@ export const CATEGORY_LABELS = {
   'qr-kod': 'QR kód',
   'instalace-aplikace': 'výzva k instalaci aplikace',
   'obecne-osloveni': 'obecné oslovení bez jména',
+  // Browser section (approved by Tomáš, 1. 10. 2026): the warning next to the address belongs here too
+  'adresa-stranky': 'adresa stránky nebo varování u ní',
 };
 
 // The player's role in the simulated mail app (approved by Tomáš, milestone 4).
@@ -196,6 +236,82 @@ export const DECISION_CHECK = {
     confirm: 'Ano, je v pořádku',
   },
 };
+
+// Simulated browser (approved by Tomáš, 1. 10. 2026, docs/navrhy-scenaru-prohlizec.md)
+export const BROWSER_APP = {
+  arrivalTitle: 'Jak jste se sem dostali',
+  // Screen reader text of the warning icon at both levels (the icon has no visible text there)
+  insecureLabel: 'Varování: připojení není zabezpečené',
+  // Visible next to the icon only in the evaluation
+  insecureText: 'Nezabezpečeno',
+  addressLabel: 'Adresa stránky: ',
+  // Same for scams and legitimate pages, so they do not give the answer away
+  buttonNotice: 'Tohle je jen trénink, tlačítko nic nedělá a nic se neodeslalo. Rozhodněte dole, jestli je stránka podvod, nebo v pořádku.',
+  fieldNotice: 'Tohle je jen trénink, do pole se psát nedá a nic se neodesílá. Rozhodněte dole, jestli je stránka podvod, nebo v pořádku.',
+  intro: {
+    title: 'Než začnete: adresní řádek',
+    caption: 'Tady prohlížeč ukazuje varování',
+    // A screen of its own on the first visit only (Tomáš, 1. 10. 2026)
+    button: 'Rozumím, vybrat úroveň',
+    paragraphs: [
+      'Nahoře v prohlížeči je adresní řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka.',
+      'Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi, tedy internetu, ke kterému se připojíte v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce. Když prohlížeč u adresy varuje, do stránky nic nezadávejte. V tréninku je varováním žlutý trojúhelník s vykřičníkem. Jiné prohlížeče ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek.',
+      'Obálka ale neříká nic o tom, kdo dopis poslal. To, že vás prohlížeč nevaruje, neznamená, že na stránce nemůže být podvod. Vždy se ptejte, jak jste se na stránku dostali a co po vás chce.',
+      'Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte.',
+    ],
+  },
+};
+
+// Section wording: the browser shows pages, not messages (Tomáš, 1. 10. 2026). E-mail and
+// Zprávy keep the texts above unchanged; the browser overrides only the listed ones.
+const SECTION_OVERRIDES = {
+  prohlizec: {
+    levelIntro: 'Vyberte si úroveň. V obou uvidíte 5 stránek.',
+    levelDescriptions: {
+      zakladni: 'Prohlédnete si stránku a rozhodnete: je to podvod, nebo je v pořádku?',
+      pokrocila:
+        'Nejdřív klepnutím označíte všechno, co vám na stránce přijde podezřelé. Pak rozhodnete. Za každé správně nalezené místo získáte bod navíc.',
+    },
+    ROUND: {
+      progress: (index, total) => `Stránka ${index} z ${total}`,
+      advancedInstruction:
+        'Klepněte na všechno, co vám na stránce přijde podezřelé. Druhým klepnutím označení zrušíte. Pak rozhodněte.',
+    },
+    EVALUATION: {
+      okCorrect: { title: 'Správně, stránka je v pořádku.', text: 'Podívejte se, podle čeho se dá poznat, že je v pořádku.' },
+      scamMissed: { ...EVALUATION.scamMissed, title: 'Tahle stránka je podvod.' },
+      okWrong: {
+        title: 'Tahle stránka je ve skutečnosti v pořádku.',
+        text: 'Opatrnost je dobrá. Podívejte se, podle čeho se dá poznat, že je v pořádku.',
+      },
+      legitClean: 'Nic jste neoznačili, správně: na stránce nebylo nic podezřelého.',
+      legitMarked: 'Na stránce nebylo nic podezřelého. Označená místa jsou v pořádku.',
+      next: 'Další stránka',
+    },
+    ROUND_END: { title: 'Hotovo, máte za sebou 5 stránek.' },
+    DECISION_CHECK: {
+      scamWithoutMarks: {
+        ...DECISION_CHECK.scamWithoutMarks,
+        text: 'Stránku ale hodnotíte jako podvod. Chcete ještě označit, co vám přišlo podezřelé?',
+      },
+      okWithMarks: { ...DECISION_CHECK.okWithMarks, text: 'Stránku ale hodnotíte jako v pořádku. Je to tak?', back: 'Zpět ke stránce' },
+    },
+  },
+};
+
+// Texts of the round screens for one section: the shared texts with the section's overrides
+export function sectionTexts(section) {
+  const own = SECTION_OVERRIDES[section] ?? {};
+  return {
+    ROUND: { ...ROUND, ...own.ROUND },
+    EVALUATION: { ...EVALUATION, ...own.EVALUATION },
+    ROUND_END: { ...ROUND_END, ...own.ROUND_END },
+    DECISION_CHECK: { ...DECISION_CHECK, ...own.DECISION_CHECK },
+    levelDescriptions: own.levelDescriptions ?? {},
+    // undefined = the shared text on the level select ("… 5 zpráv.")
+    levelIntro: own.levelIntro,
+  };
+}
 
 export const LEAVE_ROUND = {
   title: 'Opravdu chcete kolo ukončit?',

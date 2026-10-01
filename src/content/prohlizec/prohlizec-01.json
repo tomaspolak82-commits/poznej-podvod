@@ -1,0 +1,48 @@
+{
+  "id": "prohlizec-01",
+  "section": "prohlizec",
+  "title": "Výhra telefonu za poštovné",
+  "isScam": true,
+  "message": {
+    "arrival": "Hledali jste recept na švestkový koláč. Na stránce s recepty jste klepli na barevný pruh „Vyhrajte nový telefon“.",
+    "address": "telefon-vyhra-dnes.cz",
+    "secure": false,
+    "heading": "Gratulujeme! Jste dnešní výherce.",
+    "body": [
+      "Nový chytrý telefon je váš. Zaplatíte jen poštovné 49 Kč.",
+      "Nabídka platí ještě 9 minut 59 sekund."
+    ],
+    "fields": ["Jméno a příjmení", "Adresa pro doručení", "Číslo karty, platnost a kód ze zadní strany"],
+    "button": { "label": "Odeslat" }
+  },
+  "threats": [
+    {
+      "target": "security",
+      "alsoTargets": ["address", "fields.0", "fields.1"],
+      "category": "adresa-stranky",
+      "title": "Varování u adresy",
+      "explanation": "Vlevo od adresy prohlížeč varuje, že připojení není zabezpečené. Na takové stránce nic nezadávejte, ani jméno a adresu. Údaje by šly jako pohlednice: kdo chce, cestou je přečte."
+    },
+    {
+      "target": "heading",
+      "alsoTargets": ["body.0"],
+      "category": "vyhra-nabidka",
+      "title": "Výhra za poštovné",
+      "explanation": "Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Malé poštovné má jen získat číslo vaší karty."
+    },
+    {
+      "target": "body.1",
+      "category": "casovy-tlak",
+      "title": "Odpočet",
+      "explanation": "Odpočet má zabránit tomu, abyste se v klidu zamysleli. Poctivá nabídka vám nezmizí za deset minut."
+    },
+    {
+      "target": "fields.2",
+      "category": "zadost-o-udaje",
+      "title": "Číslo karty",
+      "explanation": "Číslo karty i s kódem ze zadní strany stačí k tomu, aby z ní někdo platil. Na stránce, kam vás zavedla reklama, ho nezadávejte."
+    }
+  ],
+  "summary": "Výhra, o kterou jste se nesnažili, a k tomu poštovné kartou: to je častý trik. A když prohlížeč u adresy ukazuje varování, do stránky nic nezadávejte, ať slibuje cokoli.",
+  "sources": []
+}

@@ -11,7 +11,8 @@ import { EVALUATION, ROUND } from '../texts.js';
 import { icon } from '../ui/icons.js';
 import { escapeHtml } from '../ui/html.js';
 
-const INTERACTIVE = /^(button|link|attachment|messages\.\d+\.link)$/;
+// Browser: the banner, form fields and popup buttons are controls too
+const INTERACTIVE = /^(button|link|attachment|messages\.\d+\.link|banner|fields\.\d+|popup\.button\.\d+)$/;
 
 // Phone frame on tablet and desktop; on a phone the app fills the width (CSS)
 export const phoneFrame = (content) => `<div class="phone">${content}</div>`;

@@ -291,11 +291,14 @@ a.tile:active .tile__cta {
 
 .level {
   display: grid;
+  /* minmax(0, 1fr): with 200 % text the column may not grow wider than the screen (320 px) */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
 }
 
 .level__back {
   justify-self: start;
+  max-width: 100%;
 }
 
 .level__head {

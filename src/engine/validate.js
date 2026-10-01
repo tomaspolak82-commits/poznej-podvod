@@ -13,7 +13,19 @@ export const DRAW_MINIMUM = { scam: 3, legit: 2 };
 export const CONTENT_GOAL = {
   email: { total: 12, scam: 6, legit: 6 },
   zpravy: { total: 11, scam: 5, legit: 5 },
+  // First version of the browser section (Tomáš, 1. 10. 2026): 8 scenarios, half and half
+  prohlizec: { total: 8, scam: 4, legit: 4 },
 };
+
+export const SECTIONS_WITH_CONTENT = ['email', 'zpravy', 'prohlizec'];
+const BANNER_STYLES = ['ad', 'warning'];
+
+// Browser: the banner stands before the paragraph with this index (banner.position);
+// without it, after the last paragraph
+export function bannerPosition(message) {
+  const position = message?.banner?.position;
+  return Number.isInteger(position) ? position : Array.isArray(message?.body) ? message.body.length : 0;
+}
 
 const isNonEmptyString = (value) => typeof value === 'string' && value.trim() !== '';
 
@@ -35,8 +47,64 @@ export function listTargets(section, message) {
       targets.push(`messages.${i}`);
       if (bubble && bubble.link) targets.push(`messages.${i}.link`);
     });
+  } else if (section === 'prohlizec') {
+    // In the order the browser shows them. The warning icon exists only without a secure connection;
+    // under a popup the page is dimmed and has no parts of its own.
+    const list = (value) => (Array.isArray(value) ? value : []);
+    if (message.secure === false) targets.push('security');
+    targets.push('address');
+    if (message.heading) targets.push('heading');
+    const body = list(message.body);
+    const bannerAt = bannerPosition(message);
+    body.forEach((_, i) => {
+      if (message.banner && i === bannerAt) targets.push('banner');
+      targets.push(`body.${i}`);
+    });
+    if (message.banner && bannerAt >= body.length) targets.push('banner');
+    list(message.fields).forEach((_, i) => targets.push(`fields.${i}`));
+    if (message.button) targets.push('button');
+    if (message.popup && typeof message.popup === 'object') {
+      targets.push('popup.title');
+      list(message.popup.body).forEach((_, i) => targets.push(`popup.body.${i}`));
+      list(message.popup.buttons).forEach((_, i) => targets.push(`popup.button.${i}`));
+    }
   }
   return targets;
+}
+
+function validateBrowserMessage(message, errors) {
+  for (const field of ['arrival', 'address']) {
+    if (!isNonEmptyString(message[field])) errors.push(`message.${field} chybí nebo je prázdné`);
+  }
+  if (typeof message.secure !== 'boolean') errors.push('message.secure musí být true nebo false');
+  const optionalTexts = (name, value) => {
+    if (value !== undefined && (!Array.isArray(value) || value.length === 0 || !value.every(isNonEmptyString))) {
+      errors.push(`message.${name} musí být neprázdné pole textů`);
+    }
+  };
+  if (message.heading !== undefined && !isNonEmptyString(message.heading)) errors.push('message.heading musí být neprázdný text');
+  optionalTexts('body', message.body);
+  optionalTexts('fields', message.fields);
+  if (message.banner !== undefined && (!isNonEmptyString(message.banner?.text) || !BANNER_STYLES.includes(message.banner?.style))) {
+    errors.push('message.banner musí mít text a style "ad" nebo "warning"');
+  }
+  const position = message.banner?.position;
+  const paragraphs = Array.isArray(message.body) ? message.body.length : 0;
+  if (position !== undefined && (!Number.isInteger(position) || position < 0 || position > paragraphs)) {
+    errors.push(`message.banner.position musí být celé číslo od 0 do ${paragraphs}`);
+  }
+  if (message.button !== undefined && !isNonEmptyString(message.button?.label)) errors.push('message.button musí mít label');
+  if (message.popup !== undefined) {
+    if (!isNonEmptyString(message.popup?.title)) errors.push('message.popup.title chybí nebo je prázdné');
+    optionalTexts('popup.body', message.popup?.body);
+    optionalTexts('popup.buttons', message.popup?.buttons);
+    // The page under a popup is dimmed and not marked, so it carries no content of its own
+    for (const field of ['heading', 'body', 'banner', 'fields', 'button']) {
+      if (message[field] !== undefined) errors.push(`stránka s oknem nesmí mít message.${field} (pod oknem je ztmavená)`);
+    }
+  } else if (message.heading === undefined) {
+    errors.push('stránka bez okna musí mít message.heading');
+  }
 }
 
 function validateEmailMessage(message, errors) {
@@ -105,7 +173,7 @@ export function validateScenario(scenario, { fileId, section } = {}) {
   if (!isNonEmptyString(scenario.id)) errors.push('id chybí');
   else if (fileId && scenario.id !== fileId) errors.push(`id "${scenario.id}" neodpovídá názvu souboru "${fileId}"`);
 
-  if (!['email', 'zpravy'].includes(scenario.section)) errors.push('section musí být "email" nebo "zpravy"');
+  if (!SECTIONS_WITH_CONTENT.includes(scenario.section)) errors.push('section musí být "email", "zpravy" nebo "prohlizec"');
   else if (section && scenario.section !== section) errors.push(`section "${scenario.section}" neodpovídá složce "${section}"`);
 
   if (!isNonEmptyString(scenario.title)) errors.push('title chybí');
@@ -126,6 +194,8 @@ export function validateScenario(scenario, { fileId, section } = {}) {
     validateEmailMessage(scenario.message, errors);
   } else if (scenario.section === 'zpravy') {
     validateChatMessage(scenario.message, errors);
+  } else if (scenario.section === 'prohlizec') {
+    validateBrowserMessage(scenario.message, errors);
   }
 
   if (!Array.isArray(scenario.threats)) {

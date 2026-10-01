@@ -16,6 +16,7 @@ const paths = {
     '<path d="M6.5 3.5h2.8l1.5 4-2 1.6a11.5 11.5 0 0 0 6.1 6.1l1.6-2 4 1.5v2.8a2 2 0 0 1-2 2A16.5 16.5 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z"/>',
   arrowLeft: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
   arrowRight: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  arrowUp: '<path d="M12 19V5M6 11l6-6 6 6"/>',
   bulb:
     '<path d="M9.5 18h5M10.5 21h3"/>' +
     '<path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.1v.1h5v-.1c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3Z"/>',
@@ -29,6 +30,12 @@ const paths = {
   chevronDown: '<path d="m6 9 6 6 6-6"/>',
   chevronUp: '<path d="m6 15 6-6 6 6"/>',
   person: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/>',
+  // Browser warning: yellow triangle with a dark outline and dark "!" (colours fixed, not currentColor)
+  warning:
+    '<path d="M12 2.8 22.2 20.5H1.8Z" fill="#ffb302" stroke="#1a202c" stroke-width="1.6"/>' +
+    '<path d="M12 9v5.5" stroke="#1a202c" stroke-width="2.4"/><path d="M12 17.6h.01" stroke="#1a202c" stroke-width="3"/>',
+  dots: '<path d="M12 5.5h.01M12 12h.01M12 18.5h.01" stroke-width="3"/>',
+  tabs: '<rect x="5" y="5" width="14" height="14" rx="2.5"/>',
 };
 
 export function icon(name) {

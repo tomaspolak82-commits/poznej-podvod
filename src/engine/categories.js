@@ -14,4 +14,6 @@ export const THREAT_CATEGORIES = [
   'qr-kod',
   'instalace-aplikace',
   'obecne-osloveni',
+  // Browser section: the page address or the warning next to it (1. 10. 2026)
+  'adresa-stranky',
 ];

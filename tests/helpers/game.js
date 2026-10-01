@@ -16,7 +16,7 @@ export function scenarios(section) {
 }
 
 export function scenarioById(id) {
-  const section = id.startsWith('email') ? 'email' : 'zpravy';
+  const section = id.split('-')[0];
   return scenarios(section).find((s) => s.id === id);
 }
 
@@ -66,14 +66,28 @@ export async function openCurrentMessage(page) {
   await page.locator('article[data-scenario-id]').waitFor();
 }
 
-// Opens the next message in the round ("Další zpráva" + open it from the inbox)
+// Opens the next message in the round ("Další zpráva", in the browser "Další stránka",
+// + open it from the inbox)
 export async function nextMessage(page) {
-  await page.getByRole('button', { name: /Další zpráva/ }).click();
+  await page.getByRole('button', { name: /Další (zpráva|stránka)/ }).click();
   await openCurrentMessage(page);
+}
+
+// Browser: the first-visit intro is a screen of its own; tests that are not about it start
+// as a player who has already seen it (the record the app stores, src/engine/intro.js)
+export async function skipBrowserIntro(page) {
+  await page.addInitScript(() => {
+    try {
+      localStorage.setItem('poznej-podvod:browser-intro:v1', 'seen');
+    } catch {
+      // A test that blocks the storage checks the intro itself
+    }
+  });
 }
 
 // Starts a round and opens its first message (use open: false to stay in the inbox)
 export async function startRound(page, { section = 'email', seed = 123, level = 'základní', open = true } = {}) {
+  if (section === 'prohlizec') await skipBrowserIntro(page);
   await page.goto(`/?seed=${seed}#/${section}`);
   await page.getByRole('button', { name: new RegExp(`Začít: ${level}`) }).click();
   if (open) await openCurrentMessage(page);

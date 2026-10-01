@@ -163,7 +163,8 @@
   }
 
   .phone > .mail,
-  .phone > .chat {
+  .phone > .chat,
+  .phone > .browser {
     border: 0;
     border-radius: 1.75rem;
     box-shadow: none;

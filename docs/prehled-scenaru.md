@@ -8,6 +8,7 @@ Vygenerováno příkazem `npm run prehled` ze souborů v `src/content/`. Neuprav
 |---|---|---|---|
 | E-mail | 12 | 6 | 6 |
 | Zprávy | 11 | 5 | 6 |
+| Prohlížeč | 8 | 4 | 4 |
 
 **Falešná pravidla, která legitimní zprávy vyvracejí:**
 
@@ -23,6 +24,10 @@ Vygenerováno příkazem `npm run prehled` ze souborů v `src/content/`. Neuprav
 - `zpravy-09`: „Když SMS píše o balíku, je to podvod.“
 - `zpravy-10`: „Když mě známý přes zprávu o něco prosí, je to podvod.“
 - `zpravy-11`: „Když zpráva nemá háčky a čárky nebo má chyby, je to podvod.“
+- `prohlizec-05`: „Když je na stránce reklama nebo sleva, je to podvod.“
+- `prohlizec-06`: „Když na stránce vyskočí okno, je to podvod.“
+- `prohlizec-07`: „Když stránka chce heslo, je to podvod.“
+- `prohlizec-08`: „Když stránka chce číslo karty, je to podvod.“
 
 ## E-mail
 
@@ -652,5 +657,225 @@ Vygenerováno příkazem `npm run prehled` ze souborů v `src/content/`. Neuprav
 3. **Bublina 2** `messages.1`: v nedeli prijedem s mamkou, udelas ty tvoje livance? :)
 
 **Shrnutí:** Zpráva je bez háčků a čárek, a přesto je v pořádku. Takhle na mobilu píše spousta lidí, chyby samy o sobě nic neznamenají. Rozhoduje, že na nic nespěchá a nic nechce: žádné peníze, kód ani kliknutí na odkaz.
+
+**Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
+
+## Prohlížeč
+
+### prohlizec-01: Výhra telefonu za poštovné
+
+- **Sekce:** Prohlížeč
+- **Druh:** podvod
+- **Adresa:** telefon-vyhra-dnes.cz (nezabezpečené připojení)
+
+**Stránka po částech:**
+
+- _Jak jste se sem dostali: Hledali jste recept na švestkový koláč. Na stránce s recepty jste klepli na barevný pruh „Vyhrajte nový telefon“._
+1. **Varování u adresy** `security`: nezabezpečené připojení (žlutý trojúhelník)
+   - **Hrozba** · `adresa-stranky` (adresa stránky nebo varování u ní) · „Varování u adresy“: Vlevo od adresy prohlížeč varuje, že připojení není zabezpečené. Na takové stránce nic nezadávejte, ani jméno a adresu. Údaje by šly jako pohlednice: kdo chce, cestou je přečte. Platí i pro: `address`, `fields.0`, `fields.1`.
+2. **Adresa stránky** `address`: telefon-vyhra-dnes.cz
+   - součást hrozby „Varování u adresy“ (hlavní část `security`)
+3. **Nadpis stránky** `heading`: Gratulujeme! Jste dnešní výherce.
+   - **Hrozba** · `vyhra-nabidka` (výhra nebo nečekaná nabídka) · „Výhra za poštovné“: Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Malé poštovné má jen získat číslo vaší karty. Platí i pro: `body.0`.
+4. **Odstavec 1** `body.0`: Nový chytrý telefon je váš. Zaplatíte jen poštovné 49 Kč.
+   - součást hrozby „Výhra za poštovné“ (hlavní část `heading`)
+5. **Odstavec 2** `body.1`: Nabídka platí ještě 9 minut 59 sekund.
+   - **Hrozba** · `casovy-tlak` (spěch ve zprávě) · „Odpočet“: Odpočet má zabránit tomu, abyste se v klidu zamysleli. Poctivá nabídka vám nezmizí za deset minut.
+6. **Pole formuláře 1** `fields.0`: Jméno a příjmení
+   - součást hrozby „Varování u adresy“ (hlavní část `security`)
+7. **Pole formuláře 2** `fields.1`: Adresa pro doručení
+   - součást hrozby „Varování u adresy“ (hlavní část `security`)
+8. **Pole formuláře 3** `fields.2`: Číslo karty, platnost a kód ze zadní strany
+   - **Hrozba** · `zadost-o-udaje` (žádost o údaje nebo kódy) · „Číslo karty“: Číslo karty i s kódem ze zadní strany stačí k tomu, aby z ní někdo platil. Na stránce, kam vás zavedla reklama, ho nezadávejte.
+9. **Tlačítko** `button`: Odeslat
+   - nevinná část
+
+**Shrnutí:** Výhra, o kterou jste se nesnažili, a k tomu poštovné kartou: to je častý trik. A když prohlížeč u adresy ukazuje varování, do stránky nic nezadávejte, ať slibuje cokoli.
+
+**Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
+
+---
+
+### prohlizec-02: Telefon je zablokovaný, volejte podporu
+
+- **Sekce:** Prohlížeč
+- **Druh:** podvod
+- **Adresa:** rajcata-na-zahrade.cz
+
+**Stránka po částech:**
+
+- _Jak jste se sem dostali: Četli jste na internetu článek o pěstování rajčat. Najednou se přes stránku objevilo okno._
+- _Připojení zabezpečené, u adresy žádné varování_
+- _Stránka pod oknem je ztmavená a nejde označit_
+1. **Adresa stránky** `address`: rajcata-na-zahrade.cz
+   - nevinná část
+2. **Okno: nadpis** `popup.title`: Váš telefon je zablokovaný
+   - **Hrozba** · `emocni-natlak` (citový nátlak) · „Strašení viry“: Okno na stránce nepozná, co máte v telefonu. Nenakreslil ho váš telefon, ale stránka. Strach z virů a ukradených peněz má zabránit tomu, abyste se v klidu zamysleli. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá. Platí i pro: `popup.body.0`.
+3. **Okno: odstavec 1** `popup.body.0`: Bezpečnostní kontrola našla 3 viry. Vaše fotky, hesla a údaje z banky mohou být ukradeny.
+   - součást hrozby „Strašení viry“ (hlavní část `popup.title`)
+4. **Okno: odstavec 2** `popup.body.1`: Telefon nevypínejte a do 5 minut zavolejte technickou podporu: +420 772 163 940.
+   - **Hrozba** · `neobvykla-zadost` (neobvyklá žádost) · „Výzva k zavolání“: Na druhé straně by vás čekal podvodník, který by chtěl peníze nebo přístup do vašeho telefonu, třeba tím, že vás požádá o instalaci aplikace. Spěch „do 5 minut“ k tomu patří. Platí i pro: `popup.button.0`.
+5. **Okno: tlačítko 1** `popup.button.0`: Zavolat podporu
+   - součást hrozby „Výzva k zavolání“ (hlavní část `popup.body.1`)
+
+**Shrnutí:** Když na vás stránka vybafne, že máte virus, nevolejte a na nic v okně neklepejte. Stránku zavřete. Když nejde zavřít, zavřete celý prohlížeč. Když se bojíte, že je s telefonem něco v nepořádku, zeptejte se někoho, komu věříte.
+
+**Zdroje:**
+
+- Telefonní číslo +420 772 163 940: blok 772 100 000 až 772 199 999 bez držitele podle dat ČTÚ z 1. 10. 2026 (https://data.ctu.gov.cz/dataset/pridelena-cisla-kody)
+
+---
+
+### prohlizec-03: Ověření účtu v Bance Javor
+
+- **Sekce:** Prohlížeč
+- **Druh:** podvod
+- **Adresa:** javor-overeni-uctu.cz
+
+**Stránka po částech:**
+
+- _Jak jste se sem dostali: Máte účet v Bance Javor. Přišla vám SMS, že váš účet bude zablokován, pokud se dnes neověříte. Klepli jste na odkaz v ní._
+- _Připojení zabezpečené, u adresy žádné varování_
+1. **Adresa stránky** `address`: javor-overeni-uctu.cz
+   - **Hrozba** · `adresa-stranky` (adresa stránky nebo varování u ní) · „Adresa stránky“: Na přihlášení do banky choďte adresou, kterou si napíšete sami nebo máte uloženou. Tahle stránka se otevřela z odkazu v SMS a adresa jen obsahuje slovo „javor“. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá.
+2. **Nadpis stránky** `heading`: Banka Javor: ověření účtu
+   - nevinná část
+3. **Odstavec 1** `body.0`: Z bezpečnostních důvodů jsme omezili váš účet. Pro obnovení se přihlaste a ověřte svou kartu.
+   - **Hrozba** · `emocni-natlak` (citový nátlak) · „Omezený účet“: Hrozba zablokováním má vystrašit, abyste jednali hned a nepřemýšleli.
+4. **Pole formuláře 1** `fields.0`: Přihlašovací jméno
+   - **Hrozba** · `zadost-o-udaje` (žádost o údaje nebo kódy) · „Přihlášení, karta i kód“: Stránka, na kterou vás poslal odkaz ze zprávy, chce přihlašovací údaje, číslo karty i kód z SMS. Kvůli přihlášení není potřeba zadávat číslo karty. Kód z SMS je jako klíč: kdo ho má, může potvrdit platbu z vašeho účtu. Platí i pro: `fields.1`, `fields.2`, `fields.3`.
+5. **Pole formuláře 2** `fields.1`: Heslo
+   - součást hrozby „Přihlášení, karta i kód“ (hlavní část `fields.0`)
+6. **Pole formuláře 3** `fields.2`: Číslo karty
+   - součást hrozby „Přihlášení, karta i kód“ (hlavní část `fields.0`)
+7. **Pole formuláře 4** `fields.3`: Kód z SMS
+   - součást hrozby „Přihlášení, karta i kód“ (hlavní část `fields.0`)
+8. **Tlačítko** `button`: Přihlásit a ověřit
+   - nevinná část
+
+**Shrnutí:** Když vám zpráva hrozí zablokováním účtu, neklikejte na odkaz v ní. Otevřete si bankovnictví sami, jako obvykle, nebo zavolejte na číslo, které máte na kartě.
+
+**Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
+
+---
+
+### prohlizec-04: Falešné varování na stránce s jízdními řády
+
+- **Sekce:** Prohlížeč
+- **Druh:** podvod
+- **Adresa:** autobusy-jizdni-rad.cz
+
+**Stránka po částech:**
+
+- _Jak jste se sem dostali: Hledali jste jízdní řád autobusu a otevřeli jste jeden z výsledků hledání._
+- _Připojení zabezpečené, u adresy žádné varování_
+1. **Adresa stránky** `address`: autobusy-jizdni-rad.cz
+   - nevinná část
+2. **Nadpis stránky** `heading`: Jízdní řády autobusů
+   - nevinná část
+3. **Pruh s „varováním“ od stránky** `banner`: Vaše připojení není zabezpečené!
+   - **Hrozba** · `emocni-natlak` (citový nátlak) · „Varování od stránky“: Skutečné varování ukazuje prohlížeč vlevo od adresy nebo přes celou obrazovku, ne stránka uprostřed textu. U adresy tu žádné varování není. Tohle „varování“ si nakreslila stránka sama, aby vás vystrašila. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá. Platí i pro: `body.0`.
+4. **Odstavec 1** `body.0`: Váš prohlížeč je zastaralý a vaše údaje může kdokoli vidět. Nainstalujte si aplikaci Ochrana telefonu a chraňte se.
+   - součást hrozby „Varování od stránky“ (hlavní část `banner`)
+5. **Tlačítko** `button`: Stáhnout ochranu
+   - **Hrozba** · `instalace-aplikace` (výzva k instalaci aplikace) · „Stažení aplikace“: Aplikace instalujte jen z obchodu s aplikacemi ve svém telefonu, ne přes tlačítko na stránce. Aplikace z neznámé stránky může v telefonu napáchat škody.
+
+**Shrnutí:** Varování o bezpečnosti hledejte vlevo od adresy, tam ho ukazuje prohlížeč. Co nakreslí stránka, může být past. Když stránka chce, abyste si kvůli bezpečí něco stáhli, zavřete ji. Prohlížeč ani telefon se neaktualizují přes tlačítko na stránce.
+
+**Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
+
+---
+
+### prohlizec-05: Zpravodajská stránka s reklamou
+
+- **Sekce:** Prohlížeč
+- **Druh:** legitimní
+- **Vyvrací:** „Když je na stránce reklama nebo sleva, je to podvod.“
+- **Adresa:** regionalni-zpravodaj-dnes.cz
+
+**Stránka po částech:**
+
+- _Jak jste se sem dostali: Otevřeli jste si zpravodajskou stránku, kterou čtete každý den. Máte ji uloženou v záložkách._
+- _Připojení zabezpečené, u adresy žádné varování_
+1. **Adresa stránky** `address`: regionalni-zpravodaj-dnes.cz
+2. **Nadpis stránky** `heading`: Obec opraví most přes řeku do zimy
+3. **Odstavec 1** `body.0`: Oprava začne v pondělí. Po dobu prací pojede autobus objížďkou přes Javornou Lhotu.
+4. **Reklama** `banner`: Zimní bundy se slevou 30 % · Obchod U Lípy
+5. **Odstavec 2** `body.1`: Starosta prosí řidiče o trpělivost a o dodržování dočasného značení.
+
+**Shrnutí:** Reklama je na většině stránek a sama o sobě podvod není. Tahle nabízí slevu na zboží, ale nic po vás nechce: žádné údaje, žádnou platbu za výhru. Kdybyste na reklamu klepli, dívejte se znovu, kam jste se dostali a co stránka chce.
+
+**Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
+
+---
+
+### prohlizec-06: Souhlas s cookies na stránce o výletech
+
+- **Sekce:** Prohlížeč
+- **Druh:** legitimní
+- **Vyvrací:** „Když na stránce vyskočí okno, je to podvod.“
+- **Adresa:** vylety-s-vnoucaty.cz
+
+**Stránka po částech:**
+
+- _Jak jste se sem dostali: Vnučka vám ve zprávě poslala odkaz na článek o výletech s vnoučaty. Klepli jste na něj._
+- _Připojení zabezpečené, u adresy žádné varování_
+- _Stránka pod oknem je ztmavená a nejde označit_
+1. **Adresa stránky** `address`: vylety-s-vnoucaty.cz
+2. **Okno: nadpis** `popup.title`: Souhlas s cookies
+3. **Okno: odstavec 1** `popup.body.0`: Tato stránka si do vašeho prohlížeče ukládá malé soubory (cookies), aby fungovala a aby mohla měřit návštěvnost. Můžete souhlasit, nebo odmítnout.
+4. **Okno: tlačítko 1** `popup.button.0`: Přijmout vše
+5. **Okno: tlačítko 2** `popup.button.1`: Jen nezbytné
+
+**Shrnutí:** Okno se souhlasem s cookies uvidíte na velké části stránek. Chce jen vaši volbu, ne peníze, údaje ani kód. Klidně zvolte tu možnost, která dovolí méně, třeba „Jen nezbytné“. Ani to, že vás sem poslal odkaz, neznamená samo o sobě podvod. Rozhoduje, co stránka chce.
+
+**Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
+
+---
+
+### prohlizec-07: Přihlášení do e-shopu, který jste otevřeli sami
+
+- **Sekce:** Prohlížeč
+- **Druh:** legitimní
+- **Vyvrací:** „Když stránka chce heslo, je to podvod.“
+- **Adresa:** kniha-pro-radost-eshop.cz
+
+**Stránka po částech:**
+
+- _Jak jste se sem dostali: Chcete si v e-shopu Kniha pro radost, kde občas nakupujete, zkontrolovat objednávku. Adresu jste napsali sami._
+- _Připojení zabezpečené, u adresy žádné varování_
+1. **Adresa stránky** `address`: kniha-pro-radost-eshop.cz
+2. **Nadpis stránky** `heading`: Přihlášení
+3. **Odstavec 1** `body.0`: Přihlaste se e-mailem a heslem, které jste zadali při registraci.
+4. **Pole formuláře 1** `fields.0`: E-mail
+5. **Pole formuláře 2** `fields.1`: Heslo
+6. **Tlačítko** `button`: Přihlásit se
+
+**Shrnutí:** Přihlásit se heslem je běžné, když jste stránku otevřeli sami. Tahle chce jen e-mail a heslo k vašemu účtu v obchodě, nic navíc: žádné číslo karty ani kód z SMS. Kdyby vás na přihlášení poslal odkaz ve zprávě, adresu si raději napište sami.
+
+**Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
+
+---
+
+### prohlizec-08: Placení kartou v e-shopu
+
+- **Sekce:** Prohlížeč
+- **Druh:** legitimní
+- **Vyvrací:** „Když stránka chce číslo karty, je to podvod.“
+- **Adresa:** domaci-pomocnik-obchod.cz
+
+**Stránka po částech:**
+
+- _Jak jste se sem dostali: V e-shopu Domácí pomocník, kde už jste nakupovali, jste si do košíku dali rychlovarnou konvici a klepli na „Zaplatit“._
+- _Připojení zabezpečené, u adresy žádné varování_
+1. **Adresa stránky** `address`: domaci-pomocnik-obchod.cz
+2. **Nadpis stránky** `heading`: Platba kartou
+3. **Odstavec 1** `body.0`: Objednávka č. 4417: rychlovarná konvice, 890 Kč.
+4. **Pole formuláře 1** `fields.0`: Číslo karty
+5. **Pole formuláře 2** `fields.1`: Platnost
+6. **Pole formuláře 3** `fields.2`: Kód ze zadní strany karty
+7. **Tlačítko** `button`: Zaplatit 890 Kč
+
+**Shrnutí:** Číslo karty se zadává, když za něco platíte. Tady jste si zboží vybrali sami a částka odpovídá objednávce. To, že vás prohlížeč nevaruje, samo nerozhoduje. Rozhoduje, že platíte za věc, kterou jste si sami vybrali. Když pak přijde SMS nebo zpráva v aplikaci banky na potvrzení platby, přečtěte si, za co a kolik platíte.
 
 **Zdroje:** žádné (bez tvrzení za firmu nebo úřad)

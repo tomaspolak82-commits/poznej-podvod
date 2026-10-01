@@ -2,8 +2,9 @@
 
 import * as email from './email.js';
 import * as messages from './messages.js';
+import * as browser from './browser.js';
 
-const apps = { email, zpravy: messages };
+const apps = { email, zpravy: messages, prohlizec: browser };
 
 export function appFor(section) {
   const app = apps[section];

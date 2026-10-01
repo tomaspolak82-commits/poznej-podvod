@@ -1,6 +1,17 @@
 import { test, expect } from '@playwright/test';
 import { THREAT_CATEGORIES } from '../../src/engine/categories.js';
-import { CATEGORY_LABELS, EVALUATION, HINTS, MESSAGES_APP, ROUND_END, WELCOME } from '../../src/texts.js';
+import {
+  BROWSER_APP,
+  CATEGORY_LABELS,
+  DECISION_CHECK,
+  EVALUATION,
+  HINTS,
+  MESSAGES_APP,
+  ROUND,
+  ROUND_END,
+  sectionTexts,
+  WELCOME,
+} from '../../src/texts.js';
 
 test('every allowed category has a Czech label, and no label is left over', () => {
   expect(Object.keys(CATEGORY_LABELS).sort()).toEqual([...THREAT_CATEGORIES].sort());
@@ -27,6 +38,36 @@ test('e-mail hint: an unexpected attachment is risky even from a known sender (e
   expect(HINTS.email.items[4][1]).toContain('Platí to i u známého odesílatele.');
 });
 
+test('browser hint: 7 items, the address bar first; the warning means "enter nothing", a missing warning is no proof (1. 10. 2026)', () => {
+  expect(HINTS.prohlizec.items).toHaveLength(7);
+  expect(HINTS.prohlizec.items[0][0]).toBe('Adresní řádek.');
+  expect(HINTS.prohlizec.items[2][1]).toContain('Do stránky nic nezadávejte.');
+  expect(HINTS.prohlizec.items[3][0]).toContain('ještě neznamená, že na stránce nemůže být podvod');
+  expect(JSON.stringify(HINTS.prohlizec)).not.toContain('7726');
+});
+
+test('the browser says "stránka", e-mail and Zprávy keep "zpráva" (1. 10. 2026)', () => {
+  for (const section of ['email', 'zpravy']) {
+    const t = sectionTexts(section);
+    expect(t.ROUND).toEqual(ROUND);
+    expect(t.EVALUATION).toEqual(EVALUATION);
+    expect(t.ROUND_END).toEqual(ROUND_END);
+    expect(t.DECISION_CHECK).toEqual(DECISION_CHECK);
+    expect(t.levelDescriptions).toEqual({});
+    expect(t.levelIntro).toBeUndefined();
+    expect(t.ROUND.progress(2, 5)).toBe('Zpráva 2 z 5');
+  }
+  const browser = sectionTexts('prohlizec');
+  expect(browser.levelIntro).toBe('Vyberte si úroveň. V obou uvidíte 5 stránek.');
+  expect(browser.ROUND.progress(2, 5)).toBe('Stránka 2 z 5');
+  expect(browser.EVALUATION.next).toBe('Další stránka');
+  expect(browser.ROUND_END.title).toBe('Hotovo, máte za sebou 5 stránek.');
+  expect(browser.DECISION_CHECK.okWithMarks.back).toBe('Zpět ke stránce');
+  // Unchanged in the browser too
+  expect(browser.ROUND.decideScam).toBe('Je to podvod');
+  expect(browser.DECISION_CHECK.scamWithoutMarks.title).toBe(DECISION_CHECK.scamWithoutMarks.title);
+});
+
 test('7726 advice is only in the messages hint, not in e-mail', () => {
   expect(HINTS.zpravy.advice).toContain('7726');
   expect(JSON.stringify(HINTS.email)).not.toContain('7726');
@@ -46,6 +87,14 @@ test('texts with numbers use correct Czech plurals', () => {
 });
 
 test('no exclamation marks in player texts (calm tone, CLAUDE.md section 7)', () => {
-  const all = JSON.stringify({ CATEGORY_LABELS, EVALUATION: { ...EVALUATION }, HINTS, MESSAGES_APP, ROUND_END: { ...ROUND_END } });
+  const all = JSON.stringify({
+    CATEGORY_LABELS,
+    EVALUATION: { ...EVALUATION },
+    HINTS,
+    MESSAGES_APP,
+    BROWSER_APP,
+    ROUND_END: { ...ROUND_END },
+    browser: sectionTexts('prohlizec'),
+  });
   expect(all).not.toContain('!');
 });
