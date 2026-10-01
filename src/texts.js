@@ -267,8 +267,7 @@ export const BROWSER_APP = {
     ],
     noWarningLabel: 'Bez varování',
     noWarningText: 'Obálka ale neříká, kdo dopis poslal. Když prohlížeč nevaruje, stránka ještě nemusí být poctivá. Ptejte se, jak jste se na ni dostali a co po vás chce.',
-    // The end of the last sentence was cut off in the approved text; the ending is from the
-    // previous intro and waits for Tomáš to confirm
+    // The ending "stiskněte Zpět…" is from the previous intro, confirmed by Tomáš on 1. 10. 2026
     closing: 'Jiné prohlížeče místo trojúhelníku ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek. Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte.',
   },
 };
