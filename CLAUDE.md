@@ -52,6 +52,7 @@ Cíl: pracuj co nejvíc samostatně. Zastav se jen v případech níže.
 
 ### Nasazení do veřejného vydání
 - Po každém push nasaď sám. Vždy nejdřív --dry-run.
+- **Nasazuje se jen z větve `main`** (Tomáš, 1. 10. 2026). Z větve `sekce-prohlizec` (a z žádné jiné větve) se nikdy nenasazuje. Push větve na GitHub kvůli záloze je povolený. Do `main` se větev spojí až po splnění podmínek v `docs/plany/plan-prohlizec.md` (sekce „Rozhodnutí 1. 10. 2026“).
 - **Pozor na starší výpisy:** do 28. 9. 2026 se `--dry-run` k serveru nepřipojoval a mazání nevypisoval (jen obecnou větu „smazaly by se staré soubory ve složkách assets, fonts“). Konkrétní mazané soubory ukázalo až skutečné nasazení. Od opravy (sekce 14) se zkouška připojí jen ke čtení a vypíše přesně, co by nahrála a co by smazala.
 - Po každém nasazení ověř, že `http://poznej-podvod.menestarosti.cz` vrací 301 s `Location` na `https://` (od 29. 9. 2026).
 - **`.htaccess` a nasazení:** soubor je v `public/`, takže ho každé nasazení nahraje (přepíše ten na serveru). Skript ho **nikdy nesmaže**, ani kdyby v `dist/` chyběl: maže jen soubory přímo ve složkách `assets/` a `fonts/`, soubory v kořeni ne. Když se `.htaccess` na serveru změní ručně, přepíše ho další nasazení. Zkouška to ukáže jako „jiná velikost .htaccess“, a to je důvod zastavit se a zeptat se Tomáše.

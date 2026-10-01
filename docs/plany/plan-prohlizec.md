@@ -85,7 +85,21 @@ Poznámky:
 
 Hrubý odhad práce: 6–9 sezení (bez čekání na schválení).
 
-## Otázky k rozhodnutí
+## Rozhodnutí 1. 10. 2026 (Tomáš)
+
+1. Banka 8 scénářů (4 podvody + 4 legitimní), falešný e-shop až při doplnění. Falešné přihlášení jen u smyšlené služby, žádná skutečná banka ani firma.
+2. Karta „Jak jste se sem dostali“ ano, nejde označit. Nesmí sama prozradit výsledek: aspoň jeden podvod má nevinný příchod (např. vyhledávání) a aspoň jedna legitimní stránka má příchod přes odkaz.
+3. Legitimní protějšek k falešnému varování je pokladna e-shopu. Má učit, že zámek neznamená bezpečí (zámek mají i podvodné stránky). Jak to sladit s polem `refutes`, viz otevřené otázky.
+4. Nová kategorie „adresa stránky“. V Prohlížeči „Stránka 2 z 5“, E-mail a Zprávy dál „Zpráva 2 z 5“, hlídá to nový test.
+5. Práce ve větvi `sekce-prohlizec`. Z ní se nikdy nenasazuje, automatické nasazení po push platí jen pro `main`. Push větve na GitHub kvůli záloze je povolený.
+
+**Harmonogram:** zkouška se seniory za 5–6 dní. Sekce musí být spojená do `main` a nasazená nejpozději 2 dny před zkouškou. Den před zkouškou ji Tomáš projde na telefonu a rozhodne. V den zkoušky se nic nenasazuje.
+
+**Sekce je hotová, když:** všechny texty pro hráče jsou schválené; telefonní čísla jsou ověřená v datech ČTÚ jako nepřidělená; domény jsou ověřené jako volné; prošla celá sada testů včetně nových testů Prohlížeče a ověření, že E-mail a Zprávy se nezměnily.
+
+**Pojistka:** když sekce není hotová 2 dny před zkouškou, nespojuje se. Na webu zůstane „Připravujeme“ a senioři zkoušejí jen E-mail a Zprávy. Postup při chybě po spojení a nasazení: pokyn došel neúplný, čeká na doplnění.
+
+## Otázky k rozhodnutí (vyřešené 1. 10. 2026, viz výše)
 
 1. **Banka 8 (4 + 4)** s typy 1–4 z tabulky, falešný e-shop až při doplnění? Doporučuji ano.
 2. **Karta „Jak jste se sem dostali“** nad prohlížečem (nejde označit)? Doporučuji ano: bez ní chybí kontext, podle kterého má hráč rozhodovat.
