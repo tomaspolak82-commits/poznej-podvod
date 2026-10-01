@@ -37,9 +37,27 @@ test.describe('intro about the address bar', () => {
   test('empty storage: the intro is shown with all its texts, no level buttons yet', async ({ page }) => {
     await page.goto('/?seed=1#/prohlizec');
     await expect(intro(page).getByRole('heading', { level: 1, name: BROWSER_APP.intro.title })).toBeVisible();
-    await expect(intro(page)).toContainText(BROWSER_APP.intro.caption);
-    for (const paragraph of BROWSER_APP.intro.paragraphs) await expect(intro(page)).toContainText(paragraph);
+    const { parts, noWarningLabel, noWarningText, closing } = BROWSER_APP.intro;
+    for (const part of parts) await expect(intro(page)).toContainText(`${part.label} ${part.text}`);
+    for (const text of [noWarningLabel, noWarningText, closing]) await expect(intro(page)).toContainText(text);
     await expect(levelButtons(page)).toHaveCount(0);
+  });
+
+  // The picture is only a picture (Tomáš, 1. 10. 2026): hidden from screen readers, nothing to
+  // fill in, press or mark; the text carries the content
+  test('the picture of the browser is aria-hidden and has nothing to fill in or press', async ({ page }) => {
+    await page.goto('/?seed=1#/prohlizec');
+    const shot = page.getByTestId('browser-intro-shot');
+    await expect(shot).toBeVisible();
+    await expect(shot).toHaveAttribute('aria-hidden', 'true');
+    await expect(shot).toContainText(BROWSER_APP.intro.address);
+    await expect(shot).toContainText(BROWSER_APP.intro.pageHeading);
+    await expect(shot.locator('input, textarea, button, a, [tabindex], [data-mark]')).toHaveCount(0);
+    await expect(shot.locator('.browser-intro__num')).toHaveText(['2', '1', '3']);
+    // The second bar "Bez varování": the same address, no warning
+    const plain = page.locator('.browser-intro__plain');
+    await expect(plain.locator('[aria-hidden="true"]')).toContainText(BROWSER_APP.intro.address);
+    await expect(plain.locator('.browser-intro__icon')).toHaveCount(0);
   });
 
   test('the button opens the level select; on the next visit the intro is not shown', async ({ page }) => {

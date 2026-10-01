@@ -20,7 +20,7 @@ Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14 (úprava úvod
 
 **Základní úroveň:** reklama ukáže upozornění na odkaz, tlačítka stránky i okna upozornění „tlačítko nic nedělá“, formulářová pole upozornění „do pole se psát nedá“. Vše stejné u podvodu i legitimní stránky. Pole nejsou skutečná, nedá se do nich psát.
 
-**Úvod o adresním řádku:** samostatná obrazovka jen při prvním vstupu do sekce, s tlačítkem „Rozumím, vybrat úroveň“. Tlačítko uloží záznam (`poznej-podvod:browser-intro:v1`, `src/engine/intro.js`) a vede na výběr úrovně. Při dalších vstupech se jde rovnou na výběr úrovně. Když paměť prohlížeče nejde přečíst nebo zapsat, úvod se ukáže vždy. Historie se nemění.
+**Úvod o adresním řádku:** samostatná obrazovka jen při prvním vstupu do sekce, s tlačítkem „Rozumím, vybrat úroveň“. Tlačítko uloží záznam (`poznej-podvod:browser-intro:v1`, `src/engine/intro.js`) a vede na výběr úrovně. Při dalších vstupech se jde rovnou na výběr úrovně. Když paměť prohlížeče nejde přečíst nebo zapsat, úvod se ukáže vždy. Historie se nemění. Od fáze 14 (větev `uprava-prohlizec`, texty schválené Tomášem 1. 10. 2026): nahoře obrázek malého okna prohlížeče (adresní řádek se žlutým trojúhelníkem a adresou `prihlaseni-ucet-online.cz`, pod ním stránka „Přihlášení“ s poli „Jméno“ a „Heslo“), v něm čísla 1–3 v kroužku u adresy, trojúhelníku a stránky. Obrázek je jen obrázek (`aria-hidden`), nic nejde vyplnit ani označit, obsah nese text pod ním: tři odstavce s čísly, druhý adresní řádek bez trojúhelníku s popiskem „Bez varování“ a dva odstavce na konec. Čísla jsou kroužky z CSS, ne znak „①“ (ten v hostovaných písmech není).
 
 **Hlavní myšlenka sekce:** když připojení není zabezpečené, do stránky nic nezadávat. Pravidlo zní „nezadávejte údaje“, ne „je to podvod“. Vždy v páru: to, že prohlížeč nevaruje, neznamená, že stránka je poctivá.
 
@@ -43,7 +43,7 @@ Zrychlený režim: vysvětlení a nápověda jsou obecné rady vlastními slovy,
 
 ## 4. Povinné kontroly (hotovo 1. 10. 2026)
 
-- **Adresy stránek** (i legitimních): všech 8 volných, registr CZ.NIC vrací 404, DNS neexistuje. Znovu v den zveřejnění (sekce 17 A3 CLAUDE.md).
+- **Adresy stránek** (i legitimních): všech 8 volných, registr CZ.NIC vrací 404, DNS neexistuje. Znovu v den zveřejnění (sekce 17 A3 CLAUDE.md). Adresa v obrázku úvodu `prihlaseni-ucet-online.cz` také volná (1. 10. 2026, registr 404, DNS neexistuje; kontrola metody: `menestarosti.cz` vrací 200).
 - **Telefonní číslo** +420 772 163 940 (`prohlizec-02`): blok 772 100 000 až 772 199 999 bez držitele podle dat ČTÚ z 1. 10. 2026. Znovu v den zveřejnění (sekce 17 A2).
 - **Názvy** „Banka Javor“, „Kniha pro radost“ a „Domácí pomocník“: Tomáš ověřil v ARES, že nepatří žádnému subjektu. Názvy zůstávají.
 
