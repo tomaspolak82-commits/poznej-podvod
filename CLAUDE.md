@@ -37,9 +37,14 @@ Tomáš nepíše kód sám. Zadává, kontroluje a učí se pracovat v terminál
 11. **Soubory v projektu upravuj a vytvářej nástroji Edit a Write**, ne přes `sed`, `python`, `cat >` ani jiné zápisy v Bash. Bash jen pro `npm`, `git` a spouštění testů. Tomášova pojistka na čtení mimo projekt by jinak hlásila každou úpravu.
 12. **Na server se nasazují jen texty a scénáře, které Tomáš schválil.** Kontrolu ve hře dělá Tomáš až po nasazení, přes internet na živé stránce.
 
-## 2a. Samostatnost a zastávky (platí od 24. 9. 2026)
+## 2a. Samostatnost a kdy čekat na Tomáše (platí od 24. 9. 2026)
 
 Cíl: pracuj co nejvíc samostatně. Zastav se jen v případech níže.
+
+### Názvosloví (Tomáš, 1. 10. 2026, platí pro celý projekt)
+- **Milník:** velký celek s vlastním plánem a diagramem v `docs/plany/`. Čísla v řadě podle sekce 13 a `docs/historie.md`.
+- **Fáze:** číslované políčko v diagramu milníku. Fáze, kde se čeká na Tomáše, se jen označí „čeká na tebe“ a nečíslují se zvlášť. Slovo „zastávka“ se nepoužívá.
+- **Krok:** jen číslovaný postup, který provádí Tomáš (návod, kontrolní seznam). V plánech se nepoužívá.
 
 ### Dělej bez ptaní
 - Opravy chyb v kódu, CSS a testech, pokud nemění texty pro hráče ani pravidla hry.
@@ -66,11 +71,11 @@ Cíl: pracuj co nejvíc samostatně. Zastav se jen v případech níže.
 3. Rozhodnutí má víc rozumných variant a volba změní, co hráč uvidí nebo jak se hraje. Technické volby rozhoduj sám a napiš, co jsi zvolil.
 4. Dry-run nebo kontrola tajných údajů ukáže něco nečekaného.
 
-### Formát každé zastávky
+### Formát zprávy, když čekáš na mě
 Každou zprávu, kde ode mě chceš rozhodnutí, začni tímto blokem. Stručně, dohromady nejvýš 8 řádků:
 
 STAV PRO CHAT
-- Fáze: (milník / úkol, jednou větou)
+- Kde jsme: milník N – [název], fáze X z Y – [název fáze] (případně „čeká na tebe“); hotovo: …; zbývá: … (fáze z diagramu milníku; když se plán změní a počet fází s ním, napiš to)
 - Hotovo od minula: (commity, nasazeno ano/ne)
 - Teď řeším: (jednou větou)
 - Rozhodni: (očíslované otázky; texty pro hráče vždy doslovně, kde se zobrazí, zda platí pro podvod i legitimní zprávu)
@@ -460,9 +465,9 @@ Hotové milníky 1–5 jsou v docs/historie.md.
 6. **Doplnění obsahu** (cíl změněný 25. 9. 2026): 3 nové legitimní e-maily a 3 nové legitimní Zprávy, pak obě sekce po 11 scénářích (5 podvodů, 6 legitimních, pravidla v sekci 7) + `npm run prehled` → Tomáš ověří texty. Zapnout kontrolu cíle: `ENFORCE_CONTENT_GOALS = true` v `tests/unit/content.spec.js`.
 7. **Testy a kontrola** podle sekce 12, oprava nalezených chyb. Tomáš projde aplikaci ručně na telefonu s velkým systémovým písmem.
 8. **Vydání:** **odstraň `noindex`** z `index.html` (a uprav test), nasazení, ruční kontrola na telefonu (s velkým systémovým písmem) a tabletu.
+9. **Prohlížeč** (od 1. 10. 2026): plán `docs/plany/plan-prohlizec.md`, diagram `docs/plany/plan-prohlizec.html` (14 fází). Nasazeno 1. 10. 2026, zbývá fáze 14 (Tomášova kontrola na telefonu). Doplnění banky později: falešný e-shop, investiční reklama se „známou osobností“ (bez skutečných jmen a fotek).
 
-### Pozdější fáze (teď nedělat, jen počítat s nimi v architektuře)
-- **Prohlížeč:** podvodné reklamy a bannery („Vyhráli jste“), investiční reklama se „známou osobností“ (bez skutečných jmen a fotek), falešné vyskakovací okno technické podpory, falešný e-shop.
+### Pozdější milníky (teď nedělat, jen počítat s nimi v architektuře)
 - **QR platba:** kontrola příjemce a částky v simulované bankovní aplikaci před odesláním.
 - **Telefonát:** psaný (textový) rozhovor s větvenými volbami odpovědí, **bez zvuku** (zvuk se dělat nebude). Falešný bankéř nebo policista, „bezpečný účet“, falešná technická podpora s instalací vzdáleného přístupu. Útočník silně tlačí (spěch, „nezavěšujte“, stupňování), bezpečná cesta je vždy zavěsit a ověřit si to jinak. Předem napsané repliky, žádná generativní AI.
 - **Statistiky:** GA4 jen s cookie lištou se souhlasem, nebo vlastní anonymní počítadlo bez cookies (PHP + MySQL na hostingu).
@@ -528,7 +533,7 @@ Historie hotové práce je v docs/historie.md, sem piš jen aktuální stav.
 - **Obnova certifikátu:** certifikát Let's Encrypt platí do 23. 12. 2026. Kolem 10. 12. 2026 zkontrolovat, jestli ho Subreg obnovil (datum platnosti na https://poznej-podvod.menestarosti.cz).
 
 **Pravidla, repozitář a hosting:**
-- Commity, pushe a nasazení se od 24. 9. 2026 řídí sekcí 2a (samostatně, zastávky jen v uvedených případech).
+- Commity, pushe a nasazení se od 24. 9. 2026 řídí sekcí 2a (samostatně, čekání na Tomáše jen v uvedených případech).
 - **Repozitář** https://github.com/tomaspolak82-commits/poznej-podvod je **veřejný** (ukázka do portfolia), je v něm `README.md`. E-mail autora v commitech zůstává (Tomášovo rozhodnutí). V historii (commit `4f52284`) je jméno starého FTP účtu; ten účet je už zrušený, historie se nepřepisuje.
 - **Kvůli veřejnému repozitáři před každým commitem ověř**, že připravené soubory neobsahují hesla, jméno FTP účtu ani obsah `.env`: projdi `git status` (`.env` v něm nesmí být) a prohledej připravené soubory (`git grep --cached`) na přihlašovací údaje. Když si nejsi jistý, necommituj a zeptej se.
 - **Hosting:** nasazuje se přes samostatný FTP účet subdomény, šifrované spojení funguje (ověřeno `--check`).

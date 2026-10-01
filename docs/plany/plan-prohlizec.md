@@ -72,18 +72,26 @@ Poznámky:
 - **Kategorie a statistika:** nová kategorie `adresa-stranky` přidá štítek do „Nejčastěji vám unikalo“ (text do dávky).
 - **Tvrzení o prohlížečích** (co ukazují bez zámku, jak vypadá adresa) ve vysvětleních jen obecně. Konkrétní chování jednotlivých prohlížečů ověřené nemám.
 
-## 6. Odhad kroků a schvalování
+## 6. Fáze milníku 9 (Prohlížeč)
 
-14 fází (diagram), z toho 6 zastávek u Tomáše:
+14 fází podle diagramu `docs/plany/plan-prohlizec.html`, z toho 5 „čeká na tebe“. Stav k 1. 10. 2026:
 
-1. **Rozhodnutí k tomuto plánu** (otázky níže).
-2. **Vzhled:** náčrt simulovaného prohlížeče jako samostatná stránka v `docs/plany/` (otevře se dvojklikem), před stavbou.
-3. **Texty v jedné dávce:** 8 scénářů, karta „Jak jste se sem dostali“ u každého, nápověda, upozornění u formulářového pole, popis dlaždice a úrovní, slovo „stránka“ ve společných textech, štítek kategorie. Spolu s tím seznam adres a čísla k ověření.
-4. **Snímky všech 8 scénářů** ve hře (sekce není na webu, kontrola ve hře proto přes snímky).
-5. **OK ke zpřístupnění** (dlaždice přestane být „Připravujeme“).
-6. **Kontrola na telefonu** po nasazení.
+1. **Rozhodnutí k plánu** · čeká na tebe · hotovo 1. 10. (rozhodnutí níže).
+2. **Zdroje k typům podvodů** · hotovo. Zrychlený režim zdroj k typu podvodu nevyžaduje (Tomáš, 1. 10.).
+3. **Čísla a adresy** · hotovo. 8 adres volných, číslo z bloku bez držitele (data ČTÚ z 1. 10.).
+4. **Náčrt prohlížeče** · hotovo (`docs/plany/nacrt-prohlizec.html`).
+5. **Schválení vzhledu** · čeká na tebe · hotovo 1. 10., spolu s fází 7 v jedné dávce.
+6. **Návrh všech textů** · hotovo (`docs/navrhy-scenaru-prohlizec.md`).
+7. **Schválení textů** · čeká na tebe · hotovo 1. 10., včetně oprav a doplňků (úvod při prvním vstupu, nový první bod nápovědy).
+8. **Stavba prohlížeče** · hotovo.
+9. **Scénáře do hry** · hotovo, přehled scénářů vygenerovaný.
+10. **Testy** · hotovo, celá sada prošla ve větvi i na `main`.
+11. **Kontrola na snímcích** · čeká na tebe · hotovo 1. 10. Místo snímků všech 8 scénářů stačil na tvůj pokyn výsledek kontroly označeného trojúhelníku v pokročilé úrovni.
+12. **Zpřístupnění sekce** · hotovo 1. 10. Spojení do `main` (`4b25c70`) a push na tvůj pokyn.
+13. **Ověření na živé stránce** · hotovo 1. 10.
+14. **Kontrola na telefonu** · čeká na tebe.
 
-Hrubý odhad práce: 6–9 sezení (bez čekání na schválení).
+Proti původnímu plánu: fáze 5 a 7 proběhly najednou a fáze 11 se zúžila na jeden výsledek. Počet fází se nezměnil.
 
 ## Rozhodnutí 1. 10. 2026 (Tomáš)
 
