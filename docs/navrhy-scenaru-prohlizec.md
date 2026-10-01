@@ -1,6 +1,6 @@
 # Návrhy textů: sekce Prohlížeč (dávka 1. 10. 2026)
 
-**Stav: čeká na schválení.** Všechny texty pro hráče v sekci Prohlížeč v jedné dávce. Plán a rozhodnutí: `docs/plany/plan-prohlizec.md`. Náčrt vzhledu: `docs/plany/nacrt-prohlizec.html`.
+**Stav: schváleno 1. 10. 2026** (Tomáš, včetně oprav 1–13). Doplněno a schváleno týž den: úvod jako samostatná obrazovka při prvním vstupu s tlačítkem „Rozumím, vybrat úroveň“, nový první bod nápovědy „Adresní řádek.“ (ostatní body posunuté o jedno číslo, kontroly nápovědy u scénářů přečíslované) a text výběru úrovně „Vyberte si úroveň. V obou uvidíte 5 stránek.“ Všechny texty pro hráče v sekci Prohlížeč v jedné dávce. Plán a rozhodnutí: `docs/plany/plan-prohlizec.md`. Náčrt vzhledu: `docs/plany/nacrt-prohlizec.html`.
 
 Zrychlený režim: vysvětlení jsou obecné rady vlastními slovy, žádné tvrzení za úřady ani firmy. Banka, obchody a stránky jsou smyšlené.
 
@@ -29,9 +29,19 @@ Metoda u adres: dotaz do registru CZ.NIC (rdap.nic.cz) vrátil 404 a jméno se v
 Falešné výhry, vyskakovací okna a přihlašovací stránky. Naučíte se, kam se v prohlížeči dívat.
 ```
 
-### Úvod o adresním řádku (na výběru úrovně Prohlížeče, nad volbou úrovně)
+### Úvod o adresním řádku (samostatná obrazovka při prvním vstupu do Prohlížeče)
 
-Navrhuji ho ukazovat **pokaždé**, ne jen při prvním vstupu. Je krátký, opakování seniorům pomůže a nepotřebuje paměť prohlížeče, takže funguje i v anonymním okně. Nad textem bude malý obrázek adresního řádku jen s trojúhelníkem a popiskem (viz náčrt).
+Tomáš 1. 10. 2026: úvod se ukáže jen při prvním vstupu, kdy v paměti prohlížeče není záznam. Tlačítko záznam uloží a vede na výběr úrovně. Když paměť nejde přečíst nebo zapsat, úvod se ukáže vždy. Historie se nemění. Nad textem je malý obrázek adresního řádku jen s trojúhelníkem a popiskem (viz náčrt).
+
+Tlačítko pod textem:
+```
+Rozumím, vybrat úroveň
+```
+
+Text výběru úrovně v Prohlížeči (E-mail a Zprávy beze změny):
+```
+Vyberte si úroveň. V obou uvidíte 5 stránek.
+```
 
 Popisek u obrázku:
 ```
@@ -62,17 +72,19 @@ Pokročilá: Nejdřív klepnutím označíte všechno, co vám na stránce přij
 ```
 Na co si dát pozor v prohlížeči
 
-1. Jak jste se na stránku dostali. Stránka, kterou jste otevřeli sami, je jiná situace než stránka, kam vás poslal odkaz ve zprávě nebo reklama. Na přihlášení a placení choďte adresou, kterou si napíšete sami nebo máte uloženou.
+1. Adresní řádek. Nahoře v prohlížeči je řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka. Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené.
 
-2. Varování vlevo od adresy. Když tam prohlížeč varuje (žlutý trojúhelník s vykřičníkem, nápis „Nezabezpečeno“ nebo přeškrtnutý zámek), připojení není zabezpečené. Do stránky nic nezadávejte. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce.
+2. Jak jste se na stránku dostali. Stránka, kterou jste otevřeli sami, je jiná situace než stránka, kam vás poslal odkaz ve zprávě nebo reklama. Na přihlášení a placení choďte adresou, kterou si napíšete sami nebo máte uloženou.
 
-3. To, že vás prohlížeč nevaruje, ještě neznamená, že na stránce nemůže být podvod. Obálku může poslat i podvodník. Vždy se ptejte, co po vás stránka chce.
+3. Varování vlevo od adresy. Když tam prohlížeč varuje (žlutý trojúhelník s vykřičníkem, nápis „Nezabezpečeno“ nebo přeškrtnutý zámek), připojení není zabezpečené. Do stránky nic nezadávejte. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce.
 
-4. Adresa, která nesedí. Věřte adrese v řádku nahoře, ne tomu, co o sobě píše stránka. Pozor na adresy, které jen obsahují známé jméno, třeba jméno vaší banky s dalšími slovy.
+4. To, že vás prohlížeč nevaruje, ještě neznamená, že na stránce nemůže být podvod. Obálku může poslat i podvodník. Vždy se ptejte, co po vás stránka chce.
 
-5. Stránka nebo okno, které straší nebo slibuje výhru. „Telefon je napadený“, „Vyhráli jste“. Stránka nepozná, co máte v telefonu. Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Nevolejte, nic neinstalujte a stránku zavřete.
+5. Adresa, která nesedí. Věřte adrese v řádku nahoře, ne tomu, co o sobě píše stránka. Pozor na adresy, které jen obsahují známé jméno, třeba jméno vaší banky s dalšími slovy.
 
-6. Údaje, které stránka nepotřebuje. PIN ke kartě do stránky nezadávejte nikdy. Číslo karty a kód z SMS jen při placení za věc, kterou jste si sami vybrali. I tehdy si v SMS nebo v aplikaci banky přečtěte, za co a kolik platíte.
+6. Stránka nebo okno, které straší nebo slibuje výhru. „Telefon je napadený“, „Vyhráli jste“. Stránka nepozná, co máte v telefonu. Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Nevolejte, nic neinstalujte a stránku zavřete.
+
+7. Údaje, které stránka nepotřebuje. PIN ke kartě do stránky nezadávejte nikdy. Číslo karty a kód z SMS jen při placení za věc, kterou jste si sami vybrali. I tehdy si v SMS nebo v aplikaci banky přečtěte, za co a kolik platíte.
 
 Pozor: i stránka v bezchybné češtině může být podvod. Podvodníci dnes píšou s pomocí umělé inteligence.
 
@@ -182,7 +194,7 @@ Shrnutí:
 Výhra, o kterou jste se nesnažili, a k tomu poštovné kartou: to je častý trik. A když prohlížeč u adresy ukazuje varování, do stránky nic nezadávejte, ať slibuje cokoli.
 ```
 
-Kontrola nápovědy: bod 1 (příchod přes reklamu) nevede k části stránky; bod 2 vede k varování a polím → hrozba 1; bod 4 vede k adrese → hrozba 1; bod 5 vede k výhře → hrozba 2; bod 6 vede k číslu karty → hrozba 4. „Odeslat“ nevede nikam.
+Kontrola nápovědy: bod 1 (adresní řádek) jen popisuje, kde se dívat, a vede k varování → hrozba 1; bod 2 (příchod přes reklamu) nevede k části stránky; bod 3 vede k varování a polím → hrozba 1; bod 5 vede k adrese → hrozba 1; bod 6 vede k výhře → hrozba 2; bod 7 vede k číslu karty → hrozba 4. „Odeslat“ nevede nikam.
 
 ---
 
@@ -217,7 +229,7 @@ Shrnutí:
 Když na vás stránka vybafne, že máte virus, nevolejte a na nic v okně neklepejte. Stránku zavřete. Když nejde zavřít, zavřete celý prohlížeč. Když se bojíte, že je s telefonem něco v nepořádku, zeptejte se někoho, komu věříte.
 ```
 
-Kontrola nápovědy: bod 5 vede k oknu, které straší, k zavolání i k tlačítku → hrozby 1 a 2. Bod 4: adresa odpovídá článku, který jste četli, nevede.
+Kontrola nápovědy: bod 6 vede k oknu, které straší, k zavolání i k tlačítku → hrozby 1 a 2. Body 1 a 5: adresa odpovídá článku, který jste četli, u adresy žádné varování, nevede.
 
 ---
 
@@ -256,7 +268,7 @@ Shrnutí:
 Když vám zpráva hrozí zablokováním účtu, neklikejte na odkaz v ní. Otevřete si bankovnictví sami, jako obvykle, nebo zavolejte na číslo, které máte na kartě.
 ```
 
-Kontrola nápovědy: bod 1 (odkaz ze SMS) a bod 6 vedou k polím → hrozba 3; bod 4 vede k adrese → hrozba 1; bod 5 se strachem vede k body.0 → hrozba 2. Nadpis a tlačítko nevedou.
+Kontrola nápovědy: bod 2 (odkaz ze SMS) a bod 7 vedou k polím → hrozba 3; bod 5 vede k adrese → hrozba 1; bod 6 se strachem vede k body.0 → hrozba 2. Nadpis a tlačítko nevedou.
 
 ---
 
@@ -289,7 +301,7 @@ Shrnutí:
 Varování o bezpečnosti hledejte vlevo od adresy, tam ho ukazuje prohlížeč. Co nakreslí stránka, může být past. Když stránka chce, abyste si kvůli bezpečí něco stáhli, zavřete ji. Prohlížeč ani telefon se neaktualizují přes tlačítko na stránce.
 ```
 
-Kontrola nápovědy: bod 2 (varování vlevo od adresy) k pruhu na stránce nevede, pruh ale straší → bod 5 → hrozba 1; bod 5 „nic neinstalujte“ → hrozba 2. Bod 4: adresa odpovídá hledání, nevede.
+Kontrola nápovědy: body 1 a 3 (varování vlevo od adresy) k pruhu na stránce nevedou, pruh ale straší → bod 6 → hrozba 1; bod 6 „nic neinstalujte“ → hrozba 2. Bod 5: adresa odpovídá hledání, nevede.
 
 Zdroj k typu podvodu: zrychlený režim ho nevyžaduje, scénář zůstává (Tomáš, 1. 10. 2026).
 
@@ -316,7 +328,7 @@ Shrnutí:
 Reklama je na většině stránek a sama o sobě podvod není. Tahle nabízí slevu na zboží, ale nic po vás nechce: žádné údaje, žádnou platbu za výhru. Kdybyste na reklamu klepli, dívejte se znovu, kam jste se dostali a co stránka chce.
 ```
 
-Kontrola nápovědy: bod 5 (výhra, strašení) k obyčejné slevě nevede, body 2, 4, 6 nevedou (bez varování, adresa odpovídá, nic nechce).
+Kontrola nápovědy: bod 6 (výhra, strašení) k obyčejné slevě nevede, body 1, 3, 5, 7 nevedou (bez varování, adresa odpovídá, nic nechce).
 
 ---
 
@@ -344,7 +356,7 @@ Shrnutí:
 Okno se souhlasem s cookies uvidíte na velké části stránek. Chce jen vaši volbu, ne peníze, údaje ani kód. Klidně zvolte tu možnost, která dovolí méně, třeba „Jen nezbytné“. Ani to, že vás sem poslal odkaz, neznamená samo o sobě podvod. Rozhoduje, co stránka chce.
 ```
 
-Kontrola nápovědy: bod 1 (odkaz ze zprávy) neznamená, že je co označit; bod 5 (okno, které straší nebo slibuje výhru) nevede, okno nestraší; bod 6 nevede.
+Kontrola nápovědy: bod 2 (odkaz ze zprávy) neznamená, že je co označit; bod 6 (okno, které straší nebo slibuje výhru) nevede, okno nestraší; body 1, 3 a 7 nevedou (bez varování, nic nechce).
 Pozor na sekci 7: důvodem důvěry není, že odkaz poslala vnučka (zpráva od blízkého jde podvrhnout), ale to, co stránka chce.
 
 ---
@@ -371,7 +383,7 @@ Shrnutí:
 Přihlásit se heslem je běžné, když jste stránku otevřeli sami. Tahle chce jen e-mail a heslo k vašemu účtu v obchodě, nic navíc: žádné číslo karty ani kód z SMS. Kdyby vás na přihlášení poslal odkaz ve zprávě, adresu si raději napište sami.
 ```
 
-Kontrola nápovědy: bod 1 (otevřeli jste sami) nevede; bod 6 (PIN, kód, karta) nevede, stránka je nechce; bod 4: adresa odpovídá obchodu, nevede.
+Kontrola nápovědy: bod 2 (otevřeli jste sami) nevede; bod 7 (PIN, kód, karta) nevede, stránka je nechce; body 1 a 5: adresa odpovídá obchodu, bez varování, nevede.
 
 ---
 
@@ -398,7 +410,7 @@ Shrnutí:
 Číslo karty se zadává, když za něco platíte. Tady jste si zboží vybrali sami a částka odpovídá objednávce. To, že vás prohlížeč nevaruje, samo nerozhoduje. Rozhoduje, že platíte za věc, kterou jste si sami vybrali. Když pak přijde SMS nebo zpráva v aplikaci banky na potvrzení platby, přečtěte si, za co a kolik platíte.
 ```
 
-Kontrola nápovědy: bod 6 výslovně říká „jinde než při placení za věc, kterou jste si sami vybrali“, k číslu karty tu nevede. Body 1, 4, 5 nevedou.
+Kontrola nápovědy: bod 7 říká „Číslo karty a kód z SMS jen při placení za věc, kterou jste si sami vybrali“, k číslu karty tu nevede. Body 1, 2, 5, 6 nevedou.
 
 ## D. Co do první verze nepatří a proč (k rozhodnutí)
 

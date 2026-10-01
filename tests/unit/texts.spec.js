@@ -38,10 +38,11 @@ test('e-mail hint: an unexpected attachment is risky even from a known sender (e
   expect(HINTS.email.items[4][1]).toContain('Platí to i u známého odesílatele.');
 });
 
-test('browser hint: 6 items; the warning means "enter nothing", a missing warning is no proof (1. 10. 2026)', () => {
-  expect(HINTS.prohlizec.items).toHaveLength(6);
-  expect(HINTS.prohlizec.items[1][1]).toContain('Do stránky nic nezadávejte.');
-  expect(HINTS.prohlizec.items[2][0]).toContain('ještě neznamená, že na stránce nemůže být podvod');
+test('browser hint: 7 items, the address bar first; the warning means "enter nothing", a missing warning is no proof (1. 10. 2026)', () => {
+  expect(HINTS.prohlizec.items).toHaveLength(7);
+  expect(HINTS.prohlizec.items[0][0]).toBe('Adresní řádek.');
+  expect(HINTS.prohlizec.items[2][1]).toContain('Do stránky nic nezadávejte.');
+  expect(HINTS.prohlizec.items[3][0]).toContain('ještě neznamená, že na stránce nemůže být podvod');
   expect(JSON.stringify(HINTS.prohlizec)).not.toContain('7726');
 });
 
@@ -53,9 +54,11 @@ test('the browser says "stránka", e-mail and Zprávy keep "zpráva" (1. 10. 202
     expect(t.ROUND_END).toEqual(ROUND_END);
     expect(t.DECISION_CHECK).toEqual(DECISION_CHECK);
     expect(t.levelDescriptions).toEqual({});
+    expect(t.levelIntro).toBeUndefined();
     expect(t.ROUND.progress(2, 5)).toBe('Zpráva 2 z 5');
   }
   const browser = sectionTexts('prohlizec');
+  expect(browser.levelIntro).toBe('Vyberte si úroveň. V obou uvidíte 5 stránek.');
   expect(browser.ROUND.progress(2, 5)).toBe('Stránka 2 z 5');
   expect(browser.EVALUATION.next).toBe('Další stránka');
   expect(browser.ROUND_END.title).toBe('Hotovo, máte za sebou 5 stránek.');

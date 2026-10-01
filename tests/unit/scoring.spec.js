@@ -223,7 +223,7 @@ test.describe('scoring: real scenarios, parts the hint leads to are hits', () =>
     ['zpravy-04', ['messages.3'], 'call to click = the link threat'],
     ['zpravy-04', ['messages.4'], 'code from SMS'],
     ['zpravy-06', ['messages.2'], '"fill in your card details" = the link threat'],
-    // Browser (1. 10. 2026): hint item 2 "nothing into a page with a warning" leads to every field
+    // Browser (1. 10. 2026): hint item 3 "nothing into a page with a warning" leads to every field
     ['prohlizec-01', ['security'], 'warning next to the address'],
     ['prohlizec-01', ['address'], 'address that does not fit = the warning threat'],
     ['prohlizec-01', ['fields.0'], 'name on a page with a warning = the warning threat'],

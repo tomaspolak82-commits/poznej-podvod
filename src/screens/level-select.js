@@ -1,3 +1,4 @@
+import { introSeen, markIntroSeen } from '../engine/intro.js';
 import { prepareRound, startRound } from '../engine/session.js';
 import { maxPointsForRound, ROUND_SIZE } from '../engine/round.js';
 import { levels } from '../sections.js';
@@ -25,27 +26,51 @@ function levelCard(level, max, description) {
   `;
 }
 
-// Browser only, shown every time (Tomáš, 1. 10. 2026): where the browser shows its warning
-function browserIntro() {
+// Browser only: a screen of its own on the first visit (Tomáš, 1. 10. 2026). The button stores
+// the record and opens the level select; without a record (or without storage) it shows again.
+function renderBrowserIntro(container, section) {
   const { intro, insecureLabel } = BROWSER_APP;
-  return `
-    <section class="browser-intro" data-testid="browser-intro" aria-labelledby="browser-intro-title">
-      <h2 class="browser-intro__title" id="browser-intro-title">${intro.title}</h2>
-      <figure class="browser-intro__figure">
-        <div class="browser-intro__bar" aria-hidden="true">
-          <span class="browser-intro__icon">${icon('warning')}</span>
-          <span class="browser-intro__address"></span>
-        </div>
-        <figcaption><span class="visually-hidden">${insecureLabel}. </span>${icon('arrowUp')}${intro.caption}</figcaption>
-      </figure>
-      ${intro.paragraphs.map((text) => `<p>${text}</p>`).join('')}
-    </section>`;
+  container.innerHTML = `
+    <div class="screen level">
+      <a class="button button--secondary level__back" href="#/">
+        ${icon('arrowLeft')} Zpět na výběr tréninku
+      </a>
+      <section class="browser-intro" data-testid="browser-intro" aria-labelledby="browser-intro-title">
+        <h1 class="section-title browser-intro__title" id="browser-intro-title" tabindex="-1">${intro.title}</h1>
+        <figure class="browser-intro__figure">
+          <div class="browser-intro__bar" aria-hidden="true">
+            <span class="browser-intro__icon">${icon('warning')}</span>
+            <span class="browser-intro__address"></span>
+          </div>
+          <figcaption><span class="visually-hidden">${insecureLabel}. </span>${icon('arrowUp')}${intro.caption}</figcaption>
+        </figure>
+        ${intro.paragraphs.map((text) => `<p>${text}</p>`).join('')}
+        <button type="button" class="button button--primary button--block" data-action="intro-done">
+          ${intro.button} ${icon('arrowRight')}
+        </button>
+      </section>
+    </div>
+  `;
+
+  container.onclick = (event) => {
+    if (!event.target.closest('[data-action="intro-done"]')) return;
+    markIntroSeen();
+    const { title } = renderLevelSelect(container, section, { introDone: true });
+    document.title = title;
+    window.scrollTo(0, 0);
+    container.querySelector('h1')?.focus({ preventScroll: true });
+  };
+
+  return { title: `${intro.title} | Poznej podvod` };
 }
 
-export function renderLevelSelect(container, section) {
+export function renderLevelSelect(container, section, { introDone = false } = {}) {
+  // Checked before the round is drawn, so a seeded round is the same with or without the intro
+  if (section.id === 'prohlizec' && !introDone && !introSeen()) return renderBrowserIntro(container, section);
+
   // The round is drawn now, so the real maximum can be shown before the start (CLAUDE.md, section 5)
   const round = prepareRound(section.id);
-  const { levelDescriptions } = sectionTexts(section.id);
+  const { levelDescriptions, levelIntro } = sectionTexts(section.id);
 
   container.innerHTML = `
     <div class="screen level">
@@ -57,11 +82,9 @@ export function renderLevelSelect(container, section) {
         <span class="icon-bubble">${icon(section.icon)}</span>
         <div>
           <h1 class="section-title" tabindex="-1">${section.title}</h1>
-          <p class="level__intro">Vyberte si úroveň. V obou uvidíte ${ROUND_SIZE} zpráv.</p>
+          <p class="level__intro">${levelIntro ?? `Vyberte si úroveň. V obou uvidíte ${ROUND_SIZE} zpráv.`}</p>
         </div>
       </div>
-
-      ${section.id === 'prohlizec' ? browserIntro() : ''}
 
       <ul class="level-list">
         ${levels

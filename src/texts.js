@@ -68,7 +68,12 @@ export const HINTS = {
   // Approved by Tomáš on 1. 10. 2026 (docs/navrhy-scenaru-prohlizec.md)
   prohlizec: {
     title: 'Na co si dát pozor v prohlížeči',
+    // Item 1 added on 1. 10. 2026, when the intro became a first-visit screen
     items: [
+      [
+        'Adresní řádek.',
+        'Nahoře v prohlížeči je řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka. Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené.',
+      ],
       [
         'Jak jste se na stránku dostali.',
         'Stránka, kterou jste otevřeli sami, je jiná situace než stránka, kam vás poslal odkaz ve zprávě nebo reklama. Na přihlášení a placení choďte adresou, kterou si napíšete sami nebo máte uloženou.',
@@ -246,6 +251,8 @@ export const BROWSER_APP = {
   intro: {
     title: 'Než začnete: adresní řádek',
     caption: 'Tady prohlížeč ukazuje varování',
+    // A screen of its own on the first visit only (Tomáš, 1. 10. 2026)
+    button: 'Rozumím, vybrat úroveň',
     paragraphs: [
       'Nahoře v prohlížeči je adresní řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka.',
       'Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi, tedy internetu, ke kterému se připojíte v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce. Když prohlížeč u adresy varuje, do stránky nic nezadávejte. V tréninku je varováním žlutý trojúhelník s vykřičníkem. Jiné prohlížeče ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek.',
@@ -259,6 +266,7 @@ export const BROWSER_APP = {
 // Zprávy keep the texts above unchanged; the browser overrides only the listed ones.
 const SECTION_OVERRIDES = {
   prohlizec: {
+    levelIntro: 'Vyberte si úroveň. V obou uvidíte 5 stránek.',
     levelDescriptions: {
       zakladni: 'Prohlédnete si stránku a rozhodnete: je to podvod, nebo je v pořádku?',
       pokrocila:
@@ -300,6 +308,8 @@ export function sectionTexts(section) {
     ROUND_END: { ...ROUND_END, ...own.ROUND_END },
     DECISION_CHECK: { ...DECISION_CHECK, ...own.DECISION_CHECK },
     levelDescriptions: own.levelDescriptions ?? {},
+    // undefined = the shared text on the level select ("… 5 zpráv.")
+    levelIntro: own.levelIntro,
   };
 }
 

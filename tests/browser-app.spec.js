@@ -2,7 +2,7 @@
 // docs/navrhy-scenaru-prohlizec.md, 1. 10. 2026).
 import { test, expect } from '@playwright/test';
 import { BROWSER_APP, HINTS, LINK_NOTICE } from '../src/texts.js';
-import { decide, goToScenario, nextMessage, seedWith, startRound } from './helpers/game.js';
+import { decide, goToScenario, nextMessage, seedWith, skipBrowserIntro, startRound } from './helpers/game.js';
 
 // Rounds chosen by their pages (seedWith): SEED_INSECURE has the page without a secure connection
 // (01), the warning drawn by the page (04) and the ad (05); SEED_POPUP has the popups (02, 06),
@@ -29,25 +29,92 @@ const noticeText = async (page, locator) => {
 };
 const noScroll = (page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
 
-test.describe('level select', () => {
-  test('the intro about the address bar is shown every time, the levels speak about pages', async ({ page }) => {
+// First visit (Tomáš, 1. 10. 2026): the intro is a screen of its own until its button is pressed
+test.describe('intro about the address bar', () => {
+  const intro = (page) => page.getByTestId('browser-intro');
+  const levelButtons = (page) => page.getByRole('button', { name: /^Začít:/ });
+
+  test('empty storage: the intro is shown with all its texts, no level buttons yet', async ({ page }) => {
+    await page.goto('/?seed=1#/prohlizec');
+    await expect(intro(page).getByRole('heading', { level: 1, name: BROWSER_APP.intro.title })).toBeVisible();
+    await expect(intro(page)).toContainText(BROWSER_APP.intro.caption);
+    for (const paragraph of BROWSER_APP.intro.paragraphs) await expect(intro(page)).toContainText(paragraph);
+    await expect(levelButtons(page)).toHaveCount(0);
+  });
+
+  test('the button opens the level select; on the next visit the intro is not shown', async ({ page }) => {
+    await page.goto('/?seed=1#/prohlizec');
+    await page.getByRole('button', { name: BROWSER_APP.intro.button }).click();
+    await expect(intro(page)).toHaveCount(0);
+    await expect(levelButtons(page)).toHaveCount(2);
+    await expect(page.getByRole('heading', { level: 1, name: 'Prohlížeč' })).toBeFocused();
+
+    // New visit: back home, then the section again, and a fresh page load
+    await page.getByRole('link', { name: /Zpět na výběr tréninku/ }).click();
+    await page.getByRole('link', { name: /^Prohlížeč/ }).click();
+    await expect(levelButtons(page)).toHaveCount(2);
+    await expect(intro(page)).toHaveCount(0);
+    await page.goto('about:blank');
+    await page.goto('/?seed=1#/prohlizec');
+    await expect(levelButtons(page)).toHaveCount(2);
+    await expect(intro(page)).toHaveCount(0);
+  });
+
+  test('storage that cannot be read or written: the intro is shown every time, the button still works', async ({ page }) => {
+    await page.addInitScript(() => {
+      const fail = () => {
+        throw new Error('storage blocked');
+      };
+      Object.defineProperty(window, 'localStorage', { get: fail, configurable: true });
+    });
     for (let visit = 0; visit < 2; visit += 1) {
       await page.goto('about:blank');
       await page.goto('/?seed=1#/prohlizec');
-      const intro = page.getByTestId('browser-intro');
-      await expect(intro.getByRole('heading', { name: BROWSER_APP.intro.title })).toBeVisible();
-      await expect(intro).toContainText(BROWSER_APP.intro.caption);
-      for (const paragraph of BROWSER_APP.intro.paragraphs) await expect(intro).toContainText(paragraph);
+      await expect(intro(page)).toBeVisible();
+      await page.getByRole('button', { name: BROWSER_APP.intro.button }).click();
+      await expect(levelButtons(page)).toHaveCount(2);
     }
-    await expect(page.getByTestId('level-zakladni')).toContainText('Prohlédnete si stránku a rozhodnete');
-    await expect(page.getByTestId('level-pokrocila')).toContainText('co vám na stránce přijde podezřelé');
   });
 
-  test('e-mail and Zprávy have no browser intro and keep their level texts', async ({ page }) => {
+  test('the same seed draws the same round with or without the intro', async ({ page }) => {
+    await page.goto('/?seed=1#/prohlizec');
+    await page.getByRole('button', { name: BROWSER_APP.intro.button }).click();
+    const withIntro = await page.getByTestId('max-points-pokrocila').innerText();
+    await page.goto('about:blank');
+    await page.goto('/?seed=1#/prohlizec');
+    expect(await page.getByTestId('max-points-pokrocila').innerText()).toBe(withIntro);
+  });
+
+  test('200 % text at 320 px: the intro screen does not scroll sideways', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 740 });
+    await page.goto('/?seed=1#/prohlizec');
+    await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+    await expect(intro(page)).toBeVisible();
+    expect(await noScroll(page)).toBe(true);
+  });
+});
+
+test.describe('level select', () => {
+  test.beforeEach(({ page }) => skipBrowserIntro(page));
+
+  test('the browser speaks about pages; e-mail and Zprávy keep their texts', async ({ page }) => {
+    await page.goto('/?seed=1#/prohlizec');
+    await expect(page.locator('.level__intro')).toHaveText('Vyberte si úroveň. V obou uvidíte 5 stránek.');
+    await expect(page.getByTestId('level-zakladni')).toContainText('Prohlédnete si stránku a rozhodnete');
+    await expect(page.getByTestId('level-pokrocila')).toContainText('co vám na stránce přijde podezřelé');
     for (const section of ['email', 'zpravy']) {
       await page.goto(`/?seed=1#/${section}`);
+      await expect(page.locator('.level__intro')).toHaveText('Vyberte si úroveň. V obou uvidíte 5 zpráv.');
       await expect(page.getByTestId('level-zakladni')).toContainText('Přečtete si zprávu');
       await expect(page.getByTestId('browser-intro')).toHaveCount(0);
+    }
+  });
+
+  test('360 × 740: the level buttons are visible without scrolling', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 740 });
+    await page.goto('/?seed=1#/prohlizec');
+    for (const level of ['základní', 'pokročilá']) {
+      await expect(page.getByRole('button', { name: new RegExp(`Začít: ${level}`) })).toBeInViewport({ ratio: 1 });
     }
   });
 });
@@ -81,7 +148,7 @@ test.describe(`round texts (${SEEDS})`, () => {
     await page.getByRole('button', { name: 'Na co si dát pozor?' }).click();
     const dialog = page.getByRole('dialog');
     await expect(dialog).toContainText(HINTS.prohlizec.title);
-    await expect(dialog.locator('.hint-list li')).toHaveCount(6);
+    await expect(dialog.locator('.hint-list li')).toHaveCount(7);
     await page.keyboard.press('Escape');
     await expect(dialog).toHaveCount(0);
   });
@@ -256,6 +323,7 @@ test.describe(`layout (${SEEDS})`, () => {
       for (const level of ['základní', 'pokročilá']) {
         test(`200 % text at ${width} px, seed ${seed}, ${level}: no horizontal scroll on the level select, in play, marking and evaluation`, async ({ page }) => {
           await page.setViewportSize({ width, height: 740 });
+          await skipBrowserIntro(page);
           await page.goto(`/?seed=${seed}#/prohlizec`);
           await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
           expect(await noScroll(page)).toBe(true);

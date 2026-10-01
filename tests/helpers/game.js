@@ -73,8 +73,21 @@ export async function nextMessage(page) {
   await openCurrentMessage(page);
 }
 
+// Browser: the first-visit intro is a screen of its own; tests that are not about it start
+// as a player who has already seen it (the record the app stores, src/engine/intro.js)
+export async function skipBrowserIntro(page) {
+  await page.addInitScript(() => {
+    try {
+      localStorage.setItem('poznej-podvod:browser-intro:v1', 'seen');
+    } catch {
+      // A test that blocks the storage checks the intro itself
+    }
+  });
+}
+
 // Starts a round and opens its first message (use open: false to stay in the inbox)
 export async function startRound(page, { section = 'email', seed = 123, level = 'základní', open = true } = {}) {
+  if (section === 'prohlizec') await skipBrowserIntro(page);
   await page.goto(`/?seed=${seed}#/${section}`);
   await page.getByRole('button', { name: new RegExp(`Začít: ${level}`) }).click();
   if (open) await openCurrentMessage(page);
