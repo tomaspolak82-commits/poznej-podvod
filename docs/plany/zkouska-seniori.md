@@ -24,8 +24,8 @@ Termíny řídí Tomáš, do dokumentů se nezapisují.
    - Poznáte to tak, že v zápisu je u zásahu poznámka „pomohl jsem“.
 7. První kolo (5 zpráv nebo stránek) si tester vybere sám. Zapište, kterou sekci a úroveň zvolil. Potom ho požádejte o jedno kolo sekce Prohlížeč v základní úrovni, pokud ji nehrál jako první. Další sekci nebo úroveň jen tehdy, když tester sám chce.
    - Poznáte to tak, že máte zapsanou první volbu testera a tester dohrál i kolo Prohlížeče v základní úrovni až na obrazovku s výsledkem.
-8. Během každého kola si po každé zprávě nebo stránce zapište heslo, o kterou šlo (odesílatel, předmět nebo adresa stránky), a jestli tester odpověděl správně (napoví nadpis vyhodnocení, třeba „Správně, je to podvod.“ nebo „Tahle zpráva je podvod.“). Na konci kola si z obrazovky s výsledkem opište body a větu „V tomto kole vám unikalo: …“. Obrazovka s výsledkem sama neukazuje, které zprávy nebo stránky tester viděl, proto se zapisují průběžně. Do tabulky to patří jako řádek s druhem „výsledek kola“.
-   - Poznáte to tak, že u každého kola máte 5 hesel se správně / špatně, body a větu o tom, co unikalo.
+8. Když tester u zprávy nebo stránky odpoví špatně, zapište si její heslo (odesílatel, předmět nebo adresa stránky). Na konci kola si z obrazovky s výsledkem opište body a větu „V tomto kole vám unikalo: …“. Do tabulky to patří jako řádek s druhem „výsledek kola“.
+   - Poznáte to tak, že u každého kola máte body, větu o tom, co unikalo, a hesla špatně zodpovězených zpráv nebo stránek.
 9. Na konci položte čtyři otázky a zapište odpovědi jeho slovy:
    - „Co vám přišlo nejtěžší?“
    - „Bylo něco, čemu jste nerozuměl?“
