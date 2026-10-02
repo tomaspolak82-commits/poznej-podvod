@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { maxPointsForRound } from '../src/engine/round.js';
 import {
   decide as decideAndConfirm,
+  expectBreakdown,
   expectedRounds,
   goToScenario,
   nextMessage,
@@ -95,7 +96,7 @@ test.describe(`advanced level: points, CLAUDE.md section 8 (seed ${SEED})`, () =
     for (const target of ['fromAddress', 'body.2', 'body.3', 'link']) await mark(page, target);
     await decide(page, true);
     await expect(page.getByTestId('gained')).toHaveText('Získali jste 6 bodů.');
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 4');
+    await expectBreakdown(page, 2, 4);
     await expect(page.locator('[data-status="found"]')).toHaveCount(4);
     await expect(page.locator('[data-status="missed"]')).toHaveCount(0);
   });
@@ -118,7 +119,7 @@ test.describe(`advanced level: points, CLAUDE.md section 8 (seed ${SEED})`, () =
     // The greeting by name is the innocent part of email-05
     await mark(page, 'body.0');
     await decide(page, true);
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 1');
+    await expectBreakdown(page, 2, 1);
     await expect(statusOf(page, 'body.0')).toHaveText('Označeno zbytečně, tady je vše v pořádku');
   });
 
@@ -129,7 +130,7 @@ test.describe(`advanced level: points, CLAUDE.md section 8 (seed ${SEED})`, () =
     await mark(page, 'body.4');
     await mark(page, 'body.4');
     await decide(page, true);
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 1');
+    await expectBreakdown(page, 2, 1);
     await expect(statusOf(page, 'body.4')).toHaveCount(0);
   });
 
@@ -140,7 +141,7 @@ test.describe(`advanced level: points, CLAUDE.md section 8 (seed ${SEED})`, () =
     await mark(page, 'body.2');
     await decide(page, false);
     await expect(page.getByTestId('evaluation').getByRole('heading', { level: 1 })).toHaveText('Tahle zpráva je podvod.');
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 0 · Za označená místa: 2');
+    await expectBreakdown(page, 0, 2);
     await expect(page.getByTestId('gained')).toHaveText('Získali jste 2 body.');
   });
 
@@ -154,7 +155,7 @@ test.describe(`advanced level: points, CLAUDE.md section 8 (seed ${SEED})`, () =
     await mark(page, 'fromAddress');
     await mark(page, 'body.5');
     await decide(page, true);
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 0');
+    await expectBreakdown(page, 2, 0);
     await expect(page.getByTestId('gained')).toHaveText('Získali jste 2 body.');
   });
 
@@ -175,7 +176,7 @@ test.describe(`advanced level: points, CLAUDE.md section 8 (seed ${SEED})`, () =
     await mark(page, 'subject');
     await decide(page, false);
     await expect(page.getByTestId('gained')).toHaveText('Získali jste 2 body.');
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 0');
+    await expectBreakdown(page, 2, 0);
     await expect(page.getByTestId('legit-marking')).toHaveText(
       'Na zprávě nebylo nic podezřelého. Označená místa jsou v pořádku.',
     );

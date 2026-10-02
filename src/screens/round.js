@@ -121,7 +121,14 @@ function evaluationView(round, app) {
         <h1 class="evaluation-result__title" tabindex="-1">${texts.title}</h1>
         <p>${texts.text}</p>
         <p class="evaluation-result__points" data-testid="gained">${EVALUATION.gained(result.total)}</p>
-        ${advanced ? `<p data-testid="breakdown">${EVALUATION.breakdown(result.decisionPoints, result.markingPoints)}</p>` : ''}
+        ${
+          advanced
+            ? `<div data-testid="breakdown">
+                <p data-testid="breakdown-decision">${EVALUATION.decisionPoints(result.decisionPoints)}</p>
+                <p data-testid="breakdown-marking">${EVALUATION.markingPoints(result.markingPoints)}</p>
+              </div>`
+            : ''
+        }
         ${
           advanced && !scenario.isScam
             ? `<p data-testid="legit-marking">${result.marks.length === 0 ? EVALUATION.legitClean : EVALUATION.legitMarked}</p>`

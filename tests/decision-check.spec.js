@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { scoreMessage } from '../src/engine/scoring.js';
-import { currentScenarioId, scenarioById, startRound } from './helpers/game.js';
+import { currentScenarioId, expectBreakdown, scenarioById, startRound } from './helpers/game.js';
 
 // Advanced level: a decision that does not match the marks is confirmed in a window
 // (Tomáš, 28. 9. 2026). Scoring does not change; the basic level has no window.
@@ -63,9 +63,7 @@ test.describe('advanced level: "scam" with nothing marked', () => {
     await click(page, 'Ano, je to podvod');
     await expect(evaluation(page)).toBeVisible();
     const expected = scoreMessage(scenario, 'pokrocila', 'scam', []);
-    await expect(page.getByTestId('breakdown')).toHaveText(
-      `Za rozhodnutí: ${expected.decisionPoints} · Za označená místa: ${expected.markingPoints}`,
-    );
+    await expectBreakdown(page, expected.decisionPoints, expected.markingPoints);
   });
 });
 

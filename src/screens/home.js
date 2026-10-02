@@ -74,7 +74,7 @@ export function renderHome(container, { deletedMessage = '' } = {}) {
       <div class="home__intro">
         <h1 class="section-title" tabindex="-1">Vyberte, co chcete trénovat</h1>
         <p class="home__lead">
-          Ukážeme vám zprávy, jaké dnes chodí do telefonu a do e-mailu. Vy posoudíte, jestli jde o podvod.
+          Ukážeme vám zprávy a internetové stránky, na jaké dnes můžete narazit v telefonu, v e-mailu a v prohlížeči. Vy posoudíte, jestli jde o podvod.
           Nic se neodesílá a nic nemůžete pokazit.
         </p>
       </div>

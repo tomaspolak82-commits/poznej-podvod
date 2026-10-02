@@ -72,7 +72,7 @@ export const HINTS = {
     items: [
       [
         'Adresní řádek.',
-        'Nahoře v prohlížeči je řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka. Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené.',
+        'Nahoře v prohlížeči je řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka. Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené. Dlouhou adresu prohlížeč někdy zkrátí. Když na ni klepnete, ukáže ji celou.',
       ],
       [
         'Jak jste se na stránku dostali.',
@@ -92,7 +92,7 @@ export const HINTS = {
       ],
       [
         'Stránka nebo okno, které straší nebo slibuje výhru.',
-        '„Telefon je napadený“, „Vyhráli jste“. Stránka nepozná, co máte v telefonu. Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Nevolejte, nic neinstalujte a stránku zavřete.',
+        '„Telefon je napadený“, „Vyhráli jste“. Stránka nepozná, co máte v telefonu. Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Nevolejte, nic neinstalujte a stránku zavřete. Obyčejnou reklamu zavřete křížkem v jejím rohu, někdy se objeví až po několika vteřinách. Okno, které straší nebo chce, abyste volali, křížkem nezavírejte. Zavřete celou stránku.',
       ],
       [
         'Údaje, které stránka nepotřebuje.',
@@ -126,7 +126,9 @@ export const EVALUATION = {
     text: 'Opatrnost je dobrá. Podívejte se, podle čeho se dá poznat, že je pravá.',
   },
   gained: (count) => `Získali jste ${points(count)}.`,
-  breakdown: (decision, marking) => `Za rozhodnutí: ${decision} · Za označená místa: ${marking}`,
+  // Each on a line of its own, under "Získali jste…" (Tomáš, 2. 10. 2026)
+  decisionPoints: (count) => `Za rozhodnutí: ${count}`,
+  markingPoints: (count) => `Za označená místa: ${count}`,
   bulbIntro: 'Klepněte na žárovku u podezřelého místa a přečtěte si proč.',
   statusFound: 'Našli jste',
   statusMissed: 'Tohle místo stojí za druhý pohled',
@@ -266,7 +268,13 @@ export const BROWSER_APP = {
       { label: 'Stránka.', text: 'To, co ukazuje stránka sama. Může o sobě psát cokoli.' },
     ],
     noWarningLabel: 'Bez varování',
-    noWarningText: 'Obálka ale neříká, kdo dopis poslal. Když prohlížeč nevaruje, stránka ještě nemusí být poctivá. Ptejte se, jak jste se na ni dostali a co po vás chce.',
+    // Revised after Tomáš's phone check (2. 10. 2026)
+    noWarningText:
+      'Když u adresy žádné varování není, stránka ještě nemusí být poctivá. Zabezpečené připojení může mít i podvodník. Vždy se ptejte, jak jste se sem dostali a co po vás stránka chce.',
+    // Under the picture of the address bar without a warning, which shows the neutral sign
+    // (two sliders) some browsers put there; the game itself does not draw the sign
+    noWarningSign:
+      'Bez varování bývá u adresy jen malý znak. Když na něj klepnete, prohlížeč napíše, jestli je připojení zabezpečené.',
     // The ending "stiskněte Zpět…" is from the previous intro, confirmed by Tomáš on 1. 10. 2026
     closing: 'Jiné prohlížeče místo trojúhelníku ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek. Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte.',
   },
