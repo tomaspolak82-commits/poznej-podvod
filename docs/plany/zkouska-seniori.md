@@ -1,6 +1,6 @@
 # Zkouška hry se seniory (sekce 17 D1)
 
-Cíl: zjistit, kde se senior zasekne, co nepochopí a co ho odradí, když hraje **sám na svém telefonu**. Nejde o to, jestli odpovídá správně. Postřehy se zapisují stejně jako v `docs/plany/plan-milnik-7.md`, sekce 2 (testeři jen jako T1, T2…, žádná jména, čísla ani e-maily, repozitář je veřejný).
+Cíl: zjistit, kde se senior zasekne, co nepochopí a co ho odradí, když hraje **sám na svém telefonu**. Nejde o to, jestli odpovídá správně. Zkouší se se zhruba 3–4 seniory, každý zvlášť. Postřehy se zapisují stejně jako v `docs/plany/plan-milnik-7.md`, sekce 2 (testeři jen jako T1, T2…, žádná jména, čísla ani e-maily, repozitář je veřejný).
 
 Termíny řídí Tomáš, do dokumentů se nezapisují.
 
@@ -78,6 +78,10 @@ Jeden řádek na jeden postřeh. Stejné sloupce jako v `plan-milnik-7.md`, nav�
 | | T1 | | | | | | ne |
 | | T2 | | | | | | ne |
 | | T2 | | | | | | ne |
+| | T3 | | | | | | ne |
+| | T3 | | | | | | ne |
+| | T4 | | | | | | ne |
+| | T4 | | | | | | ne |
 
 - **Zařízení:** Android / iPhone / tablet, normální nebo velké písmo.
 - **Kde ve hře:** sekce, úroveň, číslo zprávy nebo stránky v kole, obrazovka (zpráva, vyhodnocení, konec kola, úvod).
