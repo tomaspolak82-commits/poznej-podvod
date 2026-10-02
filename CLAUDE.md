@@ -572,7 +572,7 @@ Znovu ověřeno Claudem v chatu 28. 9. 2026 proti zdrojům, všechna tvrzení se
   - https://bezpecnejsi.ostrava.cz/ahoj-tati-rozbil-se-mi-telefon-nehoda-nebo-podvod/ (20. 10. 2025)
 
 ### D. Další úkoly před zveřejněním
-1. **Zkouška s 1–2 seniory** (doplněno 28. 9. 2026): senior hraje sám na svém telefonu, Tomáš jen pozoruje a nenapovídá. Postřehy se zapisují podle `docs/plany/plan-milnik-7.md` (sekce 2, testeři jen jako T1, T2). Poznáte to tak, že je zapsaná aspoň jedna celá hra od začátku do konce kola.
+1. **Zkouška s 1–2 seniory** (doplněno 28. 9. 2026): senior hraje sám na svém telefonu, Tomáš jen pozoruje a nenapovídá. Postřehy se zapisují podle `docs/plany/plan-milnik-7.md` (sekce 2, testeři jen jako T1, T2). Postup zkoušky, co sledovat v každé sekci a tabulka pro zápis: `docs/plany/zkouska-seniori.md` (2. 10. 2026). Poznáte to tak, že je zapsaná aspoň jedna celá hra od začátku do konce kola.
 2. ~~Tučný Montserrat.~~ **Hotovo 28. 9. 2026:** statické řezy 700 a 800, ve WebKitu i Chromiu vizuálně tučné (test v `tests/fonts.spec.js`). Skutečný iPhone neověřen, Tomáš ho nemá (krok B14).
 3. ~~Přesměrování http → https.~~ **Hotovo 29. 9. 2026** (sekce 16: pravidlo, ověření a návrat).
 4. Přilepená lišta při 200% písmu: nízká priorita, zveřejnění neblokuje (sekce 16).
