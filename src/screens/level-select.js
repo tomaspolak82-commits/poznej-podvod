@@ -27,15 +27,26 @@ function levelCard(level, max, description) {
   `;
 }
 
-// Number in a circle, drawn in CSS (the character ① is missing in the hosted fonts)
-const introNumber = (number) => `<span class="browser-intro__num" aria-hidden="true">${number}</span>`;
+// Number in a circle, drawn in CSS (the character ① is missing in the hosted fonts). Each number
+// has its own colour (--intro-1 … --intro-3), the same in the picture and in the text below.
+const introNumber = (number) =>
+  `<span class="browser-intro__num browser-intro__num--${number}" aria-hidden="true">${number}</span>`;
 
-// Small address bar of the intro picture; the warning only when `warning` is set
-const introBar = (address, warning) => `
-  <div class="browser-intro__bar">
-    ${warning ? `<span class="browser-intro__icon">${icon('warning')}${introNumber(2)}</span>` : ''}
+// Small address bar of the intro picture. Numbered (Tomáš, 1. 10. 2026): a dashed frame in the
+// colour of its number, the number sits on the frame: 1 around the whole bar, 2 only around the
+// triangle. The plain bar under the text has no warning and no numbers.
+const introBar = (address, numbered) =>
+  numbered
+    ? `
+  <div class="browser-intro__bar browser-intro__frame browser-intro__frame--1">
+    ${introNumber(1)}
+    <span class="browser-intro__icon browser-intro__frame browser-intro__frame--2">${introNumber(2)}${icon('warning')}</span>
     <span class="browser-intro__address">${wholeAddress(address)}</span>
-    ${warning ? introNumber(1) : ''}
+  </div>
+`
+    : `
+  <div class="browser-intro__bar">
+    <span class="browser-intro__address">${wholeAddress(address)}</span>
   </div>
 `;
 
@@ -53,7 +64,7 @@ function renderBrowserIntro(container, section) {
         <h1 class="section-title browser-intro__title" id="browser-intro-title" tabindex="-1">${intro.title}</h1>
         <div class="browser-intro__shot" data-testid="browser-intro-shot" aria-hidden="true">
           ${introBar(intro.address, true)}
-          <div class="browser-intro__page">
+          <div class="browser-intro__page browser-intro__frame browser-intro__frame--3">
             ${introNumber(3)}
             <span class="browser-intro__page-heading">${intro.pageHeading}</span>
             ${intro.pageFields

@@ -30,6 +30,75 @@ function contrastOf(locator, property = 'color') {
   }, property);
 }
 
+// Contrast of a colour property against the backgrounds around the element: for a frame its
+// own (inside) and its parent's (outside) background, for a circle its parent's and grandparent's
+// (the circle sits on the edge of a frame). Returns the lowest ratio.
+function contrastAround(locator, property, { skipOwn = false } = {}) {
+  return locator.evaluate(
+    (el, { prop, skipOwn }) => {
+      const parse = (c) => c.match(/[\d.]+/g).map(Number);
+      const alpha = (c) => parse(c)[3] ?? 1;
+      const lum = ([r, g, b]) =>
+        [r, g, b]
+          .map((v) => v / 255)
+          .map((v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4))
+          .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+      const background = (start) => {
+        for (let node = start; node; node = node.parentElement) {
+          const bg = getComputedStyle(node).backgroundColor;
+          if (alpha(bg) !== 0) return bg;
+        }
+        return 'rgb(255, 255, 255)';
+      };
+      const first = skipOwn ? el.parentElement : el;
+      const colour = lum(parse(getComputedStyle(el)[prop]));
+      return Math.min(
+        ...[background(first), background(first.parentElement)].map((bg) => {
+          const b = lum(parse(bg));
+          return (Math.max(colour, b) + 0.05) / (Math.min(colour, b) + 0.05);
+        }),
+      );
+    },
+    { prop: property, skipOwn },
+  );
+}
+
+// Browser intro (Tomáš, 1. 10. 2026): numbers 1–3 each in their own colour, the same in the
+// picture and in the text; dashed frame and circle 3:1 against what is around, white digit 4.5:1;
+// never the yellow, green or red of the game
+test('browser intro: numbered frames and circles have their own colours and enough contrast', async ({ page }) => {
+  await page.goto('/?seed=1#/prohlizec');
+  const shot = page.getByTestId('browser-intro-shot');
+  const colours = [];
+  for (const n of ['1', '2', '3']) {
+    const frame = shot.locator(`.browser-intro__frame--${n}`);
+    const inPicture = frame.locator(`> .browser-intro__num--${n}`);
+    const inText = page.locator(`.browser-intro__part .browser-intro__num--${n}`);
+    const colour = await frame.evaluate((el) => getComputedStyle(el).borderTopColor);
+    colours.push(colour);
+    await expect(inPicture).toHaveCSS('background-color', colour);
+    await expect(inText).toHaveCSS('background-color', colour);
+    expect(await contrastAround(frame, 'borderTopColor'), `frame ${n}`).toBeGreaterThanOrEqual(3);
+    for (const circle of [inPicture, inText]) {
+      expect(await contrastAround(circle, 'backgroundColor', { skipOwn: true }), `circle ${n}`).toBeGreaterThanOrEqual(3);
+      expect(await contrastOf(circle), `digit ${n}`).toBeGreaterThanOrEqual(4.5);
+      await expect(circle).toHaveText(n);
+    }
+  }
+  expect(new Set(colours).size).toBe(3);
+  for (const forbidden of [GREEN, RED, 'rgb(255, 179, 2)', 'rgb(255, 77, 77)']) expect(colours).not.toContain(forbidden);
+  // Not any red, yellow or green either: hue outside 0–15° and 345–360° (red), 45–65° (yellow),
+  // 75–165° (green)
+  for (const colour of colours) {
+    const [r, g, b] = colour.match(/\d+/g).map((v) => Number(v) / 255);
+    const max = Math.max(r, g, b);
+    const d = max - Math.min(r, g, b);
+    const hue = (((max === r ? (g - b) / d : max === g ? (b - r) / d + 2 : (r - g) / d + 4) * 60) + 360) % 360;
+    const forbiddenHue = hue < 15 || hue > 345 || (hue >= 45 && hue <= 65) || (hue >= 75 && hue <= 165);
+    expect(forbiddenHue, `${colour} has hue ${Math.round(hue)}°`).toBe(false);
+  }
+});
+
 // Browser: card "Jak jste se sem dostali" (Tomáš, 1. 10. 2026): blue-grey, never yellow,
 // title and text at least AA (4.5:1), measured in play and in the evaluation
 test('browser: card "Jak jste se sem dostali" has AA contrast and is not yellow', async ({ page }) => {

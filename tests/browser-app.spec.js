@@ -53,7 +53,13 @@ test.describe('intro about the address bar', () => {
     await expect(shot).toContainText(BROWSER_APP.intro.address);
     await expect(shot).toContainText(BROWSER_APP.intro.pageHeading);
     await expect(shot.locator('input, textarea, button, a, [tabindex], [data-mark]')).toHaveCount(0);
-    await expect(shot.locator('.browser-intro__num')).toHaveText(['2', '1', '3']);
+    await expect(shot.locator('.browser-intro__num')).toHaveText(['1', '2', '3']);
+    // Each number sits on its dashed frame: 1 the whole bar, 2 only the triangle (inside 1), 3 the page
+    for (const n of ['1', '2', '3']) {
+      await expect(shot.locator(`.browser-intro__frame--${n} > .browser-intro__num--${n}`)).toHaveText(n);
+      await expect(shot.locator(`.browser-intro__frame--${n}`)).toHaveCSS('border-top-style', 'dashed');
+    }
+    await expect(shot.locator('.browser-intro__frame--1 .browser-intro__frame--2 svg')).toHaveCount(1);
     // The second bar "Bez varování": the same address, no warning
     const plain = page.locator('.browser-intro__plain');
     await expect(plain.locator('[aria-hidden="true"]')).toContainText(BROWSER_APP.intro.address);
@@ -101,6 +107,18 @@ test.describe('intro about the address bar', () => {
     await page.goto('about:blank');
     await page.goto('/?seed=1#/prohlizec');
     expect(await page.getByTestId('max-points-pokrocila').innerText()).toBe(withIntro);
+  });
+
+  // Tomáš, 1. 10. 2026: at 360 px with normal text the address in the picture is on one line
+  test('360 px, normal text: the address in the picture is on one line', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 740 });
+    await page.goto('/?seed=1#/prohlizec');
+    const lines = await page.locator('.browser-intro__frame--1 .addr').evaluate((el) => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      return new Set([...range.getClientRects()].map((rect) => Math.round(rect.top))).size;
+    });
+    expect(lines).toBe(1);
   });
 
   test('200 % text at 320 px: the intro screen does not scroll sideways', async ({ page }) => {
