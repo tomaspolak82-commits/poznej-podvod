@@ -34,7 +34,8 @@ const introNumber = (number) =>
 
 // Small address bar of the intro picture. Numbered (Tomáš, 1. 10. 2026): a dashed frame in the
 // colour of its number, the number sits on the frame: 1 around the whole bar, 2 only around the
-// triangle. The plain bar under the text has no warning and no numbers.
+// triangle. The plain bar under the text has no warning and no numbers, only the small neutral
+// sign (two sliders) browsers show there (Tomáš, 2. 10. 2026); the game itself does not draw it.
 const introBar = (address, numbered) =>
   numbered
     ? `
@@ -46,6 +47,7 @@ const introBar = (address, numbered) =>
 `
     : `
   <div class="browser-intro__bar">
+    <span class="browser-intro__icon browser-intro__sign" data-testid="browser-intro-sign">${icon('sliders')}</span>
     <span class="browser-intro__address">${wholeAddress(address)}</span>
   </div>
 `;
@@ -80,6 +82,7 @@ function renderBrowserIntro(container, section) {
           <div aria-hidden="true">${introBar(intro.address, false)}</div>
         </div>
         <p>${intro.noWarningText}</p>
+        <p>${intro.noWarningSign}</p>
         <p>${intro.closing}</p>
         <button type="button" class="button button--primary button--block" data-action="intro-done">
           ${intro.button} ${icon('arrowRight')}

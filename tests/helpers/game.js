@@ -145,5 +145,18 @@ export async function goToScenario(page, id) {
   throw new Error(`Scenario ${id} is not in this round`);
 }
 
-export const correctly = (scenario) => (scenario.isScam ? 'scam' : 'ok');
+// Advanced evaluation: "Získali jste…", "Za rozhodnutí" and "Za označená místa" each on a line
+// of its own (Tomáš, 2. 10. 2026), so the line below starts under the one above
+export async function expectBreakdown(page, decision, marking) {
+  const gained = page.getByTestId('gained');
+  const decisionLine = page.getByTestId('breakdown-decision');
+  const markingLine = page.getByTestId('breakdown-marking');
+  await expect(decisionLine).toHaveText(`Za rozhodnutí: ${decision}`);
+  await expect(markingLine).toHaveText(`Za označená místa: ${marking}`);
+  const [a, b, c] = await Promise.all([gained.boundingBox(), decisionLine.boundingBox(), markingLine.boundingBox()]);
+  expect(b.y).toBeGreaterThanOrEqual(a.y + a.height - 1);
+  expect(c.y).toBeGreaterThanOrEqual(b.y + b.height - 1);
+}
+
+export const correctly =(scenario) => (scenario.isScam ? 'scam' : 'ok');
 export const wrongly = (scenario) => (scenario.isScam ? 'ok' : 'scam');

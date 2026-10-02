@@ -368,6 +368,11 @@
   align-items: center;
 }
 
+/* Neutral sign of the bar without a warning: plain grey, no colour that could read as a warning */
+.browser-intro__sign {
+  color: var(--color-text);
+}
+
 .browser-intro__address {
   flex: 0 1 auto;
   min-width: 0;

@@ -4,6 +4,7 @@ import { LINK_NOTICE, MESSAGES_APP } from '../src/texts.js';
 import {
   currentScenarioId,
   decide as decideAndConfirm,
+  expectBreakdown,
   expectedRounds,
   goToScenario,
   nextMessage,
@@ -166,7 +167,7 @@ test.describe(`advanced level: marking (${SEEDS})`, () => {
     await start(page, { level: 'pokročilá' });
     for (const target of ['from', 'messages.0', 'messages.0.link']) await mark(page, target);
     await decide(page, true);
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 3');
+    await expectBreakdown(page, 2, 3);
     await expect(page.locator('[data-status="missed"]')).toHaveCount(0);
   });
 
@@ -176,7 +177,7 @@ test.describe(`advanced level: marking (${SEEDS})`, () => {
       await start(page, { seed: SEED_CHAT_FIRST, level: 'pokročilá' });
       for (const target of marks) await mark(page, target);
       await decide(page, true);
-      await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 1');
+      await expectBreakdown(page, 2, 1);
       await expect(page.locator('[data-status="extra"]')).toHaveCount(0);
       await expect(page.locator('[data-status="found"]')).toHaveCount(marks.length);
     });
@@ -194,7 +195,7 @@ test.describe(`advanced level: marking (${SEEDS})`, () => {
     await start(page, { seed: SEED_CHAT_FIRST, level: 'pokročilá' });
     for (const target of ['from', 'messages.0', 'messages.1', 'messages.2', 'messages.3', 'messages.4']) await mark(page, target);
     await decide(page, true);
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 3');
+    await expectBreakdown(page, 2, 3);
     await expect(statusOf(page, 'messages.1')).toHaveText('Označeno zbytečně, tady je vše v pořádku');
   });
 
@@ -203,7 +204,7 @@ test.describe(`advanced level: marking (${SEEDS})`, () => {
     await goToScenario(page, 'zpravy-03');
     await mark(page, 'messages.0.link');
     await decide(page, false);
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 0');
+    await expectBreakdown(page, 2, 0);
     await expect(statusOf(page, 'messages.0.link')).toHaveText('Označeno zbytečně, tady je vše v pořádku');
   });
 
@@ -313,7 +314,7 @@ test.describe(`date labels and a sender that cannot be marked (zpravy-04, seed $
     await mark(page, 'messages.4');
     await mark(page, 'messages.0');
     await decide(page, true);
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 0');
+    await expectBreakdown(page, 2, 0);
     await expect(statusOf(page, 'messages.0')).toHaveText('Označeno zbytečně, tady je vše v pořádku');
   });
 

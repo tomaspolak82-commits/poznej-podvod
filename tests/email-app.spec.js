@@ -2,6 +2,7 @@
 import { test, expect } from '@playwright/test';
 import {
   currentScenarioId,
+  expectBreakdown,
   goToScenario,
   openCurrentMessage,
   scenarioById,
@@ -169,7 +170,7 @@ test.describe(`one threat on name and address (email-02, seed ${EMAIL_02_SEED})`
     await goToScenario(page, 'email-02');
     await page.locator('[data-mark="fromName"]').click();
     await page.getByRole('button', { name: 'Je to podvod' }).click();
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 1');
+    await expectBreakdown(page, 2, 1);
     await expect(page.locator('.review-part[data-target="fromName"] [data-status="found"]')).toHaveCount(1);
     await expect(page.locator('[data-status="extra"]')).toHaveCount(0);
     await expect(page.locator('.review-part[data-target="fromAddress"] [data-threat]')).toHaveCount(1);
@@ -183,7 +184,7 @@ test.describe(`one threat on name and address (email-02, seed ${EMAIL_02_SEED})`
     await showAddress(page);
     await page.locator('[data-mark="fromAddress"]').click();
     await page.getByRole('button', { name: 'Je to podvod' }).click();
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 1');
+    await expectBreakdown(page, 2, 1);
     await expect(page.locator('[data-status="found"]')).toHaveCount(2);
   });
 

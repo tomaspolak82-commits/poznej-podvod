@@ -2,7 +2,16 @@
 // docs/navrhy-scenaru-prohlizec.md, 1. 10. 2026).
 import { test, expect } from '@playwright/test';
 import { BROWSER_APP, HINTS, LINK_NOTICE } from '../src/texts.js';
-import { decide, goToScenario, nextMessage, scenarios, seedWith, skipBrowserIntro, startRound } from './helpers/game.js';
+import {
+  decide,
+  expectBreakdown,
+  goToScenario,
+  nextMessage,
+  scenarios,
+  seedWith,
+  skipBrowserIntro,
+  startRound,
+} from './helpers/game.js';
 
 // Rounds chosen by their pages (seedWith): SEED_INSECURE has the page without a secure connection
 // (01), the warning drawn by the page (04) and the ad (05); SEED_POPUP has the popups (02, 06),
@@ -37,9 +46,9 @@ test.describe('intro about the address bar', () => {
   test('empty storage: the intro is shown with all its texts, no level buttons yet', async ({ page }) => {
     await page.goto('/?seed=1#/prohlizec');
     await expect(intro(page).getByRole('heading', { level: 1, name: BROWSER_APP.intro.title })).toBeVisible();
-    const { parts, noWarningLabel, noWarningText, closing } = BROWSER_APP.intro;
+    const { parts, noWarningLabel, noWarningText, noWarningSign, closing } = BROWSER_APP.intro;
     for (const part of parts) await expect(intro(page)).toContainText(`${part.label} ${part.text}`);
-    for (const text of [noWarningLabel, noWarningText, closing]) await expect(intro(page)).toContainText(text);
+    for (const text of [noWarningLabel, noWarningText, noWarningSign, closing]) await expect(intro(page)).toContainText(text);
     await expect(levelButtons(page)).toHaveCount(0);
   });
 
@@ -60,10 +69,30 @@ test.describe('intro about the address bar', () => {
       await expect(shot.locator(`.browser-intro__frame--${n}`)).toHaveCSS('border-top-style', 'dashed');
     }
     await expect(shot.locator('.browser-intro__frame--1 .browser-intro__frame--2 svg')).toHaveCount(1);
-    // The second bar "Bez varování": the same address, no warning
+    // The second bar "Bez varování": the same address, no warning, only the neutral sign
+    // (two sliders) to the left of the address (Tomáš, 2. 10. 2026)
     const plain = page.locator('.browser-intro__plain');
-    await expect(plain.locator('[aria-hidden="true"]')).toContainText(BROWSER_APP.intro.address);
-    await expect(plain.locator('.browser-intro__icon')).toHaveCount(0);
+    await expect(plain.locator('> div[aria-hidden="true"]')).toContainText(BROWSER_APP.intro.address);
+    await expect(plain.locator('.browser-intro__icon')).toHaveCount(1);
+    await expect(plain.getByTestId('browser-intro-sign').locator('svg')).toBeVisible();
+    await expect(plain.locator('.browser-intro__frame, .browser-intro__num')).toHaveCount(0);
+    const [sign, address] = await Promise.all([
+      plain.getByTestId('browser-intro-sign').boundingBox(),
+      plain.locator('.browser-intro__address').boundingBox(),
+    ]);
+    expect(sign.x + sign.width).toBeLessThanOrEqual(address.x);
+    // Its text comes right under the paragraph about pages without a warning
+    await expect(intro(page).locator('p', { hasText: BROWSER_APP.intro.noWarningText }).locator('+ p')).toHaveText(
+      BROWSER_APP.intro.noWarningSign,
+    );
+  });
+
+  // The sign is drawn only in the intro, never in the game (Tomáš, 2. 10. 2026)
+  test(`the game does not draw the neutral sign next to a secure address (${SEEDS})`, async ({ page }) => {
+    await open(page, 'prohlizec-05');
+    await expect(article(page).locator('.browser__bar')).toBeVisible();
+    await expect(page.locator('[data-testid="browser-intro-sign"], .browser-intro__sign')).toHaveCount(0);
+    await expect(article(page).locator('circle')).toHaveCount(0);
   });
 
   test('the button opens the level select; on the next visit the intro is not shown', async ({ page }) => {
@@ -295,7 +324,7 @@ test.describe(`advanced level: scoring (${SEEDS})`, () => {
     await open(page, 'prohlizec-01', { level: 'pokročilá' });
     for (const target of ['security', 'address', 'fields.0', 'heading', 'body.1', 'fields.2']) await mark(page, target);
     await decide(page, 'scam');
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 4');
+    await expectBreakdown(page, 2, 4);
     await expect(page.locator('[data-status="extra"]')).toHaveCount(0);
     await expect(page.locator('[data-status="missed"]')).toHaveCount(0);
   });
@@ -304,7 +333,7 @@ test.describe(`advanced level: scoring (${SEEDS})`, () => {
     await open(page, 'prohlizec-01', { level: 'pokročilá' });
     for (const target of ['security', 'button']) await mark(page, target);
     await decide(page, 'scam');
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 0');
+    await expectBreakdown(page, 2, 0);
     await expect(page.locator('.review-part[data-target="button"] [data-status]')).toHaveText(
       'Označeno zbytečně, tady je vše v pořádku',
     );
@@ -331,7 +360,7 @@ test.describe(`advanced level: scoring (${SEEDS})`, () => {
     await open(page, 'prohlizec-08', { seed: SEED_POPUP, level: 'pokročilá' });
     await mark(page, 'fields.0');
     await decide(page, 'ok');
-    await expect(page.getByTestId('breakdown')).toHaveText('Za rozhodnutí: 2 · Za označená místa: 0');
+    await expectBreakdown(page, 2, 0);
   });
 });
 

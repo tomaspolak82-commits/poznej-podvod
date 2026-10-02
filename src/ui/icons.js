@@ -36,6 +36,9 @@ const paths = {
     '<path d="M12 9v5.5" stroke="#1a202c" stroke-width="2.4"/><path d="M12 17.6h.01" stroke="#1a202c" stroke-width="3"/>',
   dots: '<path d="M12 5.5h.01M12 12h.01M12 18.5h.01" stroke-width="3"/>',
   tabs: '<rect x="5" y="5" width="14" height="14" rx="2.5"/>',
+  // Neutral sign next to an address without a warning (two sliders), only in the browser intro
+  sliders:
+    '<path d="M4 8h3M11 8h9M4 16h9M17 16h3"/><circle cx="9" cy="8" r="2"/><circle cx="15" cy="16" r="2"/>',
 };
 
 export function icon(name) {
