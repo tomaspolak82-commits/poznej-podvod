@@ -39,13 +39,17 @@
 
 /* ---------- Address bar ---------- */
 
+/* Tight spacing on purpose: at 360 px with normal text every address of the bank fits on one
+   line, also while marking (Tomáš, 2. 10. 2026; longest domaci-pomocnik-obchod.cz needs 228 px).
+   The address keeps 18 px text, the warning keeps its 48 px tap area. */
 .browser__bar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-1);
-  margin: var(--space-1) var(--space-2) var(--space-2);
-  padding: 0.25rem var(--space-1);
+  gap: 0.25rem;
+  margin: var(--space-1) var(--space-1) var(--space-2);
+  /* A little more on the left, so the address does not touch the rounded edge */
+  padding: 0.25rem 0.25rem 0.25rem 0.5rem;
   border-radius: 1.5rem;
   background: #edf2f7;
 }
@@ -79,7 +83,7 @@
 .browser__address {
   flex: 1 1 6rem;
   min-width: 0;
-  padding: 0.25rem;
+  padding: 0.25rem 0;
   color: var(--color-heading);
   overflow-wrap: anywhere;
 }
@@ -100,9 +104,12 @@
   flex: none;
 }
 
-/* Marking inside the bar: the icon keeps its own small width, the address takes the rest */
+/* Marking inside the bar: the icon keeps its own small width, the address takes the rest.
+   Narrower side padding than other marked parts, so the address fits on one line at 360 px. */
 .browser__bar .msg-mark {
   width: auto;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .browser__bar .msg-mark:has(.browser__address),

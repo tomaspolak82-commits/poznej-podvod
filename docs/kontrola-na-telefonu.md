@@ -66,7 +66,7 @@ Nový úvod s barevnými rámečky a „Lipová banka“ jsou na živém webu od
 19. Dohrajte celé kolo (5 stránek).
     - Stránka 5 je „Lipová banka: ověření účtu“. Na kartě „Jak jste se sem dostali“ je pravá adresa banky `lipova-banka.cz`, v adresním řádku `lipova-banka-overeni.cz`. Ve vyhodnocení klepněte na žárovku u adresy: ve vysvětlení jsou obě adresy.
     - Adresy se zalamují jen celé: když se adresa vejde na řádek, je celá na jednom řádku. Adresa delší než celý řádek (s velkým písmem běžné) se smí zalomit kdekoli, ale stránka nejde posunout do strany.
-    - Známý případ (2. 10. 2026): na stránce 2 (e-shop, `domaci-pomocnik-obchod.cz`) se adresa v adresním řádku na úzkém telefonu zalomí za pomlčkou i s běžným písmem, protože je delší než místo vedle ikon. Pravidlu to odpovídá, nezapisujte to jako nový nález.
+    - Od 2. 10. 2026 je s běžným písmem na telefonu širokém aspoň 360 px adresa v adresním řádku na jednom řádku u všech stránek (i u e-shopu `domaci-pomocnik-obchod.cz` na stránce 2). Když se zalomí s běžným písmem, zapište to jako nález.
     - V tomto kole není stránka s nezabezpečeným připojením, trojúhelník přijde v dalším kole.
 20. Po poslední stránce klepněte na „Zobrazit výsledek“, na konci kola na „Zpět na hlavní stránku“ a v anonymním okně znovu otevřete https://poznej-podvod.menestarosti.cz/?seed=1#/prohlizec
     - Úvod se neukáže (v tomto okně jste ho už viděli). Hra si pamatuje minulé kolo a vybere jiné stránky (výpočtem ověřeno 1. 10. 2026, na živém webu 2. 10. 2026): Lipová banka v něm nebude, zato je tam stránka s výhrou telefonu a nezabezpečeným připojením.

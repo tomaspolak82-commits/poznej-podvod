@@ -2,7 +2,7 @@
 // docs/navrhy-scenaru-prohlizec.md, 1. 10. 2026).
 import { test, expect } from '@playwright/test';
 import { BROWSER_APP, HINTS, LINK_NOTICE } from '../src/texts.js';
-import { decide, goToScenario, nextMessage, seedWith, skipBrowserIntro, startRound } from './helpers/game.js';
+import { decide, goToScenario, nextMessage, scenarios, seedWith, skipBrowserIntro, startRound } from './helpers/game.js';
 
 // Rounds chosen by their pages (seedWith): SEED_INSECURE has the page without a secure connection
 // (01), the warning drawn by the page (04) and the ad (05); SEED_POPUP has the popups (02, 06),
@@ -428,6 +428,30 @@ test.describe('web addresses wrap only as a whole', () => {
       { text: 'lipova-banka-overeni.cz', lines: 1, fits: true },
     ]);
   });
+
+  // Tomáš, 2. 10. 2026: at 360 px with normal text the address in the bar is on one line on every
+  // page of the bank, in play, while marking and in the evaluation (incl. the longest addresses
+  // domaci-pomocnik-obchod.cz and regionalni-zpravodaj-dnes.cz)
+  const barLines = (page) =>
+    page.locator('.browser__bar .addr').evaluate((el) => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      return new Set([...range.getClientRects()].map((rect) => Math.round(rect.top))).size;
+    });
+  for (const scenario of scenarios('prohlizec')) {
+    const seed = seedWith('prohlizec', [scenario.id]);
+    test(`360 px, ${scenario.id} (seed ${seed}): ${scenario.message.address} on one line in play, marking and evaluation`, async ({ page }) => {
+      await page.setViewportSize({ width: 360, height: 740 });
+      await open(page, scenario.id, { seed });
+      expect(await barLines(page), 'play').toBe(1);
+      await decide(page, 'scam');
+      expect(await barLines(page), 'evaluation').toBe(1);
+      // A fresh page load: the same URL again would only change the hash and keep the round
+      await page.goto('about:blank');
+      await open(page, scenario.id, { seed, level: 'pokročilá' });
+      expect(await barLines(page), 'marking').toBe(1);
+    });
+  }
 
   test(`200 % text at 320 px, seed ${SEED_BANK}: no sideways scroll, an address that fits its line is on one line`, async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 740 });
