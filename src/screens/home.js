@@ -74,8 +74,8 @@ export function renderHome(container, { deletedMessage = '' } = {}) {
       <div class="home__intro">
         <h1 class="section-title" tabindex="-1">Vyberte, co chcete trénovat</h1>
         <p class="home__lead">
-          Ukážeme vám zprávy a internetové stránky, na jaké dnes můžete narazit v telefonu, v e-mailu a v prohlížeči. Vy posoudíte, jestli jde o podvod.
-          Nic se neodesílá a nic nemůžete pokazit.
+          Ukážeme vám, na co dnes můžete narazit v telefonu, v e-mailu a v prohlížeči. Vy posoudíte, jestli jde o podvod.
+          Nic se neodesílá, takže nemůžete nic pokazit.
         </p>
       </div>
 
@@ -95,7 +95,7 @@ export function renderHome(container, { deletedMessage = '' } = {}) {
         <h2 id="home-how" class="section-title">Jak trénink probíhá</h2>
         <ol class="steps">
           <li class="steps__item">
-            <p><span class="steps__title">Přečtete si zprávu</span>Vypadá podobně jako ve vašem telefonu.</p>
+            <p><span class="steps__title">Přečtete si zprávu nebo si prohlédnete stránku</span>Vypadá podobně jako ve vašem telefonu.</p>
           </li>
           <li class="steps__item">
             <p><span class="steps__title">Rozhodnete</span>Je to podvod, nebo je zpráva v pořádku?</p>

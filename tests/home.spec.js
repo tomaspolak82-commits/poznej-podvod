@@ -21,6 +21,18 @@ test.describe('home page', () => {
     ).toBeVisible();
   });
 
+  // Wording approved by Tomáš on 2. 10. 2026 (all three sections, pages as well as messages)
+  test('the lead and "Jak trénink probíhá" speak about messages and pages', async ({ page }) => {
+    await expect(page.locator('.home__lead')).toHaveText(
+      'Ukážeme vám, na co dnes můžete narazit v telefonu, v e-mailu a v prohlížeči. Vy posoudíte, jestli jde o podvod. Nic se neodesílá, takže nemůžete nic pokazit.',
+    );
+    await expect(page.locator('.steps__title')).toHaveText([
+      'Přečtete si zprávu nebo si prohlédnete stránku',
+      'Rozhodnete',
+      'Dozvíte se proč',
+    ]);
+  });
+
   test('shows active section tiles as links', async ({ page }) => {
     await expect(page.getByRole('link', { name: /^E-mail/ })).toHaveAttribute('href', '#/email');
     await expect(page.getByRole('link', { name: /^Zprávy \(SMS a WhatsApp\)/ })).toHaveAttribute(

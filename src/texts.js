@@ -92,7 +92,7 @@ export const HINTS = {
       ],
       [
         'Stránka nebo okno, které straší nebo slibuje výhru.',
-        '„Telefon je napadený“, „Vyhráli jste“. Stránka nepozná, co máte v telefonu. Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Nevolejte, nic neinstalujte a stránku zavřete. Obyčejnou reklamu zavřete křížkem v jejím rohu, někdy se objeví až po několika vteřinách. Okno, které straší nebo chce, abyste volali, křížkem nezavírejte. Zavřete celou stránku.',
+        '„Telefon je napadený“, „Vyhráli jste“. Stránka nepozná, co máte v telefonu. Výhra v soutěži, do které jste se nepřihlásili, je důvod zpozornět. Nevolejte a nic neinstalujte. Obyčejnou reklamu zavřete křížkem v jejím rohu, někdy se objeví až po několika vteřinách. Okno, které straší nebo chce, abyste volali, křížkem nezavírejte. Zavřete celou stránku.',
       ],
       [
         'Údaje, které stránka nepotřebuje.',
