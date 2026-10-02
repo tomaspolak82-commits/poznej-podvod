@@ -51,11 +51,12 @@ Asi 20 minut (s Prohlížečem). Hrajte normálně, nemusíte odpovídat správn
 
 ## Prohlížeč (6 minut)
 
-Nový úvod a „Lipová banka“ jsou zatím jen ve větvi `uprava-prohlizec`. Tuhle část dělejte, až bude větev spojená do `main` a nasazená. Úvod se ukáže jen při prvním vstupu do Prohlížeče a „Smazat moji historii“ ho nevrátí, proto se tahle část dělá v anonymním okně, kde je paměť prázdná.
+Nový úvod s barevnými rámečky a „Lipová banka“ jsou na živém webu od 2. 10. 2026 (kroky 15–21 prošel skript proti živému webu týž den). Úvod se ukáže jen při prvním vstupu do Prohlížeče a „Smazat moji historii“ ho nevrátí, proto se tahle část dělá v anonymním okně, kde je paměť prázdná.
 
 15. Otevřete v anonymním okně https://poznej-podvod.menestarosti.cz/?seed=1#/prohlizec
-    - Místo výběru úrovně se ukáže úvod „Než začnete: adresní řádek“. Nahoře je obrázek malého okna prohlížeče se žlutým trojúhelníkem a čísly 1, 2 a 3 v kroužcích, pod ním tři odstavce se stejnými čísly, řádek „Bez varování“ a tlačítko „Rozumím, vybrat úroveň“.
-    - Adresa v obrázku se nezalomí u pomlčky. Buď je celá na jednom řádku, nebo celá na dalším.
+    - Místo výběru úrovně se ukáže úvod „Než začnete: adresní řádek“. Nahoře je obrázek malého okna prohlížeče se třemi čárkovanými rámečky: modrý s číslem 1 kolem celého adresního řádku, fialový s číslem 2 jen kolem žlutého trojúhelníku, hnědý s číslem 3 kolem stránky „Přihlášení“. Každé číslo sedí v kroužku na okraji svého rámečku.
+    - Pod obrázkem jsou tři odstavce s kroužky 1, 2, 3 ve stejných barvách jako v obrázku, řádek „Bez varování“ a tlačítko „Rozumím, vybrat úroveň“.
+    - Adresa v obrázku je při běžném písmu celá na jednom řádku. S velkým písmem přejde celá pod trojúhelník a smí se zalomit, nic ale nesmí přetékat z rámečků a stránka nejde posunout do strany.
 16. Klepněte na „Rozumím, vybrat úroveň“.
     - Otevře se výběr úrovně s textem „Vyberte si úroveň. V obou uvidíte 5 stránek.“.
 17. Klepněte na „Zpět na výběr tréninku“ a pak znovu na Prohlížeč.
@@ -63,10 +64,12 @@ Nový úvod a „Lipová banka“ jsou zatím jen ve větvi `uprava-prohlizec`. 
 18. Otevřete v tomtéž anonymním okně znovu https://poznej-podvod.menestarosti.cz/?seed=1#/prohlizec (každé otevření výběru úrovně losuje nové kolo, nové otevření adresy vrátí kolo s Lipovou bankou). Začněte základní úroveň a otevřete „Na co si dát pozor?“.
     - První bod nápovědy je „Adresní řádek.“. Okno jde přečíst celé a zavřít.
 19. Dohrajte celé kolo (5 stránek).
-    - Stránka 5 je „Lipová banka: ověření účtu“. Na kartě „Jak jste se sem dostali“ je pravá adresa banky `lipova-banka.cz`, v adresním řádku `lipova-banka-overeni.cz`. Ve vyhodnocení klepněte na žárovku u adresy: ve vysvětlení jsou obě adresy. Žádná z nich se nezalomí u pomlčky.
+    - Stránka 5 je „Lipová banka: ověření účtu“. Na kartě „Jak jste se sem dostali“ je pravá adresa banky `lipova-banka.cz`, v adresním řádku `lipova-banka-overeni.cz`. Ve vyhodnocení klepněte na žárovku u adresy: ve vysvětlení jsou obě adresy.
+    - Adresy se zalamují jen celé: když se adresa vejde na řádek, je celá na jednom řádku. Adresa delší než celý řádek (s velkým písmem běžné) se smí zalomit kdekoli, ale stránka nejde posunout do strany.
+    - Známý případ (2. 10. 2026): na stránce 2 (e-shop, `domaci-pomocnik-obchod.cz`) se adresa v adresním řádku na úzkém telefonu zalomí za pomlčkou i s běžným písmem, protože je delší než místo vedle ikon. Pravidlu to odpovídá, nezapisujte to jako nový nález.
     - V tomto kole není stránka s nezabezpečeným připojením, trojúhelník přijde v dalším kole.
 20. Po poslední stránce klepněte na „Zobrazit výsledek“, na konci kola na „Zpět na hlavní stránku“ a v anonymním okně znovu otevřete https://poznej-podvod.menestarosti.cz/?seed=1#/prohlizec
-    - Úvod se neukáže (v tomto okně jste ho už viděli). Hra si pamatuje minulé kolo a vybere jiné stránky (výpočtem ověřeno 1. 10. 2026): Lipová banka v něm nebude, zato je tam stránka s výhrou telefonu a nezabezpečeným připojením.
+    - Úvod se neukáže (v tomto okně jste ho už viděli). Hra si pamatuje minulé kolo a vybere jiné stránky (výpočtem ověřeno 1. 10. 2026, na živém webu 2. 10. 2026): Lipová banka v něm nebude, zato je tam stránka s výhrou telefonu a nezabezpečeným připojením.
 21. Začněte pokročilou úroveň. Na stránce s výhrou telefonu se podívejte vlevo od adresy.
     - Je tam jen žlutý trojúhelník s vykřičníkem, bez nápisu. Jde trefit prstem napoprvé a po klepnutí ukáže „Označeno“.
     - Ve vyhodnocení je u trojúhelníku nápis „Nezabezpečeno“, žárovka a „Našli jste“.
