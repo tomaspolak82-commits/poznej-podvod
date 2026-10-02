@@ -726,19 +726,19 @@ Vygenerováno příkazem `npm run prehled` ze souborů v `src/content/`. Neuprav
 
 ---
 
-### prohlizec-03: Ověření účtu v Bance Javor
+### prohlizec-03: Ověření účtu v Lipové bance
 
 - **Sekce:** Prohlížeč
 - **Druh:** podvod
-- **Adresa:** javor-overeni-uctu.cz
+- **Adresa:** lipova-banka-overeni.cz
 
 **Stránka po částech:**
 
-- _Jak jste se sem dostali: Máte účet v Bance Javor. Přišla vám SMS, že váš účet bude zablokován, pokud se dnes neověříte. Klepli jste na odkaz v ní._
+- _Jak jste se sem dostali: Máte účet v Lipové bance. Do internetového bankovnictví chodíte na adresu lipova-banka.cz. Přišla vám SMS, že váš účet bude zablokován, pokud se dnes neověříte. Klepli jste na odkaz v ní._
 - _Připojení zabezpečené, u adresy žádné varování_
-1. **Adresa stránky** `address`: javor-overeni-uctu.cz
-   - **Hrozba** · `adresa-stranky` (adresa stránky nebo varování u ní) · „Adresa stránky“: Na přihlášení do banky choďte adresou, kterou si napíšete sami nebo máte uloženou. Tahle stránka se otevřela z odkazu v SMS a adresa jen obsahuje slovo „javor“. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá.
-2. **Nadpis stránky** `heading`: Banka Javor: ověření účtu
+1. **Adresa stránky** `address`: lipova-banka-overeni.cz
+   - **Hrozba** · `adresa-stranky` (adresa stránky nebo varování u ní) · „Adresa stránky“: Vaše banka má adresu lipova-banka.cz, tahle stránka je na lipova-banka-overeni.cz. Adresa jen obsahuje jméno banky s dalšími slovy. Na přihlášení do banky choďte adresou, kterou si napíšete sami nebo máte uloženou. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá.
+2. **Nadpis stránky** `heading`: Lipová banka: ověření účtu
    - nevinná část
 3. **Odstavec 1** `body.0`: Z bezpečnostních důvodů jsme omezili váš účet. Pro obnovení se přihlaste a ověřte svou kartu.
    - **Hrozba** · `emocni-natlak` (citový nátlak) · „Omezený účet“: Hrozba zablokováním má vystrašit, abyste jednali hned a nepřemýšleli.
@@ -753,7 +753,7 @@ Vygenerováno příkazem `npm run prehled` ze souborů v `src/content/`. Neuprav
 8. **Tlačítko** `button`: Přihlásit a ověřit
    - nevinná část
 
-**Shrnutí:** Když vám zpráva hrozí zablokováním účtu, neklikejte na odkaz v ní. Otevřete si bankovnictví sami, jako obvykle, nebo zavolejte na číslo, které máte na kartě.
+**Shrnutí:** Když vám zpráva hrozí zablokováním účtu, neklikejte na odkaz v ní. Zjistěte si adresu své banky a mějte ji uloženou v záložkách, nebo používejte aplikaci banky. Na přihlášení choďte jen tudy. Když si nejste jistí, zavolejte na číslo, které máte na kartě.
 
 **Zdroje:** žádné (bez tvrzení za firmu nebo úřad)
 

@@ -143,6 +143,17 @@ test.describe('content: real scenario files', () => {
     expect(scenario.message.fromName).toBe(RECIPIENT);
   });
 
+  // Tomáš, 1. 10. 2026: the player must know the real address of the made-up bank, otherwise
+  // the address bar cannot show that the page is fake
+  test('prohlizec-03: the card gives the real bank address, the page is on another one with the bank name in it', () => {
+    const { message, threats } = readSection(CONTENT_DIR, 'prohlizec').find((f) => f.data.id === 'prohlizec-03').data;
+    expect(message.arrival).toContain('lipova-banka.cz');
+    expect(message.address).toBe('lipova-banka-overeni.cz');
+    expect(message.address).not.toBe('lipova-banka.cz');
+    expect(threats.find((threat) => threat.target === 'address').explanation).toContain('lipova-banka.cz');
+    expect(JSON.stringify(message)).not.toMatch(/javor/i);
+  });
+
   // E-mail goal: 12 scenarios (6 scams, 6 legitimate), Zprávy: 11 (5 scams, 6 legitimate)
   for (const section of CONTENT_SECTIONS) {
     test(`content goal: section ${section} reaches CONTENT_GOAL`, () => {

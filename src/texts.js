@@ -248,17 +248,27 @@ export const BROWSER_APP = {
   // Same for scams and legitimate pages, so they do not give the answer away
   buttonNotice: 'Tohle je jen trénink, tlačítko nic nedělá a nic se neodeslalo. Rozhodněte dole, jestli je stránka podvod, nebo v pořádku.',
   fieldNotice: 'Tohle je jen trénink, do pole se psát nedá a nic se neodesílá. Rozhodněte dole, jestli je stránka podvod, nebo v pořádku.',
+  // A screen of its own on the first visit only. Picture of a small browser with numbers 1–3,
+  // the text below explains them (Tomáš, 1. 10. 2026). The picture is aria-hidden.
   intro: {
     title: 'Než začnete: adresní řádek',
-    caption: 'Tady prohlížeč ukazuje varování',
-    // A screen of its own on the first visit only (Tomáš, 1. 10. 2026)
     button: 'Rozumím, vybrat úroveň',
-    paragraphs: [
-      'Nahoře v prohlížeči je adresní řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka.',
-      'Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi, tedy internetu, ke kterému se připojíte v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce. Když prohlížeč u adresy varuje, do stránky nic nezadávejte. V tréninku je varováním žlutý trojúhelník s vykřičníkem. Jiné prohlížeče ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek.',
-      'Obálka ale neříká nic o tom, kdo dopis poslal. To, že vás prohlížeč nevaruje, neznamená, že na stránce nemůže být podvod. Vždy se ptejte, jak jste se na stránku dostali a co po vás chce.',
-      'Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte.',
+    // Made-up address, free on 1. 10. 2026 (CZ.NIC registry 404, no DNS)
+    address: 'prihlaseni-ucet-online.cz',
+    pageHeading: 'Přihlášení',
+    pageFields: ['Jméno', 'Heslo'],
+    parts: [
+      { label: 'Adresní řádek.', text: 'Je v něm adresa stránky, na které jste. Píše ji prohlížeč, ne stránka.' },
+      {
+        label: 'Varování.',
+        text: 'Žlutý trojúhelník znamená, že připojení není zabezpečené. Do takové stránky nic nezadávejte. Nezabezpečené připojení je jako pohlednice: kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce.',
+      },
+      { label: 'Stránka.', text: 'To, co ukazuje stránka sama. Může o sobě psát cokoli.' },
     ],
+    noWarningLabel: 'Bez varování',
+    noWarningText: 'Obálka ale neříká, kdo dopis poslal. Když prohlížeč nevaruje, stránka ještě nemusí být poctivá. Ptejte se, jak jste se na ni dostali a co po vás chce.',
+    // The ending "stiskněte Zpět…" is from the previous intro, confirmed by Tomáš on 1. 10. 2026
+    closing: 'Jiné prohlížeče místo trojúhelníku ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek. Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte.',
   },
 };
 

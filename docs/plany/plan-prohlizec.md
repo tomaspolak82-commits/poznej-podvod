@@ -1,8 +1,8 @@
 # Milník 8: sekce Prohlížeč (plán 1. 10. 2026, aktualizováno týž den)
 
-Diagram: `docs/plany/plan-prohlizec.html` (14 fází). Texty pro hráče (schválené): `docs/navrhy-scenaru-prohlizec.md`. Náčrt vzhledu: `docs/plany/nacrt-prohlizec.html`. Vydání (odstranění `noindex`) je milník 9.
+Diagram: `docs/plany/plan-prohlizec.html` (15 fází). Texty pro hráče (schválené): `docs/navrhy-scenaru-prohlizec.md`. Náčrt vzhledu: `docs/plany/nacrt-prohlizec.html`. Vydání (odstranění `noindex`) je milník 9.
 
-Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14, Tomášova kontrola na telefonu na živém webu.
+Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14 (úprava úvodu a scénáře `prohlizec-03` ve větvi `uprava-prohlizec`) a fáze 15, Tomášova kontrola na telefonu na živém webu.
 
 ## 1. Rozhraní simulovaného prohlížeče
 
@@ -12,6 +12,7 @@ Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14, Tomášova ko
 
 - **Karta „Jak jste se sem dostali“** nad adresním řádkem: jedna věta o příchodu na stránku. Modrošedá (`#e8eef8`, tmavomodrý proužek a nadpis), **ne žlutá**: žlutá je barva varování a světle žlutý podklad má označená část. Kontrast textu i nadpisu hlídá `tests/evaluation-colors.spec.js`. Kartu nejde označit. Aby neprozradila odpověď, mají podvody 02 a 04 nevinný příchod a legitimní 06 příchod přes odkaz.
 - **Adresní řádek:** adresa, celá a zalomitelná. U nezabezpečeného připojení vlevo **jen žlutý trojúhelník s vykřičníkem**, v obou úrovních bez nápisu. Čtečka obrazovky čte „Varování: připojení není zabezpečené“, klepací plocha aspoň 48 px. Ve vyhodnocení trojúhelník s nápisem „Nezabezpečeno“ a žárovkou. U zabezpečeného připojení žádné varování. **Zámek se nepoužívá.**
+- **Zalamování adres** (Tomáš, 1. 10. 2026): adresy v adresním řádku, na kartě, ve vysvětleních a v úvodu se zalamují jen celé, nikdy u pomlčky ani u tečky (`.addr` v `browser.css`, `escapeWithAddresses` v `src/ui/html.js`). Adresa delší než celý řádek se smí zlomit kdekoli, stránka se do strany neposouvá. Při 200% písmu na 320 px se adresy do řádku nevejdou a zlomí se (změřeno: karta 121 px, `lipova-banka.cz` 243 px). Na 320 px s běžným písmem se `lipova-banka-overeni.cz` v adresním řádku nevejde (chybí asi 5 px), od 360 px ano. Hlídá `tests/browser-app.spec.js` („web addresses wrap only as a whole“).
 - **Obsah stránky:** nadpis, odstavce, reklama nebo „varování“ nakreslené stránkou (pruh), formulářová pole, tlačítko.
 - **Vyskakovací okno** (02, 06): stránka pod ním je ztmavená (šedé čáry bez textu) a nejde označit, okno je obsah. Okno nemá křížek.
 - **Dekorace** (ikona karet, menu ⋮) jsou skryté pro čtečku a nic nedělají.
@@ -20,7 +21,7 @@ Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14, Tomášova ko
 
 **Základní úroveň:** reklama ukáže upozornění na odkaz, tlačítka stránky i okna upozornění „tlačítko nic nedělá“, formulářová pole upozornění „do pole se psát nedá“. Vše stejné u podvodu i legitimní stránky. Pole nejsou skutečná, nedá se do nich psát.
 
-**Úvod o adresním řádku:** samostatná obrazovka jen při prvním vstupu do sekce, s tlačítkem „Rozumím, vybrat úroveň“. Tlačítko uloží záznam (`poznej-podvod:browser-intro:v1`, `src/engine/intro.js`) a vede na výběr úrovně. Při dalších vstupech se jde rovnou na výběr úrovně. Když paměť prohlížeče nejde přečíst nebo zapsat, úvod se ukáže vždy. Historie se nemění.
+**Úvod o adresním řádku:** samostatná obrazovka jen při prvním vstupu do sekce, s tlačítkem „Rozumím, vybrat úroveň“. Tlačítko uloží záznam (`poznej-podvod:browser-intro:v1`, `src/engine/intro.js`) a vede na výběr úrovně. Při dalších vstupech se jde rovnou na výběr úrovně. Když paměť prohlížeče nejde přečíst nebo zapsat, úvod se ukáže vždy. Historie se nemění. Od fáze 14 (větev `uprava-prohlizec`, texty schválené Tomášem 1. 10. 2026): nahoře obrázek malého okna prohlížeče (adresní řádek se žlutým trojúhelníkem a adresou `prihlaseni-ucet-online.cz`, pod ním stránka „Přihlášení“ s poli „Jméno“ a „Heslo“), v něm čísla 1–3 v kroužku u adresy, trojúhelníku a stránky. Obrázek je jen obrázek (`aria-hidden`), nic nejde vyplnit ani označit, obsah nese text pod ním: tři odstavce s čísly, druhý adresní řádek bez trojúhelníku s popiskem „Bez varování“ a dva odstavce na konec. Čísla jsou kroužky z CSS, ne znak „①“ (ten v hostovaných písmech není). Každá očíslovaná část má čárkovaný rámeček v barvě svého čísla a kroužek sedí na jeho okraji (Tomáš, 1. 10. 2026): 1 modrá kolem celého adresního řádku, 2 fialová jen kolem trojúhelníku, 3 hnědá kolem stránky. Kroužky v textu mají stejné barvy. Ne žlutá, zelená ani červená. Kontrast (rámeček a kroužek 3 : 1, číslo 4,5 : 1) a barevný tón hlídá `tests/evaluation-colors.spec.js`. Na 360 px s běžným písmem je adresa v obrázku na jednom řádku (potřebuje 193 px, místa je asi 200 px), při velkém písmu přejde pod trojúhelník. Snímky: `docs/plany/snimky/`.
 
 **Hlavní myšlenka sekce:** když připojení není zabezpečené, do stránky nic nezadávat. Pravidlo zní „nezadávejte údaje“, ne „je to podvod“. Vždy v páru: to, že prohlížeč nevaruje, neznamená, že stránka je poctivá.
 
@@ -32,7 +33,7 @@ Stav: nasazeno 1. 10. 2026 (spojení `4b25c70`). Zbývá fáze 14, Tomášova ko
 |---|---|---|---|
 | 1 | `prohlizec-01` výhra telefonu za poštovné, nezabezpečené připojení | `prohlizec-05` zpravodajská stránka s reklamou | „Když je na stránce reklama nebo sleva, je to podvod.“ |
 | 2 | `prohlizec-02` „telefon je zablokovaný, volejte podporu“ (okno) | `prohlizec-06` souhlas s cookies (okno) | „Když na stránce vyskočí okno, je to podvod.“ |
-| 3 | `prohlizec-03` ověření účtu ve smyšlené Bance Javor (odkaz ze SMS) | `prohlizec-07` přihlášení do e-shopu otevřeného sami | „Když stránka chce heslo, je to podvod.“ |
+| 3 | `prohlizec-03` ověření účtu ve smyšlené Lipové bance (odkaz ze SMS; karta uvádí pravou adresu lipova-banka.cz, stránka je na lipova-banka-overeni.cz) | `prohlizec-07` přihlášení do e-shopu otevřeného sami | „Když stránka chce heslo, je to podvod.“ |
 | 4 | `prohlizec-04` „varování“ nakreslené stránkou a instalace aplikace | `prohlizec-08` placení kartou v e-shopu | „Když stránka chce číslo karty, je to podvod.“ |
 
 Později doplnit: falešný e-shop, investiční reklama se „známou osobností“ (bez skutečných jmen a fotek). Legitimní stránka s nezabezpečeným připojením do první verze nepatří (důvody v `docs/navrhy-scenaru-prohlizec.md`, část D).
@@ -43,9 +44,9 @@ Zrychlený režim: vysvětlení a nápověda jsou obecné rady vlastními slovy,
 
 ## 4. Povinné kontroly (hotovo 1. 10. 2026)
 
-- **Adresy stránek** (i legitimních): všech 8 volných, registr CZ.NIC vrací 404, DNS neexistuje. Znovu v den zveřejnění (sekce 17 A3 CLAUDE.md).
+- **Adresy stránek** (i legitimních): všech 8 volných, registr CZ.NIC vrací 404, DNS neexistuje. Znovu v den zveřejnění (sekce 17 A3 CLAUDE.md). Adresa v obrázku úvodu `prihlaseni-ucet-online.cz` také volná (1. 10. 2026, registr 404, DNS neexistuje; kontrola metody: `menestarosti.cz` vrací 200).
 - **Telefonní číslo** +420 772 163 940 (`prohlizec-02`): blok 772 100 000 až 772 199 999 bez držitele podle dat ČTÚ z 1. 10. 2026. Znovu v den zveřejnění (sekce 17 A2).
-- **Názvy** „Banka Javor“, „Kniha pro radost“ a „Domácí pomocník“: Tomáš ověřil v ARES, že nepatří žádnému subjektu. Názvy zůstávají.
+- **Názvy** „Kniha pro radost“ a „Domácí pomocník“: Tomáš ověřil v ARES, že nepatří žádnému subjektu. Názvy zůstávají. „Banka Javor“ nahradila ve fázi 14 „Lipová banka“, Tomáš ji ověřil v ARES 1. 10. 2026. Adresy `lipova-banka.cz`, `lipovabanka.cz` a `lipova-banka-overeni.cz` volné (1. 10. 2026, registr 404, DNS neexistuje).
 
 ## 5. Spojení, pojistka a návrat
 
@@ -53,7 +54,7 @@ Postup spojení, podmínky „hotovo“, vrácení spojení (`git revert -m 1 4b
 
 ## 6. Fáze milníku 8 (Prohlížeč)
 
-14 fází podle diagramu, z toho 5 „čeká na tebe“. Stav k 1. 10. 2026:
+15 fází podle diagramu, z toho 6 „čeká na tebe“. Stav k 1. 10. 2026:
 
 1. **Rozhodnutí k plánu** · čeká na tebe · hotovo.
 2. **Zdroje k typům podvodů** · hotovo. Zrychlený režim zdroj nevyžaduje.
@@ -65,12 +66,13 @@ Postup spojení, podmínky „hotovo“, vrácení spojení (`git revert -m 1 4b
 8. **Stavba prohlížeče** · hotovo.
 9. **Scénáře do hry** · hotovo, přehled scénářů vygenerovaný.
 10. **Testy** · hotovo, celá sada prošla ve větvi i na `main`.
-11. **Kontrola na snímcích** · **vynechaná, nahrazena fází 14.** Neprovedla se, ověřil se jen označený trojúhelník v pokročilé úrovni (na 360 px dobře vidět).
+11. **Kontrola na snímcích** · **vynechaná, nahrazena fází 15.** Neprovedla se, ověřil se jen označený trojúhelník v pokročilé úrovni (na 360 px dobře vidět).
 12. **Zpřístupnění sekce** · hotovo. Spojení do `main` (`4b25c70`) a push na Tomášův pokyn.
 13. **Ověření na živé stránce** · hotovo.
-14. **Kontrola na telefonu** · čeká na tebe. Tomáš projde Prohlížeč na živém webu, nahrazuje i fázi 11.
+14. **Úprava úvodu a scénáře `prohlizec-03`** · čeká na tebe (schválení dávky a snímků). Ve větvi `uprava-prohlizec`, z ní se nenasazuje. Úvod jako malé okno prohlížeče s čísly ①②③ a řádkem „Bez varování“, nový název banky v `prohlizec-03`. Pak spojení do `main` a nasazení.
+15. **Kontrola na telefonu** · čeká na tebe. Tomáš projde Prohlížeč na živém webu, nahrazuje i fázi 11.
 
-Proti původnímu plánu: fáze 5 a 7 proběhly najednou, fáze 11 je vynechaná. Počet fází v diagramu se nezměnil.
+Proti původnímu plánu: fáze 5 a 7 proběhly najednou, fáze 11 je vynechaná. Fáze 14 přibyla 1. 10. 2026 (Tomáš), kontrola na telefonu zůstává poslední.
 
 ## Rozhodnutí (Tomáš, 1. 10. 2026)
 

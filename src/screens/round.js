@@ -32,7 +32,7 @@ import {
 // set by renderRound before anything is drawn
 let ROUND, EVALUATION, ROUND_END, DECISION_CHECK;
 import { openDialog } from '../ui/dialog.js';
-import { escapeHtml } from '../ui/html.js';
+import { escapeHtml, escapeWithAddresses } from '../ui/html.js';
 import { icon } from '../ui/icons.js';
 
 function progressDots(round) {
@@ -204,7 +204,8 @@ function showThreat(scenario, index) {
   const threat = scenario.threats[index];
   return openDialog({
     title: escapeHtml(threat.title),
-    body: `<p>${escapeHtml(threat.explanation)}</p>`,
+    // Browser only: web addresses wrap as a whole (Tomáš, 1. 10. 2026); e-mail and Zprávy unchanged
+    body: `<p>${scenario.section === 'prohlizec' ? escapeWithAddresses(threat.explanation) : escapeHtml(threat.explanation)}</p>`,
     actions: [{ label: CLOSE_AND_CONTINUE, value: 'close', primary: true, autofocus: true }],
   });
 }

@@ -3,6 +3,7 @@ import { prepareRound, startRound } from '../engine/session.js';
 import { maxPointsForRound, ROUND_SIZE } from '../engine/round.js';
 import { levels } from '../sections.js';
 import { BROWSER_APP, sectionTexts } from '../texts.js';
+import { wholeAddress } from '../ui/html.js';
 import { icon } from '../ui/icons.js';
 import { pointsWord } from '../ui/format.js';
 
@@ -26,10 +27,34 @@ function levelCard(level, max, description) {
   `;
 }
 
+// Number in a circle, drawn in CSS (the character ① is missing in the hosted fonts). Each number
+// has its own colour (--intro-1 … --intro-3), the same in the picture and in the text below.
+const introNumber = (number) =>
+  `<span class="browser-intro__num browser-intro__num--${number}" aria-hidden="true">${number}</span>`;
+
+// Small address bar of the intro picture. Numbered (Tomáš, 1. 10. 2026): a dashed frame in the
+// colour of its number, the number sits on the frame: 1 around the whole bar, 2 only around the
+// triangle. The plain bar under the text has no warning and no numbers.
+const introBar = (address, numbered) =>
+  numbered
+    ? `
+  <div class="browser-intro__bar browser-intro__frame browser-intro__frame--1">
+    ${introNumber(1)}
+    <span class="browser-intro__icon browser-intro__frame browser-intro__frame--2">${introNumber(2)}${icon('warning')}</span>
+    <span class="browser-intro__address">${wholeAddress(address)}</span>
+  </div>
+`
+    : `
+  <div class="browser-intro__bar">
+    <span class="browser-intro__address">${wholeAddress(address)}</span>
+  </div>
+`;
+
 // Browser only: a screen of its own on the first visit (Tomáš, 1. 10. 2026). The button stores
 // the record and opens the level select; without a record (or without storage) it shows again.
+// The pictures are aria-hidden, the text carries the content.
 function renderBrowserIntro(container, section) {
-  const { intro, insecureLabel } = BROWSER_APP;
+  const { intro } = BROWSER_APP;
   container.innerHTML = `
     <div class="screen level">
       <a class="button button--secondary level__back" href="#/">
@@ -37,14 +62,25 @@ function renderBrowserIntro(container, section) {
       </a>
       <section class="browser-intro" data-testid="browser-intro" aria-labelledby="browser-intro-title">
         <h1 class="section-title browser-intro__title" id="browser-intro-title" tabindex="-1">${intro.title}</h1>
-        <figure class="browser-intro__figure">
-          <div class="browser-intro__bar" aria-hidden="true">
-            <span class="browser-intro__icon">${icon('warning')}</span>
-            <span class="browser-intro__address"></span>
+        <div class="browser-intro__shot" data-testid="browser-intro-shot" aria-hidden="true">
+          ${introBar(intro.address, true)}
+          <div class="browser-intro__page browser-intro__frame browser-intro__frame--3">
+            ${introNumber(3)}
+            <span class="browser-intro__page-heading">${intro.pageHeading}</span>
+            ${intro.pageFields
+              .map((field) => `<span class="browser-intro__field">${field}<span class="browser-intro__field-box"></span></span>`)
+              .join('')}
           </div>
-          <figcaption><span class="visually-hidden">${insecureLabel}. </span>${icon('arrowUp')}${intro.caption}</figcaption>
-        </figure>
-        ${intro.paragraphs.map((text) => `<p>${text}</p>`).join('')}
+        </div>
+        ${intro.parts
+          .map((part, index) => `<p class="browser-intro__part">${introNumber(index + 1)}<span><strong>${part.label}</strong> ${part.text}</span></p>`)
+          .join('')}
+        <div class="browser-intro__plain">
+          <p class="browser-intro__plain-label">${intro.noWarningLabel}</p>
+          <div aria-hidden="true">${introBar(intro.address, false)}</div>
+        </div>
+        <p>${intro.noWarningText}</p>
+        <p>${intro.closing}</p>
         <button type="button" class="button button--primary button--block" data-action="intro-done">
           ${intro.button} ${icon('arrowRight')}
         </button>

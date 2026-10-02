@@ -10,7 +10,9 @@ Zrychlený režim: vysvětlení jsou obecné rady vlastními slovy, žádné tvr
 |---|---|---|
 | telefon-vyhra-dnes.cz | prohlizec-01 | registr CZ.NIC 404, DNS neexistuje |
 | rajcata-na-zahrade.cz | prohlizec-02 | 404, DNS neexistuje |
-| javor-overeni-uctu.cz | prohlizec-03 | 404, DNS neexistuje |
+| lipova-banka-overeni.cz | prohlizec-03 (falešná adresa, od fáze 14 místo javor-overeni-uctu.cz) | 404, DNS neexistuje |
+| lipova-banka.cz, lipovabanka.cz | prohlizec-03 (pravá adresa na kartě a ve vysvětlení, i varianta bez pomlčky) | 404, DNS neexistuje |
+| prihlaseni-ucet-online.cz | obrázek v úvodu | 404, DNS neexistuje |
 | autobusy-jizdni-rad.cz | prohlizec-04 | 404, DNS neexistuje |
 | regionalni-zpravodaj-dnes.cz | prohlizec-05 | 404, DNS neexistuje |
 | vylety-s-vnoucaty.cz | prohlizec-06 | 404, DNS neexistuje |
@@ -20,7 +22,9 @@ Zrychlený režim: vysvětlení jsou obecné rady vlastními slovy, žádné tvr
 
 Metoda u adres: dotaz do registru CZ.NIC (rdap.nic.cz) vrátil 404 a jméno se v DNS nenašlo. Kontrola metody: menestarosti.cz registr najde (aktivní), DNS ho najde.
 
-**Prosím ověř:** že názvy „Banka Javor“, „Kniha pro radost“ (už je ve `zpravy-09`) a „Domácí pomocník“ nepatří skutečné bance nebo obchodu, který by si to mohl vztáhnout na sebe. Ověřené to nemám.
+Nové adresy (fáze 14) ověřené 1. 10. 2026 stejnou metodou.
+
+Názvy „Kniha pro radost“ (už je ve `zpravy-09`) a „Domácí pomocník“ Tomáš ověřil v ARES, nepatří žádnému subjektu. „Banka Javor“ nahradila ve fázi 14 „Lipová banka“, také ověřená v ARES (Tomáš, 1. 10. 2026).
 
 ## B. Texty sekce (mimo scénáře)
 
@@ -43,21 +47,22 @@ Text výběru úrovně v Prohlížeči (E-mail a Zprávy beze změny):
 Vyberte si úroveň. V obou uvidíte 5 stránek.
 ```
 
-Popisek u obrázku:
-```
-Tady prohlížeč ukazuje varování
-```
+**Nový úvod (fáze 14, texty schválené Tomášem 1. 10. 2026, nahrazuje celý dosavadní text i popisek u obrázku).** Nahoře obrázek malého okna prohlížeče (jen obrázek, pro čtečku skrytý): adresní řádek se žlutým trojúhelníkem a adresou `prihlaseni-ucet-online.cz`, pod ním stránka „Přihlášení“ s poli „Jméno“ a „Heslo“, čísla 1 u adresy, 2 u trojúhelníku, 3 u stránky. Pod textem s čísly druhý adresní řádek se stejnou adresou bez trojúhelníku.
 
 ```
 Než začnete: adresní řádek
 
-Nahoře v prohlížeči je adresní řádek s adresou stránky, na které právě jste. Adresu tam píše prohlížeč, ne stránka.
+① Adresní řádek. Je v něm adresa stránky, na které jste. Píše ji prohlížeč, ne stránka.
 
-Vlevo od adresy prohlížeč ukazuje, jestli je připojení zabezpečené. Nezabezpečené připojení je jako pohlednice: nepřečte ji každý, ale kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi, tedy internetu, ke kterému se připojíte v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce. Když prohlížeč u adresy varuje, do stránky nic nezadávejte. V tréninku je varováním žlutý trojúhelník s vykřičníkem. Jiné prohlížeče ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek.
+② Varování. Žlutý trojúhelník znamená, že připojení není zabezpečené. Do takové stránky nic nezadávejte. Nezabezpečené připojení je jako pohlednice: kdo chce, cestou ji přečte, třeba na veřejné Wi-Fi v kavárně, knihovně nebo na nádraží. Zabezpečené připojení je jako dopis v obálce.
 
-Obálka ale neříká nic o tom, kdo dopis poslal. To, že vás prohlížeč nevaruje, neznamená, že na stránce nemůže být podvod. Vždy se ptejte, jak jste se na stránku dostali a co po vás chce.
+③ Stránka. To, co ukazuje stránka sama. Může o sobě psát cokoli.
 
-Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte.
+Bez varování
+
+Obálka ale neříká, kdo dopis poslal. Když prohlížeč nevaruje, stránka ještě nemusí být poctivá. Ptejte se, jak jste se na ni dostali a co po vás chce.
+
+Jiné prohlížeče místo trojúhelníku ukazují třeba nápis „Nezabezpečeno“ nebo přeškrtnutý zámek. Když prohlížeč ukáže varování přes celou obrazovku, stiskněte Zpět a na stránku nepokračujte.
 ```
 
 ### Úrovně (jen v Prohlížeči, E-mail a Zprávy beze změny)
@@ -233,13 +238,15 @@ Kontrola nápovědy: bod 6 vede k oknu, které straší, k zavolání i k tlač�
 
 ---
 
-### prohlizec-03: Ověření účtu v Bance Javor (podvod, falešné přihlášení)
+### prohlizec-03: Ověření účtu v Lipové bance (podvod, falešné přihlášení)
+
+Fáze 14 (Tomáš, 1. 10. 2026): „Banka Javor“ nahrazena „Lipovou bankou“. Hráč dřív neznal pravou adresu smyšlené banky, a tak z adresního řádku nemohl poznat, že je falešná. Karta proto uvádí pravou adresu a falešná se od ní liší přidaným slovem. Karta, nadpis, hrozba 1 a shrnutí jsou nové a schválené.
 
 ```
-Jak jste se sem dostali: Máte účet v Bance Javor. Přišla vám SMS, že váš účet bude zablokován, pokud se dnes neověříte. Klepli jste na odkaz v ní.
+Jak jste se sem dostali: Máte účet v Lipové bance. Do internetového bankovnictví chodíte na adresu lipova-banka.cz. Přišla vám SMS, že váš účet bude zablokován, pokud se dnes neověříte. Klepli jste na odkaz v ní.
 
-[address] javor-overeni-uctu.cz
-[heading] Banka Javor: ověření účtu
+[address] lipova-banka-overeni.cz
+[heading] Lipová banka: ověření účtu
 [body.0] Z bezpečnostních důvodů jsme omezili váš účet. Pro obnovení se přihlaste a ověřte svou kartu.
 [fields.0] Přihlašovací jméno
 [fields.1] Heslo
@@ -251,7 +258,7 @@ Jak jste se sem dostali: Máte účet v Bance Javor. Přišla vám SMS, že vá�
 Hrozby:
 1. `address` · adresa-stranky · **Adresa stránky**
 ```
-Na přihlášení do banky choďte adresou, kterou si napíšete sami nebo máte uloženou. Tahle stránka se otevřela z odkazu v SMS a adresa jen obsahuje slovo „javor“. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá.
+Vaše banka má adresu lipova-banka.cz, tahle stránka je na lipova-banka-overeni.cz. Adresa jen obsahuje jméno banky s dalšími slovy. Na přihlášení do banky choďte adresou, kterou si napíšete sami nebo máte uloženou. To, že vás prohlížeč nevaruje, ještě neznamená, že stránka je poctivá.
 ```
 2. `body.0` · emocni-natlak · **Omezený účet**
 ```
@@ -265,7 +272,7 @@ Nevinné části: `heading`, `button`.
 
 Shrnutí:
 ```
-Když vám zpráva hrozí zablokováním účtu, neklikejte na odkaz v ní. Otevřete si bankovnictví sami, jako obvykle, nebo zavolejte na číslo, které máte na kartě.
+Když vám zpráva hrozí zablokováním účtu, neklikejte na odkaz v ní. Zjistěte si adresu své banky a mějte ji uloženou v záložkách, nebo používejte aplikaci banky. Na přihlášení choďte jen tudy. Když si nejste jistí, zavolejte na číslo, které máte na kartě.
 ```
 
 Kontrola nápovědy: bod 2 (odkaz ze SMS) a bod 7 vedou k polím → hrozba 3; bod 5 vede k adrese → hrozba 1; bod 6 se strachem vede k body.0 → hrozba 2. Nadpis a tlačítko nevedou.

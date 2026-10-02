@@ -37,9 +37,33 @@ test.describe('intro about the address bar', () => {
   test('empty storage: the intro is shown with all its texts, no level buttons yet', async ({ page }) => {
     await page.goto('/?seed=1#/prohlizec');
     await expect(intro(page).getByRole('heading', { level: 1, name: BROWSER_APP.intro.title })).toBeVisible();
-    await expect(intro(page)).toContainText(BROWSER_APP.intro.caption);
-    for (const paragraph of BROWSER_APP.intro.paragraphs) await expect(intro(page)).toContainText(paragraph);
+    const { parts, noWarningLabel, noWarningText, closing } = BROWSER_APP.intro;
+    for (const part of parts) await expect(intro(page)).toContainText(`${part.label} ${part.text}`);
+    for (const text of [noWarningLabel, noWarningText, closing]) await expect(intro(page)).toContainText(text);
     await expect(levelButtons(page)).toHaveCount(0);
+  });
+
+  // The picture is only a picture (Tomáš, 1. 10. 2026): hidden from screen readers, nothing to
+  // fill in, press or mark; the text carries the content
+  test('the picture of the browser is aria-hidden and has nothing to fill in or press', async ({ page }) => {
+    await page.goto('/?seed=1#/prohlizec');
+    const shot = page.getByTestId('browser-intro-shot');
+    await expect(shot).toBeVisible();
+    await expect(shot).toHaveAttribute('aria-hidden', 'true');
+    await expect(shot).toContainText(BROWSER_APP.intro.address);
+    await expect(shot).toContainText(BROWSER_APP.intro.pageHeading);
+    await expect(shot.locator('input, textarea, button, a, [tabindex], [data-mark]')).toHaveCount(0);
+    await expect(shot.locator('.browser-intro__num')).toHaveText(['1', '2', '3']);
+    // Each number sits on its dashed frame: 1 the whole bar, 2 only the triangle (inside 1), 3 the page
+    for (const n of ['1', '2', '3']) {
+      await expect(shot.locator(`.browser-intro__frame--${n} > .browser-intro__num--${n}`)).toHaveText(n);
+      await expect(shot.locator(`.browser-intro__frame--${n}`)).toHaveCSS('border-top-style', 'dashed');
+    }
+    await expect(shot.locator('.browser-intro__frame--1 .browser-intro__frame--2 svg')).toHaveCount(1);
+    // The second bar "Bez varování": the same address, no warning
+    const plain = page.locator('.browser-intro__plain');
+    await expect(plain.locator('[aria-hidden="true"]')).toContainText(BROWSER_APP.intro.address);
+    await expect(plain.locator('.browser-intro__icon')).toHaveCount(0);
   });
 
   test('the button opens the level select; on the next visit the intro is not shown', async ({ page }) => {
@@ -83,6 +107,18 @@ test.describe('intro about the address bar', () => {
     await page.goto('about:blank');
     await page.goto('/?seed=1#/prohlizec');
     expect(await page.getByTestId('max-points-pokrocila').innerText()).toBe(withIntro);
+  });
+
+  // Tomáš, 1. 10. 2026: at 360 px with normal text the address in the picture is on one line
+  test('360 px, normal text: the address in the picture is on one line', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 740 });
+    await page.goto('/?seed=1#/prohlizec');
+    const lines = await page.locator('.browser-intro__frame--1 .addr').evaluate((el) => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      return new Set([...range.getClientRects()].map((rect) => Math.round(rect.top))).size;
+    });
+    expect(lines).toBe(1);
   });
 
   test('200 % text at 320 px: the intro screen does not scroll sideways', async ({ page }) => {
@@ -346,4 +382,65 @@ test.describe(`layout (${SEEDS})`, () => {
       }
     }
   }
+});
+
+// Tomáš, 1. 10. 2026: a web address wraps only as a whole, never at a hyphen or a dot. Only an
+// address longer than the whole line may break anywhere, and the page never scrolls sideways.
+test.describe('web addresses wrap only as a whole', () => {
+  const SEED_BANK = seedWith('prohlizec', ['prohlizec-03']);
+  test.beforeEach(({ page }) => skipBrowserIntro(page));
+
+  // For every address on the screen: its text, the number of lines it takes and whether it would
+  // fit on one line of its parent (natural width measured on a hidden copy without wrapping)
+  const addresses = (page) =>
+    page.evaluate(() =>
+      [...document.querySelectorAll('.addr')].map((el) => {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const lines = new Set([...range.getClientRects()].map((rect) => Math.round(rect.top))).size;
+        const copy = el.cloneNode(true);
+        copy.style.cssText = 'position: absolute; visibility: hidden; white-space: nowrap; max-width: none;';
+        el.parentElement.append(copy);
+        const natural = copy.getBoundingClientRect().width;
+        copy.remove();
+        const style = getComputedStyle(el.parentElement);
+        const line = el.parentElement.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        return { text: el.textContent, lines, fits: natural <= line };
+      }),
+    );
+  const openExplanation = async (page) => {
+    await decide(page, 'scam');
+    await page.locator('[data-target="address"] [data-threat]').first().click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+  };
+
+  test(`360 px, seed ${SEED_BANK}: the bank addresses stay on one line on the card, in the address bar and in the explanation`, async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 740 });
+    await open(page, 'prohlizec-03', { seed: SEED_BANK });
+    expect(await addresses(page)).toEqual([
+      { text: 'lipova-banka.cz', lines: 1, fits: true },
+      { text: 'lipova-banka-overeni.cz', lines: 1, fits: true },
+    ]);
+    await openExplanation(page);
+    const inDialog = (await addresses(page)).slice(2);
+    expect(inDialog).toEqual([
+      { text: 'lipova-banka.cz', lines: 1, fits: true },
+      { text: 'lipova-banka-overeni.cz', lines: 1, fits: true },
+    ]);
+  });
+
+  test(`200 % text at 320 px, seed ${SEED_BANK}: no sideways scroll, an address that fits its line is on one line`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 740 });
+    await open(page, 'prohlizec-03', { seed: SEED_BANK });
+    await page.addStyleTag({ content: 'html { font-size: 200% !important; } .round-bar { position: static !important; }' });
+    const check = async () => {
+      expect(await noScroll(page)).toBe(true);
+      const list = await addresses(page);
+      expect(list.length).toBeGreaterThan(0);
+      for (const address of list.filter((a) => a.fits)) expect(address, address.text).toMatchObject({ lines: 1 });
+    };
+    await check();
+    await openExplanation(page);
+    await check();
+  });
 });
