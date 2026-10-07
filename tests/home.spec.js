@@ -16,9 +16,8 @@ test.describe('home page', () => {
     expect(await logo.evaluate((img) => img.naturalWidth)).toBeGreaterThan(0);
 
     await expect(page.getByText('Poznej podvod', { exact: true })).toBeVisible();
-    await expect(
-      page.getByText('Trénink pro seniory: jak poznat podvod v telefonu a na internetu'),
-    ).toBeVisible();
+    // Wording without "pro seniory" (Tomáš, 7. 10. 2026)
+    await expect(page.getByText('Naučte se poznat podvod v telefonu a na internetu')).toBeVisible();
   });
 
   // Wording approved by Tomáš on 2. 10. 2026 (all three sections, pages as well as messages)
@@ -42,16 +41,14 @@ test.describe('home page', () => {
     await expect(page.getByRole('link', { name: /^Prohlížeč/ })).toHaveAttribute('href', '#/prohlizec');
   });
 
-  test('shows upcoming sections as inactive tiles', async ({ page }) => {
-    // Prohlížeč is active in the branch sekce-prohlizec (1. 10. 2026)
+  // "Brzy přibude" is hidden for now (Tomáš, 7. 10. 2026, SHOW_UPCOMING in src/screens/home.js)
+  test('upcoming sections are not shown', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: 'Brzy přibude' })).toHaveCount(0);
     for (const [id, title] of [
       ['qr-platba', 'QR platba'],
       ['telefonat', 'Telefonát'],
     ]) {
-      const tile = page.getByTestId(`tile-${id}`);
-      await expect(tile).toBeVisible();
-      await expect(tile).toContainText('Připravujeme');
-      // Negative check: an upcoming section must not be clickable
+      await expect(page.getByTestId(`tile-${id}`)).toHaveCount(0);
       await expect(page.getByRole('link', { name: new RegExp(title) })).toHaveCount(0);
     }
   });

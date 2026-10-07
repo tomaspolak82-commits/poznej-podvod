@@ -108,12 +108,12 @@ Povolené závislosti: `vite`, `@playwright/test`, `basic-ftp`, `dotenv`.
 ## 5. Obrazovky a průběh
 
 ### Hlavní stránka („Poznej podvod“)
-- Hlavička na všech obrazovkách: logo Méně Starostí, **vedle něj** (i na mobilu) název „Poznej podvod“ a pod názvem podtitul „Trénink pro seniory: jak poznat podvod v telefonu a na internetu“. Na mobilu je logo malé (40 px), aby hlavička zabírala co nejméně místa. Jen při velmi velkém písmu se logo přesune nad název.
+- Hlavička na všech obrazovkách: logo Méně Starostí, **vedle něj** (i na mobilu) název „Poznej podvod“ a pod názvem podtitul „Naučte se poznat podvod v telefonu a na internetu“ (do 7. 10. 2026 „Trénink pro seniory: …“, změněno, protože slovo „senioři“ může někomu vadit). Na mobilu je logo malé (40 px), aby hlavička zabírala co nejméně místa. Jen při velmi velkém písmu se logo přesune nad název.
 - **Výrazné tlačítko „← Zpět na Méně Starostí“** (https://menestarosti.cz/hry-pro-senior/) je v hlavičce **jen na hlavní stránce**. Na ostatních obrazovkách (výběr úrovně, hra, vyhodnocení, konec kola) v hlavičce není; tam je vždy tlačítko pro krok zpět v aplikaci („Zpět na výběr tréninku“, „Zpět na výběr úrovně“ apod.).
 - **Patička na všech obrazovkách** má nenápadný textový odkaz „menestarosti.cz“ (https://menestarosti.cz/), vedle odkazů na Facebook a Zásady ochrany osobních údajů.
 - **Během hry (kolo, vyhodnocení, konec kola) je hlavička zmenšená**, aby zpráva měla na mobilu víc místa: menší logo a název, podtitul se nezobrazuje. Tlačítko pro krok zpět a štítek TRÉNINK musí zůstat vždy vidět (Tomáš schválil).
 - Pokud hráč už dřív hrál: panel **„Vítejte zpět“**. Nejvyšší skóre v každé sekci a úrovni a nejčastější chyby (sekce 8).
-- Dlaždice sekcí: **E-mail**, **Zprávy (SMS a WhatsApp)**. Budoucí sekce (Prohlížeč, QR platba, Telefonát) jako neaktivní dlaždice „Připravujeme“.
+- Dlaždice sekcí: **E-mail**, **Zprávy (SMS a WhatsApp)**, **Prohlížeč**. Blok „Brzy přibude“ s neaktivními dlaždicemi „Připravujeme“ (QR platba, Telefonát) je od 7. 10. 2026 skrytý (Tomáš: projekt je pozastavený, blok se vrátí později). Vrátí se přepnutím `SHOW_UPCOMING = true` v `src/screens/home.js` a úpravou testu „upcoming sections are not shown“ v `tests/home.spec.js`.
 - Úplně dole na hlavní stránce (nad patičkou) nenápadný odkaz s ikonou **„Smazat moji historii“** s potvrzením (sekce 8). Zobrazí se, jen když nějaká historie existuje.
 - Tlačítko „← Zpět na Méně Starostí“ vede na https://menestarosti.cz/hry-pro-senior/ (Tomáš ověřil, že existuje), odkaz v patičce na https://menestarosti.cz/. Jinak aplikace na obsah hlavního webu nenavazuje, žádné odkazy na články.
 
@@ -428,7 +428,7 @@ Než se začne stavět engine, připrav v milníku 2 hlavní stránku a výběr 
 Projekty (zařízení): `Pixel 7`, `iPhone 13`, `Galaxy Tab S4` (nebo `iPad (gen 7)`), `Desktop Chrome` + mobil s viewportem 320 px.
 
 Minimální sada:
-- hlavní stránka: tlačítko Zpět na Méně Starostí, logo vedle názvu, dlaždice sekcí, neaktivní dlaždice „Připravujeme“
+- hlavní stránka: tlačítko Zpět na Méně Starostí, logo vedle názvu, dlaždice sekcí, neaktivní dlaždice „Připravujeme“ (od 7. 10. 2026 skryté, test hlídá, že nejsou vidět)
 - ostatní obrazovky: tlačítko Zpět na Méně Starostí v hlavičce není (ani po návratu z hlavní stránky a zpět), je tam tlačítko pro krok zpět; v patičce je odkaz „menestarosti.cz“
 - kolo vybere 5 zpráv, obsahuje 2–3 legitimní (a v testu losování se musí objevit obojí), se stejným `seed` vždy stejné pořadí
 - základní úroveň: správné i špatné rozhodnutí → správné body a vyhodnocení

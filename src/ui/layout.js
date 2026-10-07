@@ -17,7 +17,7 @@ export function renderLayout(root) {
           <img class="site-header__logo" src="${logoUrl}" alt="Méně Starostí" width="72" height="72" />
           <div class="site-header__text">
             <p class="site-header__title">Poznej podvod</p>
-            <p class="site-header__subtitle">Trénink pro seniory: jak poznat podvod v telefonu a na internetu</p>
+            <p class="site-header__subtitle">Naučte se poznat podvod v telefonu a na internetu</p>
           </div>
         </div>
         <!-- Shown only on the home page; other screens have their own step-back button -->

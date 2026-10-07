@@ -5,6 +5,9 @@ import { CATEGORY_LABELS, DELETE_HISTORY, WELCOME } from '../texts.js';
 import { openDialog } from '../ui/dialog.js';
 import { icon } from '../ui/icons.js';
 
+// "Brzy přibude" is hidden until new sections are in the works again (Tomáš, 7. 10. 2026)
+const SHOW_UPCOMING = false;
+
 function activeTile(section) {
   return `
     <li>
@@ -86,10 +89,14 @@ export function renderHome(container, { deletedMessage = '' } = {}) {
         <ul class="tiles">${active.map(activeTile).join('')}</ul>
       </section>
 
-      <section class="home__section" aria-labelledby="home-soon">
+      ${
+        SHOW_UPCOMING && soon.length
+          ? `<section class="home__section" aria-labelledby="home-soon">
         <h2 id="home-soon" class="section-title">Brzy přibude</h2>
         <ul class="tiles tiles--soon">${soon.map(soonTile).join('')}</ul>
-      </section>
+      </section>`
+          : ''
+      }
 
       <section class="home__section" aria-labelledby="home-how">
         <h2 id="home-how" class="section-title">Jak trénink probíhá</h2>
