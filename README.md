@@ -1,4 +1,5 @@
 # Poznej podvod
+(Vytořeno pomocí Claude Code)
 
 Webová aplikace, na které si senioři bezpečně nacvičí, jak poznat podvod v telefonu a na internetu.
 
